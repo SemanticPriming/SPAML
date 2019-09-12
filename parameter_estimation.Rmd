@@ -2,24 +2,33 @@
 title: "Parameter Estimation"
 author: "Erin M. Buchanan"
 date: "8/21/2019"
-output: html_document
+output:
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 ```
 
-## The Problem
+## A Brief Overview
 
-I am writing to propose a very large data collection in collaboration with the Psychological Science Accelerator. The purpose of this project is provide semantic priming data across many languages, inspired by the Semantic Priming Project (which is only in English). Big data sets are currency for those who do research in psycholinguistics, computational linguistics, natural language processing, and cognitive modeling. These data sets encourage controlled methodology and new scientific questions - and those complete data are lacking (i.e., right now we have lots of datasets that don't overlap). 
+This document supports a proposal to do a very large data collection in collaboration with the Psychological Science Accelerator. The purpose of this project is provide semantic priming data across many languages, inspired by the Semantic Priming Project (which is only in English). Big data sets are currency for those who do research in psycholinguistics, computational linguistics, natural language processing, and cognitive modeling. These data sets encourage controlled methodology and new scientific questions - and those complete data are lacking (i.e., right now we have lots of datasets that don't overlap). 
 
-Cue words are the first word normally shown in a priming task, and target words are shown second in a priming task. When the cue and target are related to each other (DOCTOR-NURSE), the target word should be facilitated (i.e., responded to faster) because the cue word started the activation of the semantic network. Unrelated cue and target pairings (TREE-NURSE) are used as a metric to measure facilitation. Therefore, in a priming task, one subject might see DOCTOR-NURSE, while another subject might see TREE-NURSE paired together. The two instances of NURSE will then be compared in an item analysis. To see if the subjects who saw the related pairs responded to NURSE faster than the subjects who saw the unrelated pairs. 
+Cue words are defined as those shown first in a priming task, while target words are shown after the cue word. Semantic priming occurs when the target word is facilitated (i.e., responded to faster) in a related pair condition (DOCTOR-NURSE) versus an unrelated pair condition (TREE-NURSE). Therefore, in a priming task, one subject might see DOCTOR-NURSE, while another subject might see TREE-NURSE paired together. The two instances of NURSE will then be compared in an item analysis to see if the subjects who saw the related pairs responded to NURSE faster than the subjects who saw the unrelated pairs (however, some studies simply compare the average response latency of the unrelated condition to the related condition for a group level analysis). 
 
-One concern is how to estimate sample size necessary for any particular target word. The magic *N* = 30 has often been used, in an attempt to at least meet some perceived minimum criteria for the central limit theorem. Sample size planning has been promoted when there is a specific parameter goal, such as power to find X effect at specified alpha levels, but no good method has been suggested for knowing when the data around a single word has "settled". I am going to focus on the lexical decision task - wherein you would decide if a target is a word or nonsense word, and the dependent variable is response latency. 
+One concern is how to estimate sample size necessary for any particular target word. The magic *N* = 30 has often been used, in an attempt to at least meet some perceived minimum criteria for the central limit theorem. Sample size planning has been promoted when there is a specific parameter goal, such as power to find X effect at specified alpha levels, but no good method has been suggested for knowing when the data around a single word has "settled". In this power / sample size analysis, we will focus on the lexical decision task in particular, wherein participants are simply ask if a concept presented to them is a word (NURSE) or nonsense word (LURSE). The dependent variable in this study is response latency, and we will use the data from the English Lexicon Project (http://elexicon.wustl.edu/; Balota et al., 2007) and the Semantic Priming Project (http://spp.montana.edu/; Hutchison et al., 2013) as the metric for our analysis. 
 
-Herein, I try to figure that out by thinking about accuracy in parameter estimate - mostly from Kelley's work thinking about how we can have the confidence intervals be "sufficiently narrow". Usually this focuses on the standardized mean difference (effect sizes because power planning), but here we want to just know that the estimation of the response latency does not vary by some particular amount. Therefore, it seems that we actually want to focus on the SE of the response latency, as this determines the width of the confidence interval. A hypothesis, though, is that each word likely has some set of variability in it's variability that is linked to things like word length.
+Herein, we will also use concepts in accuracy in parameter estimates (AIPE) to think about how we can have the confidence intervals be "sufficiently narrow" (Kelley, 2007; Kelley, Darku, & Chattopadhyay, 2018; Maxwell, Kelley, & Rausch, 2008). Usually, AIPE power/sample size analysis focuses on the standardized mean difference, but here we want to just know that the estimation of the response latency does not vary by some particular amount. Therefore, it seems that we actually want to focus on the standard error of the response latency, as this determines the width of the confidence interval.
 
-## A look at the English Lexicon Project
+## Examining The English Lexicon Project (ELP)
+
+The English Lexicon Project collected lexical decision (word or nonsense word) and naming (reading the word aloud) data for over 40,000 words. These data provide a good metric for the variability in base response latencies across words, which should allow for the estimation of the number of participants a study should use if the focus is on the standard error of response latencies. 
 
 ```{r download-elp, eval = F, echo = F}
 #thank god because they formatted this stuff in a mildly unfriendly way
@@ -88,240 +97,350 @@ fullData <- fullData[fullData$Accuracy %in% c(0,1),] #Some accuracy values are n
 write.csv(fullData, 'ldt_raw/ELPDecisionData.csv', row.names = FALSE)
 ```
 
-Another issue to consider is that each participant likely has a somewhat arbitrary response latency factor. Usually, you would control for that with a random intercept value in a multilevel type analysis, but another suggestion has been to standardized each participant in each session (Faust et al., 1999) - this is also what they did in the Semantic Priming Project. 
+Another issue to consider is that each participant likely has a somewhat arbitrary response latency factor. Usually, you would control for within-subject variance with a random intercept value in a multilevel type analysis, but another suggestion has been to standardize each participant's responses within a data collection session (Faust et al., 1999).
 
-```{r}
-ELPmaster = read.csv("./ldt_raw/ELPDecisionData.csv")
-ELPmaster$ZScore = ave(ELPmaster$RT, ELPmaster$Participant, FUN = scale)
+```{r read_data}
+#read in the ELP data
+ELPmaster <- read.csv("./ldt_raw/ELPDecisionData.csv")
+
+#use the ave function to create a z-score of each participant
+#they only did one session 
+ELPmaster$ZScore <- ave(ELPmaster$RT, #dependent variable
+                        ELPmaster$Participant, #group variable
+                        FUN = scale) #function, scale is z-scoring
+
+#view the data 
 head(ELPmaster)
 ```
 
-Let's first remove all the inaccurate responses and non-words. I think estimating sample size for the target words is the goal here, and non-words are not target words.
+Let's first remove all the inaccurate responses (i.e., they decided word/nonsense word incorrectly) and non-words because they do not represent the target words we wish to collect. 
 
-```{r}
-ELPcorrect = subset(ELPmaster, Accuracy > 0 & Type > 0)
-ELPcorrect$Stimulus = droplevels(ELPcorrect$Stimulus)
+```{r remove_data}
+#exclude 0 accuracy for incorrect
+#exclude 0 type, which is non-words
+#subset is like filter in tidyverse
+ELPcorrect <- subset(ELPmaster, #data frame
+                     Accuracy > 0 & Type > 0) #logical rules to subset by
+
+#droplevels simply excludes the non-word labels that we just dropped
+ELPcorrect$Stimulus <- droplevels(ELPcorrect$Stimulus)
 ```
 
-What is the average SE for our standardized RTs?
+What is the average standard error for our standardized response latencies?
 
-```{r}
-#summarized data
-summary_stats = as.data.frame(tapply(ELPcorrect$ZScore, ELPcorrect$Stimulus, function(x){sd(x)/length(x)}))
-colnames(summary_stats) = "SES"
-summary_stats$samplesize = tapply(ELPcorrect$ZScore, ELPcorrect$Stimulus, length)
-summary_stats$stim = rownames(summary_stats)
+```{r summary_stats}
+library(dplyr)
+##summarize the dataframe to see what the average SE is
+summary_stats <- ELPcorrect %>% #data frame
+  select(ZScore, Stimulus) %>% #pick the columns
+  group_by(Stimulus) %>% #put together the stimuli
+  summarize(SES = sd(ZScore)/sqrt(length(ZScore)), samplesize = length(ZScore)) #create SE and the sample size for below 
 
-summary(summary_stats$SES)
-sd(summary_stats$SES, na.rm = T)
+##give descriptives of the SEs
+psych::describe(summary_stats$SES)
 ```
+
+From this output, we can see that the average and median SE hover around 0.14 to 0.16.
 
 What is the average sample size after data loss due to incorrect answers? 
 
-```{r}
-summary(summary_stats$samplesize)
-original_SS = as.data.frame(tapply(ELPmaster$RT, ELPmaster$Stimulus, length))
-colnames(original_SS) = "original_ss"
-original_SS$stim = rownames(original_SS)
+```{r sample_size}
+##figure out the original sample sizes
+original_SS <- ELPmaster %>% #data frame
+  count(Stimulus) #count up the sample size
 
-summary_stats = merge(summary_stats, original_SS, by = "stim")
+##add the original sample size to the data frame
+summary_stats <- merge(summary_stats, original_SS, by = "Stimulus")
 
-summary(summary_stats$samplesize)
-sd(summary_stats$samplesize)
+##original sample size average
+psych::describe(summary_stats$n)
 
-mean(summary_stats$samplesize/summary_stats$original_ss)
+##reduced sample size
+psych::describe(summary_stats$samplesize)
+
+##percent retained
+psych::describe(summary_stats$samplesize/summary_stats$n)
 ```
 
-Let's look at only the data above the magic *N* = 30:
+We can see that on average, the ELP usually contained ~32 participants per word. The reduced sample size was about ~27 per word with an average retention rate of 84%. There are many weird words in the ELP (see the histogram of retention rates below, creating a skewed distribution), so the median retention rate might be a better estimation of data loss at ~ .91.
 
-```{r}
-mean(summary_stats$SES[summary_stats$samplesize >=30])
-sd(summary_stats$SES[summary_stats$samplesize >=30])
+```{r hist}
+##show the retention rates
+hist(summary_stats$samplesize/summary_stats$n)
 ```
 
-So, potentially, we could set the SE of the ZScore for an item to .02 as our metric of when to stop collecting data OR some X participant stopping point. 
+Let's look at only the data above the magic *N* = 30 for the best estimate of what level of SE to use as our point at which we would consider the parameter accurate: 
 
-If I assume these data to be stable, what actual sample size would that be? 
+```{r n30plus}
+##average SE for words with at least n = 30
+summary_stats %>% #data frame
+  filter(samplesize >=30) %>% #filter out lower sample sizes
+  summarize(avgSES = mean(SES)) #create the mean
+```
 
-```{r}
-#pick 100 random words with sample sizes above 30
-targets = sample(summary_stats$stim[summary_stats$samplesize>30], 100, replace = F)
+So, potentially, we could set the SE of the ZScore for an item to .12 as our metric of when to stop collecting data. 
 
-samplesize_values = seq(5, 200, 5)
-sim_table = matrix(NA, nrow = length(samplesize_values), ncol = length(targets))
-colnames(sim_table) = targets
-sim_table = as.data.frame(sim_table)
-sim_table$sample_size = samplesize_values
+If I assume these data to be representative, what actual sample size might approximate SE = 0.12? 
 
+```{r sim_elp, warning = F, messages = F}
+##pick 100 random words with sample sizes above 30
+targets <- summary_stats %>% #data frame
+  filter(samplesize >=30) %>%  #filter out sample sizes
+  select(Stimulus) %>% #select only stimuli
+  sample_n(100) %>% #get 100
+  pull(Stimulus) #return a vector
+targets <- as.character(targets)
+
+##this section creates a sequence of sample sizes to estimate at
+#5, 10, 15, etc. 
+samplesize_values <- seq(5, 200, 5) 
+#create a blank table for us to save the values in 
+sim_table <- matrix(NA, nrow = length(samplesize_values), ncol = length(targets))
+#create column names based on the current targets
+colnames(sim_table) <- targets
+#make it a data frame
+sim_table <- as.data.frame(sim_table)
+#add those sample size values 
+sim_table$sample_size <- samplesize_values
+
+##loop over all the target words randomly selected
 for (i in 1:length(targets)){
   
+  ##loop over sample sizes
   for (q in 1:length(samplesize_values)){
     
-    temp = sample(ELPcorrect$ZScore[ ELPcorrect$Stimulus == targets[i]], 
-                  samplesize_values[q], replace = T)
+    ##temporarily save a data frame of Zscores 
+    temp <- ELPcorrect %>% #data frame
+      filter(Stimulus == targets[i])  %>% #pick rows that are the current target word
+      sample_n(samplesize_values[q], replace = T) %>% #select sample size number of rows 
+      pull(ZScore)
     
-    sim_table[sim_table$sample_size == samplesize_values[q] , targets[i]] = sd(temp)/length(temp)
-    
-  }
+    #put that in the table
+    #find the sample size row and column we are working with
+    #calculate SE sd/sqrt(n)
+    sim_table[sim_table$sample_size == samplesize_values[q], targets[i]] <- sd(temp)/sqrt(length(temp))
   
-}
+    }
+  
+  }
 ```
 
 Obviously, each run of this exercise will be different because it's randomly selected, but let's graph the data:
 
-```{r}
+```{r graph_SE, warning=F, message=F}
+##load some libraries
 library(ggplot2)
 library(reshape)
 
-sim_table_long = melt(sim_table, 
+##melt down the data into long format for ggplot2
+sim_table_long <- melt(sim_table, 
                       id = "sample_size")
 
+##create a graph of the sample size by SE value
 ggplot(sim_table_long, aes(sample_size, value)) + 
   theme_classic() +
   xlab("Sample Size") +
   ylab("Standard Error") + 
   geom_point() + 
-  geom_hline(yintercept = .02)
+  geom_hline(yintercept = .12) #mark here .12 occurs
 ```
 
-At what point are they all at or below .02? 
+At what point is 95% of the data below .12? Using 95% as a high power criterion:
 
-```{r}
-tapply(sim_table_long$value, sim_table_long$sample_size, function(x){ sum(x<=.02)})
+```{r power}
+##calculate the percent below .12
+sim_table_long %>% #data frame
+  group_by(sample_size) %>% #group by sample size
+  summarize(Percent_Below = sum(value<=.12)) %>%  #is it less than .12
+  print(n = nrow(.))
 ```
 
-Looks like the answer is ~ 100 give or take different variations of this random sampling. 
+Looks like the answer is ~ 90-100 give or take different variations of this random sampling. This estimate would be the minimum sample size per word.
 
-## A look at the Semantic Priming Project 
+## Examining The Semantic Priming Project (SPP)
 
-```{r}
-SPPmaster = read.csv("subjectdataLDT.csv")
+In the SPP, participants were given a lexical decision task with a priming cue word first. So, the task is the same as the ELP, however, they first saw a prime word, then made the lexical decision on the target word. We are using the already z-scored data for the response latencies. In the SPP, they provide an item level analysis of the average z-score priming (i.e., average z-score for the target word in the related minus unrelated condition). However, that data does not allow you to estimate when the priming estimate would be stable, as it's just one value for each prime-target pair. As mentioned in the full proposal, we would expect priming to be variable - it should be predicted by other psycholinguistic variables. Therefore, we should aim to create stable estimates for the z-scored response latencies in both the related and unrelated conditions. This aim would allow us to know that at least the response latencies are reliable, and variability in the final subtracted priming can be investigated for predictors. 
 
-#drop the nonwords and non accurate, this has been z scored
-SPPcorrect = subset(SPPmaster, target.ACC > 0 & lexicality == 1)
-SPPcorrect$target = droplevels(SPPcorrect$target)
+```{r spp_data}
+##read in the SPP data
+SPPmaster <- read.csv("subjectdataLDT.csv")
+
+##drop the nonwords and non accurate, this has already been z scored
+SPPcorrect <- subset(SPPmaster, #data frame
+                     target.ACC > 0 & lexicality == 1) #make sure it's accurate and lexicality = 1 are real words 
+
+##drop all unused stimuli and words
+SPPcorrect$target <- droplevels(SPPcorrect$target)
 
 #remove NAs from the Z target
-SPPcorrect = subset(SPPcorrect, !is.na(Ztarget.RT))
+SPPcorrect <- subset(SPPcorrect, #data frame
+                     !is.na(Ztarget.RT)) #is not NA, only keep non-NA values
 ```
 
-What is the average SE for our standardized RTs for priming, rather than lexical decision time?
+What is the average SE for our standardized response latencies for words in a priming task (rather than no priming lexical decision)?
 
-```{r}
-#summarized data
-summary_stats = as.data.frame(tapply(SPPcorrect$Ztarget.RT, SPPcorrect$target, function(x){sd(x)/length(x)}))
-colnames(summary_stats) = "SES"
-summary_stats$samplesize = tapply(SPPcorrect$Ztarget.RT, SPPcorrect$target, length)
-summary_stats$stim = rownames(summary_stats)
+```{r summary_stats2}
+##summarize the dataframe to see what the average SE is
+summary_stats <- SPPcorrect %>% #data frame
+  select(Ztarget.RT, target) %>% #pick the columns
+  group_by(target) %>% #put together the stimuli
+  summarize(SES = sd(Ztarget.RT)/sqrt(length(Ztarget.RT)), samplesize = length(Ztarget.RT)) #create SE and the sample size for below 
 
-summary(summary_stats$SES)
-sd(summary_stats$SES, na.rm = T)
+##give descriptives of the SEs
+psych::describe(summary_stats$SES)
 ```
-
-Priming levels have a lot less variability than the response latencies but the sample sizes are much larger. 
+In this study, we are examining a smaller subset of words (1661) rather that a much larger set of English (40,000+). These words are likely to be similar to the words chosen for the study - because they are mostly somewhat frequent nouns, the variability in response latency is less than above. Here, we see it's about 0.06 for the standard error.
 
 What is the average sample size after data loss due to incorrect answers? 
 
-```{r}
-summary(summary_stats$samplesize)
-original_SS = as.data.frame(tapply(SPPmaster$Ztarget.RT, SPPmaster$target, length))
-colnames(original_SS) = "original_ss"
-original_SS$stim = rownames(original_SS)
+```{r sample_size2}
+##figure out the original sample sizes
+original_SS <- SPPmaster %>% #data frame
+  count(target) #count up the sample size
 
-summary_stats = merge(summary_stats, original_SS, by = "stim")
+##add the original sample size to the data frame
+summary_stats <- merge(summary_stats, original_SS, by = "target")
 
-summary(summary_stats$samplesize)
-sd(summary_stats$samplesize)
+##original sample size average
+psych::describe(summary_stats$n)
 
-mean(summary_stats$samplesize/summary_stats$original_ss)
+##reduced sample size
+psych::describe(summary_stats$samplesize) 
+
+##percent retained
+psych::describe(summary_stats$samplesize/summary_stats$n)
 ```
 
-Losing a lot less data - but the sample stimulus size is also restricted here (40K in the ELP, 1.6K in the SPP - also the words are less weird). The sample sizes are a lot larger as well - which is likely why the SE on the variability is smaller. 
+The original sample sizes are approximately ~256 participants, which is *n* = 32 for each of the eight possible conditions in the study. We are not going to use these type of conditions, so the entire data was collapsed for this analysis. The data retention is much better in this analysis at around 96%-97%, likely because the dataset includes much less "weird" words. 
 
-Note that the sample sizes are larger because I am collapsing over the entire design of SSP - which had ~ 32 participants in each condition. 
+```{r hist2}
+##show the retention rates
+hist(summary_stats$samplesize/summary_stats$n)
+```
 
-Let's try examining where SE hits the .004 mark, which is the average of SE in this data.  
+If I assume these data to be representative, what actual sample size would SE = 0.06? 
 
-If I assume these data to be stable, what actual sample size would that be? 
+```{r sim_spp, warning = F, messages = F}
+##pick 100 random words as all sample sizes are above 30
+targets <- summary_stats %>% #data frame
+  select(target) %>% #select only stimuli
+  sample_n(100) %>% #get 100
+  pull(target) #make it a vector
+targets <- as.character(targets)
 
-```{r}
-#pick 100 random words all sample sizes are above 100 anyway 
-targets = sample(summary_stats$stim, 100, replace = F)
+##this section creates a sequence of sample sizes to estimate at
+#5, 10, 15, etc. 
+samplesize_values <- seq(5, 200, 5) 
+#create a blank table for us to save the values in 
+sim_table <- matrix(NA, nrow = length(samplesize_values), ncol = length(targets))
+#create column names based on the current targets
+colnames(sim_table) <- targets
+#make it a data frame
+sim_table <- as.data.frame(sim_table)
+#add those sample size values 
+sim_table$sample_size <- samplesize_values
 
-samplesize_values = seq(5, 500, 5)
-sim_table = matrix(NA, nrow = length(samplesize_values), ncol = length(targets))
-colnames(sim_table) = targets
-sim_table = as.data.frame(sim_table)
-sim_table$sample_size = samplesize_values
-
+##loop over all the target words randomly selected
 for (i in 1:length(targets)){
   
+  ##loop over sample sizes
   for (q in 1:length(samplesize_values)){
     
-    temp = sample(SPPcorrect$Ztarget.RT[ SPPcorrect$target == targets[i]], 
-                  samplesize_values[q], replace = T)
+    ##temporarily save a data frame of Zscores 
+    temp <- SPPcorrect %>% #data frame
+      filter(target == targets[i])  %>% #pick rows that are the current target word
+      sample_n(samplesize_values[q], replace = T) %>% #select sample size number of rows 
+      pull(Ztarget.RT)
     
-    sim_table[sim_table$sample_size == samplesize_values[q] , targets[i]] = sd(temp)/length(temp)
-    
-  }
+    #put that in the table
+    #find the sample size row and column we are working with
+    #calculate SE sd/sqrt(n)
+    sim_table[sim_table$sample_size == samplesize_values[q], targets[i]] <- sd(temp)/sqrt(length(temp))
   
-}
+    }
+  
+  }
 ```
 
 A graph of this data:
 
-```{r}
-sim_table_long = melt(sim_table, 
+```{r graph_SE2, warning=F, message=F}
+##melt down the data into long format for ggplot2
+sim_table_long <- melt(sim_table, 
                       id = "sample_size")
 
+##create a graph of the sample size by SE value
 ggplot(sim_table_long, aes(sample_size, value)) + 
   theme_classic() +
   xlab("Sample Size") +
   ylab("Standard Error") + 
   geom_point() + 
-  geom_hline(yintercept = .004)
-
+  geom_hline(yintercept = .06) #mark here .06 occurs
 ```
 
-At what point are they all at or below .004? 
+At what point is 95% of the data below .06? Using 95% as a high power criterion:
 
-```{r}
-tapply(sim_table_long$value, sim_table_long$sample_size, function(x){ sum(x<=.004)})
+```{r power2}
+##calculate the percent below .12
+sim_table_long %>% #data frame
+  group_by(sample_size) %>% #group by sample size
+  summarize(Percent_Below = sum(value<=.12)) %>%  #is it less than .12
+  print(n = nrow(.))
 ```
 
-The answer here is probably the upper level of unreasonable for feasibility sake - that's ~ 335 participants X 2 because we have to have 335 related pairs and 335 unrelated pairs to do the subtraction. 
+Here the required number of participants per word would be ~120 participants. 
 
-If I think it's ok that priming is a little bit more variable:
+## Summary and Suggestions
 
-```{r}
-tapply(sim_table_long$value, sim_table_long$sample_size, function(x){ sum(x<=.005)})
+In each session, participants would judge multiple words. In the SPP, each person judged 800 words per session, while in the ELP included 1,200 words per session. This facet should be considering for timing of the experiment, especially fatigue. 
 
-tapply(sim_table_long$value, sim_table_long$sample_size, function(x){ sum(x<=.006)})
+Estimation formulas:
 
-tapply(sim_table_long$value, sim_table_long$sample_size, function(x){ sum(x<=.007)})
+```{r estimates}
+##how many words per session
+##go a little less since it's a boring task
+words_per_session <- 600
 
-tapply(sim_table_long$value, sim_table_long$sample_size, function(x){ sum(x<=.008)})
+##words are assigned 25% related, 25% unrelated, 50% nonwords
+##this keeps relatedness to 50/50 for real words, which is what SPP did
+##also keeps yes/no lexical decision to 50/50
+##also remember you will rate the prime word but it doesn't count
+usable_words_per_session <- words_per_session * .50 / 2 
+
+##each word has to collected in both unrelated and related conditions
+conditions <- 2
+
+##estimated participants from above 
+lower_est <- 100
+upper_est <- 120
+
+##data loss conservative estimate from ELP, since online studies may have more
+data_loss <- .9 
+
+##target word goal
+#number of targets we wish to achieve
+number_of_targets <- 1000
+
+##total estimated participants
+((1/data_loss) * #incorporate data loss
+  lower_est * #number of participants needed for each word
+  conditions * #number of conditions each word has to appear in 
+  number_of_targets) / #number of total words
+  usable_words_per_session
+
+##total estimated participants
+((1/data_loss) * #incorporate data loss
+  upper_est * #number of participants needed for each word
+  conditions * #number of conditions each word has to appear in 
+  number_of_targets) / #number of total words
+  usable_words_per_session 
 ```
 
-So, the answer is somewhere between 200 and 335 for priming levels - remembering that the word has to be shown in two conditions, an unrelated and a related condition. Best guess at sample size would then be a minimum of 100 to know that lexical decision response latency has settled with a stopping criteria of .02 for the SE for the lexical decision time and .004 for the priming time, with an upper limit of 200 for sample size across both conditions - as I think the 300+ might be a lofty stretch goal outside of what PSA should be asked to collect. 
+The formula works as follows: We will incorporate expected data loss by multiplying by a percent increase one would need to accomodate that loss. This score is then multiplied by the estimates of persons per word for accuracy in parameter estimation. Each word must be seen in the related and unrelated condition, and these are not repeated within-subjects, therefore, we will double the estimate for the two conditions. This number is then multiplied by a desired number of target words, and 1000 words is the goal for this study. That value is divided by the useable number of words per session from a participant. In priming studies, you need to control for relatedness proprotions by keeping a balance of unrelated and related target words, as well as the balance of yes/no answers for the lexical decision task. Therefore, they are allocated at 25% for each of the real words (related/unrelated) and 50% for non-words. Therefore, each participant only provides 50% useable words, which is then further divided by two to only capture target words (i.e., ignoring prime words). 
 
-I'd probably propose building a website much like https://smallworldofwords.org/en/project/home to help collect the data allowing us to continue to collect even after the goal is reached with planned data release dates. 
+The estimates indicate that between 1482 and 1778 participants would be necessary to gather 1000 real word targets in related and unrelated conditions for the study. This value would be the target sample size for each of the languages in the study. 
 
-We would need to figure out how many words each participant could judge before knowing a total estimation of participants - take for example, that the SPP had participants complete two sessions of 400+ words each. 
 
-(100 participants X 2 conditions (related/unrelated)) / 400 words per person = .5 (min)
-
-(200 participants X 2 conditions (related/unrelated)) / 400 words per person = 1 (max) if we use 200 as a stopping criteria
-
-(300 participants X 2 conditions (related/unrelated)) / 400 words per person = 1.5 (max) if we use 300 as a stopping criteria
-
-.5 * 1000 words * (1/.95) data loss potential = 526 min
-
-1 * 1000 words * (1/.95) data loss potential = 1052 max
-
-1.5 * 1000 words * (1/.95) data loss potential = 1579 max 
-
-Per language! 
 
 
 
