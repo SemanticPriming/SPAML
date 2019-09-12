@@ -3,8 +3,8 @@ title: "Parameter Estimation"
 author: "Erin M. Buchanan"
 date: "8/21/2019"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -442,7 +442,7 @@ The estimates indicate that between 741 and 4741 participants would be necessary
 
 ## Stopping Procedure
 
-Because the variability of the sample size is quite large, we will employ a stopping  procedure to ensure participant time and effort is maximized and data collection is minimized. The minimum sample size will be 50 participants per concept or 741 total participants. After 50 participants, each concept will be examined for standard error, and data collection for that concept will be stopped when the standard error reaches and average of the two metrics found in this exploration or 0.09. This process will be automated online and checked in a daily subroutine. From the current simulations, this approximates to 
+Because the variability of the sample size is quite large, we will employ a stopping procedure to ensure participant time and effort is maximized and data collection is minimized. The minimum sample size will be 50 participants per concept or 741 total participants. After 50 participants, each concept will be examined for standard error, and data collection for that concept will be stopped when the standard error reaches and average of the two metrics found in this exploration or 0.09. This process will be automated online and checked in a daily subroutine. From the current simulations, this approximates to 100 to 150 participants per word, and 1482 to 2223 participants per language total.  
 
 ```{r power_9}
 ##calculate the percent below .09
@@ -457,4 +457,43 @@ sim_table_long2 %>% #data frame
   summarize(Percent_Below = sum(value<=.09)) %>%  #is it less than .12
   print(n = nrow(.))
 ```
+
+```{r estimates}
+##how many words per session
+##go a little less since it's a boring task
+words_per_session <- 600
+
+##words are assigned 25% related, 25% unrelated, 50% nonwords
+##this keeps relatedness to 50/50 for real words, which is what SPP did
+##also keeps yes/no lexical decision to 50/50
+##also remember you will rate the prime word but it doesn't count
+usable_words_per_session <- words_per_session * .50 / 2 
+
+##each word has to collected in both unrelated and related conditions
+conditions <- 2
+
+##estimated participants from above 
+lower_est <- 100
+upper_est <- 150
+
+##data loss conservative estimate from ELP, since online studies may have more
+data_loss <- .9 
+
+##target word goal
+#number of targets we wish to achieve
+number_of_targets <- 1000
+
+##total estimated participants
+((1/data_loss) * #incorporate data loss
+  lower_est * #number of participants needed for each word
+  conditions * #number of conditions each word has to appear in 
+  number_of_targets) / #number of total words
+  usable_words_per_session
+
+##total estimated participants
+((1/data_loss) * #incorporate data loss
+  upper_est * #number of participants needed for each word
+  conditions * #number of conditions each word has to appear in 
+  number_of_targets) / #number of total words
+  usable_words_per_session 
 ```
