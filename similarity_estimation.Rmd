@@ -1,0 +1,14 @@
+---
+title: "Similarity Calculation"
+author: "Erin M. Buchanan"
+date: "9/12/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r import_data, warnings = F, messages = F}
+
+```
