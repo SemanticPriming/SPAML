@@ -61,7 +61,14 @@ NL_subset <- NL_freq %>% #data frame
 ##will work with the university to see if we have
 ##a service already for this type of task 
 #library(translateR)
+
+write.csv(US_subset, "US_subset_words.csv", row.names = F)
+write.csv(NL_subset, "NL_subset_words.csv", row.names = F)
 ```
 
+In this next step, I worked with the online interface for snaut using the pre-defined English lemma space. Spaces are currently only avaliable for English and Dutch built with the SUBTLEX projects. Their paper for the snaut model details the creation of the space, and the model can be created from the raw SUBTLEX files. If accepted, we will work with the original authors (Pawel Mandera and Marc Brysbaert) to create models for all the target languages. The SUBTLEX data is partially online in raw form (i.e., complete movie subtitles, rather than summary statsitics), but the lines of the data are currently scrambled for copyright purposes. If SUBTLEX data cannot be made avaliable, we will use semantic feature production norms or free association norms to create highly similar pairs across languages and translate into languages that do not have feature production or free association norms avaliable. 
 
+```{r}
+
+```
 
