@@ -2,7 +2,9 @@
 title: "Data Processing"
 author: "Erin M. Buchanan"
 date: "9/14/2019"
-output: pdf_document
+output:
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -20,4 +22,8 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 master <- read.csv("exp_demo/example_data.csv")
 ```
 
-## 
+## Trial Data
+
+## Item Data
+
+## Priming Data
