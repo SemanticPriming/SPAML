@@ -3,12 +3,17 @@ title: "Similarity Calculation"
 author: "Erin M. Buchanan"
 date: "9/12/2019"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 ```
 
 First, words will be selected from the SUBTLEX projects that are:
@@ -18,7 +23,7 @@ First, words will be selected from the SUBTLEX projects that are:
   
 We are using the `Lg10WF` data - this is the log of the word frequency from the subtitle counts. Using log of frequency is advantageous, we can compare the frequencies across datasets, as well as deal with the large skew present in frequency data.  
 
-```{r import_data, warnings = F, messages = F}
+```{r import_data, warning = F, message = F}
 ##Library to read excel files
 library(readxl)
 
