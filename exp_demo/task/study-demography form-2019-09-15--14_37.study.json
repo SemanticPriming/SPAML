@@ -1,0 +1,210 @@
+{
+  "components": {
+    "1": {
+      "id": "1",
+      "type": "lab.html.Page",
+      "items": {
+        "rows": [
+          [
+            {
+              "type": "text",
+              "title": "Please tell us a little about yourself"
+            }
+          ],
+          [
+            {
+              "required": true,
+              "type": "radio",
+              "options": [
+                {
+                  "label": "male",
+                  "coding": "male"
+                },
+                {
+                  "label": "female",
+                  "coding": "female"
+                },
+                {
+                  "label": "other",
+                  "coding": "other"
+                },
+                {
+                  "label": "prefer not to say",
+                  "coding": "notsay"
+                }
+              ],
+              "label": "Please tell us your gender"
+            }
+          ],
+          [
+            {
+              "required": true,
+              "type": "input",
+              "label": "Which year were you born?",
+              "help": "Please enter a four-digit year",
+              "attributes": {
+                "type": "number",
+                "min": "1920",
+                "max": "2010"
+              }
+            }
+          ],
+          [
+            {
+              "required": true,
+              "type": "radio",
+              "options": [
+                {
+                  "label": "None",
+                  "coding": "none"
+                },
+                {
+                  "label": "Elementary School",
+                  "coding": "elementary school"
+                },
+                {
+                  "label": "High School",
+                  "coding": "high school"
+                },
+                {
+                  "label": "College, Bachelor's degree or equivalent",
+                  "coding": "college"
+                },
+                {
+                  "label": "Master's degree or equivalent",
+                  "coding": "master"
+                },
+                {
+                  "label": "Doctorate",
+                  "coding": "doctorate"
+                }
+              ],
+              "label": "Please tell us your education level"
+            }
+          ],
+          [
+            {
+              "required": true,
+              "type": "radio",
+              "options": [
+                {
+                  "label": "English",
+                  "coding": "english"
+                }
+              ],
+              "label": "What language is your native (first) language?"
+            }
+          ]
+        ]
+      },
+      "files": {
+        "rows": []
+      },
+      "parameters": {
+        "rows": [
+          [
+            {
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        ]
+      },
+      "responses": {
+        "rows": [
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "messageHandlers": {
+        "rows": [
+          [
+            {
+              "title": "",
+              "message": "",
+              "code": ""
+            }
+          ]
+        ]
+      },
+      "submitButtonText": "Continue →",
+      "submitButtonPosition": "right",
+      "title": "Demography form"
+    },
+    "root": {
+      "id": "root",
+      "title": "root",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "1"
+      ],
+      "parameters": {
+        "rows": [
+          [
+            {
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        ]
+      },
+      "plugins": [
+        {
+          "type": "lab.plugins.Metadata"
+        }
+      ],
+      "metadata": {
+        "title": "",
+        "description": "",
+        "repository": "",
+        "contributors": ""
+      }
+    }
+  },
+  "version": [
+    19,
+    1,
+    0
+  ],
+  "files": {
+    "files": {
+      "index.html": {
+        "content": "data:text/html,%3C!doctype%20html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%20%20%3Cmeta%20charset%3D%22utf-8%22%3E%0A%20%20%3Ctitle%3EExperiment%3C%2Ftitle%3E%0A%20%20%3C!--%20viewport%20setup%20--%3E%0A%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1%22%3E%0A%20%20%3C!--%20lab.js%20library%20and%20experiment%20code%20--%3E%0A%20%20%24%7B%20header%20%7D%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%3C!--%20If%20you'd%20rather%20have%20a%20container%20with%20a%20fixed%20width%0A%20%20%20%20%20%20%20and%20variable%20height%2C%20try%20removing%20the%20fullscreen%20class%20below%20--%3E%0A%20%20%3Cdiv%20class%3D%22container%20fullscreen%22%20data-labjs-section%3D%22main%22%3E%0A%20%20%20%20%3Cmain%20class%3D%22content-vertical-center%20content-horizontal-center%22%3E%0A%20%20%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20%20%20%3Ch2%3ELoading%20Experiment%3C%2Fh2%3E%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20experiment%20is%20loading%20and%20should%20start%20in%20a%20few%20seconds%3C%2Fp%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%3C%2Fmain%3E%0A%20%20%3C%2Fdiv%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A",
+        "source": "library"
+      },
+      "style.css": {
+        "content": "data:text/css,%2F*%20Please%20define%20your%20custom%20styles%20here%20*%2F",
+        "source": "library"
+      }
+    },
+    "bundledFiles": {
+      "lib/lab.js": {
+        "type": "application/javascript"
+      },
+      "lib/lab.js.map": {
+        "type": "text/plain"
+      },
+      "lib/lab.fallback.js": {
+        "type": "application/javascript"
+      },
+      "lib/lab.legacy.js": {
+        "type": "application/javascript"
+      },
+      "lib/lab.legacy.js.map": {
+        "type": "text/plain"
+      },
+      "lib/lab.css": {
+        "type": "text/css"
+      },
+      "lib/loading.svg": {
+        "type": "image/svg+xml"
+      }
+    }
+  }
+}
