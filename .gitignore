@@ -1,7 +1,7 @@
 # Specific files in folders
 *.udpipe
-/stimuli/data
-/stimuli/frequency
+/stimuli/data/*/
+/stimuli/frequency/*/
 
 # Word files
 ~$*.docx

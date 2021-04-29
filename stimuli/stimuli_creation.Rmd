@@ -1,0 +1,288 @@
+---
+title: "SPAML Stimuli Creation"
+author: "Erin M. Buchanan"
+date: "4/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Libraries
+
+```{r messages = F, warning = F}
+library(rio, quietly = T)
+library(tm, quietly = T)
+library(udpipe, quietly = T)
+library(plyr, quietly = T)
+library(R.utils, quietly = T)
+library(NCmisc, quietly = T)
+library(dplyr, quietly = T)
+options(timeout=2000)
+```
+
+# User Defined Set Up
+
+```{r}
+root <- ""
+dir.create(paste0(root, 'data/', language), showWarnings = F)
+dir.create(paste0(root, 'frequency/', language), showWarnings = F)
+```
+
+# Function Set Up
+
+## Importing Data Function
+
+This section imports the subtitles data from the Open Subtitles website and breaks down the files into smaller components for processing. 
+
+```{r}
+import_subs <- function (language, root){
+  
+  con <-
+  paste0("http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.",
+         language, ".gz")
+  
+  
+  # goes into root / data / language
+  download.file(
+  con,
+  destfile = paste0(root, "data/", language, '/', language, ".gz"),
+  mode = "wb")
+  
+  text_file <-
+  gunzip(
+    filename = paste0(root, "data/", language, '/', language, ".gz"),
+    destname = paste0(root, "data/", language, '/', language, ".txt"))
+  
+  file.split(
+  text_file,
+  size = 100000,
+  same.dir = TRUE,
+  verbose = TRUE,
+  suf = "part",
+  #win = .Platform$OS.type == 'windows'
+  win = FALSE)
+  
+  rm(con, text_file)
+}
+```
+
+## Calculate Frequency
+
+This section calculates the word frequency given the subtitles by looping over each small subtitle file to create the part of speech and token/lemma. 
+
+```{r}
+# input model language, which file to process 
+calc_frequency <- function(root, model, file) {
+  
+  data.text <-
+    readLines(
+      file,
+      encoding = "UTF-8")
+  
+  # Preprocess text
+  data.text <- tolower(data.text)
+  data.text <- tm::stripWhitespace(data.text)
+  
+  # Annotate the Text
+  annotate <- udpipe(data.text, model, parser = "none") 
+  annotated_df <- as.data.frame(annotate)
+  
+  # Subset columns
+  annotated_df <- annotated_df[ , c("token", "lemma", "upos", "xpos")]
+  
+  # Frequency of unique combinations
+  count_df <- plyr::count(annotated_df, colnames(annotated_df))
+  
+  file <- gsub(root, "data/", "frequency/", file, fixed = T)
+  file <- paste0(file, "_frequency.csv")
+  
+  export(count_df, file = file)
+  
+  cat(file)
+}
+```
+
+## Run the Files
+
+```{r}
+calc_all_files <- function (root, language, model_language) {
+  
+  file_names <-
+  list.files(
+    path = paste0(root, "data/", language),
+    pattern = paste0(language, "_part"),
+    full.names = T)
+
+  for (current_file in file_names) {
+    calc_frequency(root, model_language, current_file)
+  }
+  
+}
+```
+
+## Create Final Results
+
+```{r}
+#final_freq <- function (root, language, )
+
+#ja_freq <- import_list("frequency/ja/ja_archive.zip", rbind = T)
+#ja_summary <- ja_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
+```
+
+
+
+
+
+
+
+
+# Examine the Results
+
+## Afrikaans
+
+In this section, we will see if the results are comparable from the subs2vec project to leverage already processed data. 
+
+```{r}
+# our processed data
+af_freq <- import("frequency/af/af_partaa.txt_frequency.csv")
+af_summary <- af_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
+pop_pos <- af_freq[order(af_freq$freq, decreasing = T) , ]
+pop_pos <- pop_pos[!duplicated(pop_pos$token) , ]
+af_summary <- merge(af_summary, pop_pos[ , c("token", "upos") ], by = "token")
+
+
+# subs2vec data
+af_subs <- import("https://hdl.handle.net/1839/a1a82d13-be9d-4024-bbfe-90de100fcd3c@download")
+colnames(af_subs) <- c("token", "freq")
+af_subs_summary <- udpipe(af_subs$token, model_language, parser = "none")
+af_subs_summary <- af_subs_summary[ , c("token", "upos")]
+af_subs_summary <- merge(af_subs_summary, af_subs, by = "token")
+
+af_together <- merge(af_summary, af_subs_summary, by = "token", all = T)
+```
+
+How many overall matches do we get?
+
+```{r}
+nrow(af_together)
+nrow(na.omit(af_together))
+
+af_all <- na.omit(af_together)
+
+# take out less than two letters
+af_all <- subset(af_all, nchar(af_all$token) > 2)
+nrow(af_all)
+```
+
+How correlated are the top most frequent words?
+
+```{r}
+cor(af_all$calc_freq, af_all$freq)
+plot(af_all$calc_freq, af_all$freq)
+
+MSE <- af_all$calc_freq - af_all$freq
+
+mean(MSE)
+sd(MSE)
+hist(MSE)
+```
+
+How much do the parts of speech match?
+
+```{r}
+words_want <- c("NOUN", "VERB", "ADJ", "ADV", "PRON", "PROPN", "INTJ", "NUM")
+sum(af_all$upos.x == af_all$upos.y) / nrow(af_all)
+
+af_just_want <- subset(af_all, upos.x %in% words_want | upos.y %in% words_want)
+sum(af_just_want$upos.x == af_just_want$upos.y) / nrow(af_all)
+
+table("estimated" = af_all$upos.y, "calculated" = af_all$upos.x)
+```
+
+Would we pick the same approximate words?
+
+```{r}
+top_calculated <- subset(af_all, upos.x %in% words_want)
+top_calculated <- top_calculated$token[order(top_calculated$calc_freq, decreasing = T)][1:5000]
+
+top_estimated <- subset(af_all, upos.y %in% words_want)
+top_estimated <- top_estimated$token[order(top_estimated$freq, decreasing = T)][1:5000]
+
+sum(top_estimated %in% top_calculated) / 5000
+```
+
+
+
+
+## Japanese
+
+```{r}
+# our processed data
+ja_freq <- import_list("frequency/ja/ja_archive.zip", rbind = T)
+ja_summary <- ja_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
+pop_pos <- ja_freq[order(ja_freq$freq, decreasing = T) , ]
+pop_pos <- pop_pos[!duplicated(pop_pos$token) , ]
+ja_summary <- merge(ja_summary, pop_pos[ , c("token", "upos") ], by = "token")
+
+
+# subs2vec data
+ja_subs <- import("https://hdl.handle.net/1839/a1a82d13-be9d-4024-bbfe-90de100fcd3c@download")
+colnames(ja_subs) <- c("token", "freq")
+ja_subs_summary <- udpipe(ja_subs$token, model_language, parser = "none")
+ja_subs_summary <- ja_subs_summary[ , c("token", "upos")]
+ja_subs_summary <- merge(ja_subs_summary, ja_subs, by = "token")
+
+ja_together <- merge(ja_summary, ja_subs_summary, by = "token", all = T)
+```
+
+How many overall matches do we get?
+
+```{r}
+nrow(ja_together)
+nrow(na.omit(ja_together))
+
+ja_all <- na.omit(ja_together)
+
+# take out less than two letters
+ja_all <- subset(ja_all, nchar(ja_all$token) > 2)
+nrow(ja_all)
+```
+
+How correlated are the top most frequent words?
+
+```{r}
+cor(ja_all$calc_freq, ja_all$freq)
+plot(ja_all$calc_freq, ja_all$freq)
+
+MSE <- ja_all$calc_freq - ja_all$freq
+
+mean(MSE)
+sd(MSE)
+hist(MSE)
+```
+
+How much do the parts of speech match?
+
+```{r}
+words_want <- c("NOUN", "VERB", "ADJ", "ADV", "PRON", "PROPN", "INTJ", "NUM")
+sum(ja_all$upos.x == ja_all$upos.y) / nrow(ja_all)
+
+ja_just_want <- subset(ja_all, upos.x %in% words_want | upos.y %in% words_want)
+sum(ja_just_want$upos.x == ja_just_want$upos.y) / nrow(ja_all)
+
+table("estimated" = ja_all$upos.y, "calculated" = ja_all$upos.x)
+```
+
+Would we pick the same approximate words?
+
+```{r}
+top_calculated <- subset(ja_all, upos.x %in% words_want)
+top_calculated <- top_calculated$token[order(top_calculated$calc_freq, decreasing = T)][1:5000]
+
+top_estimated <- subset(ja_all, upos.y %in% words_want)
+top_estimated <- top_estimated$token[order(top_estimated$freq, decreasing = T)][1:5000]
+
+sum(top_estimated %in% top_calculated) / 5000
+```
