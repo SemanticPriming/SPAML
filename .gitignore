@@ -1,4 +1,9 @@
-#Word files
+# Specific files in folders
+*.udpipe
+/stimuli/data
+/stimuli/frequency
+
+# Word files
 ~$*.docx
 
 # History files
