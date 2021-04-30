@@ -25,9 +25,7 @@ options(timeout=2000)
 # User Defined Set Up
 
 ```{r}
-root <- ""
-dir.create(paste0(root, 'data/', language), showWarnings = F)
-dir.create(paste0(root, 'frequency/', language), showWarnings = F)
+root <- paste0(getwd(), "/")
 ```
 
 # Function Set Up
@@ -38,6 +36,9 @@ This section imports the subtitles data from the Open Subtitles website and brea
 
 ```{r}
 import_subs <- function (language, root){
+  
+  dir.create(paste0(root, 'data/', language), showWarnings = F)
+  dir.create(paste0(root, 'frequency/', language), showWarnings = F)
   
   con <-
   paste0("http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.",
@@ -62,9 +63,10 @@ import_subs <- function (language, root){
   verbose = TRUE,
   suf = "part",
   #win = .Platform$OS.type == 'windows'
-  win = FALSE)
+  win = TRUE)
   
   rm(con, text_file)
+  
 }
 ```
 
@@ -74,11 +76,11 @@ This section calculates the word frequency given the subtitles by looping over e
 
 ```{r}
 # input model language, which file to process 
-calc_frequency <- function(root, model, file) {
+calc_frequency <- function(root, model_language, file_name) {
   
   data.text <-
     readLines(
-      file,
+      file_name,
       encoding = "UTF-8")
   
   # Preprocess text
@@ -86,7 +88,7 @@ calc_frequency <- function(root, model, file) {
   data.text <- tm::stripWhitespace(data.text)
   
   # Annotate the Text
-  annotate <- udpipe(data.text, model, parser = "none") 
+  annotate <- udpipe(data.text, model_language, parser = "none") 
   annotated_df <- as.data.frame(annotate)
   
   # Subset columns
@@ -95,12 +97,12 @@ calc_frequency <- function(root, model, file) {
   # Frequency of unique combinations
   count_df <- plyr::count(annotated_df, colnames(annotated_df))
   
-  file <- gsub(root, "data/", "frequency/", file, fixed = T)
-  file <- paste0(file, "_frequency.csv")
+  file_name <- gsub("data/", "frequency/", file_name, fixed = T)
+  file_name <- paste0(file_name, "_frequency.csv")
   
-  export(count_df, file = file)
+  export(count_df, file = file_name)
   
-  cat(file)
+  cat(file_name)
 }
 ```
 
@@ -132,8 +134,33 @@ calc_all_files <- function (root, language, model_language) {
 ```
 
 
+# Languages
+
+## Import the Overall File
+
+```{r}
+overall_languages <- import("stimuli_options.xlsx")
+overall_languages <- subset(overall_languages, udpipe_model != "NA")
+```
+
+if they are summarized, use that
+if they are not create our own
+if they are less than 50k add in wiki 
+
+## zh_tw Mandarin 
+
+```{r}
+import_subs(language = "zh_tw", 
+            root = root)
+calc_all_files(root = root, 
+               language = "zh_tw",
+               model_language = overall_languages$udpipe_model[overall_languages$language_code == "zh_tw"])
+```
 
 
+## Afrikaans
+
+## 
 
 
 
