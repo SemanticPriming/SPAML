@@ -19,6 +19,9 @@ library(plyr, quietly = T)
 library(R.utils, quietly = T)
 library(NCmisc, quietly = T)
 library(dplyr, quietly = T)
+library(tm, quietly = T)
+library(lsa, quietly = T)
+library(quanteda, quietly = T)
 options(timeout=2000)
 ```
 
@@ -26,13 +29,16 @@ options(timeout=2000)
 
 ```{r}
 root <- paste0(getwd(), "/")
+dir.create(paste0(root, 'similarity/'), showWarnings = F)
+word_choice <- c("NOUN", "VERB", "ADJ", "ADV")
+en_special_list <- c("don", "didn", "wouldn", "couldn", "isn", "wasn", "shouldn", "haven", "ain", "gonna", "gotta", "doesn", "wanna")
 ```
 
 # Function Set Up
 
 ## Importing Data Function
 
-This section imports the subtitles data from the Open Subtitles website and breaks down the files into smaller components for processing. 
+This section imports the subtitles data from the Open Subtitles website and breaks down the files into smaller components for processing. The second function imports information from the `subs2vec` project to leverage preprocessed data. 
 
 ```{r}
 import_subs <- function (language, root){
@@ -67,6 +73,23 @@ import_subs <- function (language, root){
   
   rm(con, text_file)
   
+}
+
+import_other <- function(language, what) {
+  
+  dir.create(paste0(root, 'data/', language), showWarnings = F)
+  dir.create(paste0(root, 'frequency/', language), showWarnings = F)
+  
+  con <-
+  paste0(overall_languages[overall_languages$language_code == language , what ])
+  
+  
+  # goes into root / data / language
+  download.file(
+  con,
+  destfile = paste0(root, "data/", language, '/', language, ".zip"),
+  mode = "wb")
+
 }
 ```
 
@@ -124,7 +147,7 @@ calc_all_files <- function (root, language, model_language) {
 }
 ```
 
-## Create Final Results
+## Create Summarized Frequency Results
 
 ```{r}
 #final_freq <- function (root, language, )
@@ -133,6 +156,112 @@ calc_all_files <- function (root, language, model_language) {
 #ja_summary <- ja_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
 ```
 
+## Create Similarity from subs2vec
+
+```{r}
+calc_sim <- function(words, vec){
+  # reduce the data
+  vec <- subset(vec, V1 %in% words)
+  rownames(vec) <- vec$V1
+  vec <- vec[ , -1]
+  vec <- t(vec)
+  similarity <- cosine(as.matrix(vec))
+  return(similarity)
+}
+
+# credit to Brenton Wiernik
+top_n <- function(similarity, n) {
+  n_cols <- ncol(similarity)
+  final_sims <- data.frame(
+    cue = vector("character", n * n_cols),
+    target = vector("character", n * n_cols),
+    cosine = vector("numeric", n * n_cols)
+  )
+  columns <- colnames(similarity)
+  rows <- rownames(similarity)
+  indices <- apply(similarity, 2, function(x) order(x, decreasing = TRUE)[seq_len(n)])
+  for (i in seq_len(n_cols)) {
+    final_sims[(i - 1) * n + 1:n,] <- list(
+      columns[i],
+      rows[indices[,i]],
+      similarity[indices[,i],i]
+    )
+  }
+  return(final_sims)
+}
+```
+
+## Pseudoword Generator 
+
+```{r}
+# make up the fake words 
+get_fake <- function(wordlist){
+
+  bigrams <- as.data.frame(
+    table(char_ngrams(
+      unlist(tokens(wordlist, "character")), 
+      concatenator = "")))
+  
+  new_words <- rep(NA, length(wordlist))
+
+  for (i in 1:length(wordlist)){
+  
+  word <- wordlist[i]
+  # pick a random letter
+  num_replace <- sample(1:nchar(word), 1)
+  char_replace <- substr(word, num_replace, num_replace)
+
+    # if the first letter
+    if (num_replace == 1){
+      
+      examine_replace <- substr(word, num_replace + 1, num_replace + 1)
+      poss_replace <- sample(substr(
+        bigrams$Var1[grepl(paste0(examine_replace, "$"), bigrams$Var1)], 1, 1),1)
+      
+      broken_down <- unlist(strsplit(word, split = ""))
+      broken_down[num_replace] <- poss_replace
+      new_words[i] <- paste(broken_down, collapse = "")
+      
+      # if the last letter
+    } else if (num_replace == nchar(word)){
+      
+      examine_replace <- substr(word, num_replace - 1, num_replace - 1)
+      poss_replace <- sample(substr(
+        bigrams$Var1[grepl(paste0("^", examine_replace), bigrams$Var1)], 2, 2),1)
+
+      broken_down <- unlist(strsplit(word, split = ""))
+      broken_down[num_replace] <- poss_replace
+      new_words[i] <- paste(broken_down, collapse = "")
+      
+      # if anything else 
+    } else {
+      
+      examine_replace_before <- substr(word, num_replace - 1, num_replace - 1)
+      examine_replace_after <- substr(word, num_replace + 1, num_replace + 1)
+      
+      intersection <- intersect(substr(bigrams$Var1[
+        grepl(paste0("^", examine_replace_before), 
+              bigrams$Var1)], 2, 2),
+        substr(bigrams$Var1[
+          grepl(paste0(examine_replace_after, "$"), 
+                bigrams$Var1)], 1, 1))
+      
+      if (length(intersection) > 0 ){
+        poss_replace <- sample(intersection, 1)
+      } else { poss_replace <- sample(substr(bigrams$Var1[
+        grepl(paste0("^", examine_replace_before), 
+              bigrams$Var1)], 2, 2), 1)
+        }
+      
+      broken_down <- unlist(strsplit(word, split = ""))
+      broken_down[num_replace] <- poss_replace
+      new_words[i] <- paste(broken_down, collapse = "")
+    
+    }
+  }
+  return(new_words) 
+}
+```
 
 # Languages
 
@@ -142,6 +271,84 @@ calc_all_files <- function (root, language, model_language) {
 overall_languages <- import("stimuli_options.xlsx")
 overall_languages <- subset(overall_languages, udpipe_model != "NA")
 ```
+
+- All languages from OpenSubtitles have been filtered for only languages with models in `udpipe` for part of speech tagging. 
+- Is the language available on subs2vec? 
+  - Yes, use `import_other` to import the `subs_count` file.
+    - Does the language have 50,000 words?
+      - Yes, tag the language with `udpipe` and use the `subs_vec` file to calculate similarity.
+      - No, use `import_other` to import the `wiki_count` file.
+        - Tag both the `subs_count` and `wiki_count` and merge together.
+        - Use the `wiki_vec` file to calculate similarity. 
+  - No, use `import_subs` to import the OpenSubtitles.
+    - Use `udpipe` to tag the files and calculate frequency from that information. 
+    - Use the `subs2strudel` or `words2many` project to calculate similarity.  
+    
+- Other exclusions:
+  - Words must be three or more characters long
+  - Words must be listed in `word_choice`
+  - Stopwords will be excluded, if they are available for a language 
+
+## en English
+
+```{r eval = F}
+language <- "en"
+
+# download other on subs count
+import_other(language = "en", what = "subs_count")
+
+# import subs to check size
+en_subs <- import(paste0(root, "data/", language, "/", language, ".zip"))
+
+# check size
+nrow(en_subs)
+
+# tag with udpipe
+en_tagged <- udpipe(en_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "en"], parser = "none")
+
+# exclusions
+en_tagged <- subset(en_tagged, nchar(en_tagged$lemma) >= 3)
+en_tagged <- subset(en_tagged, upos %in% word_choice)
+en_tagged <- subset(en_tagged, !(lemma %in% tm::stopwords(kind = "SMART")))
+en_tagged <- subset(en_tagged, !(lemma %in% en_special_list))
+en_tagged <- subset(en_tagged, !(grepl("[0-9]", en_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(en_subs) <- c("sentence", "freq")
+en_final <- merge(en_tagged, en_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+en_final <- en_final[order(en_final$freq, decreasing = TRUE) , ]
+en_final <- en_final[!duplicated(en_final$lemma), ]
+
+# grab top 10K
+en_top <- en_final[1:10000 , ]
+
+# find similarity
+import_other(language = "en", what = "subs_vec")
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, "data/", language, '/', language, ".zip"),
+             exdir = paste0(root, "data/", language))
+file.rename(paste0(root, "data/", language, "/subs.", language, ".1e6.vec"),
+            paste0(root, "data/", language, "/subs.", language, ".1e6.txt"))
+en_vec <- read.table(paste0(root, "data/", language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+en_sim <- calc_sim(en_top$lemma, en_vec)
+en_top_sim <- top_n(en_sim, 6)
+en_top_sim <- subset(en_top_sim, cue!=target)
+
+# create fake words
+en_top_sim$fake_cue <- get_fake(en_top_sim$cue)
+en_top_sim$fake_target <- get_fake(en_top_sim$target)
+
+write.csv(en_top_sim, paste0(root, "similarity/", language, "_sims.csv"))
+```
+
+
 
 if they are summarized, use that
 if they are not create our own
