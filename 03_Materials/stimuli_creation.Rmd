@@ -316,7 +316,7 @@ af_wiki <- import(paste0(root, "data/", language, "/", language, ".zip"))
 nrow(af_wiki)
 
 # tag with udpipe
-af_tagged <- udpipe(af_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "af"], parser = "none")
+af_tagged <- udpipe(af_wiki$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "af"], parser = "none")
 
 # exclusions
 af_tagged <- subset(af_tagged, nchar(af_tagged$lemma) >= 3)
