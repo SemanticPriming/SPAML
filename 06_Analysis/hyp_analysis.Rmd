@@ -1,0 +1,93 @@
+---
+title: "Analyze the Data"
+author: "Erin M. Buchanan"
+date: "Last Update `r Sys.Date()`"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(psych)
+library(reshape)
+library(tidyr)
+library(ggplot2)
+```
+
+## Import the Files
+
+```{r}
+targets_only <- read.csv("../05_Data/output_data/prime_data.csv")
+targets_only_no2.5 <- read.csv("../05_Data/output_data/prime_data_no2.5.csv")
+targets_only_no3.0 <- read.csv("../05_Data/output_data/prime_data_no3.0.csv")
+```
+
+## Merge All Languages
+
+This demonstration shows processing of an English related demonstration. Each language will be stored separately and processed separately. We will then combine the languages together for Hypothesis testing. For this demonstration of the code, we will simply show English. This process will be repeated for data without 2.5 z-score trials and 3.0 z-score trials. 
+
+```{r}
+# merge all targets_only files
+targets_only$lang <- "English"
+targets_all <- targets_only # for this demo 
+```
+
+## Hypothesis 1
+
+Is semantic priming a non-zero effect? To assess this research question, we will examine the confidence interval of the semantic priming effect to determine if the lower limit of the confidence interval is greater than zero. Therefore, Hypothesis 1 is for semantic facilitation with faster response latencies for related words in relation to unrelated words. We will provide estimates for all languages and each language individually. 
+
+```{r}
+# calculate all languages together
+all_language <- psych::describe(targets_all$avgZ_prime)
+all_language
+
+# lower
+all_language$mean - qt(.025, nrow(targets_all), lower.tail = F)*all_language$se
+
+# upper
+all_language$mean + qt(.025, nrow(targets_all), lower.tail = F)*all_language$se
+
+# by language
+each_language <- psych::describeBy(targets_all$avgZ_prime, group = targets_all$lang)
+each_language
+
+# lower
+each_language$mean - qt(.025, nrow(targets_all), lower.tail = F)*each_language$se
+
+# upper
+each_language$mean + qt(.025, nrow(targets_all), lower.tail = F)*each_language$se
+```
+
+## Hypothesis 2
+
+How does the semantic priming effect vary across languages? We will compare the confidence intervals of the semantic priming effect for each language to determine if they overlap. The effect will be considered equal when confidence intervals overlap between languages and different when they do not overlap. In Hypothesis 2, we do not pick a direction for the effects, but expect differences between languages. 
+
+For this hypothesis, we will use the analyses provided above, but interpret the confidence intervals. We will create visualizations for this hypothesis. 
+
+```{r}
+# example plot
+ggplot(targets_all, aes(lang, avgZ_prime)) +
+  stat_summary(fun.data = mean_cl_normal, 
+               geom = "errorbar", 
+               width = .2, 
+               position = position_dodge(width = .2)) + 
+  stat_summary(fun = mean,
+               geom = "bar", 
+               position = position_dodge()) + 
+  xlab("Language") + 
+  ylab("Z Score Priming") +
+  theme_classic()
+
+```
+

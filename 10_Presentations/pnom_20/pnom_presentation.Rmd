@@ -82,7 +82,7 @@ knitr::include_graphics("pub_rates.png")
 
 ```{r read_data, echo = F}
 #read in the ELP data
-ELPmaster <- read.csv("./ldt_raw/ELPDecisionData.csv")
+ELPmaster <- read.csv("../04_Power/ELPDecisionData.csv")
 
 #use the ave function to create a z-score of each participant
 #they only did one session 

@@ -1,9 +1,8 @@
 ---
-title: "Parameter Estimation"
+title: "Power using Accuracy in Parameter Estimation"
 author: "Erin M. Buchanan"
-date: "8/21/2019"
+date: "Last Updated: `r Sys.Date()`"
 output:
-  word_document: default
   pdf_document: default
 ---
 
@@ -94,14 +93,14 @@ colnames(fullData) <- c('Trial', 'Type', 'Accuracy', 'RT', 'Stimulus', 'Particip
 
 fullData <- fullData[fullData$Accuracy %in% c(0,1),] #Some accuracy values are not or one. Remove them.
 
-write.csv(fullData, 'ldt_raw/ELPDecisionData.csv', row.names = FALSE)
+write.csv(fullData, 'ELPDecisionData.csv', row.names = FALSE)
 ```
 
 Another issue to consider is that each participant likely has a somewhat arbitrary response latency factor. Usually, you would control for within-subject variance with a random intercept value in a multilevel type analysis, but another suggestion has been to standardize each participant's responses within a data collection session (Faust et al., 1999).
 
 ```{r read_data}
 #read in the ELP data
-ELPmaster <- read.csv("./ldt_raw/ELPDecisionData.csv")
+ELPmaster <- read.csv("ELPDecisionData.csv")
 
 #use the ave function to create a z-score of each participant
 #they only did one session 
@@ -113,7 +112,7 @@ ELPmaster$ZScore <- ave(ELPmaster$RT, #dependent variable
 head(ELPmaster)
 ```
 
-Let's first remove all the inaccurate responses (i.e., they decided word/nonsense word incorrectly) and non-words because they do not represent the target words we wish to collect. 
+Let's first remove all the inaccurate responses (i.e., they decided word/nonsense word incorrectly) and non-words because they do not represent the target words we wish to collect.
 
 ```{r remove_data}
 #exclude 0 accuracy for incorrect
@@ -123,7 +122,8 @@ ELPcorrect <- subset(ELPmaster, #data frame
                      Accuracy > 0 & Type > 0) #logical rules to subset by
 
 #droplevels simply excludes the non-word labels that we just dropped
-ELPcorrect$Stimulus <- droplevels(ELPcorrect$Stimulus)
+#ELPcorrect$Stimulus <- droplevels(ELPcorrect$Stimulus)
+#read.csv doesn't import as factors anymore 
 ```
 
 What is the average standard error for our standardized response latencies?
@@ -274,7 +274,7 @@ SPPcorrect <- subset(SPPmaster, #data frame
                      target.ACC > 0 & lexicality == 1) #make sure it's accurate and lexicality = 1 are real words 
 
 ##drop all unused stimuli and words
-SPPcorrect$target <- droplevels(SPPcorrect$target)
+#SPPcorrect$target <- droplevels(SPPcorrect$target)
 
 #remove NAs from the Z target
 SPPcorrect <- subset(SPPcorrect, #data frame

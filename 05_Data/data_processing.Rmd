@@ -1,10 +1,9 @@
 ---
 title: "Data Processing"
 author: "Erin M. Buchanan"
-date: "9/14/2019"
+date: "Last Update `r Sys.Date()`"
 output:
   pdf_document: default
-  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -16,12 +15,21 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 })
 ```
 
+## Libraries
+
+```{r}
+library(dplyr)
+library(psych)
+library(reshape)
+library(tidyr)
+library(ggplot2)
+```
+
 ## Data Processing Example
 
 ```{r import_data}
-library(dplyr)
 ##import overall dataset
-master <- read.csv("../exp_demo/input_data/example_data_task.csv", stringsAsFactors = F)
+master <- read.csv("input_data/example_data.csv", stringsAsFactors = F)
 
 ##create demographics only data
 demos <- master %>% #data frame
@@ -92,7 +100,7 @@ real_trials <- merge(demos[ , demo_columns ],
                      all = T)
 
 ##write out raw trial data 
-write.csv(real_trials, "../exp_demo/output_data/trial_data.csv", row.names = F)
+write.csv(real_trials, "output_data/trial_data.csv", row.names = F)
 ```
 
 ## Item Data
@@ -103,7 +111,7 @@ The descriptive statistics calculated from the trial level data will then be inc
 
 ```{r merge_stimuli}
 ##read in stimuli data
-stimuli_data <- read.csv("../exp_demo/example_stimuli.csv", stringsAsFactors = F)
+stimuli_data <- read.csv("../04_Procedure/example_stimuli.csv", stringsAsFactors = F)
 
 ##create item level data by summarizing
 item_data <- real_trials %>% #data frame
@@ -124,7 +132,7 @@ No data will be excluded for being a potential outlier, however, we will recomme
 ##example outlier exclusion for Z > 2.5
 ##same as above with one extra filter
 item_data_2.5 <- real_trials %>% 
-  filter(abs(Z_RT) <= 2.5) %>% #take out trials above 2.5 z scores
+  filter(abs(Z_RT) < 2.5) %>% #take out trials above 2.5 z scores
   group_by(word_real) %>% 
   summarize(avgRT = mean(duration, na.rm = T),
             avgZ_RT = mean(Z_RT, na.rm = T),
@@ -138,6 +146,25 @@ colnames(item_data_2.5)[-1] <- paste("Z2.5_", colnames(item_data_2.5)[-1], sep =
 
 #merge together two z score calculations
 item_data_combo <- merge(item_data, item_data_2.5, by = "word_real")
+
+##example outlier exclusion for Z > 3.0
+##same as above with one extra filter
+item_data_3.0 <- real_trials %>% 
+  filter(abs(Z_RT) < 3.0) %>% #take out trials above 2.5 z scores
+  group_by(word_real) %>% 
+  summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)), 
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT)))) %>% 
+  filter(!is.na(word_real))
+
+##make new column names for these calculations
+colnames(item_data_3.0)[-1] <- paste("Z3.0_", colnames(item_data_3.0)[-1], sep = "")
+
+#merge together two z score calculations
+item_data_combo <- merge(item_data, item_data_2.5, by = "word_real")
+item_data_combo <- merge(item_data_combo, item_data_3.0, by = "word_real")
 ```
 
 For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values will be indicated because these values do not exist for nonwords. 
@@ -150,7 +177,7 @@ item_data_combo <- merge(item_data_combo,
                          by.y = "string")
 
 ##write out item level data 
-write.csv(item_data_combo, "../exp_demo/output_data/item_data.csv", row.names = F)
+write.csv(item_data_combo, "output_data/item_data.csv", row.names = F)
 ```
 
 ## Priming Data
@@ -174,7 +201,6 @@ trial_types <- stimuli_data %>% #data frame
   mutate(related_pair = paste(string, related, sep = "-")) %>%
   mutate(related_pair2 = paste(related, string, sep = "-"))
 
-library(reshape)
 ##subset out only the trial names and orders
 trial_types <- trial_types[ , grepl("pair", colnames(trial_types))]
 ##melt into long format
@@ -193,8 +219,6 @@ target_words <- subset(stimuli_data,
                        target == 1 & stim_type == "real", #target is yes (1, second word) and stimuli is real word 
                        select = "string")$string
 
-##this thing is crazy
-library(tidyr)
 ##take the real pairs of only target words
 targets_only <- real_pairs %>% 
   ##filter out the priming words and nonwords
@@ -214,6 +238,46 @@ targets_only <- real_pairs %>%
   mutate(avgRT_prime = avgRT_unrelated_pair - avgRT_related_pair) %>% 
   mutate(avgZ_prime = avgZ_RT_unrelated_pair - avgZ_RT_related_pair)
 
+## this process will be repeated for 2.5 and 3.0 z score outliers excluded
+targets_only_no2.5 <- real_pairs %>% 
+  ##filter out the priming words and nonwords
+  filter(word_real %in% target_words) %>% 
+  ##filter out z score outliers
+  filter(Z_RT < 2.50) %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_real, variable) %>% 
+  ##create average scores by condition 
+  summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)), 
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT)))) %>% 
+  ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "variable",
+              values_from = c("avgRT", "avgZ_RT", "samplesize", "seRT", "seZ_RT")) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated_pair - avgRT_related_pair) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated_pair - avgZ_RT_related_pair)
+
+targets_only_no3.0 <- real_pairs %>% 
+  ##filter out the priming words and nonwords
+  filter(word_real %in% target_words) %>% 
+  ##filter out z score outliers
+  filter(Z_RT < 3.00) %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_real, variable) %>% 
+  ##create average scores by condition 
+  summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)), 
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT)))) %>% 
+  ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "variable",
+              values_from = c("avgRT", "avgZ_RT", "samplesize", "seRT", "seZ_RT")) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated_pair - avgRT_related_pair) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated_pair - avgZ_RT_related_pair)
 ```
 
 The similarity scores calculated during stimuli selection will be included, as well as other popular measures of similarity if they are available in that language.
@@ -225,10 +289,18 @@ targets_only <- merge(targets_only,
                        by.x = "word_real", 
                        by.y = "string")
 
+targets_only_no2.5 <- merge(targets_only_no2.5, 
+                            stimuli_data[ , c("string", "cosine.Buchanan", "fsg.SWOW")], 
+                            by.x = "word_real", 
+                            by.y = "string")
+
+targets_only_no3.0 <- merge(targets_only_no3.0, 
+                            stimuli_data[ , c("string", "cosine.Buchanan", "fsg.SWOW")], 
+                            by.x = "word_real", 
+                            by.y = "string")
+
 ##write out the priming data 
-write.csv(targets_only, "../exp_demo/output_data/prime_data.csv", row.names = F)
+write.csv(targets_only, "output_data/prime_data.csv", row.names = F)
+write.csv(targets_only_no2.5, "output_data/prime_data_no2.5.csv", row.names = F)
+write.csv(targets_only_no3.0, "output_data/prime_data_no3.0.csv", row.names = F)
 ```
-
-
-
-

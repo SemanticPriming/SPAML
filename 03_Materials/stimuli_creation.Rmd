@@ -1,7 +1,7 @@
 ---
 title: "SPAML Stimuli Creation"
 author: "Erin M. Buchanan"
-date: "4/27/2021"
+date: "Last Update `r Sys.Date()`"
 output: html_document
 ---
 
@@ -131,6 +131,8 @@ calc_frequency <- function(root, model_language, file_name) {
 
 ## Run the Files
 
+This section examines all the files in the subtitle data and combines their results together.
+
 ```{r}
 calc_all_files <- function (root, language, model_language) {
   
@@ -150,10 +152,7 @@ calc_all_files <- function (root, language, model_language) {
 ## Create Summarized Frequency Results
 
 ```{r}
-#final_freq <- function (root, language, )
 
-#ja_freq <- import_list("frequency/ja/ja_archive.zip", rbind = T)
-#ja_summary <- ja_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
 ```
 
 ## Create Similarity from subs2vec
@@ -269,7 +268,12 @@ get_fake <- function(wordlist){
 
 ```{r}
 overall_languages <- import("stimuli_options.xlsx")
+# total open subs
+nrow(overall_languages)
+
 overall_languages <- subset(overall_languages, udpipe_model != "NA")
+# total we can do
+nrow(overall_languages)
 ```
 
 - All languages from OpenSubtitles have been filtered for only languages with models in `udpipe` for part of speech tagging. 
@@ -288,6 +292,74 @@ overall_languages <- subset(overall_languages, udpipe_model != "NA")
   - Words must be three or more characters long
   - Words must be listed in `word_choice`
   - Stopwords will be excluded, if they are available for a language 
+
+## af Afrikaans
+
+```{r eval = F}
+language <- "af"
+
+# download other on subs count
+import_other(language = "af", what = "subs_count")
+
+# import subs to check size
+af_subs <- import(paste0(root, "data/", language, "/", language, ".zip"))
+
+# check size
+nrow(af_subs)
+
+# less than 50k so use wiki for frequency
+import_other(language = "af", what = "wiki_count")
+
+af_wiki <- import(paste0(root, "data/", language, "/", language, ".zip"))
+
+# check size
+nrow(af_wiki)
+
+# tag with udpipe
+af_tagged <- udpipe(af_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "af"], parser = "none")
+
+# exclusions
+af_tagged <- subset(af_tagged, nchar(af_tagged$lemma) >= 3)
+af_tagged <- subset(af_tagged, upos %in% word_choice)
+af_tagged <- subset(af_tagged, !(lemma %in% tm::stopwords(kind = "SMART")))
+af_tagged <- subset(af_tagged, !(lemma %in% af_special_list))
+af_tagged <- subset(af_tagged, !(grepl("[0-9]", af_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(af_subs) <- c("sentence", "freq")
+af_final <- merge(af_tagged, af_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+af_final <- af_final[order(af_final$freq, decreasing = TRUE) , ]
+af_final <- af_final[!duplicated(af_final$lemma), ]
+
+# grab top 10K
+af_top <- af_final[1:10000 , ]
+
+# find similarity
+import_other(language = "af", what = "subs_vec")
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, "data/", language, '/', language, ".zip"),
+             exdir = paste0(root, "data/", language))
+file.rename(paste0(root, "data/", language, "/subs.", language, ".1e6.vec"),
+            paste0(root, "data/", language, "/subs.", language, ".1e6.txt"))
+af_vec <- read.table(paste0(root, "data/", language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+af_sim <- calc_sim(af_top$lemma, af_vec)
+af_top_sim <- top_n(af_sim, 6)
+af_top_sim <- subset(af_top_sim, cue!=target)
+
+# create fake words
+af_top_sim$fake_cue <- get_fake(af_top_sim$cue)
+af_top_sim$fake_target <- get_fake(af_top_sim$target)
+
+write.csv(af_top_sim, paste0(root, "similarity/", language, "_sims.csv"))
+```
+
 
 ## en English
 
@@ -349,10 +421,6 @@ write.csv(en_top_sim, paste0(root, "similarity/", language, "_sims.csv"))
 ```
 
 
-
-if they are summarized, use that
-if they are not create our own
-if they are less than 50k add in wiki 
 
 ## zh_tw Mandarin 
 
