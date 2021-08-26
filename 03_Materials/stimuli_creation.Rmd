@@ -318,17 +318,19 @@ nrow(af_wiki)
 # tag with udpipe
 af_tagged <- udpipe(af_wiki$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "af"], parser = "none")
 
+# lower case
+af_tagged$lemma <- tolower(af_tagged$lemma)
+
 # exclusions
 af_tagged <- subset(af_tagged, nchar(af_tagged$lemma) >= 3)
 af_tagged <- subset(af_tagged, upos %in% word_choice)
-af_tagged <- subset(af_tagged, !(lemma %in% tm::stopwords(kind = "SMART")))
-af_tagged <- subset(af_tagged, !(lemma %in% af_special_list))
+af_tagged <- subset(af_tagged, !(lemma %in% stopwords(language = "af", source = "stopwords-iso")))
 af_tagged <- subset(af_tagged, !(grepl("[0-9]", af_tagged$sentence)))
 
 # merge frequency back into tagged list
 # merge by sentence so one to one match
-colnames(af_subs) <- c("sentence", "freq")
-af_final <- merge(af_tagged, af_subs, by = "sentence", all.x = T)
+colnames(af_wiki) <- c("sentence", "freq")
+af_final <- merge(af_tagged, af_wiki, by = "sentence", all.x = T)
 
 # eliminate duplicates by lemma
 af_final <- af_final[order(af_final$freq, decreasing = TRUE) , ]
@@ -338,15 +340,21 @@ af_final <- af_final[!duplicated(af_final$lemma), ]
 af_top <- af_final[1:10000 , ]
 
 # find similarity
-import_other(language = "af", what = "subs_vec")
+import_other(language = "af", what = "wiki_vec")
 
 # load similarity vec
 utils::unzip(zipfile = paste0(root, "data/", language, '/', language, ".zip"),
              exdir = paste0(root, "data/", language))
-file.rename(paste0(root, "data/", language, "/subs.", language, ".1e6.vec"),
-            paste0(root, "data/", language, "/subs.", language, ".1e6.txt"))
-af_vec <- read.table(paste0(root, "data/", language, "/subs.", language, ".1e6.txt"), 
+file.rename(paste0(root, "data/", language, "/wiki.", language, ".1e6.vec"),
+            paste0(root, "data/", language, "/wiki.", language, ".1e6.txt"))
+af_vec <- read.table(paste0(root, "data/", language, "/wiki.", language, ".1e6.txt"), 
                      quote="\"")
+
+# lower case
+af_vec$V1 <- tolower(af_vec$V1)
+
+# eliminate duplicates 
+af_vec <- subset(af_vec, !duplicated(V1))
 
 # calculate similarity, take top 6, drop cosine of cue-target match
 af_sim <- calc_sim(af_top$lemma, af_vec)
