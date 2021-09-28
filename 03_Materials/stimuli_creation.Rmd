@@ -22,13 +22,17 @@ library(dplyr, quietly = T)
 library(tm, quietly = T)
 library(lsa, quietly = T)
 library(quanteda, quietly = T)
-options(timeout=2000)
+library(data.table, quietly = T)
+library(purrr, quietly = T)
+options(timeout=6000)
+set.seed(5389253)
 ```
 
 # User Defined Set Up
 
 ```{r}
 root <- paste0(getwd(), "/")
+root <- "/Volumes/SPAML Backup/"
 dir.create(paste0(root, 'similarity/'), showWarnings = F)
 word_choice <- c("NOUN", "VERB", "ADJ", "ADV")
 en_special_list <- c("don", "didn", "wouldn", "couldn", "isn", "wasn", "shouldn", "haven", "ain", "gonna", "gotta", "doesn", "wanna")
@@ -41,44 +45,9 @@ en_special_list <- c("don", "didn", "wouldn", "couldn", "isn", "wasn", "shouldn"
 This section imports the subtitles data from the Open Subtitles website and breaks down the files into smaller components for processing. The second function imports information from the `subs2vec` project to leverage preprocessed data. 
 
 ```{r}
-import_subs <- function (language, root){
-  
-  dir.create(paste0(root, 'data/', language), showWarnings = F)
-  dir.create(paste0(root, 'frequency/', language), showWarnings = F)
-  
-  con <-
-  paste0("http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.",
-         language, ".gz")
-  
-  
-  # goes into root / data / language
-  download.file(
-  con,
-  destfile = paste0(root, "data/", language, '/', language, ".gz"),
-  mode = "wb")
-  
-  text_file <-
-  gunzip(
-    filename = paste0(root, "data/", language, '/', language, ".gz"),
-    destname = paste0(root, "data/", language, '/', language, ".txt"))
-  
-  file.split(
-  text_file,
-  size = 100000,
-  same.dir = TRUE,
-  verbose = TRUE,
-  suf = "part",
-  #win = .Platform$OS.type == 'windows'
-  win = TRUE)
-  
-  rm(con, text_file)
-  
-}
-
 import_other <- function(language, what) {
   
-  dir.create(paste0(root, 'data/', language), showWarnings = F)
-  dir.create(paste0(root, 'frequency/', language), showWarnings = F)
+  dir.create(paste0(root, what, '/', language), showWarnings = F)
   
   con <-
   paste0(overall_languages[overall_languages$language_code == language , what ])
@@ -87,72 +56,10 @@ import_other <- function(language, what) {
   # goes into root / data / language
   download.file(
   con,
-  destfile = paste0(root, "data/", language, '/', language, ".zip"),
+  destfile = paste0(root, what, '/', language, "/", language, ".zip"),
   mode = "wb")
 
 }
-```
-
-## Calculate Frequency
-
-This section calculates the word frequency given the subtitles by looping over each small subtitle file to create the part of speech and token/lemma. 
-
-```{r}
-# input model language, which file to process 
-calc_frequency <- function(root, model_language, file_name) {
-  
-  data.text <-
-    readLines(
-      file_name,
-      encoding = "UTF-8")
-  
-  # Preprocess text
-  data.text <- tolower(data.text)
-  data.text <- tm::stripWhitespace(data.text)
-  
-  # Annotate the Text
-  annotate <- udpipe(data.text, model_language, parser = "none") 
-  annotated_df <- as.data.frame(annotate)
-  
-  # Subset columns
-  annotated_df <- annotated_df[ , c("token", "lemma", "upos", "xpos")]
-  
-  # Frequency of unique combinations
-  count_df <- plyr::count(annotated_df, colnames(annotated_df))
-  
-  file_name <- gsub("data/", "frequency/", file_name, fixed = T)
-  file_name <- paste0(file_name, "_frequency.csv")
-  
-  export(count_df, file = file_name)
-  
-  cat(file_name)
-}
-```
-
-## Run the Files
-
-This section examines all the files in the subtitle data and combines their results together.
-
-```{r}
-calc_all_files <- function (root, language, model_language) {
-  
-  file_names <-
-  list.files(
-    path = paste0(root, "data/", language),
-    pattern = paste0(language, "_part"),
-    full.names = T)
-
-  for (current_file in file_names) {
-    calc_frequency(root, model_language, current_file)
-  }
-  
-}
-```
-
-## Create Summarized Frequency Results
-
-```{r}
-
 ```
 
 ## Create Similarity from subs2vec
@@ -284,9 +191,7 @@ nrow(overall_languages)
       - No, use `import_other` to import the `wiki_count` file.
         - Tag both the `subs_count` and `wiki_count` and merge together.
         - Use the `wiki_vec` file to calculate similarity. 
-  - No, use `import_subs` to import the OpenSubtitles.
-    - Use `udpipe` to tag the files and calculate frequency from that information. 
-    - Use the `subs2strudel` or `words2many` project to calculate similarity.  
+  - No, use data provided by `words2many` project. 
     
 - Other exclusions:
   - Words must be three or more characters long
@@ -297,12 +202,13 @@ nrow(overall_languages)
 
 ```{r eval = F}
 language <- "af"
+what <- "subs_count"
 
 # download other on subs count
 import_other(language = "af", what = "subs_count")
 
 # import subs to check size
-af_subs <- import(paste0(root, "data/", language, "/", language, ".zip"))
+af_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
 
 # check size
 nrow(af_subs)
@@ -310,7 +216,9 @@ nrow(af_subs)
 # less than 50k so use wiki for frequency
 import_other(language = "af", what = "wiki_count")
 
-af_wiki <- import(paste0(root, "data/", language, "/", language, ".zip"))
+what <- "wiki_count"
+
+af_wiki <- import(paste0(root, what, "/",language, "/", language, ".zip"))
 
 # check size
 nrow(af_wiki)
@@ -342,12 +250,14 @@ af_top <- af_final[1:10000 , ]
 # find similarity
 import_other(language = "af", what = "wiki_vec")
 
+what <- "wiki_vec"
+
 # load similarity vec
-utils::unzip(zipfile = paste0(root, "data/", language, '/', language, ".zip"),
-             exdir = paste0(root, "data/", language))
-file.rename(paste0(root, "data/", language, "/wiki.", language, ".1e6.vec"),
-            paste0(root, "data/", language, "/wiki.", language, ".1e6.txt"))
-af_vec <- read.table(paste0(root, "data/", language, "/wiki.", language, ".1e6.txt"), 
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/wiki.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"))
+af_vec <- read.table(paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"), 
                      quote="\"")
 
 # lower case
@@ -365,20 +275,510 @@ af_top_sim <- subset(af_top_sim, cue!=target)
 af_top_sim$fake_cue <- get_fake(af_top_sim$cue)
 af_top_sim$fake_target <- get_fake(af_top_sim$target)
 
-write.csv(af_top_sim, paste0(root, "similarity/", language, "_sims.csv"))
+write.csv(af_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
 ```
 
+## ar Arabic
+
+```{r eval = F}
+language <- "ar"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ar", what = "subs_count")
+
+# import subs to check size
+ar_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ar_subs)
+
+# tag with udpipe
+ar_tagged <- udpipe(ar_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ar"], parser = "none")
+
+# lower case
+ar_tagged$lemma <- tolower(ar_tagged$lemma)
+
+# exclusions
+ar_tagged <- subset(ar_tagged, nchar(ar_tagged$lemma) >= 3)
+ar_tagged <- subset(ar_tagged, upos %in% word_choice)
+ar_tagged <- subset(ar_tagged, !(lemma %in% stopwords(language = "ar", source = "stopwords-iso")))
+ar_tagged <- subset(ar_tagged, !(grepl("[0-9]", ar_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ar_subs) <- c("sentence", "freq")
+ar_final <- merge(ar_tagged, ar_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ar_final <- ar_final[order(ar_final$freq, decreasing = TRUE) , ]
+ar_final <- ar_final[!duplicated(ar_final$lemma), ]
+
+# grab top 10K
+ar_top <- ar_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ar", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+ar_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ar_vec$V1 <- tolower(ar_vec$V1)
+
+# eliminate duplicates 
+ar_vec <- subset(ar_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ar_sim <- calc_sim(ar_top$lemma, ar_vec)
+ar_top_sim <- top_n(ar_sim, 6)
+ar_top_sim <- subset(ar_top_sim, cue!=target)
+
+# create fake words
+ar_top_sim$fake_cue <- get_fake(ar_top_sim$cue)
+ar_top_sim$fake_target <- get_fake(ar_top_sim$target)
+
+write.csv(ar_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## bg Bulgarian
+
+```{r eval = F}
+language <- "bg"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "bg", what = "subs_count")
+
+# import subs to check size
+bg_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(bg_subs)
+
+# tag with udpipe
+bg_tagged <- udpipe(bg_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "bg"], parser = "none")
+
+# lower case
+bg_tagged$lemma <- tolower(bg_tagged$lemma)
+
+# exclusions
+bg_tagged <- subset(bg_tagged, nchar(bg_tagged$lemma) >= 3)
+bg_tagged <- subset(bg_tagged, upos %in% word_choice)
+bg_tagged <- subset(bg_tagged, !(lemma %in% stopwords(language = "bg", source = "stopwords-iso")))
+bg_tagged <- subset(bg_tagged, !(grepl("[0-9]", bg_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(bg_subs) <- c("sentence", "freq")
+bg_final <- merge(bg_tagged, bg_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+bg_final <- bg_final[order(bg_final$freq, decreasing = TRUE) , ]
+bg_final <- bg_final[!duplicated(bg_final$lemma), ]
+
+# grab top 10K
+bg_top <- bg_final[1:10000 , ]
+
+# find similarity
+import_other(language = "bg", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+bg_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+bg_vec$V1 <- tolower(bg_vec$V1)
+
+# eliminate duplicates 
+bg_vec <- subset(bg_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+bg_sim <- calc_sim(bg_top$lemma, bg_vec)
+bg_top_sim <- top_n(bg_sim, 6)
+bg_top_sim <- subset(bg_top_sim, cue!=target)
+
+# create fake words
+bg_top_sim$fake_cue <- get_fake(bg_top_sim$cue)
+bg_top_sim$fake_target <- get_fake(bg_top_sim$target)
+
+write.csv(bg_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## ca Catalan
+
+```{r eval = F}
+language <- "ca"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ca", what = "subs_count")
+
+# import subs to check size
+ca_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ca_subs)
+
+# tag with udpipe
+ca_tagged <- udpipe(ca_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ca"], parser = "none")
+
+# lower case
+ca_tagged$lemma <- tolower(ca_tagged$lemma)
+
+# exclusions
+ca_tagged <- subset(ca_tagged, nchar(ca_tagged$lemma) >= 3)
+ca_tagged <- subset(ca_tagged, upos %in% word_choice)
+ca_tagged <- subset(ca_tagged, !(lemma %in% stopwords(language = "ca", source = "stopwords-iso")))
+ca_tagged <- subset(ca_tagged, !(grepl("[0-9]", ca_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ca_subs) <- c("sentence", "freq")
+ca_final <- merge(ca_tagged, ca_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ca_final <- ca_final[order(ca_final$freq, decreasing = TRUE) , ]
+ca_final <- ca_final[!duplicated(ca_final$lemma), ]
+
+# grab top 10K
+ca_top <- ca_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ca", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+ca_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ca_vec$V1 <- tolower(ca_vec$V1)
+
+# eliminate duplicates 
+ca_vec <- subset(ca_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ca_sim <- calc_sim(ca_top$lemma, ca_vec)
+ca_top_sim <- top_n(ca_sim, 6)
+ca_top_sim <- subset(ca_top_sim, cue!=target)
+
+# create fake words
+ca_top_sim$fake_cue <- get_fake(ca_top_sim$cue)
+ca_top_sim$fake_target <- get_fake(ca_top_sim$target)
+
+write.csv(ca_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## cs Czech
+
+```{r eval = F}
+language <- "cs"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "cs", what = "subs_count")
+
+# import subs to check size
+cs_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(cs_subs)
+
+# tag with udpipe
+cs_tagged <- udpipe(cs_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "cs"], parser = "none")
+
+# lower csse
+cs_tagged$lemma <- tolower(cs_tagged$lemma)
+
+# exclusions
+cs_tagged <- subset(cs_tagged, nchar(cs_tagged$lemma) >= 3)
+cs_tagged <- subset(cs_tagged, upos %in% word_choice)
+cs_tagged <- subset(cs_tagged, !(lemma %in% stopwords(language = "cs", source = "stopwords-iso")))
+cs_tagged <- subset(cs_tagged, !(grepl("[0-9]", cs_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(cs_subs) <- c("sentence", "freq")
+cs_final <- merge(cs_tagged, cs_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+cs_final <- cs_final[order(cs_final$freq, decreasing = TRUE) , ]
+cs_final <- cs_final[!duplicated(cs_final$lemma), ]
+
+# grab top 10K
+cs_top <- cs_final[1:10000 , ]
+
+# find similarity
+import_other(language = "cs", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+cs_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+cs_vec$V1 <- tolower(cs_vec$V1)
+
+# eliminate duplicates 
+cs_vec <- subset(cs_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+cs_sim <- calc_sim(cs_top$lemma, cs_vec)
+cs_top_sim <- top_n(cs_sim, 6)
+cs_top_sim <- subset(cs_top_sim, cue!=target)
+
+# create fake words
+cs_top_sim$fake_cue <- get_fake(cs_top_sim$cue)
+cs_top_sim$fake_target <- get_fake(cs_top_sim$target)
+
+write.csv(cs_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## da Danish
+
+```{r eval = F}
+language <- "da"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "da", what = "subs_count")
+
+# import subs to check size
+da_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(da_subs)
+
+# tag with udpipe
+da_tagged <- udpipe(da_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "da"], parser = "none")
+
+# lower case
+da_tagged$lemma <- tolower(da_tagged$lemma)
+
+# exclusions
+da_tagged <- subset(da_tagged, nchar(da_tagged$lemma) >= 3)
+da_tagged <- subset(da_tagged, upos %in% word_choice)
+da_tagged <- subset(da_tagged, !(lemma %in% stopwords(language = "da", source = "stopwords-iso")))
+da_tagged <- subset(da_tagged, !(grepl("[0-9]", da_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(da_subs) <- c("sentence", "freq")
+da_final <- merge(da_tagged, da_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+da_final <- da_final[order(da_final$freq, decreasing = TRUE) , ]
+da_final <- da_final[!duplicated(da_final$lemma), ]
+
+# grab top 10K
+da_top <- da_final[1:10000 , ]
+
+# find similarity
+import_other(language = "da", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+da_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+da_vec$V1 <- tolower(da_vec$V1)
+
+# eliminate duplicates 
+da_vec <- subset(da_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+da_sim <- calc_sim(da_top$lemma, da_vec)
+da_top_sim <- top_n(da_sim, 6)
+da_top_sim <- subset(da_top_sim, cue!=target)
+
+# create fake words
+da_top_sim$fake_cue <- get_fake(da_top_sim$cue)
+da_top_sim$fake_target <- get_fake(da_top_sim$target)
+
+write.csv(da_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## de German
+
+```{r eval = F}
+language <- "de"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "de", what = "subs_count")
+
+# import subs to check size
+de_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(de_subs)
+
+# tag with udpipe
+de_tagged <- udpipe(de_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "de"], parser = "none")
+
+# lower case
+de_tagged$lemma <- tolower(de_tagged$lemma)
+
+# exclusions
+de_tagged <- subset(de_tagged, nchar(de_tagged$lemma) >= 3)
+de_tagged <- subset(de_tagged, upos %in% word_choice)
+de_tagged <- subset(de_tagged, !(lemma %in% stopwords(language = "de", source = "stopwords-iso")))
+de_tagged <- subset(de_tagged, !(grepl("[0-9]", de_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(de_subs) <- c("sentence", "freq")
+de_final <- merge(de_tagged, de_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+de_final <- de_final[order(de_final$freq, decreasing = TRUE) , ]
+de_final <- de_final[!duplicated(de_final$lemma), ]
+
+# grab top 10K
+de_top <- de_final[1:10000 , ]
+
+# find similarity
+import_other(language = "de", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+de_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+de_vec$V1 <- tolower(de_vec$V1)
+
+# eliminate duplicates 
+de_vec <- subset(de_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+de_sim <- calc_sim(de_top$lemma, de_vec)
+de_top_sim <- top_n(de_sim, 6)
+de_top_sim <- subset(de_top_sim, cue!=target)
+
+# create fake words
+de_top_sim$fake_cue <- get_fake(de_top_sim$cue)
+de_top_sim$fake_target <- get_fake(de_top_sim$target)
+
+write.csv(de_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## el Greek
+
+```{r eval = F}
+language <- "el"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "el", what = "subs_count")
+
+# import subs to check size
+el_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(el_subs)
+
+# tag with udpipe
+el_tagged <- udpipe(el_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "el"], parser = "none")
+
+# lower case
+el_tagged$lemma <- tolower(el_tagged$lemma)
+
+# exclusions
+el_tagged <- subset(el_tagged, nchar(el_tagged$lemma) >= 3)
+el_tagged <- subset(el_tagged, upos %in% word_choice)
+el_tagged <- subset(el_tagged, !(lemma %in% stopwords(language = "el", source = "stopwords-iso")))
+el_tagged <- subset(el_tagged, !(grepl("[0-9]", el_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(el_subs) <- c("sentence", "freq")
+el_final <- merge(el_tagged, el_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+el_final <- el_final[order(el_final$freq, decreasing = TRUE) , ]
+el_final <- el_final[!duplicated(el_final$lemma), ]
+
+# grab top 10K
+el_top <- el_final[1:10000 , ]
+
+# find similarity
+import_other(language = "el", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+el_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+el_vec$V1 <- tolower(el_vec$V1)
+
+# eliminate duplicates 
+el_vec <- subset(el_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+el_sim <- calc_sim(el_top$lemma, el_vec)
+el_top_sim <- top_n(el_sim, 6)
+el_top_sim <- subset(el_top_sim, cue!=target)
+
+# create fake words
+el_top_sim$fake_cue <- get_fake(el_top_sim$cue)
+el_top_sim$fake_target <- get_fake(el_top_sim$target)
+
+write.csv(el_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
 
 ## en English
 
 ```{r eval = F}
 language <- "en"
+what <- "subs_count"
 
 # download other on subs count
 import_other(language = "en", what = "subs_count")
 
 # import subs to check size
-en_subs <- import(paste0(root, "data/", language, "/", language, ".zip"))
+en_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
 
 # check size
 nrow(en_subs)
@@ -408,12 +808,14 @@ en_top <- en_final[1:10000 , ]
 # find similarity
 import_other(language = "en", what = "subs_vec")
 
+what <- "subs_vec"
+
 # load similarity vec
-utils::unzip(zipfile = paste0(root, "data/", language, '/', language, ".zip"),
-             exdir = paste0(root, "data/", language))
-file.rename(paste0(root, "data/", language, "/subs.", language, ".1e6.vec"),
-            paste0(root, "data/", language, "/subs.", language, ".1e6.txt"))
-en_vec <- read.table(paste0(root, "data/", language, "/subs.", language, ".1e6.txt"), 
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+en_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
                      quote="\"")
 
 # calculate similarity, take top 6, drop cosine of cue-target match
@@ -425,174 +827,2625 @@ en_top_sim <- subset(en_top_sim, cue!=target)
 en_top_sim$fake_cue <- get_fake(en_top_sim$cue)
 en_top_sim$fake_target <- get_fake(en_top_sim$target)
 
-write.csv(en_top_sim, paste0(root, "similarity/", language, "_sims.csv"))
+write.csv(en_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## es Spanish
+
+```{r eval = F}
+language <- "es"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "es", what = "subs_count")
+
+# import subs to check size
+es_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(es_subs)
+
+# tag with udpipe
+es_tagged <- udpipe(es_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "es"], parser = "none")
+
+# lower case
+es_tagged$lemma <- tolower(es_tagged$lemma)
+
+# exclusions
+es_tagged <- subset(es_tagged, nchar(es_tagged$lemma) >= 3)
+es_tagged <- subset(es_tagged, upos %in% word_choice)
+es_tagged <- subset(es_tagged, !(lemma %in% stopwords(language = "es", source = "stopwords-iso")))
+es_tagged <- subset(es_tagged, !(grepl("[0-9]", es_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(es_subs) <- c("sentence", "freq")
+es_final <- merge(es_tagged, es_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+es_final <- es_final[order(es_final$freq, decreasing = TRUE) , ]
+es_final <- es_final[!duplicated(es_final$lemma), ]
+
+# grab top 10K
+es_top <- es_final[1:10000 , ]
+
+# find similarity
+import_other(language = "es", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+es_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+es_vec$V1 <- tolower(es_vec$V1)
+
+# eliminate duplicates 
+es_vec <- subset(es_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+es_sim <- calc_sim(es_top$lemma, es_vec)
+es_top_sim <- top_n(es_sim, 6)
+es_top_sim <- subset(es_top_sim, cue!=target)
+
+# create fake words
+es_top_sim$fake_cue <- get_fake(es_top_sim$cue)
+es_top_sim$fake_target <- get_fake(es_top_sim$target)
+
+write.csv(es_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## et Estonian
+
+```{r eval = F}
+language <- "et"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "et", what = "subs_count")
+
+# import subs to check size
+et_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(et_subs)
+
+# tag with udpipe
+et_tagged <- udpipe(et_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "et"], parser = "none")
+
+# lower case
+et_tagged$lemma <- tolower(et_tagged$lemma)
+
+# exclusions
+et_tagged <- subset(et_tagged, nchar(et_tagged$lemma) >= 3)
+et_tagged <- subset(et_tagged, upos %in% word_choice)
+et_tagged <- subset(et_tagged, !(lemma %in% stopwords(language = "et", source = "stopwords-iso")))
+et_tagged <- subset(et_tagged, !(grepl("[0-9]", et_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(et_subs) <- c("sentence", "freq")
+et_final <- merge(et_tagged, et_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+et_final <- et_final[order(et_final$freq, decreasing = TRUE) , ]
+et_final <- et_final[!duplicated(et_final$lemma), ]
+
+# grab top 10K
+et_top <- et_final[1:10000 , ]
+
+# find similarity
+import_other(language = "et", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+et_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+et_vec$V1 <- tolower(et_vec$V1)
+
+# eliminate duplicates 
+et_vec <- subset(et_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+et_sim <- calc_sim(et_top$lemma, et_vec)
+et_top_sim <- top_n(et_sim, 6)
+et_top_sim <- subset(et_top_sim, cue!=target)
+
+# create fake words
+et_top_sim$fake_cue <- get_fake(et_top_sim$cue)
+et_top_sim$fake_target <- get_fake(et_top_sim$target)
+
+write.csv(et_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## eu Basque
+
+```{r eval = F}
+language <- "eu"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "eu", what = "subs_count")
+
+# import subs to check size
+eu_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(eu_subs)
+
+# tag with udpipe
+eu_tagged <- udpipe(eu_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "eu"], parser = "none")
+
+# lower case
+eu_tagged$lemma <- tolower(eu_tagged$lemma)
+
+# exclusions
+eu_tagged <- subset(eu_tagged, nchar(eu_tagged$lemma) >= 3)
+eu_tagged <- subset(eu_tagged, upos %in% word_choice)
+eu_tagged <- subset(eu_tagged, !(lemma %in% stopwords(language = "eu", source = "stopwords-iso")))
+eu_tagged <- subset(eu_tagged, !(grepl("[0-9]", eu_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(eu_subs) <- c("sentence", "freq")
+eu_final <- merge(eu_tagged, eu_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+eu_final <- eu_final[order(eu_final$freq, decreasing = TRUE) , ]
+eu_final <- eu_final[!duplicated(eu_final$lemma), ]
+
+# grab top 10K
+eu_top <- eu_final[1:10000 , ]
+
+# find similarity
+import_other(language = "eu", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+eu_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+eu_vec$V1 <- tolower(eu_vec$V1)
+
+# eliminate duplicates 
+eu_vec <- subset(eu_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+eu_sim <- calc_sim(eu_top$lemma, eu_vec)
+eu_top_sim <- top_n(eu_sim, 6)
+eu_top_sim <- subset(eu_top_sim, cue!=target)
+
+# create fake words
+eu_top_sim$fake_cue <- get_fake(eu_top_sim$cue)
+eu_top_sim$fake_target <- get_fake(eu_top_sim$target)
+
+write.csv(eu_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## fa Farsi
+
+```{r eval = F}
+language <- "fa"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "fa", what = "subs_count")
+
+# import subs to check size
+fa_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(fa_subs)
+
+# tag with udpipe
+fa_tagged <- udpipe(fa_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "fa"], parser = "none")
+
+# lower case
+fa_tagged$lemma <- tolower(fa_tagged$lemma)
+
+# exclusions
+fa_tagged <- subset(fa_tagged, nchar(fa_tagged$lemma) >= 3)
+fa_tagged <- subset(fa_tagged, upos %in% word_choice)
+fa_tagged <- subset(fa_tagged, !(lemma %in% stopwords(language = "fa", source = "stopwords-iso")))
+fa_tagged <- subset(fa_tagged, !(grepl("[0-9]", fa_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(fa_subs) <- c("sentence", "freq")
+fa_final <- merge(fa_tagged, fa_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+fa_final <- fa_final[order(fa_final$freq, decreasing = TRUE) , ]
+fa_final <- fa_final[!duplicated(fa_final$lemma), ]
+
+# grab top 10K
+fa_top <- fa_final[1:10000 , ]
+
+# find similarity
+import_other(language = "fa", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+fa_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+fa_vec$V1 <- tolower(fa_vec$V1)
+
+# eliminate duplicates 
+fa_vec <- subset(fa_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+fa_sim <- calc_sim(fa_top$lemma, fa_vec)
+fa_top_sim <- top_n(fa_sim, 6)
+fa_top_sim <- subset(fa_top_sim, cue!=target)
+
+# create fake words
+fa_top_sim$fake_cue <- get_fake(fa_top_sim$cue)
+fa_top_sim$fake_target <- get_fake(fa_top_sim$target)
+
+write.csv(fa_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## fi Finnish
+
+```{r eval = F}
+language <- "fi"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "fi", what = "subs_count")
+
+# import subs to check size
+fi_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(fi_subs)
+
+# tag with udpipe
+fi_tagged <- udpipe(fi_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "fi"], parser = "none")
+
+# lower case
+fi_tagged$lemma <- tolower(fi_tagged$lemma)
+
+# exclusions
+fi_tagged <- subset(fi_tagged, nchar(fi_tagged$lemma) >= 3)
+fi_tagged <- subset(fi_tagged, upos %in% word_choice)
+fi_tagged <- subset(fi_tagged, !(lemma %in% stopwords(language = "fi", source = "stopwords-iso")))
+fi_tagged <- subset(fi_tagged, !(grepl("[0-9]", fi_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(fi_subs) <- c("sentence", "freq")
+fi_final <- merge(fi_tagged, fi_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+fi_final <- fi_final[order(fi_final$freq, decreasing = TRUE) , ]
+fi_final <- fi_final[!duplicated(fi_final$lemma), ]
+
+# grab top 10K
+fi_top <- fi_final[1:10000 , ]
+
+# find similarity
+import_other(language = "fi", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+fi_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+fi_vec$V1 <- tolower(fi_vec$V1)
+
+# eliminate duplicates 
+fi_vec <- subset(fi_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+fi_sim <- calc_sim(fi_top$lemma, fi_vec)
+fi_top_sim <- top_n(fi_sim, 6)
+fi_top_sim <- subset(fi_top_sim, cue!=target)
+
+# create fake words
+fi_top_sim$fake_cue <- get_fake(fi_top_sim$cue)
+fi_top_sim$fake_target <- get_fake(fi_top_sim$target)
+
+write.csv(fi_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## fr French
+
+```{r eval = F}
+language <- "fr"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "fr", what = "subs_count")
+
+# import subs to check size
+fr_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(fr_subs)
+
+# tag with udpipe
+fr_tagged <- udpipe(fr_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "fr"], parser = "none")
+
+# lower case
+fr_tagged$lemma <- tolower(fr_tagged$lemma)
+
+# exclusions
+fr_tagged <- subset(fr_tagged, nchar(fr_tagged$lemma) >= 3)
+fr_tagged <- subset(fr_tagged, upos %in% word_choice)
+fr_tagged <- subset(fr_tagged, !(lemma %in% stopwords(language = "fr", source = "stopwords-iso")))
+fr_tagged <- subset(fr_tagged, !(grepl("[0-9]", fr_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(fr_subs) <- c("sentence", "freq")
+fr_final <- merge(fr_tagged, fr_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+fr_final <- fr_final[order(fr_final$freq, decreasing = TRUE) , ]
+fr_final <- fr_final[!duplicated(fr_final$lemma), ]
+
+# grab top 10K
+fr_top <- fr_final[1:10000 , ]
+
+# find similarity
+import_other(language = "fr", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+fr_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+fr_vec$V1 <- tolower(fr_vec$V1)
+
+# eliminate duplicates 
+fr_vec <- subset(fr_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+fr_sim <- calc_sim(fr_top$lemma, fr_vec)
+fr_top_sim <- top_n(fr_sim, 6)
+fr_top_sim <- subset(fr_top_sim, cue!=target)
+
+# create fake words
+fr_top_sim$fake_cue <- get_fake(fr_top_sim$cue)
+fr_top_sim$fake_target <- get_fake(fr_top_sim$target)
+
+write.csv(fr_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## gl Galician
+
+```{r eval = F}
+language <- "gl"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "gl", what = "subs_count")
+
+# import subs to check size
+gl_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(gl_subs)
+
+# tag with udpipe
+gl_tagged <- udpipe(gl_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "gl"], parser = "none")
+
+# lower case
+gl_tagged$lemma <- tolower(gl_tagged$lemma)
+
+# exclusions
+gl_tagged <- subset(gl_tagged, nchar(gl_tagged$lemma) >= 3)
+gl_tagged <- subset(gl_tagged, upos %in% word_choice)
+gl_tagged <- subset(gl_tagged, !(lemma %in% stopwords(language = "gl", source = "stopwords-iso")))
+gl_tagged <- subset(gl_tagged, !(grepl("[0-9]", gl_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(gl_subs) <- c("sentence", "freq")
+gl_final <- merge(gl_tagged, gl_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+gl_final <- gl_final[order(gl_final$freq, decreasing = TRUE) , ]
+gl_final <- gl_final[!duplicated(gl_final$lemma), ]
+
+# grab top 10K
+gl_top <- gl_final[1:10000 , ]
+
+# find similarity
+import_other(language = "gl", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+gl_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+gl_vec$V1 <- tolower(gl_vec$V1)
+
+# eliminate duplicates 
+gl_vec <- subset(gl_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+gl_sim <- calc_sim(gl_top$lemma, gl_vec)
+gl_top_sim <- top_n(gl_sim, 6)
+gl_top_sim <- subset(gl_top_sim, cue!=target)
+
+# create fake words
+gl_top_sim$fake_cue <- get_fake(gl_top_sim$cue)
+gl_top_sim$fake_target <- get_fake(gl_top_sim$target)
+
+write.csv(gl_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## he Hebrew
+
+```{r eval = F}
+language <- "he"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "he", what = "subs_count")
+
+# import subs to check size
+he_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(he_subs)
+
+# tag with udpipe
+he_tagged <- udpipe(he_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "he"], parser = "none")
+
+# lower case
+he_tagged$lemma <- tolower(he_tagged$lemma)
+
+# exclusions
+he_tagged <- subset(he_tagged, nchar(he_tagged$lemma) >= 3)
+he_tagged <- subset(he_tagged, upos %in% word_choice)
+he_tagged <- subset(he_tagged, !(lemma %in% stopwords(language = "he", source = "stopwords-iso")))
+he_tagged <- subset(he_tagged, !(grepl("[0-9]", he_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(he_subs) <- c("sentence", "freq")
+he_final <- merge(he_tagged, he_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+he_final <- he_final[order(he_final$freq, decreasing = TRUE) , ]
+he_final <- he_final[!duplicated(he_final$lemma), ]
+
+# grab top 10K
+he_top <- he_final[1:10000 , ]
+
+# find similarity
+import_other(language = "he", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+he_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+he_vec$V1 <- tolower(he_vec$V1)
+
+# eliminate duplicates 
+he_vec <- subset(he_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+he_sim <- calc_sim(he_top$lemma, he_vec)
+he_top_sim <- top_n(he_sim, 6)
+he_top_sim <- subset(he_top_sim, cue!=target)
+
+# create fake words
+he_top_sim$fake_cue <- get_fake(he_top_sim$cue)
+he_top_sim$fake_target <- get_fake(he_top_sim$target)
+
+write.csv(he_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## hi Hindi 
+
+```{r eval = F}
+language <- "hi"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "hi", what = "subs_count")
+
+# import subs to check size
+hi_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(hi_subs)
+
+# less than 50k so use wiki for frequency
+import_other(language = "hi", what = "wiki_count")
+
+what <- "wiki_count"
+
+hi_wiki <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(hi_wiki)
+
+# tag with udpipe
+hi_tagged <- udpipe(hi_wiki$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "hi"], parser = "none")
+
+# lower case
+hi_tagged$lemma <- tolower(hi_tagged$lemma)
+
+# exclusions
+hi_tagged <- subset(hi_tagged, nchar(hi_tagged$lemma) >= 3)
+hi_tagged <- subset(hi_tagged, upos %in% word_choice)
+hi_tagged <- subset(hi_tagged, !(lemma %in% stopwords(language = "hi", source = "stopwords-iso")))
+hi_tagged <- subset(hi_tagged, !(grepl("[0-9]", hi_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(hi_wiki) <- c("sentence", "freq")
+hi_final <- merge(hi_tagged, hi_wiki, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+hi_final <- hi_final[order(hi_final$freq, decreasing = TRUE) , ]
+hi_final <- hi_final[!duplicated(hi_final$lemma), ]
+
+# grab top 10K
+hi_top <- hi_final[1:10000 , ]
+
+# find similarity
+import_other(language = "hi", what = "wiki_vec")
+
+what <- "wiki_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/wiki.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"))
+hi_vec <- read.table(paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+hi_vec$V1 <- tolower(hi_vec$V1)
+
+# eliminate duplicates 
+hi_vec <- subset(hi_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+hi_sim <- calc_sim(hi_top$lemma, hi_vec)
+hi_top_sim <- top_n(hi_sim, 6)
+hi_top_sim <- subset(hi_top_sim, cue!=target)
+
+# create fake words
+hi_top_sim$fake_cue <- get_fake(hi_top_sim$cue)
+hi_top_sim$fake_target <- get_fake(hi_top_sim$target)
+
+write.csv(hi_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## hr Croatian
+
+```{r eval = F}
+language <- "hr"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "hr", what = "subs_count")
+
+# import subs to check size
+hr_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(hr_subs)
+
+# tag with udpipe
+hr_tagged <- udpipe(hr_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "hr"], parser = "none")
+
+# lower case
+hr_tagged$lemma <- tolower(hr_tagged$lemma)
+
+# exclusions
+hr_tagged <- subset(hr_tagged, nchar(hr_tagged$lemma) >= 3)
+hr_tagged <- subset(hr_tagged, upos %in% word_choice)
+hr_tagged <- subset(hr_tagged, !(lemma %in% stopwords(language = "hr", source = "stopwords-iso")))
+hr_tagged <- subset(hr_tagged, !(grepl("[0-9]", hr_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(hr_subs) <- c("sentence", "freq")
+hr_final <- merge(hr_tagged, hr_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+hr_final <- hr_final[order(hr_final$freq, decreasing = TRUE) , ]
+hr_final <- hr_final[!duplicated(hr_final$lemma), ]
+
+# grab top 10K
+hr_top <- hr_final[1:10000 , ]
+
+# find similarity
+import_other(language = "hr", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+hr_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+hr_vec$V1 <- tolower(hr_vec$V1)
+
+# eliminate duplicates 
+hr_vec <- subset(hr_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+hr_sim <- calc_sim(hr_top$lemma, hr_vec)
+hr_top_sim <- top_n(hr_sim, 6)
+hr_top_sim <- subset(hr_top_sim, cue!=target)
+
+# create fake words
+hr_top_sim$fake_cue <- get_fake(hr_top_sim$cue)
+hr_top_sim$fake_target <- get_fake(hr_top_sim$target)
+
+write.csv(hr_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## hu Hungarian
+
+```{r eval = F}
+language <- "hu"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "hu", what = "subs_count")
+
+# import subs to check size
+hu_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(hu_subs)
+
+# tag with udpipe
+hu_tagged <- udpipe(hu_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "hu"], parser = "none")
+
+# lower case
+hu_tagged$lemma <- tolower(hu_tagged$lemma)
+
+# exclusions
+hu_tagged <- subset(hu_tagged, nchar(hu_tagged$lemma) >= 3)
+hu_tagged <- subset(hu_tagged, upos %in% word_choice)
+hu_tagged <- subset(hu_tagged, !(lemma %in% stopwords(language = "hu", source = "stopwords-iso")))
+hu_tagged <- subset(hu_tagged, !(grepl("[0-9]", hu_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(hu_subs) <- c("sentence", "freq")
+hu_final <- merge(hu_tagged, hu_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+hu_final <- hu_final[order(hu_final$freq, decreasing = TRUE) , ]
+hu_final <- hu_final[!duplicated(hu_final$lemma), ]
+
+# grab top 10K
+hu_top <- hu_final[1:10000 , ]
+
+# find similarity
+import_other(language = "hu", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+hu_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+hu_vec$V1 <- tolower(hu_vec$V1)
+
+# eliminate duplicates 
+hu_vec <- subset(hu_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+hu_sim <- calc_sim(hu_top$lemma, hu_vec)
+hu_top_sim <- top_n(hu_sim, 6)
+hu_top_sim <- subset(hu_top_sim, cue!=target)
+
+# create fake words
+hu_top_sim$fake_cue <- get_fake(hu_top_sim$cue)
+hu_top_sim$fake_target <- get_fake(hu_top_sim$target)
+
+write.csv(hu_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## hy Armenian
+
+```{r eval = F}
+language <- "hy"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "hy", what = "subs_count")
+
+# import subs to check size
+hy_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(hy_subs)
+
+# less than 50k so use wiki for frequency
+import_other(language = "hy", what = "wiki_count")
+
+what <- "wiki_count"
+
+hy_wiki <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(hy_wiki)
+
+# tag with udpipe
+hy_tagged <- udpipe(hy_wiki$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "hy"], parser = "none")
+
+# lower case
+hy_tagged$lemma <- tolower(hy_tagged$lemma)
+
+# exclusions
+hy_tagged <- subset(hy_tagged, nchar(hy_tagged$lemma) >= 3)
+hy_tagged <- subset(hy_tagged, upos %in% word_choice)
+hy_tagged <- subset(hy_tagged, !(lemma %in% stopwords(language = "hy", source = "stopwords-iso")))
+hy_tagged <- subset(hy_tagged, !(grepl("[0-9]", hy_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(hy_wiki) <- c("sentence", "freq")
+hy_final <- merge(hy_tagged, hy_wiki, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+hy_final <- hy_final[order(hy_final$freq, decreasing = TRUE) , ]
+hy_final <- hy_final[!duplicated(hy_final$lemma), ]
+
+# grab top 10K
+hy_top <- hy_final[1:10000 , ]
+
+# find similarity
+import_other(language = "hy", what = "wiki_vec")
+
+what <- "wiki_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/wiki.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"))
+hy_vec <- read.table(paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+hy_vec$V1 <- tolower(hy_vec$V1)
+
+# eliminate duplicates 
+hy_vec <- subset(hy_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+hy_sim <- calc_sim(hy_top$lemma, hy_vec)
+hy_top_sim <- top_n(hy_sim, 6)
+hy_top_sim <- subset(hy_top_sim, cue!=target)
+
+# create fake words
+hy_top_sim$fake_cue <- get_fake(hy_top_sim$cue)
+hy_top_sim$fake_target <- get_fake(hy_top_sim$target)
+
+write.csv(hy_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## id Indonesian
+
+```{r eval = F}
+language <- "id"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "id", what = "subs_count")
+
+# import subs to check size
+id_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(id_subs)
+
+# tag with udpipe
+id_tagged <- udpipe(id_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "id"], parser = "none")
+
+# lower case
+id_tagged$lemma <- tolower(id_tagged$lemma)
+
+# exclusions
+id_tagged <- subset(id_tagged, nchar(id_tagged$lemma) >= 3)
+id_tagged <- subset(id_tagged, upos %in% word_choice)
+id_tagged <- subset(id_tagged, !(lemma %in% stopwords(language = "id", source = "stopwords-iso")))
+id_tagged <- subset(id_tagged, !(grepl("[0-9]", id_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(id_subs) <- c("sentence", "freq")
+id_final <- merge(id_tagged, id_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+id_final <- id_final[order(id_final$freq, decreasing = TRUE) , ]
+id_final <- id_final[!duplicated(id_final$lemma), ]
+
+# grab top 10K
+id_top <- id_final[1:10000 , ]
+
+# find similarity
+import_other(language = "id", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+id_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+id_vec$V1 <- tolower(id_vec$V1)
+
+# eliminate duplicates 
+id_vec <- subset(id_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+id_sim <- calc_sim(id_top$lemma, id_vec)
+id_top_sim <- top_n(id_sim, 6)
+id_top_sim <- subset(id_top_sim, cue!=target)
+
+# create fake words
+id_top_sim$fake_cue <- get_fake(id_top_sim$cue)
+id_top_sim$fake_target <- get_fake(id_top_sim$target)
+
+write.csv(id_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## it Italian
+
+```{r eval = F}
+language <- "it"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "it", what = "subs_count")
+
+# import subs to check size
+it_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(it_subs)
+
+# tag with udpipe
+it_tagged <- udpipe(it_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "it"], parser = "none")
+
+# lower case
+it_tagged$lemma <- tolower(it_tagged$lemma)
+
+# exclusions
+it_tagged <- subset(it_tagged, nchar(it_tagged$lemma) >= 3)
+it_tagged <- subset(it_tagged, upos %in% word_choice)
+it_tagged <- subset(it_tagged, !(lemma %in% stopwords(language = "it", source = "stopwords-iso")))
+it_tagged <- subset(it_tagged, !(grepl("[0-9]", it_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(it_subs) <- c("sentence", "freq")
+it_final <- merge(it_tagged, it_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+it_final <- it_final[order(it_final$freq, decreasing = TRUE) , ]
+it_final <- it_final[!duplicated(it_final$lemma), ]
+
+# grab top 10K
+it_top <- it_final[1:10000 , ]
+
+# find similarity
+import_other(language = "it", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+it_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+it_vec$V1 <- tolower(it_vec$V1)
+
+# eliminate duplicates 
+it_vec <- subset(it_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+it_sim <- calc_sim(it_top$lemma, it_vec)
+it_top_sim <- top_n(it_sim, 6)
+it_top_sim <- subset(it_top_sim, cue!=target)
+
+# create fake words
+it_top_sim$fake_cue <- get_fake(it_top_sim$cue)
+it_top_sim$fake_target <- get_fake(it_top_sim$target)
+
+write.csv(it_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## ja Japanese
+
+```{r eval = F}
+language <- "ja"
+what <- "subs_count"
+
+# import our own subs count
+ja_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ja_subs)
+
+colnames(ja_subs) <- c("id", "unigram", "freq")
+
+# tag with udpipe
+ja_tagged <- udpipe(ja_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ja"], parser = "none")
+
+# lower case
+ja_tagged$lemma <- tolower(ja_tagged$lemma)
+
+# exclusions
+ja_tagged <- subset(ja_tagged, nchar(ja_tagged$lemma) >= 3)
+ja_tagged <- subset(ja_tagged, upos %in% word_choice)
+ja_tagged <- subset(ja_tagged, !(lemma %in% stopwords(language = "ja", source = "stopwords-iso")))
+ja_tagged <- subset(ja_tagged, !(grepl("[0-9]", ja_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ja_subs) <- c("sentence", "freq")
+ja_final <- merge(ja_tagged, ja_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ja_final <- ja_final[order(ja_final$freq, decreasing = TRUE) , ]
+ja_final <- ja_final[!duplicated(ja_final$lemma), ]
+
+# grab top 10K
+ja_top <- ja_final[1:10000 , ]
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+ja_vec <- read.csv(paste0(root, what, "/",language, "/ja_300_5_sg_wxd.csv"), 
+                     quote="\"")
+
+# lower case
+ja_vec$word <- tolower(ja_vec$word)
+
+# eliminate duplicates 
+ja_vec <- subset(ja_vec, !duplicated(word))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+colnames(ja_vec)[1] <- "V1"
+ja_sim <- calc_sim(ja_top$lemma, ja_vec)
+ja_top_sim <- top_n(ja_sim, 6)
+ja_top_sim <- subset(ja_top_sim, cue!=target)
+
+# create fake words
+ja_top_sim$fake_cue <- get_fake(ja_top_sim$cue)
+ja_top_sim$fake_target <- get_fake(ja_top_sim$target)
+
+write.csv(ja_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## ko Korean
+
+```{r eval = F}
+language <- "ko"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ko", what = "subs_count")
+
+# import subs to check size
+ko_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ko_subs)
+
+# tag with udpipe
+ko_tagged <- udpipe(ko_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ko"], parser = "none")
+
+# lower case
+ko_tagged$lemma <- tolower(ko_tagged$lemma)
+
+# exclusions
+ko_tagged <- subset(ko_tagged, nchar(ko_tagged$lemma) >= 3)
+ko_tagged <- subset(ko_tagged, upos %in% word_choice)
+ko_tagged <- subset(ko_tagged, !(lemma %in% stopwords(language = "ko", source = "stopwords-iso")))
+ko_tagged <- subset(ko_tagged, !(grepl("[0-9]", ko_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ko_subs) <- c("sentence", "freq")
+ko_final <- merge(ko_tagged, ko_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ko_final <- ko_final[order(ko_final$freq, decreasing = TRUE) , ]
+ko_final <- ko_final[!duplicated(ko_final$lemma), ]
+
+# grab top 10K
+ko_top <- ko_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ko", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+ko_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ko_vec$V1 <- tolower(ko_vec$V1)
+
+# eliminate duplicates 
+ko_vec <- subset(ko_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ko_sim <- calc_sim(ko_top$lemma, ko_vec)
+ko_top_sim <- top_n(ko_sim, 6)
+ko_top_sim <- subset(ko_top_sim, cue!=target)
+
+# create fake words
+ko_top_sim$fake_cue <- get_fake(ko_top_sim$cue)
+ko_top_sim$fake_target <- get_fake(ko_top_sim$target)
+
+write.csv(ko_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## lt Lithuanian
+
+```{r eval = F}
+language <- "lt"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "lt", what = "subs_count")
+
+# import subs to check size
+lt_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(lt_subs)
+
+# tag with udpipe
+lt_tagged <- udpipe(lt_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "lt"], parser = "none")
+
+# lower case
+lt_tagged$lemma <- tolower(lt_tagged$lemma)
+
+# exclusions
+lt_tagged <- subset(lt_tagged, nchar(lt_tagged$lemma) >= 3)
+lt_tagged <- subset(lt_tagged, upos %in% word_choice)
+lt_tagged <- subset(lt_tagged, !(lemma %in% stopwords(language = "lt", source = "stopwords-iso")))
+lt_tagged <- subset(lt_tagged, !(grepl("[0-9]", lt_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(lt_subs) <- c("sentence", "freq")
+lt_final <- merge(lt_tagged, lt_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+lt_final <- lt_final[order(lt_final$freq, decreasing = TRUE) , ]
+lt_final <- lt_final[!duplicated(lt_final$lemma), ]
+
+# grab top 10K
+lt_top <- lt_final[1:10000 , ]
+
+# find similarity
+import_other(language = "lt", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+lt_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+lt_vec$V1 <- tolower(lt_vec$V1)
+
+# eliminate duplicates 
+lt_vec <- subset(lt_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+lt_sim <- calc_sim(lt_top$lemma, lt_vec)
+lt_top_sim <- top_n(lt_sim, 6)
+lt_top_sim <- subset(lt_top_sim, cue!=target)
+
+# create fake words
+lt_top_sim$fake_cue <- get_fake(lt_top_sim$cue)
+lt_top_sim$fake_target <- get_fake(lt_top_sim$target)
+
+write.csv(lt_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## lv Latvian
+
+```{r eval = F}
+language <- "lv"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "lv", what = "subs_count")
+
+# import subs to check size
+lv_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(lv_subs)
+
+# tag with udpipe
+lv_tagged <- udpipe(lv_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "lv"], parser = "none")
+
+# lower case
+lv_tagged$lemma <- tolower(lv_tagged$lemma)
+
+# exclusions
+lv_tagged <- subset(lv_tagged, nchar(lv_tagged$lemma) >= 3)
+lv_tagged <- subset(lv_tagged, upos %in% word_choice)
+lv_tagged <- subset(lv_tagged, !(lemma %in% stopwords(language = "lv", source = "stopwords-iso")))
+lv_tagged <- subset(lv_tagged, !(grepl("[0-9]", lv_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(lv_subs) <- c("sentence", "freq")
+lv_final <- merge(lv_tagged, lv_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+lv_final <- lv_final[order(lv_final$freq, decreasing = TRUE) , ]
+lv_final <- lv_final[!duplicated(lv_final$lemma), ]
+
+# grab top 10K
+lv_top <- lv_final[1:10000 , ]
+
+# find similarity
+import_other(language = "lv", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+lv_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+lv_vec$V1 <- tolower(lv_vec$V1)
+
+# eliminate duplicates 
+lv_vec <- subset(lv_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+lv_sim <- calc_sim(lv_top$lemma, lv_vec)
+lv_top_sim <- top_n(lv_sim, 6)
+lv_top_sim <- subset(lv_top_sim, cue!=target)
+
+# create fake words
+lv_top_sim$fake_cue <- get_fake(lv_top_sim$cue)
+lv_top_sim$fake_target <- get_fake(lv_top_sim$target)
+
+write.csv(lv_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## nl Dutch
+
+```{r eval = F}
+language <- "nl"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "nl", what = "subs_count")
+
+# import subs to check size
+nl_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(nl_subs)
+
+# tag with udpipe
+nl_tagged <- udpipe(nl_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "nl"], parser = "none")
+
+# lower case
+nl_tagged$lemma <- tolower(nl_tagged$lemma)
+
+# exclusions
+nl_tagged <- subset(nl_tagged, nchar(nl_tagged$lemma) >= 3)
+nl_tagged <- subset(nl_tagged, upos %in% word_choice)
+nl_tagged <- subset(nl_tagged, !(lemma %in% stopwords(language = "nl", source = "stopwords-iso")))
+nl_tagged <- subset(nl_tagged, !(grepl("[0-9]", nl_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(nl_subs) <- c("sentence", "freq")
+nl_final <- merge(nl_tagged, nl_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+nl_final <- nl_final[order(nl_final$freq, decreasing = TRUE) , ]
+nl_final <- nl_final[!duplicated(nl_final$lemma), ]
+
+# grab top 10K
+nl_top <- nl_final[1:10000 , ]
+
+# find similarity
+import_other(language = "nl", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+nl_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+nl_vec$V1 <- tolower(nl_vec$V1)
+
+# eliminate duplicates 
+nl_vec <- subset(nl_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+nl_sim <- calc_sim(nl_top$lemma, nl_vec)
+nl_top_sim <- top_n(nl_sim, 6)
+nl_top_sim <- subset(nl_top_sim, cue!=target)
+
+# create fake words
+nl_top_sim$fake_cue <- get_fake(nl_top_sim$cue)
+nl_top_sim$fake_target <- get_fake(nl_top_sim$target)
+
+write.csv(nl_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## no Norwegian
+
+```{r eval = F}
+language <- "no"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "no", what = "subs_count")
+
+# import subs to check size
+no_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(no_subs)
+
+# tag with udpipe
+no_tagged <- udpipe(no_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "no"], parser = "none")
+
+# lower case
+no_tagged$lemma <- tolower(no_tagged$lemma)
+
+# exclusions
+no_tagged <- subset(no_tagged, nchar(no_tagged$lemma) >= 3)
+no_tagged <- subset(no_tagged, upos %in% word_choice)
+no_tagged <- subset(no_tagged, !(lemma %in% stopwords(language = "no", source = "stopwords-iso")))
+no_tagged <- subset(no_tagged, !(grepl("[0-9]", no_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(no_subs) <- c("sentence", "freq")
+no_final <- merge(no_tagged, no_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+no_final <- no_final[order(no_final$freq, decreasing = TRUE) , ]
+no_final <- no_final[!duplicated(no_final$lemma), ]
+
+# grab top 10K
+no_top <- no_final[1:10000 , ]
+
+# find similarity
+import_other(language = "no", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+no_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+no_vec$V1 <- tolower(no_vec$V1)
+
+# eliminate duplicates 
+no_vec <- subset(no_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+no_sim <- calc_sim(no_top$lemma, no_vec)
+no_top_sim <- top_n(no_sim, 6)
+no_top_sim <- subset(no_top_sim, cue!=target)
+
+# create fake words
+no_top_sim$fake_cue <- get_fake(no_top_sim$cue)
+no_top_sim$fake_target <- get_fake(no_top_sim$target)
+
+write.csv(no_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
 ```
 
 
+## pl Polish
 
-## zh_tw Mandarin 
+```{r eval = F}
+language <- "pl"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "pl", what = "subs_count")
+
+# import subs to check size
+pl_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(pl_subs)
+
+# tag with udpipe
+pl_tagged <- udpipe(pl_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "pl"], parser = "none")
+
+# lower case
+pl_tagged$lemma <- tolower(pl_tagged$lemma)
+
+# exclusions
+pl_tagged <- subset(pl_tagged, nchar(pl_tagged$lemma) >= 3)
+pl_tagged <- subset(pl_tagged, upos %in% word_choice)
+pl_tagged <- subset(pl_tagged, !(lemma %in% stopwords(language = "pl", source = "stopwords-iso")))
+pl_tagged <- subset(pl_tagged, !(grepl("[0-9]", pl_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(pl_subs) <- c("sentence", "freq")
+pl_final <- merge(pl_tagged, pl_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+pl_final <- pl_final[order(pl_final$freq, decreasing = TRUE) , ]
+pl_final <- pl_final[!duplicated(pl_final$lemma), ]
+
+# grab top 10K
+pl_top <- pl_final[1:10000 , ]
+
+# find similarity
+import_other(language = "pl", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+pl_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+pl_vec$V1 <- tolower(pl_vec$V1)
+
+# eliminate duplicates 
+pl_vec <- subset(pl_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+pl_sim <- calc_sim(pl_top$lemma, pl_vec)
+pl_top_sim <- top_n(pl_sim, 6)
+pl_top_sim <- subset(pl_top_sim, cue!=target)
+
+# create fake words
+pl_top_sim$fake_cue <- get_fake(pl_top_sim$cue)
+pl_top_sim$fake_target <- get_fake(pl_top_sim$target)
+
+write.csv(pl_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## pt Portuguese
+
+```{r eval = F}
+language <- "pt"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "pt", what = "subs_count")
+
+# import subs to check size
+pt_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(pt_subs)
+
+# tag with udpipe
+pt_tagged <- udpipe(pt_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "pt"], parser = "none")
+
+# lower case
+pt_tagged$lemma <- tolower(pt_tagged$lemma)
+
+# exclusions
+pt_tagged <- subset(pt_tagged, nchar(pt_tagged$lemma) >= 3)
+pt_tagged <- subset(pt_tagged, upos %in% word_choice)
+pt_tagged <- subset(pt_tagged, !(lemma %in% stopwords(language = "pt", source = "stopwords-iso")))
+pt_tagged <- subset(pt_tagged, !(grepl("[0-9]", pt_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(pt_subs) <- c("sentence", "freq")
+pt_final <- merge(pt_tagged, pt_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+pt_final <- pt_final[order(pt_final$freq, decreasing = TRUE) , ]
+pt_final <- pt_final[!duplicated(pt_final$lemma), ]
+
+# grab top 10K
+pt_top <- pt_final[1:10000 , ]
+
+# find similarity
+import_other(language = "pt", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+pt_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+pt_vec$V1 <- tolower(pt_vec$V1)
+
+# eliminate duplicates 
+pt_vec <- subset(pt_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+pt_sim <- calc_sim(pt_top$lemma, pt_vec)
+pt_top_sim <- top_n(pt_sim, 6)
+pt_top_sim <- subset(pt_top_sim, cue!=target)
+
+# create fake words
+pt_top_sim$fake_cue <- get_fake(pt_top_sim$cue)
+pt_top_sim$fake_target <- get_fake(pt_top_sim$target)
+
+write.csv(pt_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+
+## ro Romanian 
+
+```{r eval = F}
+language <- "ro"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ro", what = "subs_count")
+
+# import subs to check size
+ro_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ro_subs)
+
+# tag with udpipe
+ro_tagged <- udpipe(ro_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ro"], parser = "none")
+
+# lower case
+ro_tagged$lemma <- tolower(ro_tagged$lemma)
+
+# exclusions
+ro_tagged <- subset(ro_tagged, nchar(ro_tagged$lemma) >= 3)
+ro_tagged <- subset(ro_tagged, upos %in% word_choice)
+ro_tagged <- subset(ro_tagged, !(lemma %in% stopwords(language = "ro", source = "stopwords-iso")))
+ro_tagged <- subset(ro_tagged, !(grepl("[0-9]", ro_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ro_subs) <- c("sentence", "freq")
+ro_final <- merge(ro_tagged, ro_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ro_final <- ro_final[order(ro_final$freq, decreasing = TRUE) , ]
+ro_final <- ro_final[!duplicated(ro_final$lemma), ]
+
+# grab top 10K
+ro_top <- ro_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ro", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+ro_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ro_vec$V1 <- tolower(ro_vec$V1)
+
+# eliminate duplicates 
+ro_vec <- subset(ro_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ro_sim <- calc_sim(ro_top$lemma, ro_vec)
+ro_top_sim <- top_n(ro_sim, 6)
+ro_top_sim <- subset(ro_top_sim, cue!=target)
+
+# create fake words
+ro_top_sim$fake_cue <- get_fake(ro_top_sim$cue)
+ro_top_sim$fake_target <- get_fake(ro_top_sim$target)
+
+write.csv(ro_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## ru Russian 
+
+```{r eval = F}
+language <- "ru"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ru", what = "subs_count")
+
+# import subs to check size
+ru_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ru_subs)
+
+# tag with udpipe
+ru_tagged <- udpipe(ru_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ru"], parser = "none")
+
+# lower case
+ru_tagged$lemma <- tolower(ru_tagged$lemma)
+
+# exclusions
+ru_tagged <- subset(ru_tagged, nchar(ru_tagged$lemma) >= 3)
+ru_tagged <- subset(ru_tagged, upos %in% word_choice)
+ru_tagged <- subset(ru_tagged, !(lemma %in% stopwords(language = "ru", source = "stopwords-iso")))
+ru_tagged <- subset(ru_tagged, !(grepl("[0-9]", ru_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ru_subs) <- c("sentence", "freq")
+ru_final <- merge(ru_tagged, ru_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ru_final <- ru_final[order(ru_final$freq, decreasing = TRUE) , ]
+ru_final <- ru_final[!duplicated(ru_final$lemma), ]
+
+# grab top 10K
+ru_top <- ru_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ru", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+ru_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ru_vec$V1 <- tolower(ru_vec$V1)
+
+# eliminate duplicates 
+ru_vec <- subset(ru_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ru_sim <- calc_sim(ru_top$lemma, ru_vec)
+ru_top_sim <- top_n(ru_sim, 6)
+ru_top_sim <- subset(ru_top_sim, cue!=target)
+
+# create fake words
+ru_top_sim$fake_cue <- get_fake(ru_top_sim$cue)
+ru_top_sim$fake_target <- get_fake(ru_top_sim$target)
+
+write.csv(ru_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## sk Slovak 
+
+```{r eval = F}
+language <- "sk"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "sk", what = "subs_count")
+
+# import subs to check size
+sk_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(sk_subs)
+
+# tag with udpipe
+sk_tagged <- udpipe(sk_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "sk"], parser = "none")
+
+# lower case
+sk_tagged$lemma <- tolower(sk_tagged$lemma)
+
+# exclusions
+sk_tagged <- subset(sk_tagged, nchar(sk_tagged$lemma) >= 3)
+sk_tagged <- subset(sk_tagged, upos %in% word_choice)
+sk_tagged <- subset(sk_tagged, !(lemma %in% stopwords(language = "sk", source = "stopwords-iso")))
+sk_tagged <- subset(sk_tagged, !(grepl("[0-9]", sk_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(sk_subs) <- c("sentence", "freq")
+sk_final <- merge(sk_tagged, sk_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+sk_final <- sk_final[order(sk_final$freq, decreasing = TRUE) , ]
+sk_final <- sk_final[!duplicated(sk_final$lemma), ]
+
+# grab top 10K
+sk_top <- sk_final[1:10000 , ]
+
+# find similarity
+import_other(language = "sk", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+sk_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+sk_vec$V1 <- tolower(sk_vec$V1)
+
+# eliminate duplicates 
+sk_vec <- subset(sk_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+sk_sim <- calc_sim(sk_top$lemma, sk_vec)
+sk_top_sim <- top_n(sk_sim, 6)
+sk_top_sim <- subset(sk_top_sim, cue!=target)
+
+# create fake words
+sk_top_sim$fake_cue <- get_fake(sk_top_sim$cue)
+sk_top_sim$fake_target <- get_fake(sk_top_sim$target)
+
+write.csv(sk_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## sl Slovenian
+
+```{r eval = F}
+language <- "sl"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "sl", what = "subs_count")
+
+# import subs to check size
+sl_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(sl_subs)
+
+# tag with udpipe
+sl_tagged <- udpipe(sl_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "sl"], parser = "none")
+
+# lower case
+sl_tagged$lemma <- tolower(sl_tagged$lemma)
+
+# exclusions
+sl_tagged <- subset(sl_tagged, nchar(sl_tagged$lemma) >= 3)
+sl_tagged <- subset(sl_tagged, upos %in% word_choice)
+sl_tagged <- subset(sl_tagged, !(lemma %in% stopwords(language = "sl", source = "stopwords-iso")))
+sl_tagged <- subset(sl_tagged, !(grepl("[0-9]", sl_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(sl_subs) <- c("sentence", "freq")
+sl_final <- merge(sl_tagged, sl_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+sl_final <- sl_final[order(sl_final$freq, decreasing = TRUE) , ]
+sl_final <- sl_final[!duplicated(sl_final$lemma), ]
+
+# grab top 10K
+sl_top <- sl_final[1:10000 , ]
+
+# find similarity
+import_other(language = "sl", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+sl_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+sl_vec$V1 <- tolower(sl_vec$V1)
+
+# eliminate duplicates 
+sl_vec <- subset(sl_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+sl_sim <- calc_sim(sl_top$lemma, sl_vec)
+sl_top_sim <- top_n(sl_sim, 6)
+sl_top_sim <- subset(sl_top_sim, cue!=target)
+
+# create fake words
+sl_top_sim$fake_cue <- get_fake(sl_top_sim$cue)
+sl_top_sim$fake_target <- get_fake(sl_top_sim$target)
+
+write.csv(sl_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## sr Serbian
+
+```{r eval = F}
+language <- "sr"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "sr", what = "subs_count")
+
+# import subs to check size
+sr_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(sr_subs)
+
+# tag with udpipe
+sr_tagged <- udpipe(sr_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "sr"], parser = "none")
+
+# lower case
+sr_tagged$lemma <- tolower(sr_tagged$lemma)
+
+# exclusions
+sr_tagged <- subset(sr_tagged, nchar(sr_tagged$lemma) >= 3)
+sr_tagged <- subset(sr_tagged, upos %in% word_choice)
+#sr_tagged <- subset(sr_tagged, !(lemma %in% stopwords(language = "sr", source = "stopwords-iso")))
+sr_tagged <- subset(sr_tagged, !(grepl("[0-9]", sr_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(sr_subs) <- c("sentence", "freq")
+sr_final <- merge(sr_tagged, sr_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+sr_final <- sr_final[order(sr_final$freq, decreasing = TRUE) , ]
+sr_final <- sr_final[!duplicated(sr_final$lemma), ]
+
+# grab top 10K
+sr_top <- sr_final[1:10000 , ]
+
+# find similarity
+import_other(language = "sr", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+sr_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+sr_vec$V1 <- tolower(sr_vec$V1)
+
+# eliminate duplicates 
+sr_vec <- subset(sr_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+sr_sim <- calc_sim(sr_top$lemma, sr_vec)
+sr_top_sim <- top_n(sr_sim, 6)
+sr_top_sim <- subset(sr_top_sim, cue!=target)
+
+# create fake words
+sr_top_sim$fake_cue <- get_fake(sr_top_sim$cue)
+sr_top_sim$fake_target <- get_fake(sr_top_sim$target)
+
+write.csv(sr_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## sv Swedish  
+
+```{r eval = F}
+language <- "sv"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "sv", what = "subs_count")
+
+# import subs to check size
+sv_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(sv_subs)
+
+# tag with udpipe
+sv_tagged <- udpipe(sv_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "sv"], parser = "none")
+
+# lower case
+sv_tagged$lemma <- tolower(sv_tagged$lemma)
+
+# exclusions
+sv_tagged <- subset(sv_tagged, nchar(sv_tagged$lemma) >= 3)
+sv_tagged <- subset(sv_tagged, upos %in% word_choice)
+sv_tagged <- subset(sv_tagged, !(lemma %in% stopwords(language = "sv", source = "stopwords-iso")))
+sv_tagged <- subset(sv_tagged, !(grepl("[0-9]", sv_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(sv_subs) <- c("sentence", "freq")
+sv_final <- merge(sv_tagged, sv_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+sv_final <- sv_final[order(sv_final$freq, decreasing = TRUE) , ]
+sv_final <- sv_final[!duplicated(sv_final$lemma), ]
+
+# grab top 10K
+sv_top <- sv_final[1:10000 , ]
+
+# find similarity
+import_other(language = "sv", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+sv_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+sv_vec$V1 <- tolower(sv_vec$V1)
+
+# eliminate duplicates 
+sv_vec <- subset(sv_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+sv_sim <- calc_sim(sv_top$lemma, sv_vec)
+sv_top_sim <- top_n(sv_sim, 6)
+sv_top_sim <- subset(sv_top_sim, cue!=target)
+
+# create fake words
+sv_top_sim$fake_cue <- get_fake(sv_top_sim$cue)
+sv_top_sim$fake_target <- get_fake(sv_top_sim$target)
+
+write.csv(sv_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## ta Tamil
+
+```{r eval = F}
+language <- "ta"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ta", what = "subs_count")
+
+# import subs to check size
+ta_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ta_subs)
+
+# less than 50k so use wiki for frequency
+import_other(language = "ta", what = "wiki_count")
+
+what <- "wiki_count"
+
+ta_wiki <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ta_wiki)
+
+# tag with udpipe
+ta_tagged <- udpipe(ta_wiki$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ta"], parser = "none")
+
+# lower case
+ta_tagged$lemma <- tolower(ta_tagged$lemma)
+
+# exclusions
+ta_tagged <- subset(ta_tagged, nchar(ta_tagged$lemma) >= 3)
+ta_tagged <- subset(ta_tagged, upos %in% word_choice)
+#ta_tagged <- subset(ta_tagged, !(lemma %in% stopwords(language = "ta", source = "stopwords-iso")))
+ta_tagged <- subset(ta_tagged, !(grepl("[0-9]", ta_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ta_wiki) <- c("sentence", "freq")
+ta_final <- merge(ta_tagged, ta_wiki, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ta_final <- ta_final[order(ta_final$freq, decreasing = TRUE) , ]
+ta_final <- ta_final[!duplicated(ta_final$lemma), ]
+
+# grab top 10K
+ta_top <- ta_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ta", what = "wiki_vec")
+
+what <- "wiki_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/wiki.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"))
+ta_vec <- read.table(paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ta_vec$V1 <- tolower(ta_vec$V1)
+
+# eliminate duplicates 
+ta_vec <- subset(ta_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ta_sim <- calc_sim(ta_top$lemma, ta_vec)
+ta_top_sim <- top_n(ta_sim, 6)
+ta_top_sim <- subset(ta_top_sim, cue!=target)
+
+# create fake words
+ta_top_sim$fake_cue <- get_fake(ta_top_sim$cue)
+ta_top_sim$fake_target <- get_fake(ta_top_sim$target)
+
+write.csv(ta_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## tr Turkish
+
+```{r eval = F}
+language <- "tr"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "tr", what = "subs_count")
+
+# import subs to check size
+tr_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(tr_subs)
+
+# tag with udpipe
+tr_tagged <- udpipe(tr_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "tr"], parser = "none")
+
+# lower case
+tr_tagged$lemma <- tolower(tr_tagged$lemma)
+
+# exclusions
+tr_tagged <- subset(tr_tagged, nchar(tr_tagged$lemma) >= 3)
+tr_tagged <- subset(tr_tagged, upos %in% word_choice)
+tr_tagged <- subset(tr_tagged, !(lemma %in% stopwords(language = "tr", source = "stopwords-iso")))
+tr_tagged <- subset(tr_tagged, !(grepl("[0-9]", tr_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(tr_subs) <- c("sentence", "freq")
+tr_final <- merge(tr_tagged, tr_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+tr_final <- tr_final[order(tr_final$freq, decreasing = TRUE) , ]
+tr_final <- tr_final[!duplicated(tr_final$lemma), ]
+
+# grab top 10K
+tr_top <- tr_final[1:10000 , ]
+
+# find similarity
+import_other(language = "tr", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+tr_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+tr_vec$V1 <- tolower(tr_vec$V1)
+
+# eliminate duplicates 
+tr_vec <- subset(tr_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+tr_sim <- calc_sim(tr_top$lemma, tr_vec)
+tr_top_sim <- top_n(tr_sim, 6)
+tr_top_sim <- subset(tr_top_sim, cue!=target)
+
+# create fake words
+tr_top_sim$fake_cue <- get_fake(tr_top_sim$cue)
+tr_top_sim$fake_target <- get_fake(tr_top_sim$target)
+
+write.csv(tr_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## uk Ukrainian 
+
+```{r eval = F}
+language <- "uk"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "uk", what = "subs_count")
+
+# import subs to check size
+uk_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(uk_subs)
+
+# tag with udpipe
+uk_tagged <- udpipe(uk_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "uk"], parser = "none")
+
+# lower case
+uk_tagged$lemma <- tolower(uk_tagged$lemma)
+
+# exclusions
+uk_tagged <- subset(uk_tagged, nchar(uk_tagged$lemma) >= 3)
+uk_tagged <- subset(uk_tagged, upos %in% word_choice)
+uk_tagged <- subset(uk_tagged, !(lemma %in% stopwords(language = "uk", source = "stopwords-iso")))
+uk_tagged <- subset(uk_tagged, !(grepl("[0-9]", uk_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(uk_subs) <- c("sentence", "freq")
+uk_final <- merge(uk_tagged, uk_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+uk_final <- uk_final[order(uk_final$freq, decreasing = TRUE) , ]
+uk_final <- uk_final[!duplicated(uk_final$lemma), ]
+
+# grab top 10K
+uk_top <- uk_final[1:10000 , ]
+
+# find similarity
+import_other(language = "uk", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+uk_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+uk_vec$V1 <- tolower(uk_vec$V1)
+
+# eliminate duplicates 
+uk_vec <- subset(uk_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+uk_sim <- calc_sim(uk_top$lemma, uk_vec)
+uk_top_sim <- top_n(uk_sim, 6)
+uk_top_sim <- subset(uk_top_sim, cue!=target)
+
+# create fake words
+uk_top_sim$fake_cue <- get_fake(uk_top_sim$cue)
+uk_top_sim$fake_target <- get_fake(uk_top_sim$target)
+
+write.csv(uk_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## ur Urdu 
+
+```{r eval = F}
+language <- "ur"
+what <- "subs_count"
+
+# download other on subs count
+import_other(language = "ur", what = "subs_count")
+
+# import subs to check size
+ur_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ur_subs)
+
+# less than 50k so use wiki for frequency
+import_other(language = "ur", what = "wiki_count")
+
+what <- "wiki_count"
+
+ur_wiki <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(ur_wiki)
+
+# tag with udpipe
+ur_tagged <- udpipe(ur_wiki$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "ur"], parser = "none")
+
+# lower case
+ur_tagged$lemma <- tolower(ur_tagged$lemma)
+
+# exclusions
+ur_tagged <- subset(ur_tagged, nchar(ur_tagged$lemma) >= 3)
+ur_tagged <- subset(ur_tagged, upos %in% word_choice)
+ur_tagged <- subset(ur_tagged, !(lemma %in% stopwords(language = "ur", source = "stopwords-iso")))
+ur_tagged <- subset(ur_tagged, !(grepl("[0-9]", ur_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(ur_wiki) <- c("sentence", "freq")
+ur_final <- merge(ur_tagged, ur_wiki, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+ur_final <- ur_final[order(ur_final$freq, decreasing = TRUE) , ]
+ur_final <- ur_final[!duplicated(ur_final$lemma), ]
+
+# grab top 10K
+ur_top <- ur_final[1:10000 , ]
+
+# find similarity
+import_other(language = "ur", what = "wiki_vec")
+
+what <- "wiki_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/wiki.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"))
+ur_vec <- read.table(paste0(root, what, "/",language, "/wiki.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+ur_vec$V1 <- tolower(ur_vec$V1)
+
+# eliminate duplicates 
+ur_vec <- subset(ur_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+ur_sim <- calc_sim(ur_top$lemma, ur_vec)
+ur_top_sim <- top_n(ur_sim, 6)
+ur_top_sim <- subset(ur_top_sim, cue!=target)
+
+# create fake words
+ur_top_sim$fake_cue <- get_fake(ur_top_sim$cue)
+ur_top_sim$fake_target <- get_fake(ur_top_sim$target)
+
+write.csv(ur_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## vi Vietnamese 
+
+```{r eval = F}
+language <- "vi"
+what <- "subs_count"
+
+# download other on subs count
+# import_other(language = "vi", what = "subs_count")
+
+# import subs to check size
+vi_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(vi_subs)
+
+# tag with udpipe
+vi_tagged <- udpipe(vi_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "vi"], parser = "none")
+
+# lower case
+vi_tagged$lemma <- tolower(vi_tagged$lemma)
+
+# exclusions
+vi_tagged <- subset(vi_tagged, nchar(vi_tagged$lemma) >= 3)
+vi_tagged <- subset(vi_tagged, upos %in% word_choice)
+vi_tagged <- subset(vi_tagged, !(lemma %in% stopwords(language = "vi", source = "stopwords-iso")))
+vi_tagged <- subset(vi_tagged, !(grepl("[0-9]", vi_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(vi_subs) <- c("sentence", "freq")
+vi_final <- merge(vi_tagged, vi_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+vi_final <- vi_final[order(vi_final$freq, decreasing = TRUE) , ]
+vi_final <- vi_final[!duplicated(vi_final$lemma), ]
+
+# grab top 10K
+vi_top <- vi_final[1:10000 , ]
+
+# find similarity
+# import_other(language = "vi", what = "subs_vec")
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+file.rename(paste0(root, what, "/",language, "/subs.", language, ".1e6.vec"),
+            paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"))
+vi_vec <- read.table(paste0(root, what, "/",language, "/subs.", language, ".1e6.txt"), 
+                     quote="\"")
+
+# lower case
+vi_vec$V1 <- tolower(vi_vec$V1)
+
+# eliminate duplicates 
+vi_vec <- subset(vi_vec, !duplicated(V1))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+vi_sim <- calc_sim(vi_top$lemma, vi_vec)
+vi_top_sim <- top_n(vi_sim, 6)
+vi_top_sim <- subset(vi_top_sim, cue!=target)
+
+# create fake words
+vi_top_sim$fake_cue <- get_fake(vi_top_sim$cue)
+vi_top_sim$fake_target <- get_fake(vi_top_sim$target)
+
+write.csv(vi_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## zh_cn Cantonese
+
+```{r eval = F}
+language <- "zh_cn"
+what <- "subs_count"
+
+# import our own subs count
+zh_cn_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(zh_cn_subs)
+
+colnames(zh_cn_subs) <- c("id", "unigram", "freq")
+
+# tag with udpipe
+zh_cn_tagged <- udpipe(zh_cn_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "zh_cn"], parser = "none")
+
+# lower case
+zh_cn_tagged$lemma <- tolower(zh_cn_tagged$lemma)
+
+# exclusions
+zh_cn_tagged <- subset(zh_cn_tagged, nchar(zh_cn_tagged$lemma) >= 3)
+zh_cn_tagged <- subset(zh_cn_tagged, upos %in% word_choice)
+zh_cn_tagged <- subset(zh_cn_tagged, !(lemma %in% stopwords(language = "zh", source = "stopwords-iso")))
+zh_cn_tagged <- subset(zh_cn_tagged, !(grepl("[0-9]", zh_cn_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(zh_cn_subs) <- c("sentence", "freq")
+zh_cn_final <- merge(zh_cn_tagged, zh_cn_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+zh_cn_final <- zh_cn_final[order(zh_cn_final$freq, decreasing = TRUE) , ]
+zh_cn_final <- zh_cn_final[!duplicated(zh_cn_final$lemma), ]
+
+# grab top 10K
+zh_cn_top <- zh_cn_final[1:10000 , ]
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+zh_cn_vec <- import(paste0(root, what, "/",language, "/zh_300_5_sg_wxd.csv"))
+
+colnames(zh_cn_vec) <- zh_cn_vec[1 , ]
+zh_cn_vec <- zh_cn_vec[-1, ]
+
+# lower case
+zh_cn_vec$word <- tolower(zh_cn_vec$word)
+
+# eliminate duplicates 
+zh_cn_vec <- subset(zh_cn_vec, !duplicated(word))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+colnames(zh_cn_vec)[1] <- "V1"
+zh_cn_sim <- calc_sim(zh_cn_top$lemma, zh_cn_vec)
+zh_cn_top_sim <- top_n(zh_cn_sim, 6)
+zh_cn_top_sim <- subset(zh_cn_top_sim, cue!=target)
+
+# create fake words
+zh_cn_top_sim$fake_cue <- get_fake(zh_cn_top_sim$cue)
+zh_cn_top_sim$fake_target <- get_fake(zh_cn_top_sim$target)
+
+write.csv(zh_cn_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+
+## zh_tw Mandarin TO DO 
+
+```{r eval = F}
+language <- "zh_tw"
+what <- "subs_count"
+
+# import our own subs count
+zh_tw_subs <- import(paste0(root, what, "/",language, "/", language, ".zip"))
+
+# check size
+nrow(zh_tw_subs)
+
+colnames(zh_tw_subs) <- c("id", "unigram", "freq")
+
+# tag with udpipe
+zh_tw_tagged <- udpipe(zh_tw_subs$unigram, object = overall_languages$udpipe_model[overall_languages$language_code == "zh_tw"], parser = "none")
+
+# lower case
+zh_tw_tagged$lemma <- tolower(zh_tw_tagged$lemma)
+
+# exclusions
+zh_tw_tagged <- subset(zh_tw_tagged, nchar(zh_tw_tagged$lemma) >= 3)
+zh_tw_tagged <- subset(zh_tw_tagged, upos %in% word_choice)
+zh_tw_tagged <- subset(zh_tw_tagged, !(lemma %in% stopwords(language = "zh", source = "stopwords-iso")))
+zh_tw_tagged <- subset(zh_tw_tagged, !(grepl("[0-9]", zh_tw_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(zh_tw_subs) <- c("sentence", "freq")
+zh_tw_final <- merge(zh_tw_tagged, zh_tw_subs, by = "sentence", all.x = T)
+
+# eliminate duplicates by lemma
+zh_tw_final <- zh_tw_final[order(zh_tw_final$freq, decreasing = TRUE) , ]
+zh_tw_final <- zh_tw_final[!duplicated(zh_tw_final$lemma), ]
+
+# grab top 10K
+zh_tw_top <- zh_tw_final[1:10000 , ]
+
+what <- "subs_vec"
+
+# load similarity vec
+utils::unzip(zipfile = paste0(root, what, "/",language, '/', language, ".zip"),
+             exdir = paste0(root, what, "/",language))
+zh_tw_vec <- import(paste0(root, what, "/",language, "/tw_300_5_sg_wxd.csv"))
+
+colnames(zh_tw_vec) <- zh_tw_vec[1 , ]
+zh_tw_vec <- zh_tw_vec[-1, ]
+
+# lower case
+zh_tw_vec$word <- tolower(zh_tw_vec$word)
+
+# eliminate duplicates 
+zh_tw_vec <- subset(zh_tw_vec, !duplicated(word))
+
+# calculate similarity, take top 6, drop cosine of cue-target match
+colnames(zh_tw_vec)[1] <- "V1"
+zh_tw_sim <- calc_sim(zh_tw_top$lemma, zh_tw_vec)
+zh_tw_top_sim <- top_n(zh_tw_sim, 6)
+zh_tw_top_sim <- subset(zh_tw_top_sim, cue!=target)
+
+# create fake words
+zh_tw_top_sim$fake_cue <- get_fake(zh_tw_top_sim$cue)
+zh_tw_top_sim$fake_target <- get_fake(zh_tw_top_sim$target)
+
+write.csv(zh_tw_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row.names = F)
+```
+
+## Translation File
+
+Using google translate in gsheets, we were able to get most of the words translated by splitting up the file and using the translate option. 
+
+```{r eval = F}
+labels <- list.files(paste0(getwd(), "/similarity"), pattern = "*.csv")
+filenames <- list.files(paste0(getwd(), "/similarity"), pattern = "*.csv", full.names = T)
+ldf <- lapply(filenames, read.csv)
+names(ldf) <- gsub("_sims.csv", "", labels)
+
+fullsims <- rbindlist(ldf, use.names=TRUE, fill=TRUE, idcol=names(ldf))
+colnames(fullsims)[1] <- "language"
+
+# don't need english
+fullsims <- subset(fullsims, language != "en")
+
+# don't need these other columns
+fullsims <- fullsims[ , c("language", "cue", "target")]
+
+# melt the information down
+fullsims <- melt(fullsims,
+                 measure.vars = c("cue", "target"))
+
+# only need language and value
+fullsims <- fullsims[ , c("language", "value")]
+
+# only translate each word once
+fullsims <- unique(fullsims)
+
+# save file for google translate
+nrow(fullsims) * ncol(fullsims) # you can only have 5 million 
+
+# break the file down 
+# size <- nrow(fullsims)
+# split_number <- 5
+# final_split <- size / split_number
+# r <- 1
+# write.csv(fullsims[r:final_split,  ], "fullsims1.csv", row.names = F)
+# write.csv(fullsims[(r+final_split):(final_split*2)], "fullsims2.csv", row.names = F)
+# write.csv(fullsims[(r+final_split*2):(final_split*3)], "fullsims3.csv", row.names = F)
+# write.csv(fullsims[(r+final_split*3):(final_split*4)], "fullsims4.csv", row.names = F)
+# write.csv(fullsims[(r+final_split*4):(final_split*5)], "fullsims5.csv", row.names = F)
+```
+
+If necessary, we can pull information with Selenium. 
+
+```{r eval = F}
+library(rvest)
+library(RSelenium)
+library(dplyr, quietly = T)
+
+## start selenium
+rD <- rsDriver(browser = "firefox")
+remDr <- rD[["client"]]
+remDr$navigate("https://translate.Google.com/")
+
+# loop here over words you'd like to translate
+words_translate <- c("hebben deze van door heet woord maar wat sommige")
+
+webElem <- remDr$findElement(using = "css selector",".er8xn")
+webElem$sendKeysToElement(list(words_translate, "\uE007"))
+
+webAnswer <- remDr$findElement(using = "css selector", ".dePhmb")
+words <- webAnswer$getElementText()[[1]][1]
+words <- gsub("\n volume_up\ncontent_copy\nshare", "", words)
+
+
+# end the session
+#close the browser 
+remDr$close()
+# stop the selenium server
+rD[["server"]]$stop()
+```
+
+## Import Translation and Merge
 
 ```{r}
-import_subs(language = "zh_tw", 
-            root = root)
-calc_all_files(root = root, 
-               language = "zh_tw",
-               model_language = overall_languages$udpipe_model[overall_languages$language_code == "zh_tw"])
+# open all files 
+labels <- list.files(paste0(getwd(), "/similarity"), pattern = "*.csv")
+filenames <- list.files(paste0(getwd(), "/similarity"), pattern = "*.csv", full.names = T)
+ldf <- lapply(filenames, read.csv)
+names(ldf) <- gsub("_sims.csv", "", labels)
+
+# open translation file
+translation_dict <- import("translation_dict.csv")
+
+# in each list merge in the English information
+for (i in 1:length(ldf)){
+  
+  if (names(ldf)[[i]] != "en"){
+    temp_dict <- translation_dict[translation_dict$language == names(ldf)[i], ]
+    colnames(temp_dict)[2:3] <- c("cue", "cue_trans")
+    ldf[[i]] <- merge(ldf[[i]], temp_dict[ , c("cue", "cue_trans")], all.x = T, by = "cue")
+  
+    colnames(temp_dict)[2:3] <- c("target", "target_trans")
+    ldf[[i]] <- merge(ldf[[i]], temp_dict[ , c("target", "target_trans")], all.x = T, by = "target")
+    
+    # remove cue-target matches
+    ldf[[i]] <- ldf[[i]][ldf[[i]]$cue_trans != ldf[[i]]$target_trans, ]
+    
+    ldf[[i]]$unique <- paste0(ldf[[i]]$cue_trans, ldf[[i]]$target_trans)
+    colnames(ldf[[i]])[1:5] <- paste(names(ldf)[i], colnames(ldf[[i]]), sep = "_")[1:5]
+    ldf[[i]] <- ldf[[i]][ , -c(6:7)]
+    
+    ldf[[i]] <- ldf[[i]][!duplicated(ldf[[i]]$unique), ]
+    
+  } else {
+    
+    ldf[[i]]$unique <- paste0(ldf[[i]]$cue, ldf[[i]]$target)
+    colnames(ldf[[i]])[1:5] <- paste(names(ldf)[i], colnames(ldf[[i]]), sep = "_")[1:5]
+    
+    ldf[[i]] <- ldf[[i]][!duplicated(ldf[[i]]$unique), ]
+    
+  }
+  
+}
+
+# put english first
+order <- names(ldf)[c(9, 1:8, 10:length(ldf))]
+ldf <- ldf[order]
+
+finalstimuli <- purrr::reduce(ldf, full_join, by = "unique")
+
+finalstimuli$total <- apply(finalstimuli, 1, function (x) { sum(!is.na(x))})
+finalstimuli$total <- finalstimuli$total / ncol(finalstimuli) * 100
+summary(finalstimuli$total)
+
+finalstimuli <- finalstimuli[ order(finalstimuli$total, decreasing = TRUE), 
+                              ]
+write.csv(finalstimuli, "proposed_finalstimuli.csv", row.names = F)
+
+# write out small version to manually check 
+smallstim <- finalstimuli[1:5000, 1:6]
+
+write.csv(smallstim, "finalstimuli.csv", row.names = F)
 ```
 
-
-## Afrikaans
-
-## 
-
-
-
-
-# Examine the Results
-
-## Afrikaans
-
-In this section, we will see if the results are comparable from the subs2vec project to leverage already processed data. 
-
-```{r}
-# our processed data
-af_freq <- import("frequency/af/af_partaa.txt_frequency.csv")
-af_summary <- af_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
-pop_pos <- af_freq[order(af_freq$freq, decreasing = T) , ]
-pop_pos <- pop_pos[!duplicated(pop_pos$token) , ]
-af_summary <- merge(af_summary, pop_pos[ , c("token", "upos") ], by = "token")
-
-
-# subs2vec data
-af_subs <- import("https://hdl.handle.net/1839/a1a82d13-be9d-4024-bbfe-90de100fcd3c@download")
-colnames(af_subs) <- c("token", "freq")
-af_subs_summary <- udpipe(af_subs$token, model_language, parser = "none")
-af_subs_summary <- af_subs_summary[ , c("token", "upos")]
-af_subs_summary <- merge(af_subs_summary, af_subs, by = "token")
-
-af_together <- merge(af_summary, af_subs_summary, by = "token", all = T)
-```
-
-How many overall matches do we get?
-
-```{r}
-nrow(af_together)
-nrow(na.omit(af_together))
-
-af_all <- na.omit(af_together)
-
-# take out less than two letters
-af_all <- subset(af_all, nchar(af_all$token) > 2)
-nrow(af_all)
-```
-
-How correlated are the top most frequent words?
-
-```{r}
-cor(af_all$calc_freq, af_all$freq)
-plot(af_all$calc_freq, af_all$freq)
-
-MSE <- af_all$calc_freq - af_all$freq
-
-mean(MSE)
-sd(MSE)
-hist(MSE)
-```
-
-How much do the parts of speech match?
-
-```{r}
-words_want <- c("NOUN", "VERB", "ADJ", "ADV", "PRON", "PROPN", "INTJ", "NUM")
-sum(af_all$upos.x == af_all$upos.y) / nrow(af_all)
-
-af_just_want <- subset(af_all, upos.x %in% words_want | upos.y %in% words_want)
-sum(af_just_want$upos.x == af_just_want$upos.y) / nrow(af_all)
-
-table("estimated" = af_all$upos.y, "calculated" = af_all$upos.x)
-```
-
-Would we pick the same approximate words?
-
-```{r}
-top_calculated <- subset(af_all, upos.x %in% words_want)
-top_calculated <- top_calculated$token[order(top_calculated$calc_freq, decreasing = T)][1:5000]
-
-top_estimated <- subset(af_all, upos.y %in% words_want)
-top_estimated <- top_estimated$token[order(top_estimated$freq, decreasing = T)][1:5000]
-
-sum(top_estimated %in% top_calculated) / 5000
-```
-
-
-
-
-## Japanese
-
-```{r}
-# our processed data
-ja_freq <- import_list("frequency/ja/ja_archive.zip", rbind = T)
-ja_summary <- ja_freq %>% group_by(token) %>% summarize(calc_freq = sum(freq))
-pop_pos <- ja_freq[order(ja_freq$freq, decreasing = T) , ]
-pop_pos <- pop_pos[!duplicated(pop_pos$token) , ]
-ja_summary <- merge(ja_summary, pop_pos[ , c("token", "upos") ], by = "token")
-
-
-# subs2vec data
-ja_subs <- import("https://hdl.handle.net/1839/a1a82d13-be9d-4024-bbfe-90de100fcd3c@download")
-colnames(ja_subs) <- c("token", "freq")
-ja_subs_summary <- udpipe(ja_subs$token, model_language, parser = "none")
-ja_subs_summary <- ja_subs_summary[ , c("token", "upos")]
-ja_subs_summary <- merge(ja_subs_summary, ja_subs, by = "token")
-
-ja_together <- merge(ja_summary, ja_subs_summary, by = "token", all = T)
-```
-
-How many overall matches do we get?
-
-```{r}
-nrow(ja_together)
-nrow(na.omit(ja_together))
-
-ja_all <- na.omit(ja_together)
-
-# take out less than two letters
-ja_all <- subset(ja_all, nchar(ja_all$token) > 2)
-nrow(ja_all)
-```
-
-How correlated are the top most frequent words?
-
-```{r}
-cor(ja_all$calc_freq, ja_all$freq)
-plot(ja_all$calc_freq, ja_all$freq)
-
-MSE <- ja_all$calc_freq - ja_all$freq
-
-mean(MSE)
-sd(MSE)
-hist(MSE)
-```
-
-How much do the parts of speech match?
-
-```{r}
-words_want <- c("NOUN", "VERB", "ADJ", "ADV", "PRON", "PROPN", "INTJ", "NUM")
-sum(ja_all$upos.x == ja_all$upos.y) / nrow(ja_all)
-
-ja_just_want <- subset(ja_all, upos.x %in% words_want | upos.y %in% words_want)
-sum(ja_just_want$upos.x == ja_just_want$upos.y) / nrow(ja_all)
-
-table("estimated" = ja_all$upos.y, "calculated" = ja_all$upos.x)
-```
-
-Would we pick the same approximate words?
-
-```{r}
-top_calculated <- subset(ja_all, upos.x %in% words_want)
-top_calculated <- top_calculated$token[order(top_calculated$calc_freq, decreasing = T)][1:5000]
-
-top_estimated <- subset(ja_all, upos.y %in% words_want)
-top_estimated <- top_estimated$token[order(top_estimated$freq, decreasing = T)][1:5000]
-
-sum(top_estimated %in% top_calculated) / 5000
-```
