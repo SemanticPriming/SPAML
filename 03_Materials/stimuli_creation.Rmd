@@ -3443,6 +3443,11 @@ finalstimuli <- finalstimuli[ order(finalstimuli$total, decreasing = TRUE),
                               ]
 write.csv(finalstimuli, "proposed_finalstimuli.csv", row.names = F)
 
+# figure out duplicates
+tempstim <- finalstimuli[ , c("en_cue", "en_target")]
+tempstim$dup1 <- duplicated(finalstimuli$en_cue)
+tempstim$dup2 <- duplicated(finalstimuli$en_target)
+
 # write out small version to manually check 
 smallstim <- finalstimuli[1:5000, 1:6]
 
