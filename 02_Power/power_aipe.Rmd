@@ -13,6 +13,8 @@ knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
   ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
 })
+
+library(rio)
 ```
 
 ## A Brief Overview
@@ -100,7 +102,7 @@ Another issue to consider is that each participant likely has a somewhat arbitra
 
 ```{r read_data}
 #read in the ELP data
-ELPmaster <- read.csv("ELPDecisionData.csv")
+ELPmaster <- import("ELPDecisionData.zip")
 
 #use the ave function to create a z-score of each participant
 #they only did one session 
@@ -267,7 +269,7 @@ In the SPP, participants were given a lexical decision task with a priming cue w
 
 ```{r spp_data}
 ##read in the SPP data
-SPPmaster <- read.csv("subjectdataLDT.csv")
+SPPmaster <- import("subjectdataLDT.zip")
 
 ##drop the nonwords and non accurate, this has already been z scored
 SPPcorrect <- subset(SPPmaster, #data frame
