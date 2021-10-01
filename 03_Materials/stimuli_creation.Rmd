@@ -3441,16 +3441,43 @@ summary(finalstimuli$total)
 
 finalstimuli <- finalstimuli[ order(finalstimuli$total, decreasing = TRUE), 
                               ]
-write.csv(finalstimuli, "proposed_finalstimuli.csv", row.names = F)
-
-# figure out duplicates
-tempstim <- finalstimuli[ , c("en_cue", "en_target")]
-tempstim$dup1 <- duplicated(finalstimuli$en_cue)
-tempstim$dup2 <- duplicated(finalstimuli$en_target)
+# write.csv(finalstimuli, "proposed_finalstimuli.csv", row.names = F)
 
 # write out small version to manually check 
-smallstim <- finalstimuli[1:5000, 1:6]
+smallstim <- finalstimuli[1:10000, 1:6]
 
-write.csv(smallstim, "finalstimuli.csv", row.names = F)
+# figure out duplicates
+smallstim$dup1 <- duplicated(smallstim$en_cue)
+smallstim$dup2 <- duplicated(smallstim$en_target)
+
+# write.csv(smallstim, "finalstimuli.csv", row.names = F)
 ```
+
+## Final Stimuli Set
+
+```{r}
+# import selected words
+selected <- import("finalstimuli_list.xlsx")
+
+# use unique to grab the full set
+selected_final <- subset(finalstimuli, unique %in% selected$unique)
+
+# fill in missing english words
+selected_final_NA <- subset(selected_final, is.na(en_cue))
+selected_final_not <- subset(selected_final, !is.na(en_cue))
+
+selected_final_NA <- merge(selected_final_NA, selected, by = "unique")
+selected_final_NA <- selected_final_NA[ , c(223:224, 1, 4:222) ]
+colnames(selected_final_NA)[1:2] <- c("en_cue", "en_target")
+
+# put them back
+selected_final <- rbind(selected_final_NA, selected_final_not)
+
+# write this out for RR
+write.csv(selected_final, "final_selected_words.csv", row.names = F)
+```
+
+## Get Missing Information
+
+We will fill in the missing holes of the data when the procedure for selecting the words has been approved. Each language will be checked by a translator for that language before putting online, and then each of the final words will be analyzed for cosine from their vector space model. Please note that the fake words will also be assessed to ensure they are appropriate psuedowords. 
 
