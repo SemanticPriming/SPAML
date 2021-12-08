@@ -1,0 +1,155 @@
+---
+title: "Author_List"
+author: "erin buchanan"
+date: "Last Knitted: `r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+#libraries
+library(gsheet)
+library(rio)
+```
+
+```{r}
+#grab tenzing information
+lab_gsheet <- gsheet2tbl("https://docs.google.com/spreadsheets/d/15f0OaG_R6WK_hOIhBwwQ3YEzrjbsVkUT8FqTQilR4zA/edit?usp=sharing")
+
+admin_team <- c(lab_gsheet$PSA_ID[lab_gsheet$Tier == 1 | #erin/kelly
+                                    lab_gsheet$Tier == 1.1 | #admin
+                                    lab_gsheet$Tier == 3]) #sav
+```
+
+```{r}
+#grab download canvas
+canvas_contributions <- import("contributions.csv")
+
+#drop the first line
+canvas_contributions <- canvas_contributions[-1 , ]
+```
+
+```{r}
+# for the registered report they have to do the RR survey and contributor survey
+combined_sheet <- merge(lab_gsheet, canvas_contributions[ , c("SIS User ID", "SPAML Registered Report (48)", "Collaborator Agreement (22)")], 
+                    by.x = "PSA_ID", by.y = "SIS User ID", all = T) 
+```
+
+## Completed RR Not on Our Sheet
+
+```{r}
+subset(combined_sheet, `SPAML Registered Report (48)` > 0 && is.na(Tier))
+```
+
+## Did Not Complete RR
+
+```{r}
+subset(combined_sheet, (is.na(`SPAML Registered Report (48)`) | `SPAML Registered Report (48)` == 0) & !is.na(Tier) & !(PSA_ID %in% admin_team))
+```
+
+## Did Not Complete Collaborator Agreement 
+
+```{r}
+subset(combined_sheet, (is.na(`Collaborator Agreement (22)`) | `Collaborator Agreement (22)` == 0) & !is.na(Tier) & !(PSA_ID %in% admin_team))
+```
+
+## Authorship
+
+```{r}
+# print out authorship 
+
+# take out double spaces made by concat in gsheet
+combined_sheet$`Full Name` <- gsub("  ", " ", combined_sheet$`Full Name`)
+combined_sheet$`Full Affiliation` <- gsub("; ;", "", combined_sheet$`Full Affiliation`)
+combined_sheet$`Full Affiliation` <- gsub(";$", "", combined_sheet$`Full Affiliation`)
+
+ordered_author <- combined_sheet
+
+# fill in collab + RR admin team
+ordered_author[ordered_author$PSA_ID %in% admin_team , c("SPAML Registered Report (48)", "Collaborator Agreement (22)")] <- 1
+  
+# drop people who didn't fill out stuff
+ordered_author <- subset(ordered_author, 
+                         `SPAML Registered Report (48)` > 0 &
+                           `Collaborator Agreement (22)` > 0)
+
+# randomize 2 rest are in order 
+set.seed(5843902)
+  # get rows with 2
+  rows_2 <- ordered_author$PSA_ID[grep("^2", ordered_author$Tier)]
+  # randomize
+  rows_2 <- sample(rows_2, length(rows_2), replace = FALSE)
+  # author PSA ID order
+  PSA_ID_sorted <- c(lab_gsheet$PSA_ID[lab_gsheet$Tier == 1], #tier 1
+      lab_gsheet$PSA_ID[lab_gsheet$Tier == 1.1], #tier 1.1
+      lab_gsheet$PSA_ID[lab_gsheet$Tier == 1.2], #tier 1.2
+      rows_2, #tier 2
+      lab_gsheet$PSA_ID[lab_gsheet$Tier == 3])
+  # put back together
+  ordered_author <- ordered_author[match(PSA_ID_sorted, ordered_author$PSA_ID), ]
+  
+  
+ordered_author$full <- paste(ordered_author$`Full Name`, 
+                             ordered_author$`Full Affiliation`, 
+                             ordered_author$`Email address`, 
+                             sep = ", ")
+```
+
+`r paste(ordered_author$full, collapse = "  \n")`
+
+## Credit
+
+```{r}
+ordered_author$Conceptualization <- ifelse(ordered_author$Conceptualization == TRUE, "Conceptualization", "")
+
+ordered_author$`Data curation` <- ifelse(ordered_author$`Data curation` == TRUE, "Data Curation", "")
+
+ordered_author$`Formal analysis` <- ifelse(ordered_author$`Formal analysis` == TRUE, "Formal Analysis", "")
+
+ordered_author$`Funding acquisition` <- ifelse(ordered_author$`Funding acquisition` == TRUE, "Funding Acquisition", "")
+
+ordered_author$Investigation <- ifelse(ordered_author$Investigation == TRUE, "Investigation", "")
+
+ordered_author$Methodology <- ifelse(ordered_author$Methodology == TRUE, "Methodology", "")
+
+ordered_author$`Project administration` <- ifelse(ordered_author$`Project administration` == TRUE, "Project Administration", "")
+
+ordered_author$Resources <- ifelse(ordered_author$Resources == TRUE, "Resources", "")
+
+ordered_author$Software <- ifelse(ordered_author$Software == TRUE, "Software", "")
+
+ordered_author$Supervision <- ifelse(ordered_author$Supervision == TRUE, "Supervision", "")
+
+ordered_author$Validation <- ifelse(ordered_author$Validation == TRUE, "Validation", "")
+
+ordered_author$Visualization <- ifelse(ordered_author$Visualization == TRUE, "Visualization", "")
+
+ordered_author$`Writing - original draft` <- ifelse(ordered_author$`Writing - original draft` == TRUE, "Writing - Original Draft", "")
+
+ordered_author$`Writing - review & editing` <- ifelse(ordered_author$`Writing - review & editing` == TRUE, "Writing - Review & Editing", "")
+
+ordered_author$credit <- paste(paste(ordered_author$`Full Name`, ": ", sep = ""), 
+                               ordered_author$Conceptualization, 
+                               ordered_author$`Data curation`, 
+                               ordered_author$`Formal analysis`, 
+                               ordered_author$`Funding acquisition`, 
+                               ordered_author$Investigation, 
+                               ordered_author$Methodology,
+                               ordered_author$`Project administration`, 
+                               ordered_author$Resources, 
+                               ordered_author$Software, 
+                               ordered_author$Supervision, 
+                               ordered_author$Validation, 
+                               ordered_author$Visualization, 
+                               ordered_author$`Writing - original draft`, 
+                               ordered_author$`Writing - review & editing`, 
+                               sep = ", ")
+
+
+ordered_author$credit <- gsub(" ,", "", ordered_author$credit)
+```
+
+`r paste(ordered_author$credit, collapse = "  \n")`
