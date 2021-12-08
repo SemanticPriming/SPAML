@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = FALSE)
 #libraries
 library(gsheet)
 library(rio)
+library(flextable)
 ```
 
 ```{r}
@@ -41,19 +42,23 @@ combined_sheet <- merge(lab_gsheet, canvas_contributions[ , c("SIS User ID", "SP
 ## Completed RR Not on Our Sheet
 
 ```{r}
-subset(combined_sheet, `SPAML Registered Report (48)` > 0 && is.na(Tier))
+autofit(flextable(subset(combined_sheet, 
+                 `SPAML Registered Report (48)` > 0 && is.na(Tier), 
+                 select = c(PSA_ID, `Full Name`, `Email address`))))
 ```
 
 ## Did Not Complete RR
 
 ```{r}
-subset(combined_sheet, (is.na(`SPAML Registered Report (48)`) | `SPAML Registered Report (48)` == 0) & !is.na(Tier) & !(PSA_ID %in% admin_team))
+autofit(flextable(subset(combined_sheet, (is.na(`SPAML Registered Report (48)`) | `SPAML Registered Report (48)` == 0) & !is.na(Tier) & !(PSA_ID %in% admin_team), 
+                 select = c(PSA_ID, `Full Name`, `Email address`))))
 ```
 
 ## Did Not Complete Collaborator Agreement 
 
 ```{r}
-subset(combined_sheet, (is.na(`Collaborator Agreement (22)`) | `Collaborator Agreement (22)` == 0) & !is.na(Tier) & !(PSA_ID %in% admin_team))
+autofit(flextable(subset(combined_sheet, (is.na(`Collaborator Agreement (22)`) | `Collaborator Agreement (22)` == 0) & !is.na(Tier) & !(PSA_ID %in% admin_team), 
+                 select = c(PSA_ID, `Full Name`, `Email address`))))
 ```
 
 ## Authorship
