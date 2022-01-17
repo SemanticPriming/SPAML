@@ -3,6 +3,9 @@
 /03_Materials/data/*/
 /03_Materials/frequency/*/
 
+# Apple stuff
+.DS_Store
+
 # Word files
 ~$*.docx
 
