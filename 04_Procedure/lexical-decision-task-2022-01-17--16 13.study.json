@@ -27,8 +27,8 @@
         }
       ],
       "title": "Overall Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">This experiment is concerned with how people process words. You will be asked to view words and judge them.</p>\n\n    <p class=\"text-left\">The words will be presented in the middle of the screen. You should ask yourself if the word on the screen is a real word or a fake word.</p>\n\n    <p class=\"text-left\">If you recognize the word on the screen like <b>COLD</b>, please press the <kbd>Z</kbd> key for real word. If the word is made-up nonsense, like <b>WERM</b>, please press <kbd>?</kbd> for fake word. During practice, we will give you feedback.</p>\n\n    <p class=\"text-left\">We'd like to ask to to respond as quickly as you can while remaining accurate. You have five seconds to respond to every word</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to try a few for practice.\n</footer>",
-      "_tab": "Files",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">This experiment is concerned with how people process words. You will be asked to view words and judge them.</p>\n\n    <p class=\"text-left\">The words will be presented in the middle of the screen. You should ask yourself if the word on the screen is a real word or a fake word.</p>\n\n    <p class=\"text-left\">If you recognize the word on the screen like <b>COLD</b>, please press the <kbd>Z</kbd> key for real word. If the word is made-up nonsense, like <b>WERM</b>, please press <kbd>/</kbd> for fake word. During practice, we will give you feedback.</p>\n\n    <p class=\"text-left\">We'd like to ask to to respond as quickly as you can while remaining accurate. You have five seconds to respond to every word</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to try a few for practice.\n</footer>",
+      "_tab": "Content",
       "plugins": []
     },
     "2": {
@@ -1033,7 +1033,7 @@
       "files": [
         {
           "localPath": "stimuli_english_real2.json",
-          "poolPath": "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"
+          "poolPath": "embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"
         }
       ],
       "parameters": [
@@ -1075,7 +1075,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Scripts",
+      "_tab": "Files",
       "tardy": true,
       "_collapsed": false
     },
@@ -1331,7 +1331,7 @@
       "files": [
         {
           "localPath": "stimuli_english_real5.json",
-          "poolPath": "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"
+          "poolPath": "embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"
         }
       ],
       "parameters": [
@@ -1373,7 +1373,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Scripts",
+      "_tab": "Files",
       "tardy": true,
       "_collapsed": false
     },
@@ -1629,7 +1629,7 @@
       "files": [
         {
           "localPath": "stimuli_english_real4.json",
-          "poolPath": "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"
+          "poolPath": "embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"
         }
       ],
       "parameters": [
@@ -1927,7 +1927,7 @@
       "files": [
         {
           "localPath": "stimuli_english_real3.json",
-          "poolPath": "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"
+          "poolPath": "embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"
         }
       ],
       "parameters": [
@@ -1969,7 +1969,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Scripts",
+      "_tab": "Files",
       "tardy": true,
       "_collapsed": false
     },
@@ -2225,7 +2225,7 @@
       "files": [
         {
           "localPath": "stimuli_english_real6.json",
-          "poolPath": "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"
+          "poolPath": "embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"
         }
       ],
       "parameters": [
@@ -2267,7 +2267,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Scripts",
+      "_tab": "Files",
       "tardy": true,
       "_collapsed": false
     },
@@ -2548,6 +2548,31 @@
         "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjIiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
         "source": "embedded",
         "checkSum": "3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41"
+      },
+      "embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjk4IiwiY2xhc3MiOiJ3b3JkIn0seyJ3b3JkIjoiTlVSU0UiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJISUNFIiwiY2xhc3MiOiJub253b3JkIn0seyJ3b3JkIjoiQk9TU0lMIiwiY2xhc3MiOiJub253b3JkIn1dCg==",
+        "source": "embedded",
+        "checkSum": "ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871"
+      },
+      "embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjg5MCIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6Ik5VUlNFIiwiY2xhc3MiOiJ3b3JkIn0seyJ3b3JkIjoiSElDRSIsImNsYXNzIjoibm9ud29yZCJ9LHsid29yZCI6IkJPU1NJTCIsImNsYXNzIjoibm9ud29yZCJ9XQo=",
+        "source": "embedded",
+        "checkSum": "3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e"
+      },
+      "embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjYiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06"
+      },
+      "embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjUiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee"
+      },
+      "embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjMiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99"
       }
     },
     "bundledFiles": {
