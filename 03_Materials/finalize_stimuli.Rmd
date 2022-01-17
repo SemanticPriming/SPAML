@@ -1,0 +1,131 @@
+---
+title: "Finalize Stimuli"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document takes the proposed stimuli and finalizes the information for each one to be included in the experiment. This section includes languages we are currently running in the experiment. 
+
+## Libraries
+
+```{r}
+library(rio)
+library(lsa)
+library(quanteda)
+```
+
+## Functions
+
+```{r}
+# make up the fake words 
+get_fake <- function(wordlist){
+
+  bigrams <- as.data.frame(
+    table(char_ngrams(
+      unlist(tokens(wordlist, "character")), 
+      concatenator = "")))
+  
+  new_words <- rep(NA, length(wordlist))
+
+  for (i in 1:length(wordlist)){
+  
+  word <- wordlist[i]
+  # pick a random letter
+  num_replace <- sample(1:nchar(word), 1)
+  char_replace <- substr(word, num_replace, num_replace)
+
+    # if the first letter
+    if (num_replace == 1){
+      
+      examine_replace <- substr(word, num_replace + 1, num_replace + 1)
+      poss_replace <- sample(substr(
+        bigrams$Var1[grepl(paste0(examine_replace, "$"), bigrams$Var1)], 1, 1),1)
+      
+      broken_down <- unlist(strsplit(word, split = ""))
+      broken_down[num_replace] <- poss_replace
+      new_words[i] <- paste(broken_down, collapse = "")
+      
+      # if the last letter
+    } else if (num_replace == nchar(word)){
+      
+      examine_replace <- substr(word, num_replace - 1, num_replace - 1)
+      poss_replace <- sample(substr(
+        bigrams$Var1[grepl(paste0("^", examine_replace), bigrams$Var1)], 2, 2),1)
+
+      broken_down <- unlist(strsplit(word, split = ""))
+      broken_down[num_replace] <- poss_replace
+      new_words[i] <- paste(broken_down, collapse = "")
+      
+      # if anything else 
+    } else {
+      
+      examine_replace_before <- substr(word, num_replace - 1, num_replace - 1)
+      examine_replace_after <- substr(word, num_replace + 1, num_replace + 1)
+      
+      intersection <- intersect(substr(bigrams$Var1[
+        grepl(paste0("^", examine_replace_before), 
+              bigrams$Var1)], 2, 2),
+        substr(bigrams$Var1[
+          grepl(paste0(examine_replace_after, "$"), 
+                bigrams$Var1)], 1, 1))
+      
+      if (length(intersection) > 0 ){
+        poss_replace <- sample(intersection, 1)
+      } else { poss_replace <- sample(substr(bigrams$Var1[
+        grepl(paste0("^", examine_replace_before), 
+              bigrams$Var1)], 2, 2), 1)
+        }
+      
+      broken_down <- unlist(strsplit(word, split = ""))
+      broken_down[num_replace] <- poss_replace
+      new_words[i] <- paste(broken_down, collapse = "")
+    
+    }
+  }
+  return(new_words) 
+}
+```
+
+
+## Proposed Data
+
+```{r}
+words <- import("final_selected_words.csv")
+```
+
+Note: all models were downloaded from subs2vec github and stored on a separate drive, as they are very large. 
+
+## English
+
+```{r}
+en <- words[ , c("en_cue", "en_target", "en_fake_cue", "en_fake_target", "en_cosine")]
+en$en_cue <- tolower(en$en_cue)
+en$en_target <- tolower(en$en_target)
+
+# set up model
+en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
+en_model <- na.omit(en_model)
+en_model$V1 <- tolower(en_model$V1)
+en_model <- en_model[!duplicated(en_model$V1), ]
+rownames(en_model) <- en_model$V1
+en_model <- en_model[ , -1]
+
+# get cosine
+for (row in 1:nrow(en)){
+  en$en_cosine[row] <- cosine(as.matrix(t(en_model[
+    c(en$en_cue[row], en$en_target[row]) , ])))[2]
+}
+
+# create fake words 
+en$en_fake_cue <- get_fake(en$en_cue)
+en$en_fake_target <- get_fake(en$en_target)
+
+# write it out 
+write.csv(en, "../04_Procedure/en/en_words.csv", row.names = F)
+```
+
