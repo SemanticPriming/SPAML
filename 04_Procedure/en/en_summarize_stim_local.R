@@ -165,10 +165,10 @@ processData <- function(database) {
 # Data --------------------------------------------------------------------
 
 # original word lists
-en_words <- import("/var/www/html/en/en_words.csv")
+en_words <- import("./04_Procedure/en/en_words.csv")
 
 # collected data
-en_data_all <- processData("/var/www/html/en/data/data.sqlite")
+en_data_all <- processData("./04_Procedure/en/data/data.sqlite")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -273,14 +273,14 @@ en_data <- en_data_all %>% # data set
 # Generate ----------------------------------------------------------------
 
 # generate summary chart for shiny ----
-  write.csv(en_merged, "/var/www/html/en/data/en_summary.csv", row.names = F)
+  write.csv(en_merged, "./04_Procedure/en/data/en_summary.csv", row.names = F)
 
 # generate participant report for shiny ----
   p_end <- en_data_all$observation[en_data_all$sender == "Real Frame Task 6"]
   p_lab <- en_data_all[en_data_all$observation %in% p_end, ]
   p_lab <- p_lab[!is.na(p_lab$url_lab), ]
   p_lab <- p_lab[ , c("url_lab", "timestamp")]
-  write.csv(p_lab, "/var/www/html/en/data/en_participants.csv", row.names = F)
+  write.csv(p_lab, "./04_Procedure/en/data/en_participants.csv", row.names = F)
   
 # generate new stimuli ----
   
@@ -346,7 +346,7 @@ en_data <- en_data_all %>% # data set
   {"word": "shot", "class": "word"},
   {"word": "foll", "class": "nonword"},
   {"word": "boot", "class": "word"}]'
-  writeLines(practice, con = "/var/www/html/en/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json")
+  writeLines(practice, con = "./04_Procedure/en/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json")
   
   all_trials <- rbind(nonwords, related, unrelated)
   all_trials <- all_trials[sample(1:nrow(all_trials), nrow(all_trials), replace = F), ]
@@ -368,40 +368,40 @@ en_data <- en_data_all %>% # data set
   real <- paste('[', 
                 paste(all_trials$together[1:50], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
-  writeLines(real, con = "/var/www/html/en/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json")
+  writeLines(real, con = "./04_Procedure/en/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json")
   
   # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
   
   real <- paste('[', 
                 paste(all_trials$together[51:100], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
-  writeLines(real, con = "/var/www/html/en/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json")
+  writeLines(real, con = "./04_Procedure/en/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json")
   
   # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
   
   real <- paste('[', 
                 paste(all_trials$together[101:150], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
-  writeLines(real, con = "/var/www/html/en/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json")
+  writeLines(real, con = "./04_Procedure/en/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json")
   
   # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
   
   real <- paste('[', 
                 paste(all_trials$together[151:200], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
-  writeLines(real, con = "/var/www/html/en/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json")
+  writeLines(real, con = "./04_Procedure/en/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json")
   
   # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
   
   real <- paste('[', 
                 paste(all_trials$together[201:250], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
-  writeLines(real, con = "/var/www/html/en/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json")
+  writeLines(real, con = "./04_Procedure/en/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json")
   
   # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
   real <- paste('[', 
                 paste(all_trials$together[250:300], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
-  writeLines(real, con = "/var/www/html/en/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json")
+  writeLines(real, con = "./04_Procedure/en/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json")
   
 
