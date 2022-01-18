@@ -107,19 +107,19 @@ en <- words[ , c("en_cue", "en_target", "en_fake_cue", "en_fake_target", "en_cos
 en$en_cue <- tolower(en$en_cue)
 en$en_target <- tolower(en$en_target)
 
-# set up model
-en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
-en_model <- na.omit(en_model)
-en_model$V1 <- tolower(en_model$V1)
-en_model <- en_model[!duplicated(en_model$V1), ]
-rownames(en_model) <- en_model$V1
-en_model <- en_model[ , -1]
-
-# get cosine
-for (row in 1:nrow(en)){
-  en$en_cosine[row] <- cosine(as.matrix(t(en_model[
-    c(en$en_cue[row], en$en_target[row]) , ])))[2]
-}
+# # set up model
+# en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
+# en_model <- na.omit(en_model)
+# en_model$V1 <- tolower(en_model$V1)
+# en_model <- en_model[!duplicated(en_model$V1), ]
+# rownames(en_model) <- en_model$V1
+# en_model <- en_model[ , -1]
+# 
+# # get cosine
+# for (row in 1:nrow(en)){
+#   en$en_cosine[row] <- cosine(as.matrix(t(en_model[
+#     c(en$en_cue[row], en$en_target[row]) , ])))[2]
+# }
 
 # create fake words 
 en$en_fake_cue <- get_fake(en$en_cue)
@@ -128,25 +128,33 @@ en$en_fake_target <- get_fake(en$en_target)
 # create possible trials 
 en_trials <- en[ , c("en_cue", "en_target")]
 en_trials$type <- "related"
+en_trials$cue_type <- "word"
+en_trials$target_type <- "word"
 
 en_trials <- rbind(en_trials,
                    data.frame(en_cue = en$en_cue, 
                               en_target = en$en_target[sample(1:1000, 
                                                               1000)],
-                              type = "unrelated"), 
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
                    data.frame(en_cue = en$en_fake_cue, 
                               en_target = en$en_target[sample(1:1000, 
                                                               1000)],
-                              type = "nonword"),
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
                    data.frame(en_cue = en$en_cue[sample(1:1000,
                                                         1000)], 
                               en_target = en$en_fake_target,
-                              type = "nonword"))
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"))
 
-# check dups
+# check dups run until 0
 sum(duplicated(en_trials[ , c("en_cue", "en_target")]))
 
 # write it out 
-write.csv(en, "../04_Procedure/en/en_words.csv", row.names = F)
+write.csv(en_trials, "../04_Procedure/en/en_words.csv", row.names = F)
 ```
 
