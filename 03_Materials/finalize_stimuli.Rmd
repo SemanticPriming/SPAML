@@ -125,6 +125,27 @@ for (row in 1:nrow(en)){
 en$en_fake_cue <- get_fake(en$en_cue)
 en$en_fake_target <- get_fake(en$en_target)
 
+# create possible trials 
+en_trials <- en[ , c("en_cue", "en_target")]
+en_trials$type <- "related"
+
+en_trials <- rbind(en_trials,
+                   data.frame(en_cue = en$en_cue, 
+                              en_target = en$en_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated"), 
+                   data.frame(en_cue = en$en_fake_cue, 
+                              en_target = en$en_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword"),
+                   data.frame(en_cue = en$en_cue[sample(1:1000,
+                                                        1000)], 
+                              en_target = en$en_fake_target,
+                              type = "nonword"))
+
+# check dups
+sum(duplicated(en_trials[ , c("en_cue", "en_target")]))
+
 # write it out 
 write.csv(en, "../04_Procedure/en/en_words.csv", row.names = F)
 ```
