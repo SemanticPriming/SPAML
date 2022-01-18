@@ -139,11 +139,19 @@ processData <- function(database) {
     ungroup() %>%
     select(-id) -> d.incremental
   
+  if (nrow(d.full) > 0){
+  
   d.output <- d.full %>%
     bind_rows(
       d.incremental %>% filter(!(observation %in% d.full$observation))
     ) %>%
     type_convert()
+  
+  } else {
+    
+    d.output <- d.incremental %>% type_convert()
+    
+  }
   
   d.output %>%
     group_by(observation) %>%
