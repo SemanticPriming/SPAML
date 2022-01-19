@@ -149,6 +149,13 @@ en_trials <- rbind(en_trials,
                               en_target = en$en_fake_target,
                               type = "nonword",
                               cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(en_cue = en$en_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              en_target = en$en_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
                               target_type = "nonword"))
 
 # check dups run until 0

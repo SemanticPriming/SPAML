@@ -67,7 +67,7 @@ server <- function(input, output) {
     
     output$en_summary_table <- renderDT({
       
-      datatable(en_summary, rownames = F,
+      datatable(en_summary[en_summary$type != "nonword", ], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
