@@ -256,7 +256,7 @@ this.parameters.feedback = this.state.ended_on !== 'response'
         "parameters": {},
         "templateParameters": [],
         "sample": {
-          "mode": "draw-shuffle"
+          "mode": "sequential"
         },
         "responses": {
           "": ""
@@ -389,7 +389,7 @@ this.options.templateParameters = await response.json()
         "parameters": {},
         "templateParameters": [],
         "sample": {
-          "mode": "draw-shuffle"
+          "mode": "sequential"
         },
         "responses": {
           "": ""
@@ -522,7 +522,7 @@ this.options.templateParameters = await response.json()
         "parameters": {},
         "templateParameters": [],
         "sample": {
-          "mode": "draw-shuffle"
+          "mode": "sequential"
         },
         "responses": {
           "": ""
@@ -655,7 +655,7 @@ this.options.templateParameters = await response.json()
         "parameters": {},
         "templateParameters": [],
         "sample": {
-          "mode": "draw-shuffle"
+          "mode": "sequential"
         },
         "responses": {
           "": ""
@@ -788,7 +788,7 @@ this.options.templateParameters = await response.json()
         "parameters": {},
         "templateParameters": [],
         "sample": {
-          "mode": "draw-shuffle"
+          "mode": "sequential"
         },
         "responses": {
           "": ""
@@ -921,7 +921,7 @@ this.options.templateParameters = await response.json()
         "parameters": {},
         "templateParameters": [],
         "sample": {
-          "mode": "draw-shuffle"
+          "mode": "sequential"
         },
         "responses": {
           "": ""

@@ -28,7 +28,7 @@
       ],
       "title": "Overall Instructions",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">This experiment is concerned with how people process words. You will be asked to view words and judge them.</p>\n\n    <p class=\"text-left\">The words will be presented in the middle of the screen. You should ask yourself if the word on the screen is a real word or a fake word.</p>\n\n    <p class=\"text-left\">If you recognize the word on the screen like <b>COLD</b>, please press the <kbd>Z</kbd> key for real word. If the word is made-up nonsense, like <b>WERM</b>, please press <kbd>/</kbd> for fake word. During practice, we will give you feedback.</p>\n\n    <p class=\"text-left\">We'd like to ask to to respond as quickly as you can while remaining accurate. You have five seconds to respond to every word</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to try a few for practice.\n</footer>",
-      "_tab": "Content",
+      "_tab": "Scripts",
       "plugins": []
     },
     "2": {
@@ -723,7 +723,7 @@
       "children": [
         "54"
       ],
-      "_collapsed": true,
+      "_collapsed": false,
       "_tab": "Scripts"
     },
     "54": {
@@ -759,7 +759,7 @@
         "rows": []
       },
       "sample": {
-        "mode": "draw-shuffle"
+        "mode": "sequential"
       },
       "responses": [
         {
@@ -777,7 +777,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Files",
+      "_tab": "Content",
       "tardy": true,
       "_collapsed": false
     },
@@ -812,7 +812,7 @@
         }
       ],
       "title": "Trial Real",
-      "_tab": "Content"
+      "_tab": "Scripts"
     },
     "56": {
       "id": "56",
@@ -1057,7 +1057,7 @@
         "rows": []
       },
       "sample": {
-        "mode": "draw-shuffle"
+        "mode": "sequential"
       },
       "responses": [
         {
@@ -1075,7 +1075,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Files",
+      "_tab": "Content",
       "tardy": true,
       "_collapsed": false
     },
@@ -1355,7 +1355,7 @@
         "rows": []
       },
       "sample": {
-        "mode": "draw-shuffle"
+        "mode": "sequential"
       },
       "responses": [
         {
@@ -1373,7 +1373,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Files",
+      "_tab": "Content",
       "tardy": true,
       "_collapsed": false
     },
@@ -1653,7 +1653,7 @@
         "rows": []
       },
       "sample": {
-        "mode": "draw-shuffle"
+        "mode": "sequential"
       },
       "responses": [
         {
@@ -1671,7 +1671,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Files",
+      "_tab": "Content",
       "tardy": true,
       "_collapsed": false
     },
@@ -1951,7 +1951,7 @@
         "rows": []
       },
       "sample": {
-        "mode": "draw-shuffle"
+        "mode": "sequential"
       },
       "responses": [
         {
@@ -1969,7 +1969,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Files",
+      "_tab": "Content",
       "tardy": true,
       "_collapsed": false
     },
@@ -2249,7 +2249,7 @@
         "rows": []
       },
       "sample": {
-        "mode": "draw-shuffle"
+        "mode": "sequential"
       },
       "responses": [
         {
@@ -2267,7 +2267,7 @@
         }
       ],
       "title": "Task Real",
-      "_tab": "Files",
+      "_tab": "Content",
       "tardy": true,
       "_collapsed": false
     },
