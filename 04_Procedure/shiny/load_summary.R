@@ -5,3 +5,9 @@
  
 en_participants <- import("/var/www/html/en/data/en_participants.csv")
 en_summary <- import("/var/www/html/en/data/en_summary.csv")
+
+en_participants2 <- import("/var/www/html/en-z/data/en_participants.csv")
+en_summary2 <- import("/var/www/html/en-z/data/en_summary.csv")
+
+en_participants <- rbind(en_participants, en_participants2)
+en_summary <- rbind(en_summary, en_summary2)
