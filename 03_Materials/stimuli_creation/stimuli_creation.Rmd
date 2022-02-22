@@ -174,7 +174,7 @@ get_fake <- function(wordlist){
 ## Import the Overall File
 
 ```{r}
-overall_languages <- import("stimuli_options.xlsx")
+overall_languages <- import("../stimuli_options.xlsx")
 # total open subs
 nrow(overall_languages)
 
@@ -3439,8 +3439,7 @@ finalstimuli$total <- apply(finalstimuli, 1, function (x) { sum(!is.na(x))})
 finalstimuli$total <- finalstimuli$total / ncol(finalstimuli) * 100
 summary(finalstimuli$total)
 
-finalstimuli <- finalstimuli[ order(finalstimuli$total, decreasing = TRUE), 
-                              ]
+finalstimuli <- finalstimuli[ order(finalstimuli$total, decreasing = TRUE), ]
 # write.csv(finalstimuli, "proposed_finalstimuli.csv", row.names = F)
 
 # write out small version to manually check 

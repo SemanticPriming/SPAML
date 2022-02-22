@@ -63,10 +63,10 @@ each_language <- psych::describeBy(targets_all$avgZ_prime, group = targets_all$l
 each_language
 
 # lower
-each_language$mean - qt(.025, nrow(targets_all), lower.tail = F)*each_language$se
+each_language$English$mean - qt(.025, nrow(targets_all), lower.tail = F)*each_language$English$se
 
 # upper
-each_language$mean + qt(.025, nrow(targets_all), lower.tail = F)*each_language$se
+each_language$English$mean + qt(.025, nrow(targets_all), lower.tail = F)*each_language$English$se
 ```
 
 ## Hypothesis 2

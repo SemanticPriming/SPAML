@@ -191,7 +191,7 @@ en_data <- en_data_all %>% # data set
   for (person in unique(en_real_trials$observation)){
     
     en_real_trials$trial_code[en_real_trials$observation == person] <- 
-      rep(1:300, each = 2, length.out = length(en_real_trials$trial_code[en_real_trials$observation == person]))
+      rep(1:400, each = 2, length.out = length(en_real_trials$trial_code[en_real_trials$observation == person]))
     
     en_real_trials$which[en_real_trials$observation == person] <-
       rep(c("cue", "target"), times = 2, 

@@ -1,0 +1,251 @@
+---
+title: "Finalize Stimuli"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document takes the proposed stimuli and finalizes the information for each one to be included in the experiment. This section includes languages we are currently running in the experiment. 
+
+## Libraries
+
+```{r}
+library(rio)
+library(lsa)
+library(quanteda)
+library(sylly)
+library(dplyr)
+library(tidytext)
+library(tidyr)
+library(stringr)
+```
+
+## Functions
+
+In this section, we define a fake word function that operates similar to Wuggy: 
+  
+  - As many changes as syllables
+  - Keep the same number of letters/characters
+  - Smallest possible deviation transition frequency
+
+We originally planned to change on letter of each word, but a reviewer pointed out the problem with this procedure - especially for longer words. Therefore, we will discard the original created pseudowords and update them here. 
+
+```{r}
+# make up the fake words 
+# wordlist is the list of possible words
+# language_hyp is the language to based hyphenation on
+# replacewords is the list of words to make fake words from
+get_fake <- function(wordlist, language_hyp, replacewords){
+
+  # figure out possible combinations --- 
+  # figure out the syllables 
+  hyp_words <- hyphen(as.character(wordlist), hyph.pattern = language_hyp)
+  hyp_words <- hyp_words@hyphen
+  hyp_words$word <- tolower(hyp_words$word)
+  
+  # for multiple syllable words
+  multiple <- hyp_words %>% filter(syll > 1)
+  # create pattern [blank, first] [first, second] [second, blank]
+  multiple$word <- paste("FIRST_BLANK-", multiple$word, "-LAST_BLANK", sep = "")
+  
+  # for single syllable words 
+  single <- hyp_words %>% filter(syll == 1)
+  single$word <- gsub("(.{2})", "\\1-", single$word)
+  single$word <- gsub("-$", "", single$word)
+  single$word <- paste("FIRST_BLANK-", single$word, "-LAST_BLANK", sep = "")
+  
+  all <- rbind(single, multiple)
+  all$word_id <- 1:nrow(all)
+  
+  # break them down 
+  replacements <- unnest_tokens(all, 
+                                output = "syllable", 
+                                input = word, 
+                                token = strsplit, split = "-") %>% 
+    group_by(word_id) %>% 
+    mutate(pair = paste(syllable, lead(syllable, 1), sep = "-")) %>% 
+    filter(!grepl("NA", pair)) %>% 
+    ungroup %>% 
+    group_by(pair) %>%
+    summarise(Frequency = n()) %>% 
+    separate(pair, c("first", "second"), "-", remove = F)
+  
+  # break down replacement word list ---
+  hyp_replace <- hyphen(as.character(replacewords), hyph.pattern = language_hyp)
+  hyp_replace <- hyp_replace@hyphen
+  hyp_replace$word <- tolower(hyp_replace$word)
+  hyp_replace$word_id <- 1:nrow(hyp_replace)
+  
+  # for multiple syllable words
+  multiple <- hyp_replace %>% filter(syll > 1)
+  # create pattern [blank, first] [first, second] [second, blank]
+  multiple$word <- paste("FIRST_BLANK-", multiple$word, "-LAST_BLANK", sep = "")
+  
+  # for single syllable words 
+  single <- hyp_replace %>% filter(syll == 1)
+  single$word <- gsub("(.{2})", "\\1-", single$word)
+  single$word <- gsub("-$", "", single$word)
+  single$word <- paste("FIRST_BLANK-", single$word, "-LAST_BLANK", sep = "")
+  
+  all <- rbind(single, multiple)
+  all$word_id <- 1:nrow(all)
+  
+  to_replace <- unnest_tokens(all,
+                              output = "syllable", 
+                              input = word, 
+                              token = strsplit, split = "-") %>% 
+      group_by(word_id) %>% 
+      mutate(pair = paste(syllable, lead(syllable, 1), sep = "-")) %>% 
+      filter(!grepl("NA", pair))
+  
+  # merge replacements with things to replace to find frequency
+  to_replace_options <- merge(to_replace, replacements, by = "pair", all.x = T) %>% 
+    select(-syllable) %>% 
+    separate(pair, c("first", "second"), "-", remove = FALSE)
+  
+  # now merge by first, then second to get possible replacements
+  to_replace_options1 <- merge(to_replace_options, replacements, 
+                              by = "first", all.x = T)
+  colnames(to_replace_options1) <- c("first", "original_pair", "second", 
+                                     "syll", "word_id", "original_freq", 
+                                     "replacement_pair", "replacement_syll", 
+                                     "replacement_freq")
+  to_replace_options2 <- merge(to_replace_options, replacements, 
+                              by = "second", all.x = T)
+    colnames(to_replace_options2) <- c("second", "original_pair", "first", 
+                                     "syll", "word_id", "original_freq", 
+                                     "replacement_pair", "replacement_syll", 
+                                     "replacement_freq")
+  
+  replace_options <- rbind(to_replace_options1, to_replace_options2)
+  replace_options$original_freq[is.na(replace_options$original_freq)] <- 1
+  
+  replace_options$freq_diff <- abs(replace_options$original_freq - replace_options$replacement_freq)
+  replace_options$char_diff <- abs(nchar(replace_options$original_pair) - 
+                                     nchar(replace_options$replacement_pair))
+  
+  replace_options$letter_diff <- stringdist(a = replace_options$original_pair, b = replace_options$replacement_pair) - replace_options$syll
+  
+  # replacements can't be blank
+  # can't be the same replacement 
+  replace_options <- replace_options %>% 
+    filter(replacement_syll != "first_blank") %>% 
+    filter(replacement_syll != "last_blank") %>% 
+    filter(letter_diff > 0)
+  
+  # merge the words back in 
+  replacewords <- as.data.frame(replacewords)
+  colnames(replacewords) <- "original_word"
+  replacewords$word_id <- 1:nrow(replacewords)
+  replace_options <- merge(replace_options, replacewords,
+                           by = "word_id", all = T)
+  replace_options <- merge(replace_options, all[ , -1], 
+                           by = "word_id", all = T)
+  colnames(replace_options)[ncol(replace_options)] <- "replacement_word"
+  replace_options$replacement_word <- tolower(replace_options$replacement_word)
+  
+  replace_options$replacement_word <- str_replace(
+    string = replace_options$replacement_word, 
+    pattern = replace_options$original_pair,
+    replacement = replace_options$replacement_pair)
+  replace_options$replacement_word <- gsub("first_blank|last_blank|-", "", replace_options$replacement_word)
+  
+  # remove replacement words that are in the original 
+  replace_options <- replace_options %>% 
+    filter(!(replacement_word %in% wordlist))
+  
+  # char diff to be zero 
+  # letter diff to be lowest to match syllable
+  # frequency diff to be < 2 but lowest
+  replace_options <- replace_options %>% 
+    group_by(original_word) %>% 
+    arrange(char_diff, freq_diff, letter_diff, .by_group = TRUE)
+  
+  new_words <- replace_options %>% 
+    filter(!duplicated(original_word))
+
+  return(new_words) 
+}
+```
+
+## Proposed Data
+
+```{r}
+words <- import("final_selected_words.csv")
+```
+
+Note: all models were downloaded from subs2vec github and stored on a separate drive, as they are very large. 
+
+## English
+
+```{r}
+en_patterns <- read.hyph.pat("hyphen/hyph-en-us.tex", "en_us")
+```
+
+```{r}
+en <- words[ , c("en_cue", "en_target", "en_fake_cue", "en_fake_target", "en_cosine")]
+en$en_cue <- tolower(en$en_cue)
+en$en_target <- tolower(en$en_target)
+
+# # set up model
+# en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
+# en_model <- na.omit(en_model)
+# en_model$V1 <- tolower(en_model$V1)
+# en_model <- en_model[!duplicated(en_model$V1), ]
+# rownames(en_model) <- en_model$V1
+# en_model <- en_model[ , -1]
+# 
+# # get cosine
+# for (row in 1:nrow(en)){
+#   en$en_cosine[row] <- cosine(as.matrix(t(en_model[
+#     c(en$en_cue[row], en$en_target[row]) , ])))[2]
+# }
+
+# create fake words 
+en$en_fake_cue <- get_fake(en$en_cue)
+en$en_fake_target <- get_fake(en$en_target)
+
+# create possible trials 
+en_trials <- en[ , c("en_cue", "en_target")]
+en_trials$type <- "related"
+en_trials$cue_type <- "word"
+en_trials$target_type <- "word"
+
+en_trials <- rbind(en_trials,
+                   data.frame(en_cue = en$en_cue, 
+                              en_target = en$en_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(en_cue = en$en_fake_cue, 
+                              en_target = en$en_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(en_cue = en$en_cue[sample(1:1000,
+                                                        1000)], 
+                              en_target = en$en_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(en_cue = en$en_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              en_target = en$en_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(en_trials[ , c("en_cue", "en_target")]))
+
+# write it out 
+write.csv(en_trials, "../04_Procedure/en/en_words.csv", row.names = F)
+```
+
