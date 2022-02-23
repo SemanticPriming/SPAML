@@ -175,7 +175,7 @@ get_fake <- function(wordlist, language_hyp, replacewords){
 ## Proposed Data
 
 ```{r}
-words <- import("final_selected_words.csv")
+words <- import("../stimuli_creation/final_selected_words.csv")
 ```
 
 Note: all models were downloaded from subs2vec github and stored on a separate drive, as they are very large. 
@@ -184,29 +184,32 @@ Note: all models were downloaded from subs2vec github and stored on a separate d
 
 ```{r}
 en_patterns <- read.hyph.pat("hyphen/hyph-en-us.tex", "en_us")
-```
 
-```{r}
 en <- words[ , c("en_cue", "en_target", "en_fake_cue", "en_fake_target", "en_cosine")]
 en$en_cue <- tolower(en$en_cue)
 en$en_target <- tolower(en$en_target)
 
-# # set up model
-# en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
-# en_model <- na.omit(en_model)
-# en_model$V1 <- tolower(en_model$V1)
-# en_model <- en_model[!duplicated(en_model$V1), ]
-# rownames(en_model) <- en_model$V1
-# en_model <- en_model[ , -1]
-# 
-# # get cosine
-# for (row in 1:nrow(en)){
-#   en$en_cosine[row] <- cosine(as.matrix(t(en_model[
-#     c(en$en_cue[row], en$en_target[row]) , ])))[2]
-# }
+# set up model
+en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
+en_model <- na.omit(en_model)
+en_model$V1 <- tolower(en_model$V1)
+en_model <- en_model[!duplicated(en_model$V1), ]
+rownames(en_model) <- en_model$V1
+en_model <- en_model[ , -1]
+
+# get cosine
+for (row in 1:nrow(en)){
+  en$en_cosine[row] <- cosine(as.matrix(t(en_model[
+    c(en$en_cue[row], en$en_target[row]) , ])))[2]
+}
+
+full_words <- rownames(en_model)
+rm(en_model)
 
 # create fake words 
-en$en_fake_cue <- get_fake(en$en_cue)
+en$en_fake_cue <- get_fake(wordlist = , #possibles
+                           language_hyp = en_patterns, #hyphen rules
+                           replacewords = en$en_cue) #your words
 en$en_fake_target <- get_fake(en$en_target)
 
 # create possible trials 
