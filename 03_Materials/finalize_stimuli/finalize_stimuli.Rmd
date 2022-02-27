@@ -22,6 +22,7 @@ library(dplyr)
 library(tidytext)
 library(tidyr)
 library(stringr)
+library(stringdist)
 ```
 
 ## Functions
@@ -50,7 +51,9 @@ get_fake <- function(wordlist, language_hyp, replacewords){
   # for multiple syllable words
   multiple <- hyp_words %>% filter(syll > 1)
   # create pattern [blank, first] [first, second] [second, blank]
-  multiple$word <- paste("FIRST_BLANK-", multiple$word, "-LAST_BLANK", sep = "")
+  if (nrow(multiple) >= 1){
+    multiple$word <- paste("FIRST_BLANK-", multiple$word, "-LAST_BLANK", sep = "")
+  }
   
   # for single syllable words 
   single <- hyp_words %>% filter(syll == 1)
@@ -72,8 +75,11 @@ get_fake <- function(wordlist, language_hyp, replacewords){
     ungroup %>% 
     group_by(pair) %>%
     summarise(Frequency = n()) %>% 
-    separate(pair, c("first", "second"), "-", remove = F)
-  
+    separate(pair, c("first", "second"), "-", remove = F) %>% 
+    mutate(first = gsub("\\s", "", first)) %>% 
+    filter(first != "") %>% 
+    filter(!grepl("^[[:space:]]", first)) 
+
   # break down replacement word list ---
   hyp_replace <- hyphen(as.character(replacewords), hyph.pattern = language_hyp)
   hyp_replace <- hyp_replace@hyphen
@@ -82,8 +88,11 @@ get_fake <- function(wordlist, language_hyp, replacewords){
   
   # for multiple syllable words
   multiple <- hyp_replace %>% filter(syll > 1)
-  # create pattern [blank, first] [first, second] [second, blank]
-  multiple$word <- paste("FIRST_BLANK-", multiple$word, "-LAST_BLANK", sep = "")
+  
+  if (nrow(multiple) >= 1){
+    # create pattern [blank, first] [first, second] [second, blank]
+    multiple$word <- paste("FIRST_BLANK-", multiple$word, "-LAST_BLANK", sep = "")
+  }
   
   # for single syllable words 
   single <- hyp_replace %>% filter(syll == 1)
@@ -92,7 +101,6 @@ get_fake <- function(wordlist, language_hyp, replacewords){
   single$word <- paste("FIRST_BLANK-", single$word, "-LAST_BLANK", sep = "")
   
   all <- rbind(single, multiple)
-  all$word_id <- 1:nrow(all)
   
   to_replace <- unnest_tokens(all,
                               output = "syllable", 
@@ -175,44 +183,60 @@ get_fake <- function(wordlist, language_hyp, replacewords){
 ## Proposed Data
 
 ```{r}
-words <- import("../stimuli_creation/final_selected_words.csv")
+words <- import("final_selected_words.xlsx")
 ```
 
 Note: all models were downloaded from subs2vec github and stored on a separate drive, as they are very large. 
 
-## English
+## en English
 
-```{r}
-en_patterns <- read.hyph.pat("hyphen/hyph-en-us.tex", "en_us")
-
+```{r eval = F}
+# get data ----
 en <- words[ , c("en_cue", "en_target", "en_fake_cue", "en_fake_target", "en_cosine")]
 en$en_cue <- tolower(en$en_cue)
 en$en_target <- tolower(en$en_target)
 
-# set up model
-en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
-en_model <- na.omit(en_model)
-en_model$V1 <- tolower(en_model$V1)
-en_model <- en_model[!duplicated(en_model$V1), ]
-rownames(en_model) <- en_model$V1
-en_model <- en_model[ , -1]
+# get patterns -----
+en_patterns <- read.hyph.pat("hyphen/hyph-en-us.tex", "en_us")
+en_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/en/en.zip"))
+en_subs <- en_subs[!grepl("[0-9]", en_subs$unigram), ]
+en_subs <- en_subs[!grepl("[[:punct:]]", en_subs$unigram), ]
+en_subs <- en_subs %>% filter(unigram != "")
+en_subs <- en_subs[1:100000, ]
 
-# get cosine
-for (row in 1:nrow(en)){
-  en$en_cosine[row] <- cosine(as.matrix(t(en_model[
-    c(en$en_cue[row], en$en_target[row]) , ])))[2]
-}
-
-full_words <- rownames(en_model)
-rm(en_model)
-
-# create fake words 
-en$en_fake_cue <- get_fake(wordlist = , #possibles
+# create fake words based on cue
+en_fake_words <- get_fake(wordlist = en_subs$unigram, #possibles
                            language_hyp = en_patterns, #hyphen rules
                            replacewords = en$en_cue) #your words
-en$en_fake_target <- get_fake(en$en_target)
 
-# create possible trials 
+write.csv(en_fake_words, "en/en_fake_cues.csv", row.names = F)
+
+# merge back into data
+en <- merge(en, 
+            en_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "en_cue", by.y = "original_word")
+en$en_fake_cue <- en$replacement_word
+en$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+en_fake_words <- get_fake(wordlist = en_subs$unigram, #possibles
+                           language_hyp = en_patterns, #hyphen rules
+                           replacewords = en$en_target) #your words
+
+write.csv(en_fake_words, "en/en_fake_targets.csv", row.names = F)
+
+# merge back into data
+en <- merge(en, 
+            en_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "en_target", by.y = "original_word")
+en$en_fake_target <- en$replacement_word
+en$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
 en_trials <- en[ , c("en_cue", "en_target")]
 en_trials$type <- "related"
 en_trials$cue_type <- "word"
@@ -248,7 +272,2485 @@ en_trials <- rbind(en_trials,
 # check dups run until 0
 sum(duplicated(en_trials[ , c("en_cue", "en_target")]))
 
+en$en_cosine <- NULL
+write.csv(en, "en/en_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
+en_model <- na.omit(en_model)
+en_model$V1 <- tolower(en_model$V1)
+en_model <- en_model[!duplicated(en_model$V1), ]
+rownames(en_model) <- en_model$V1
+en_model <- en_model[ , -1]
+
+en_trials$en_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(en_trials)){
+  
+  if(en_trials$type[row] != "nonword") { 
+    
+    en_trials$en_cosine[row] <- cosine(as.matrix(t(en_model[
+    c(en_trials$en_cue[row], en_trials$en_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(en_trials$en_cosine, en_trials$type, mean, na.rm = T)
+tapply(en_trials$en_cosine, en_trials$type, min, na.rm = T)
+tapply(en_trials$en_cosine, en_trials$type, max, na.rm = T)
+
+rm(en_model)
+
+gc()
+
 # write it out 
-write.csv(en_trials, "../04_Procedure/en/en_words.csv", row.names = F)
+write.csv(en_trials, "en/en_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
 ```
 
+## af Afrikaans wiki
+
+```{r eval = F}
+# get data ----
+af <- words[ , c("af_cue", "af_target", "af_fake_cue", "af_fake_target", 
+                 "en_cue", "en_target")]
+af$af_cue <- tolower(af$af_cue)
+af$af_target <- tolower(af$af_target)
+
+# get patterns -----
+af_patterns <- read.hyph.pat("hyphen/hyph-af.tex", "af")
+af_subs <- import(paste0("/Volumes/SPAML Backup/wiki_count/af/af.zip"))
+af_subs <- af_subs[!grepl("[0-9]", af_subs$unigram), ]
+af_subs <- af_subs[!grepl("[[:punct:]]", af_subs$unigram), ]
+af_subs <- af_subs %>% filter(unigram != "")
+af_subs <- af_subs[1:100000, ]
+
+# create fake words based on cue
+af_fake_words <- get_fake(wordlist = af_subs$unigram, #possibles
+                           language_hyp = af_patterns, #hyphen rules
+                           replacewords = af$af_cue) #your words
+
+write.csv(af_fake_words, "af/af_fake_cues.csv", row.names = F)
+
+# merge back into data
+af <- merge(af, 
+            af_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "af_cue", by.y = "original_word")
+af$af_fake_cue <- af$replacement_word
+af$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+af_fake_words <- get_fake(wordlist = af_subs$unigram, #possibles
+                           language_hyp = af_patterns, #hyphen rules
+                           replacewords = af$af_target) #your words
+
+write.csv(af_fake_words, "af/af_fake_targets.csv", row.names = F)
+
+# merge back into data
+af <- merge(af, 
+            af_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "af_target", by.y = "original_word")
+af$af_fake_target <- af$replacement_word
+af$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+af_trials <- af[ , c("af_cue", "af_target")]
+af_trials$type <- "related"
+af_trials$cue_type <- "word"
+af_trials$target_type <- "word"
+
+af_trials <- rbind(af_trials,
+                   data.frame(af_cue = af$af_cue, 
+                              af_target = af$af_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(af_cue = af$af_fake_cue, 
+                              af_target = af$af_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(af_cue = af$af_cue[sample(1:1000,
+                                                        1000)], 
+                              af_target = af$af_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(af_cue = af$af_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              af_target = af$af_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(af_trials[ , c("af_cue", "af_target")]))
+
+af$af_cosine <- NULL
+write.csv(af, "af/af_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+af_model <- read.table("/Volumes/SPAML Backup/wiki_vec/af/wiki.af.1e6.txt", quote="\"")
+af_model <- na.omit(af_model)
+af_model$V1 <- tolower(af_model$V1)
+af_model <- af_model[!duplicated(af_model$V1), ]
+rownames(af_model) <- af_model$V1
+af_model <- af_model[ , -1]
+
+af_trials$af_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(af_trials)){
+  
+  if(af_trials$type[row] != "nonword") { 
+    
+    af_trials$af_cosine[row] <- cosine(as.matrix(t(af_model[
+    c(af_trials$af_cue[row], af_trials$af_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(af_trials$af_cosine, af_trials$type, mean, na.rm = T)
+tapply(af_trials$af_cosine, af_trials$type, min, na.rm = T)
+tapply(af_trials$af_cosine, af_trials$type, max, na.rm = T)
+
+rm(af_model)
+
+gc()
+
+# write it out 
+write.csv(af_trials, "af/af_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## ar Arabic
+
+```{r eval = F}
+# get data ----
+ar <- words[ , c("ar_cue", "ar_target", "ar_fake_cue", "ar_fake_target", 
+                 "en_cue", "en_target")]
+ar$ar_cue <- tolower(ar$ar_cue)
+ar$ar_target <- tolower(ar$ar_target)
+
+# get patterns -----
+ar_patterns <- read.hyph.pat("hyphen/hyph-af.tex", "af")
+# not a typo, Arabic technically doesn't allow hyphenation
+# so we will use random rules amounting to one syllable per word
+ar_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/ar/ar.zip"))
+ar_subs <- ar_subs[!grepl("[0-9]", ar_subs$unigram), ]
+ar_subs <- ar_subs[!grepl("[[:punct:]]", ar_subs$unigram), ]
+ar_subs <- ar_subs %>% filter(unigram != "")
+ar_subs <- ar_subs[1:100000, ]
+
+# create fake words based on cue
+ar_fake_words <- get_fake(wordlist = ar_subs$unigram, #possibles
+                           language_hyp = ar_patterns, #hyphen rules
+                           replacewords = ar$ar_cue) #your words
+
+write.csv(ar_fake_words, "ar/ar_fake_cues.csv", row.names = F)
+
+# merge back into data
+ar <- merge(ar, 
+            ar_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "ar_cue", by.y = "original_word")
+ar$ar_fake_cue <- ar$replacement_word
+ar$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+ar_fake_words <- get_fake(wordlist = ar_subs$unigram, #possibles
+                           language_hyp = ar_patterns, #hyphen rules
+                           replacewords = ar$ar_target) #your words
+
+write.csv(ar_fake_words, "ar/ar_fake_targets.csv", row.names = F)
+
+# merge back into data
+ar <- merge(ar, 
+            ar_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "ar_target", by.y = "original_word")
+ar$ar_fake_target <- ar$replacement_word
+ar$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+ar_trials <- ar[ , c("ar_cue", "ar_target")]
+ar_trials$type <- "related"
+ar_trials$cue_type <- "word"
+ar_trials$target_type <- "word"
+
+ar_trials <- rbind(ar_trials,
+                   data.frame(ar_cue = ar$ar_cue, 
+                              ar_target = ar$ar_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(ar_cue = ar$ar_fake_cue, 
+                              ar_target = ar$ar_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(ar_cue = ar$ar_cue[sample(1:1000,
+                                                        1000)], 
+                              ar_target = ar$ar_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(ar_cue = ar$ar_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              ar_target = ar$ar_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(ar_trials[ , c("ar_cue", "ar_target")]))
+
+ar$ar_cosine <- NULL
+write.csv(ar, "ar/ar_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+ar_model <- read.table("/Volumes/SPAML Backup/subs_vec/ar/subs.ar.1e6.txt", quote="\"")
+ar_model <- na.omit(ar_model)
+ar_model$V1 <- tolower(ar_model$V1)
+ar_model <- ar_model[!duplicated(ar_model$V1), ]
+rownames(ar_model) <- ar_model$V1
+ar_model <- ar_model[ , -1]
+
+ar_trials$ar_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(ar_trials)){
+  
+  if(ar_trials$type[row] != "nonword") { 
+    
+    ar_trials$ar_cosine[row] <- cosine(as.matrix(t(ar_model[
+    c(ar_trials$ar_cue[row], ar_trials$ar_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(ar_trials$ar_cosine, ar_trials$type, mean, na.rm = T)
+tapply(ar_trials$ar_cosine, ar_trials$type, min, na.rm = T)
+tapply(ar_trials$ar_cosine, ar_trials$type, max, na.rm = T)
+
+rm(ar_model)
+
+gc()
+
+# write it out 
+write.csv(ar_trials, "ar/ar_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## bg Bulgarian
+
+```{r eval = F}
+# get data ----
+bg <- words[ , c("bg_cue", "bg_target", "bg_fake_cue", "bg_fake_target", 
+                 "en_cue", "en_target")]
+bg$bg_cue <- tolower(bg$bg_cue)
+bg$bg_target <- tolower(bg$bg_target)
+
+# get patterns -----
+bg_patterns <- read.hyph.pat("hyphen/hyph-ru.tex", "ru")
+#bulgarian files would not work, using russian as a Cyrillic alternative
+bg_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/bg/bg.zip"))
+bg_subs <- bg_subs[!grepl("[0-9]", bg_subs$unigram), ]
+bg_subs <- bg_subs[!grepl("[[:punct:]]", bg_subs$unigram), ]
+bg_subs <- bg_subs %>% filter(unigram != "")
+bg_subs <- bg_subs[1:100000, ]
+
+# create fake words based on cue
+bg_fake_words <- get_fake(wordlist = bg_subs$unigram, #possibles
+                           language_hyp = bg_patterns, #hyphen rules
+                           replacewords = bg$bg_cue) #your words
+
+write.csv(bg_fake_words, "bg/bg_fake_cues.csv", row.names = F)
+
+# merge back into data
+bg <- merge(bg, 
+            bg_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "bg_cue", by.y = "original_word")
+bg$bg_fake_cue <- bg$replacement_word
+bg$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+bg_fake_words <- get_fake(wordlist = bg_subs$unigram, #possibles
+                           language_hyp = bg_patterns, #hyphen rules
+                           replacewords = bg$bg_target) #your words
+
+write.csv(bg_fake_words, "bg/bg_fake_targets.csv", row.names = F)
+
+# merge back into data
+bg <- merge(bg, 
+            bg_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "bg_target", by.y = "original_word")
+bg$bg_fake_target <- bg$replacement_word
+bg$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+bg_trials <- bg[ , c("bg_cue", "bg_target")]
+bg_trials$type <- "related"
+bg_trials$cue_type <- "word"
+bg_trials$target_type <- "word"
+
+bg_trials <- rbind(bg_trials,
+                   data.frame(bg_cue = bg$bg_cue, 
+                              bg_target = bg$bg_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(bg_cue = bg$bg_fake_cue, 
+                              bg_target = bg$bg_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(bg_cue = bg$bg_cue[sample(1:1000,
+                                                        1000)], 
+                              bg_target = bg$bg_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(bg_cue = bg$bg_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              bg_target = bg$bg_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(bg_trials[ , c("bg_cue", "bg_target")]))
+
+bg$bg_cosine <- NULL
+write.csv(bg, "bg/bg_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+bg_model <- read.table("/Volumes/SPAML Backup/subs_vec/bg/subs.bg.1e6.txt", quote="\"")
+bg_model <- na.omit(bg_model)
+bg_model$V1 <- tolower(bg_model$V1)
+bg_model <- bg_model[!duplicated(bg_model$V1), ]
+rownames(bg_model) <- bg_model$V1
+bg_model <- bg_model[ , -1]
+
+bg_trials$bg_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(bg_trials)){
+  
+  if(bg_trials$type[row] != "nonword") { 
+    
+    bg_trials$bg_cosine[row] <- cosine(as.matrix(t(bg_model[
+    c(bg_trials$bg_cue[row], bg_trials$bg_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(bg_trials$bg_cosine, bg_trials$type, mean, na.rm = T)
+tapply(bg_trials$bg_cosine, bg_trials$type, min, na.rm = T)
+tapply(bg_trials$bg_cosine, bg_trials$type, max, na.rm = T)
+
+rm(bg_model)
+
+gc()
+
+# write it out 
+write.csv(bg_trials, "bg/bg_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## ca Catalan
+
+```{r eval = F}
+# get data ----
+ca <- words[ , c("ca_cue", "ca_target", "ca_fake_cue", "ca_fake_target", 
+                 "en_cue", "en_target")]
+ca$ca_cue <- tolower(ca$ca_cue)
+ca$ca_target <- tolower(ca$ca_target)
+
+# get patterns -----
+ca_patterns <- read.hyph.pat("hyphen/hyph-es.tex", "es")
+# using spanish as there's a bug in ca 
+ca_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/ca/ca.zip"))
+ca_subs <- ca_subs[!grepl("[0-9]", ca_subs$unigram), ]
+ca_subs <- ca_subs[!grepl("[[:punct:]]", ca_subs$unigram), ]
+ca_subs <- ca_subs %>% filter(unigram != "") 
+ca_subs$unigram <- gsub(" ", "-", ca_subs$unigram)
+ca_subs <- ca_subs[1:75000, ]
+
+# create fake words based on cue
+ca_fake_words <- get_fake(wordlist = ca_subs$unigram, #possibles
+                           language_hyp = ca_patterns, #hyphen rules
+                           replacewords = ca$ca_cue) #your words
+
+write.csv(ca_fake_words, "ca/ca_fake_cues.csv", row.names = F)
+
+# merge back into data
+ca <- merge(ca, 
+            ca_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "ca_cue", by.y = "original_word")
+ca$ca_fake_cue <- ca$replacement_word
+ca$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+ca_fake_words <- get_fake(wordlist = ca_subs$unigram, #possibles
+                           language_hyp = ca_patterns, #hyphen rules
+                           replacewords = ca$ca_target) #your words
+
+write.csv(ca_fake_words, "ca/ca_fake_targets.csv", row.names = F)
+
+# merge back into data
+ca <- merge(ca, 
+            ca_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "ca_target", by.y = "original_word")
+ca$ca_fake_target <- ca$replacement_word
+ca$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+ca_trials <- ca[ , c("ca_cue", "ca_target")]
+ca_trials$type <- "related"
+ca_trials$cue_type <- "word"
+ca_trials$target_type <- "word"
+
+ca_trials <- rbind(ca_trials,
+                   data.frame(ca_cue = ca$ca_cue, 
+                              ca_target = ca$ca_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(ca_cue = ca$ca_fake_cue, 
+                              ca_target = ca$ca_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(ca_cue = ca$ca_cue[sample(1:1000,
+                                                        1000)], 
+                              ca_target = ca$ca_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(ca_cue = ca$ca_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              ca_target = ca$ca_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(ca_trials[ , c("ca_cue", "ca_target")]))
+
+ca$ca_cosine <- NULL
+write.csv(ca, "ca/ca_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+ca_model <- read.table("/Volumes/SPAML Backup/subs_vec/ca/subs.ca.1e6.txt", quote="\"")
+ca_model <- na.omit(ca_model)
+ca_model$V1 <- tolower(ca_model$V1)
+ca_model <- ca_model[!duplicated(ca_model$V1), ]
+rownames(ca_model) <- ca_model$V1
+ca_model <- ca_model[ , -1]
+
+ca_trials$ca_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(ca_trials)){
+  
+  if(ca_trials$type[row] != "nonword") { 
+    
+    ca_trials$ca_cosine[row] <- cosine(as.matrix(t(ca_model[
+    c(ca_trials$ca_cue[row], ca_trials$ca_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(ca_trials$ca_cosine, ca_trials$type, mean, na.rm = T)
+tapply(ca_trials$ca_cosine, ca_trials$type, min, na.rm = T)
+tapply(ca_trials$ca_cosine, ca_trials$type, max, na.rm = T)
+
+rm(ca_model)
+
+gc()
+
+# write it out 
+write.csv(ca_trials, "ca/ca_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## cs Czech
+
+```{r eval = F}
+# get data ----
+cs <- words[ , c("cs_cue", "cs_target", "cs_fake_cue", "cs_fake_target", 
+                 "en_cue", "en_target")]
+cs$cs_cue <- tolower(cs$cs_cue)
+cs$cs_target <- tolower(cs$cs_target)
+
+# get patterns -----
+cs_patterns <- read.hyph.pat("hyphen/hyph-cs.tex", "cs")
+cs_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/cs/cs.zip"))
+cs_subs <- cs_subs[!grepl("[0-9]", cs_subs$unigram), ]
+cs_subs <- cs_subs[!grepl("[[:punct:]]", cs_subs$unigram), ]
+cs_subs <- cs_subs %>% filter(unigram != "")
+cs_subs <- cs_subs[1:100000, ]
+
+# create fake words based on cue
+cs_fake_words <- get_fake(wordlist = cs_subs$unigram, #possibles
+                           language_hyp = cs_patterns, #hyphen rules
+                           replacewords = cs$cs_cue) #your words
+
+write.csv(cs_fake_words, "cs/cs_fake_cues.csv", row.names = F)
+
+# merge back into data
+cs <- merge(cs, 
+            cs_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "cs_cue", by.y = "original_word")
+cs$cs_fake_cue <- cs$replacement_word
+cs$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+cs_fake_words <- get_fake(wordlist = cs_subs$unigram, #possibles
+                           language_hyp = cs_patterns, #hyphen rules
+                           replacewords = cs$cs_target) #your words
+
+write.csv(cs_fake_words, "cs/cs_fake_targets.csv", row.names = F)
+
+# merge back into data
+cs <- merge(cs, 
+            cs_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "cs_target", by.y = "original_word")
+cs$cs_fake_target <- cs$replacement_word
+cs$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+cs_trials <- cs[ , c("cs_cue", "cs_target")]
+cs_trials$type <- "related"
+cs_trials$cue_type <- "word"
+cs_trials$target_type <- "word"
+
+cs_trials <- rbind(cs_trials,
+                   data.frame(cs_cue = cs$cs_cue, 
+                              cs_target = cs$cs_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(cs_cue = cs$cs_fake_cue, 
+                              cs_target = cs$cs_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(cs_cue = cs$cs_cue[sample(1:1000,
+                                                        1000)], 
+                              cs_target = cs$cs_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(cs_cue = cs$cs_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              cs_target = cs$cs_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(cs_trials[ , c("cs_cue", "cs_target")]))
+
+cs$cs_cosine <- NULL
+write.csv(cs, "cs/cs_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+cs_model <- read.table("/Volumes/SPAML Backup/subs_vec/cs/subs.cs.1e6.txt", quote="\"")
+cs_model <- na.omit(cs_model)
+cs_model$V1 <- tolower(cs_model$V1)
+cs_model <- cs_model[!duplicated(cs_model$V1), ]
+rownames(cs_model) <- cs_model$V1
+cs_model <- cs_model[ , -1]
+
+cs_trials$cs_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(cs_trials)){
+  
+  if(cs_trials$type[row] != "nonword") { 
+    
+    cs_trials$cs_cosine[row] <- cosine(as.matrix(t(cs_model[
+    c(cs_trials$cs_cue[row], cs_trials$cs_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(cs_trials$cs_cosine, cs_trials$type, mean, na.rm = T)
+tapply(cs_trials$cs_cosine, cs_trials$type, min, na.rm = T)
+tapply(cs_trials$cs_cosine, cs_trials$type, max, na.rm = T)
+
+rm(cs_model)
+
+gc()
+
+# write it out 
+write.csv(cs_trials, "cs/cs_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## da Danish 
+
+```{r eval = F}
+# get data ----
+da <- words[ , c("da_cue", "da_target", "da_fake_cue", "da_fake_target", 
+                 "en_cue", "en_target")]
+da$da_cue <- tolower(da$da_cue)
+da$da_target <- tolower(da$da_target)
+
+# get patterns -----
+da_patterns <- read.hyph.pat("hyphen/hyph-da.tex", "da")
+da_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/da/da.zip"))
+da_subs <- da_subs[!grepl("[0-9]", da_subs$unigram), ]
+da_subs <- da_subs[!grepl("[[:punct:]]", da_subs$unigram), ]
+da_subs <- da_subs %>% filter(unigram != "")
+da_subs <- da_subs[1:100000, ]
+
+# create fake words based on cue
+da_fake_words <- get_fake(wordlist = da_subs$unigram, #possibles
+                           language_hyp = da_patterns, #hyphen rules
+                           replacewords = da$da_cue) #your words
+
+write.csv(da_fake_words, "da/da_fake_cues.csv", row.names = F)
+
+# merge back into data
+da <- merge(da, 
+            da_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "da_cue", by.y = "original_word")
+da$da_fake_cue <- da$replacement_word
+da$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+da_fake_words <- get_fake(wordlist = da_subs$unigram, #possibles
+                           language_hyp = da_patterns, #hyphen rules
+                           replacewords = da$da_target) #your words
+
+write.csv(da_fake_words, "da/da_fake_targets.csv", row.names = F)
+
+# merge back into data
+da <- merge(da, 
+            da_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "da_target", by.y = "original_word")
+da$da_fake_target <- da$replacement_word
+da$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+da_trials <- da[ , c("da_cue", "da_target")]
+da_trials$type <- "related"
+da_trials$cue_type <- "word"
+da_trials$target_type <- "word"
+
+da_trials <- rbind(da_trials,
+                   data.frame(da_cue = da$da_cue, 
+                              da_target = da$da_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(da_cue = da$da_fake_cue, 
+                              da_target = da$da_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(da_cue = da$da_cue[sample(1:1000,
+                                                        1000)], 
+                              da_target = da$da_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(da_cue = da$da_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              da_target = da$da_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(da_trials[ , c("da_cue", "da_target")]))
+
+da$da_cosine <- NULL
+write.csv(da, "da/da_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+da_model <- read.table("/Volumes/SPAML Backup/subs_vec/da/subs.da.1e6.txt", quote="\"")
+da_model <- na.omit(da_model)
+da_model$V1 <- tolower(da_model$V1)
+da_model <- da_model[!duplicated(da_model$V1), ]
+rownames(da_model) <- da_model$V1
+da_model <- da_model[ , -1]
+
+da_trials$da_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(da_trials)){
+  
+  if(da_trials$type[row] != "nonword") { 
+    
+    da_trials$da_cosine[row] <- cosine(as.matrix(t(da_model[
+    c(da_trials$da_cue[row], da_trials$da_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(da_trials$da_cosine, da_trials$type, mean, na.rm = T)
+tapply(da_trials$da_cosine, da_trials$type, min, na.rm = T)
+tapply(da_trials$da_cosine, da_trials$type, max, na.rm = T)
+
+rm(da_model)
+
+gc()
+
+# write it out 
+write.csv(da_trials, "da/da_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## de German 
+
+```{r eval = F}
+# get data ----
+de <- words[ , c("de_cue", "de_target", "de_fake_cue", "de_fake_target", 
+                 "en_cue", "en_target")]
+de$de_cue <- tolower(de$de_cue)
+de$de_target <- tolower(de$de_target)
+
+# get patterns -----
+de_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/de/de.zip"))
+de_subs <- de_subs[!grepl("[0-9]", de_subs$unigram), ]
+de_subs <- de_subs[!grepl("[[:punct:]]", de_subs$unigram), ]
+de_subs <- de_subs %>% filter(unigram != "")
+de_subs <- de_subs[1:100000, ]
+
+# create fake words based on cue
+library(sylly.de) #german built in 
+de_fake_words <- get_fake(wordlist = de_subs$unigram, #possibles
+                           language_hyp = "de", #hyphen rules
+                           replacewords = de$de_cue) #your words
+
+write.csv(de_fake_words, "de/de_fake_cues.csv", row.names = F)
+
+# merge back into data
+de <- merge(de, 
+            de_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "de_cue", by.y = "original_word")
+de$de_fake_cue <- de$replacement_word
+de$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+de_fake_words <- get_fake(wordlist = de_subs$unigram, #possibles
+                           language_hyp = "de", #hyphen rules
+                           replacewords = de$de_target) #your words
+
+write.csv(de_fake_words, "de/de_fake_targets.csv", row.names = F)
+
+# merge back into data
+de <- merge(de, 
+            de_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "de_target", by.y = "original_word")
+de$de_fake_target <- de$replacement_word
+de$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+de_trials <- de[ , c("de_cue", "de_target")]
+de_trials$type <- "related"
+de_trials$cue_type <- "word"
+de_trials$target_type <- "word"
+
+de_trials <- rbind(de_trials,
+                   data.frame(de_cue = de$de_cue, 
+                              de_target = de$de_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(de_cue = de$de_fake_cue, 
+                              de_target = de$de_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(de_cue = de$de_cue[sample(1:1000,
+                                                        1000)], 
+                              de_target = de$de_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(de_cue = de$de_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              de_target = de$de_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(de_trials[ , c("de_cue", "de_target")]))
+
+de$de_cosine <- NULL
+write.csv(de, "de/de_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+de_model <- read.table("/Volumes/SPAML Backup/subs_vec/de/subs.de.1e6.txt", quote="\"")
+de_model <- na.omit(de_model)
+de_model$V1 <- tolower(de_model$V1)
+de_model <- de_model[!duplicated(de_model$V1), ]
+rownames(de_model) <- de_model$V1
+de_model <- de_model[ , -1]
+
+de_trials$de_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(de_trials)){
+  
+  if(de_trials$type[row] != "nonword") { 
+    
+    de_trials$de_cosine[row] <- cosine(as.matrix(t(de_model[
+    c(de_trials$de_cue[row], de_trials$de_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(de_trials$de_cosine, de_trials$type, mean, na.rm = T)
+tapply(de_trials$de_cosine, de_trials$type, min, na.rm = T)
+tapply(de_trials$de_cosine, de_trials$type, max, na.rm = T)
+
+rm(de_model)
+
+gc()
+
+# write it out 
+write.csv(de_trials, "de/de_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## el Greek 
+
+```{r eval = F}
+# get data ----
+el <- words[ , c("el_cue", "el_target", "el_fake_cue", "el_fake_target", 
+                 "en_cue", "en_target")]
+el$el_cue <- tolower(el$el_cue)
+el$el_target <- tolower(el$el_target)
+
+# get patterns -----
+el_patterns <- read.hyph.pat("hyphen/grphyph5.tex", "el-polyton")
+el_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/el/el.zip"))
+el_subs <- el_subs[!grepl("[0-9]", el_subs$unigram), ]
+el_subs <- el_subs[!grepl("[[:punct:]]", el_subs$unigram), ]
+el_subs <- el_subs %>% filter(unigram != "")
+el_subs <- el_subs[1:100000, ]
+
+# create fake words based on cue
+el_fake_words <- get_fake(wordlist = el_subs$unigram, #possibles
+                           language_hyp = el_patterns, #hyphen rules
+                           replacewords = el$el_cue) #your words
+
+write.csv(el_fake_words, "el/el_fake_cues.csv", row.names = F)
+
+# merge back into data
+el <- merge(el, 
+            el_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "el_cue", by.y = "original_word")
+el$el_fake_cue <- el$replacement_word
+el$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+el_fake_words <- get_fake(wordlist = el_subs$unigram, #possibles
+                           language_hyp = el_patterns, #hyphen rules
+                           replacewords = el$el_target) #your words
+
+write.csv(el_fake_words, "el/el_fake_targets.csv", row.names = F)
+
+# merge back into data
+el <- merge(el, 
+            el_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "el_target", by.y = "original_word")
+el$el_fake_target <- el$replacement_word
+el$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+el_trials <- el[ , c("el_cue", "el_target")]
+el_trials$type <- "related"
+el_trials$cue_type <- "word"
+el_trials$target_type <- "word"
+
+el_trials <- rbind(el_trials,
+                   data.frame(el_cue = el$el_cue, 
+                              el_target = el$el_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(el_cue = el$el_fake_cue, 
+                              el_target = el$el_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(el_cue = el$el_cue[sample(1:1000,
+                                                        1000)], 
+                              el_target = el$el_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(el_cue = el$el_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              el_target = el$el_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(el_trials[ , c("el_cue", "el_target")]))
+
+el$el_cosine <- NULL
+write.csv(el, "el/el_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+el_model <- read.table("/Volumes/SPAML Backup/subs_vec/el/subs.el.1e6.txt", quote="\"")
+el_model <- na.omit(el_model)
+el_model$V1 <- tolower(el_model$V1)
+el_model <- el_model[!duplicated(el_model$V1), ]
+rownames(el_model) <- el_model$V1
+el_model <- el_model[ , -1]
+
+el_trials$el_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(el_trials)){
+  
+  if(el_trials$type[row] != "nonword") { 
+    
+    el_trials$el_cosine[row] <- cosine(as.matrix(t(el_model[
+    c(el_trials$el_cue[row], el_trials$el_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(el_trials$el_cosine, el_trials$type, mean, na.rm = T)
+tapply(el_trials$el_cosine, el_trials$type, min, na.rm = T)
+tapply(el_trials$el_cosine, el_trials$type, max, na.rm = T)
+
+rm(el_model)
+
+gc()
+
+# write it out 
+write.csv(el_trials, "el/el_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## es Spanish
+
+```{r eval = F}
+# get data ----
+es <- words[ , c("es_cue", "es_target", "es_fake_cue", "es_fake_target", 
+                 "en_cue", "en_target")]
+es$es_cue <- tolower(es$es_cue)
+es$es_target <- tolower(es$es_target)
+
+# get patterns -----
+es_patterns <- read.hyph.pat("hyphen/hyph-es.tex", "es")
+es_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/es/es.zip"))
+es_subs <- es_subs[!grepl("[0-9]", es_subs$unigram), ]
+es_subs <- es_subs[!grepl("[[:punct:]]", es_subs$unigram), ]
+es_subs <- es_subs %>% filter(unigram != "")
+es_subs <- es_subs[1:100000, ]
+
+# create fake words based on cue
+es_fake_words <- get_fake(wordlist = es_subs$unigram, #possibles
+                           language_hyp = es_patterns, #hyphen rules
+                           replacewords = es$es_cue) #your words
+
+write.csv(es_fake_words, "es/es_fake_cues.csv", row.names = F)
+
+# merge back into data
+es <- merge(es, 
+            es_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "es_cue", by.y = "original_word")
+es$es_fake_cue <- es$replacement_word
+es$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+es_fake_words <- get_fake(wordlist = es_subs$unigram, #possibles
+                           language_hyp = es_patterns, #hyphen rules
+                           replacewords = es$es_target) #your words
+
+write.csv(es_fake_words, "es/es_fake_targets.csv", row.names = F)
+
+# merge back into data
+es <- merge(es, 
+            es_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "es_target", by.y = "original_word")
+es$es_fake_target <- es$replacement_word
+es$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+es_trials <- es[ , c("es_cue", "es_target")]
+es_trials$type <- "related"
+es_trials$cue_type <- "word"
+es_trials$target_type <- "word"
+
+es_trials <- rbind(es_trials,
+                   data.frame(es_cue = es$es_cue, 
+                              es_target = es$es_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(es_cue = es$es_fake_cue, 
+                              es_target = es$es_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(es_cue = es$es_cue[sample(1:1000,
+                                                        1000)], 
+                              es_target = es$es_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(es_cue = es$es_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              es_target = es$es_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(es_trials[ , c("es_cue", "es_target")]))
+
+es$es_cosine <- NULL
+write.csv(es, "es/es_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+es_model <- read.table("/Volumes/SPAML Backup/subs_vec/es/subs.es.1e6.txt", quote="\"")
+es_model <- na.omit(es_model)
+es_model$V1 <- tolower(es_model$V1)
+es_model <- es_model[!duplicated(es_model$V1), ]
+rownames(es_model) <- es_model$V1
+es_model <- es_model[ , -1]
+
+es_trials$es_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(es_trials)){
+  
+  if(es_trials$type[row] != "nonword") { 
+    
+    es_trials$es_cosine[row] <- cosine(as.matrix(t(es_model[
+    c(es_trials$es_cue[row], es_trials$es_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(es_trials$es_cosine, es_trials$type, mean, na.rm = T)
+tapply(es_trials$es_cosine, es_trials$type, min, na.rm = T)
+tapply(es_trials$es_cosine, es_trials$type, max, na.rm = T)
+
+rm(es_model)
+
+gc()
+
+# write it out 
+write.csv(es_trials, "es/es_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## et Estonian
+
+```{r eval = F}
+# get data ----
+et <- words[ , c("et_cue", "et_target", "et_fake_cue", "et_fake_target", 
+                 "en_cue", "en_target")]
+et$et_cue <- tolower(et$et_cue)
+et$et_target <- tolower(et$et_target)
+
+# get patterns -----
+et_patterns <- read.hyph.pat("hyphen/hyph-et.tex", "et")
+et_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/et/et.zip"))
+et_subs <- et_subs[!grepl("[0-9]", et_subs$unigram), ]
+et_subs <- et_subs[!grepl("[[:punct:]]", et_subs$unigram), ]
+et_subs <- et_subs %>% filter(unigram != "")
+et_subs <- et_subs[1:100000, ]
+
+# create fake words based on cue
+et_fake_words <- get_fake(wordlist = et_subs$unigram, #possibles
+                           language_hyp = et_patterns, #hyphen rules
+                           replacewords = et$et_cue) #your words
+
+write.csv(et_fake_words, "et/et_fake_cues.csv", row.names = F)
+
+# merge back into data
+et <- merge(et, 
+            et_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "et_cue", by.y = "original_word")
+et$et_fake_cue <- et$replacement_word
+et$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+et_fake_words <- get_fake(wordlist = et_subs$unigram, #possibles
+                           language_hyp = et_patterns, #hyphen rules
+                           replacewords = et$et_target) #your words
+
+write.csv(et_fake_words, "et/et_fake_targets.csv", row.names = F)
+
+# merge back into data
+et <- merge(et, 
+            et_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "et_target", by.y = "original_word")
+et$et_fake_target <- et$replacement_word
+et$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+et_trials <- et[ , c("et_cue", "et_target")]
+et_trials$type <- "related"
+et_trials$cue_type <- "word"
+et_trials$target_type <- "word"
+
+et_trials <- rbind(et_trials,
+                   data.frame(et_cue = et$et_cue, 
+                              et_target = et$et_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(et_cue = et$et_fake_cue, 
+                              et_target = et$et_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(et_cue = et$et_cue[sample(1:1000,
+                                                        1000)], 
+                              et_target = et$et_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(et_cue = et$et_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              et_target = et$et_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(et_trials[ , c("et_cue", "et_target")]))
+
+et$et_cosine <- NULL
+write.csv(et, "et/et_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+et_model <- read.table("/Volumes/SPAML Backup/subs_vec/et/subs.et.1e6.txt", quote="\"")
+et_model <- na.omit(et_model)
+et_model$V1 <- tolower(et_model$V1)
+et_model <- et_model[!duplicated(et_model$V1), ]
+rownames(et_model) <- et_model$V1
+et_model <- et_model[ , -1]
+
+et_trials$et_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(et_trials)){
+  
+  if(et_trials$type[row] != "nonword") { 
+    
+    et_trials$et_cosine[row] <- cosine(as.matrix(t(et_model[
+    c(et_trials$et_cue[row], et_trials$et_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(et_trials$et_cosine, et_trials$type, mean, na.rm = T)
+tapply(et_trials$et_cosine, et_trials$type, min, na.rm = T)
+tapply(et_trials$et_cosine, et_trials$type, max, na.rm = T)
+
+rm(et_model)
+
+gc()
+
+# write it out 
+write.csv(et_trials, "et/et_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## eu Basque
+
+```{r eval = F}
+# get data ----
+eu <- words[ , c("eu_cue", "eu_target", "eu_fake_cue", "eu_fake_target", 
+                 "en_cue", "en_target")]
+eu$eu_cue <- tolower(eu$eu_cue)
+eu$eu_target <- tolower(eu$eu_target)
+
+# get patterns -----
+eu_patterns <- read.hyph.pat("hyphen/hyph-eu.tex", "eu")
+eu_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/eu/eu.zip"))
+eu_subs <- eu_subs[!grepl("[0-9]", eu_subs$unigram), ]
+eu_subs <- eu_subs[!grepl("[[:punct:]]", eu_subs$unigram), ]
+eu_subs <- eu_subs %>% filter(unigram != "")
+eu_subs <- eu_subs[1:100000, ]
+
+# create fake words based on cue
+eu_fake_words <- get_fake(wordlist = eu_subs$unigram, #possibles
+                           language_hyp = eu_patterns, #hyphen rules
+                           replacewords = eu$eu_cue) #your words
+
+write.csv(eu_fake_words, "eu/eu_fake_cues.csv", row.names = F)
+
+# merge back into data
+eu <- merge(eu, 
+            eu_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "eu_cue", by.y = "original_word")
+eu$eu_fake_cue <- eu$replacement_word
+eu$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+eu_fake_words <- get_fake(wordlist = eu_subs$unigram, #possibles
+                           language_hyp = eu_patterns, #hyphen rules
+                           replacewords = eu$eu_target) #your words
+
+write.csv(eu_fake_words, "eu/eu_fake_targets.csv", row.names = F)
+
+# merge back into data
+eu <- merge(eu, 
+            eu_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "eu_target", by.y = "original_word")
+eu$eu_fake_target <- eu$replacement_word
+eu$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+eu_trials <- eu[ , c("eu_cue", "eu_target")]
+eu_trials$type <- "related"
+eu_trials$cue_type <- "word"
+eu_trials$target_type <- "word"
+
+eu_trials <- rbind(eu_trials,
+                   data.frame(eu_cue = eu$eu_cue, 
+                              eu_target = eu$eu_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(eu_cue = eu$eu_fake_cue, 
+                              eu_target = eu$eu_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(eu_cue = eu$eu_cue[sample(1:1000,
+                                                        1000)], 
+                              eu_target = eu$eu_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(eu_cue = eu$eu_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              eu_target = eu$eu_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(eu_trials[ , c("eu_cue", "eu_target")]))
+
+eu$eu_cosine <- NULL
+write.csv(eu, "eu/eu_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+eu_model <- read.table("/Volumes/SPAML Backup/subs_vec/eu/subs.eu.1e6.txt", quote="\"")
+eu_model <- na.omit(eu_model)
+eu_model$V1 <- tolower(eu_model$V1)
+eu_model <- eu_model[!duplicated(eu_model$V1), ]
+rownames(eu_model) <- eu_model$V1
+eu_model <- eu_model[ , -1]
+
+eu_trials$eu_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(eu_trials)){
+  
+  if(eu_trials$type[row] != "nonword") { 
+    
+    eu_trials$eu_cosine[row] <- cosine(as.matrix(t(eu_model[
+    c(eu_trials$eu_cue[row], eu_trials$eu_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(eu_trials$eu_cosine, eu_trials$type, mean, na.rm = T)
+tapply(eu_trials$eu_cosine, eu_trials$type, min, na.rm = T)
+tapply(eu_trials$eu_cosine, eu_trials$type, max, na.rm = T)
+
+rm(eu_model)
+
+gc()
+
+# write it out 
+write.csv(eu_trials, "eu/eu_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## fa Farsi
+
+```{r eval = F}
+# get data ----
+fa <- words[ , c("fa_cue", "fa_target", "fa_fake_cue", "fa_fake_target", 
+                 "en_cue", "en_target")]
+fa$fa_cue <- tolower(fa$fa_cue)
+fa$fa_target <- tolower(fa$fa_target)
+
+# get patterns -----
+fa_patterns <- read.hyph.pat("hyphen/hyph-af.tex", "af")
+# not a typo, Arabic technically doesn't allow hyphenation
+fa_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/fa/fa.zip"))
+fa_subs <- fa_subs[!grepl("[0-9]", fa_subs$unigram), ]
+fa_subs <- fa_subs[!grepl("[[:punct:]]", fa_subs$unigram), ]
+fa_subs <- fa_subs %>% filter(unigram != "")
+fa_subs <- fa_subs[1:100000, ]
+
+# create fake words based on cue
+fa_fake_words <- get_fake(wordlist = fa_subs$unigram, #possibles
+                           language_hyp = fa_patterns, #hyphen rules
+                           replacewords = fa$fa_cue) #your words
+
+write.csv(fa_fake_words, "fa/fa_fake_cues.csv", row.names = F)
+
+# merge back into data
+fa <- merge(fa, 
+            fa_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "fa_cue", by.y = "original_word")
+fa$fa_fake_cue <- fa$replacement_word
+fa$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+fa_fake_words <- get_fake(wordlist = fa_subs$unigram, #possibles
+                           language_hyp = fa_patterns, #hyphen rules
+                           replacewords = fa$fa_target) #your words
+
+write.csv(fa_fake_words, "fa/fa_fake_targets.csv", row.names = F)
+
+# merge back into data
+fa <- merge(fa, 
+            fa_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "fa_target", by.y = "original_word")
+fa$fa_fake_target <- fa$replacement_word
+fa$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+fa_trials <- fa[ , c("fa_cue", "fa_target")]
+fa_trials$type <- "related"
+fa_trials$cue_type <- "word"
+fa_trials$target_type <- "word"
+
+fa_trials <- rbind(fa_trials,
+                   data.frame(fa_cue = fa$fa_cue, 
+                              fa_target = fa$fa_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(fa_cue = fa$fa_fake_cue, 
+                              fa_target = fa$fa_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(fa_cue = fa$fa_cue[sample(1:1000,
+                                                        1000)], 
+                              fa_target = fa$fa_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(fa_cue = fa$fa_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              fa_target = fa$fa_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(fa_trials[ , c("fa_cue", "fa_target")]))
+
+fa$fa_cosine <- NULL
+write.csv(fa, "fa/fa_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+fa_model <- read.table("/Volumes/SPAML Backup/subs_vec/fa/subs.fa.1e6.txt", quote="\"")
+fa_model <- na.omit(fa_model)
+fa_model$V1 <- tolower(fa_model$V1)
+fa_model <- fa_model[!duplicated(fa_model$V1), ]
+rownames(fa_model) <- fa_model$V1
+fa_model <- fa_model[ , -1]
+
+fa_trials$fa_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(fa_trials)){
+  
+  if(fa_trials$type[row] != "nonword") { 
+    
+    fa_trials$fa_cosine[row] <- cosine(as.matrix(t(fa_model[
+    c(fa_trials$fa_cue[row], fa_trials$fa_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(fa_trials$fa_cosine, fa_trials$type, mean, na.rm = T)
+tapply(fa_trials$fa_cosine, fa_trials$type, min, na.rm = T)
+tapply(fa_trials$fa_cosine, fa_trials$type, max, na.rm = T)
+
+rm(fa_model)
+
+gc()
+
+# write it out 
+write.csv(fa_trials, "fa/fa_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## fi Finnish
+
+```{r eval = F}
+# get data ----
+fi <- words[ , c("fi_cue", "fi_target", "fi_fake_cue", "fi_fake_target", 
+                 "en_cue", "en_target")]
+fi$fi_cue <- tolower(fi$fi_cue)
+fi$fi_target <- tolower(fi$fi_target)
+
+# get patterns -----
+fi_patterns <- read.hyph.pat("hyphen/hyph-fi.tex", "fi")
+fi_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/fi/fi.zip"))
+fi_subs <- fi_subs[!grepl("[0-9]", fi_subs$unigram), ]
+fi_subs <- fi_subs[!grepl("[[:punct:]]", fi_subs$unigram), ]
+fi_subs <- fi_subs %>% filter(unigram != "")
+fi_subs <- fi_subs[1:100000, ]
+
+# create fake words based on cue
+fi_fake_words <- get_fake(wordlist = fi_subs$unigram, #possibles
+                           language_hyp = fi_patterns, #hyphen rules
+                           replacewords = fi$fi_cue) #your words
+
+write.csv(fi_fake_words, "fi/fi_fake_cues.csv", row.names = F)
+
+# merge back into data
+fi <- merge(fi, 
+            fi_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "fi_cue", by.y = "original_word")
+fi$fi_fake_cue <- fi$replacement_word
+fi$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+fi_fake_words <- get_fake(wordlist = fi_subs$unigram, #possibles
+                           language_hyp = fi_patterns, #hyphen rules
+                           replacewords = fi$fi_target) #your words
+
+write.csv(fi_fake_words, "fi/fi_fake_targets.csv", row.names = F)
+
+# merge back into data
+fi <- merge(fi, 
+            fi_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "fi_target", by.y = "original_word")
+fi$fi_fake_target <- fi$replacement_word
+fi$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+fi_trials <- fi[ , c("fi_cue", "fi_target")]
+fi_trials$type <- "related"
+fi_trials$cue_type <- "word"
+fi_trials$target_type <- "word"
+
+fi_trials <- rbind(fi_trials,
+                   data.frame(fi_cue = fi$fi_cue, 
+                              fi_target = fi$fi_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(fi_cue = fi$fi_fake_cue, 
+                              fi_target = fi$fi_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(fi_cue = fi$fi_cue[sample(1:1000,
+                                                        1000)], 
+                              fi_target = fi$fi_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(fi_cue = fi$fi_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              fi_target = fi$fi_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(fi_trials[ , c("fi_cue", "fi_target")]))
+
+fi$fi_cosine <- NULL
+write.csv(fi, "fi/fi_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+fi_model <- read.table("/Volumes/SPAML Backup/subs_vec/fi/subs.fi.1e6.txt", quote="\"")
+fi_model <- na.omit(fi_model)
+fi_model$V1 <- tolower(fi_model$V1)
+fi_model <- fi_model[!duplicated(fi_model$V1), ]
+rownames(fi_model) <- fi_model$V1
+fi_model <- fi_model[ , -1]
+
+fi_trials$fi_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(fi_trials)){
+  
+  if(fi_trials$type[row] != "nonword") { 
+    
+    fi_trials$fi_cosine[row] <- cosine(as.matrix(t(fi_model[
+    c(fi_trials$fi_cue[row], fi_trials$fi_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(fi_trials$fi_cosine, fi_trials$type, mean, na.rm = T)
+tapply(fi_trials$fi_cosine, fi_trials$type, min, na.rm = T)
+tapply(fi_trials$fi_cosine, fi_trials$type, max, na.rm = T)
+
+rm(fi_model)
+
+gc()
+
+# write it out 
+write.csv(fi_trials, "fi/fi_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## fr French
+
+```{r eval = F}
+# get data ----
+fr <- words[ , c("fr_cue", "fr_target", "fr_fake_cue", "fr_fake_target", 
+                 "en_cue", "en_target")]
+fr$fr_cue <- tolower(fr$fr_cue)
+fr$fr_target <- tolower(fr$fr_target)
+
+# get patterns -----
+fr_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/fr/fr.zip"))
+fr_subs <- fr_subs[!grepl("[0-9]", fr_subs$unigram), ]
+fr_subs <- fr_subs[!grepl("[[:punct:]]", fr_subs$unigram), ]
+fr_subs <- fr_subs %>% filter(unigram != "")
+fr_subs <- fr_subs[1:100000, ]
+
+# create fake words based on cue
+fr_fake_words <- get_fake(wordlist = fr_subs$unigram, #possibles
+                           language_hyp = "fr", #hyphen rules
+                           replacewords = fr$fr_cue) #your words
+
+write.csv(fr_fake_words, "fr/fr_fake_cues.csv", row.names = F)
+
+# merge back into data
+fr <- merge(fr, 
+            fr_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "fr_cue", by.y = "original_word")
+fr$fr_fake_cue <- fr$replacement_word
+fr$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+fr_fake_words <- get_fake(wordlist = fr_subs$unigram, #possibles
+                           language_hyp = "fr", #hyphen rules
+                           replacewords = fr$fr_target) #your words
+
+write.csv(fr_fake_words, "fr/fr_fake_targets.csv", row.names = F)
+
+# merge back into data
+fr <- merge(fr, 
+            fr_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "fr_target", by.y = "original_word")
+fr$fr_fake_target <- fr$replacement_word
+fr$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+fr_trials <- fr[ , c("fr_cue", "fr_target")]
+fr_trials$type <- "related"
+fr_trials$cue_type <- "word"
+fr_trials$target_type <- "word"
+
+fr_trials <- rbind(fr_trials,
+                   data.frame(fr_cue = fr$fr_cue, 
+                              fr_target = fr$fr_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(fr_cue = fr$fr_fake_cue, 
+                              fr_target = fr$fr_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(fr_cue = fr$fr_cue[sample(1:1000,
+                                                        1000)], 
+                              fr_target = fr$fr_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(fr_cue = fr$fr_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              fr_target = fr$fr_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(fr_trials[ , c("fr_cue", "fr_target")]))
+
+fr$fr_cosine <- NULL
+write.csv(fr, "fr/fr_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+fr_model <- read.table("/Volumes/SPAML Backup/subs_vec/fr/subs.fr.1e6.txt", quote="\"")
+fr_model <- na.omit(fr_model)
+fr_model$V1 <- tolower(fr_model$V1)
+fr_model <- fr_model[!duplicated(fr_model$V1), ]
+rownames(fr_model) <- fr_model$V1
+fr_model <- fr_model[ , -1]
+
+fr_trials$fr_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(fr_trials)){
+  
+  if(fr_trials$type[row] != "nonword") { 
+    
+    fr_trials$fr_cosine[row] <- cosine(as.matrix(t(fr_model[
+    c(fr_trials$fr_cue[row], fr_trials$fr_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(fr_trials$fr_cosine, fr_trials$type, mean, na.rm = T)
+tapply(fr_trials$fr_cosine, fr_trials$type, min, na.rm = T)
+tapply(fr_trials$fr_cosine, fr_trials$type, max, na.rm = T)
+
+rm(fr_model)
+
+gc()
+
+# write it out 
+write.csv(fr_trials, "fr/fr_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## gl Galician 
+
+```{r eval = F}
+# get data ----
+gl <- words[ , c("gl_cue", "gl_target", "gl_fake_cue", "gl_fake_target", 
+                 "en_cue", "en_target")]
+gl$gl_cue <- tolower(gl$gl_cue)
+gl$gl_target <- tolower(gl$gl_target)
+
+# get patterns -----
+gl_patterns <- read.hyph.pat("hyphen/hyph-pt.tex", "pt")
+gl_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/gl/gl.zip"))
+gl_subs <- gl_subs[!grepl("[0-9]", gl_subs$unigram), ]
+gl_subs <- gl_subs[!grepl("[[:punct:]]", gl_subs$unigram), ]
+gl_subs <- gl_subs %>% filter(unigram != "")
+gl_subs <- gl_subs[1:80000, ]
+
+# create fake words based on cue
+gl_fake_words <- get_fake(wordlist = gl_subs$unigram, #possibles
+                           language_hyp = gl_patterns, #hyphen rules
+                           replacewords = gl$gl_cue) #your words
+
+write.csv(gl_fake_words, "gl/gl_fake_cues.csv", row.names = F)
+
+# merge back into data
+gl <- merge(gl, 
+            gl_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "gl_cue", by.y = "original_word")
+gl$gl_fake_cue <- gl$replacement_word
+gl$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+gl_fake_words <- get_fake(wordlist = gl_subs$unigram, #possibles
+                           language_hyp = gl_patterns, #hyphen rules
+                           replacewords = gl$gl_target) #your words
+
+write.csv(gl_fake_words, "gl/gl_fake_targets.csv", row.names = F)
+
+# merge back into data
+gl <- merge(gl, 
+            gl_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "gl_target", by.y = "original_word")
+gl$gl_fake_target <- gl$replacement_word
+gl$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+gl_trials <- gl[ , c("gl_cue", "gl_target")]
+gl_trials$type <- "related"
+gl_trials$cue_type <- "word"
+gl_trials$target_type <- "word"
+
+gl_trials <- rbind(gl_trials,
+                   data.frame(gl_cue = gl$gl_cue, 
+                              gl_target = gl$gl_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(gl_cue = gl$gl_fake_cue, 
+                              gl_target = gl$gl_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(gl_cue = gl$gl_cue[sample(1:1000,
+                                                        1000)], 
+                              gl_target = gl$gl_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(gl_cue = gl$gl_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              gl_target = gl$gl_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(gl_trials[ , c("gl_cue", "gl_target")]))
+
+gl$gl_cosine <- NULL
+write.csv(gl, "gl/gl_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+gl_model <- read.table("/Volumes/SPAML Backup/subs_vec/gl/subs.gl.1e6.txt", quote="\"")
+gl_model <- na.omit(gl_model)
+gl_model$V1 <- tolower(gl_model$V1)
+gl_model <- gl_model[!duplicated(gl_model$V1), ]
+rownames(gl_model) <- gl_model$V1
+gl_model <- gl_model[ , -1]
+
+gl_trials$gl_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(gl_trials)){
+  
+  if(gl_trials$type[row] != "nonword") { 
+    
+    gl_trials$gl_cosine[row] <- cosine(as.matrix(t(gl_model[
+    c(gl_trials$gl_cue[row], gl_trials$gl_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(gl_trials$gl_cosine, gl_trials$type, mean, na.rm = T)
+tapply(gl_trials$gl_cosine, gl_trials$type, min, na.rm = T)
+tapply(gl_trials$gl_cosine, gl_trials$type, max, na.rm = T)
+
+rm(gl_model)
+
+gc()
+
+# write it out 
+write.csv(gl_trials, "gl/gl_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## he Hebrew running
+
+```{r eval = F}
+# get data ----
+he <- words[ , c("he_cue", "he_target", "he_fake_cue", "he_fake_target", 
+                 "en_cue", "en_target")]
+he$he_cue <- tolower(he$he_cue)
+he$he_target <- tolower(he$he_target)
+
+# get patterns -----
+he_patterns <- read.hyph.pat("hyphen/hyph-af.tex", "af")
+# not a typo, hebrew technically doesn't allow hyphenation
+he_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/he/he.zip"))
+he_subs <- he_subs[!grepl("[0-9]", he_subs$unigram), ]
+he_subs <- he_subs[!grepl("[[:punct:]]", he_subs$unigram), ]
+he_subs <- he_subs %>% filter(unigram != "")
+he_subs <- he_subs[1:100000, ]
+
+# create fake words based on cue
+he_fake_words <- get_fake(wordlist = he_subs$unigram, #possibles
+                           language_hyp = he_patterns, #hyphen rules
+                           replacewords = he$he_cue) #your words
+
+write.csv(he_fake_words, "he/he_fake_cues.csv", row.names = F)
+
+# merge back into data
+he <- merge(he, 
+            he_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "he_cue", by.y = "original_word")
+he$he_fake_cue <- he$replacement_word
+he$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+he$he_target <- gsub("[[:punct:]]", " ", he$he_target)
+he_fake_words <- get_fake(wordlist = he_subs$unigram, #possibles
+                           language_hyp = he_patterns, #hyphen rules
+                           replacewords = he$he_target) #your words
+
+write.csv(he_fake_words, "he/he_fake_targets.csv", row.names = F)
+
+# merge back into data
+he <- merge(he, 
+            he_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "he_target", by.y = "original_word")
+he$he_fake_target <- he$replacement_word
+he$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+he_trials <- he[ , c("he_cue", "he_target")]
+he_trials$type <- "related"
+he_trials$cue_type <- "word"
+he_trials$target_type <- "word"
+
+he_trials <- rbind(he_trials,
+                   data.frame(he_cue = he$he_cue, 
+                              he_target = he$he_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(he_cue = he$he_fake_cue, 
+                              he_target = he$he_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(he_cue = he$he_cue[sample(1:1000,
+                                                        1000)], 
+                              he_target = he$he_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(he_cue = he$he_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              he_target = he$he_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(he_trials[ , c("he_cue", "he_target")]))
+
+he$he_cosine <- NULL
+write.csv(he, "he/he_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+he_model <- read.table("/Volumes/SPAML Backup/subs_vec/he/subs.he.1e6.txt", quote="\"")
+he_model <- na.omit(he_model)
+he_model$V1 <- tolower(he_model$V1)
+he_model <- he_model[!duplicated(he_model$V1), ]
+rownames(he_model) <- he_model$V1
+he_model <- he_model[ , -1]
+
+he_trials$he_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(he_trials)){
+  
+  if(he_trials$type[row] != "nonword") { 
+    
+    he_trials$he_cosine[row] <- cosine(as.matrix(t(he_model[
+    c(he_trials$he_cue[row], he_trials$he_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(he_trials$he_cosine, he_trials$type, mean, na.rm = T)
+tapply(he_trials$he_cosine, he_trials$type, min, na.rm = T)
+tapply(he_trials$he_cosine, he_trials$type, max, na.rm = T)
+
+rm(he_model)
+
+gc()
+
+# write it out 
+write.csv(he_trials, "he/he_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## hi Hindi 
+
+```{r eval = F}
+# get data ----
+hi <- words[ , c("hi_cue", "hi_target", "hi_fake_cue", "hi_fake_target", 
+                 "en_cue", "en_target")]
+hi$hi_cue <- tolower(hi$hi_cue)
+hi$hi_target <- tolower(hi$hi_target)
+
+# get patterns -----
+hi_patterns <- read.hyph.pat("hyphen/hyph-hi.tex", "hi")
+hi_subs <- import(paste0("/Volumes/SPAML Backup/wiki_count/hi/hi.zip"))
+hi_subs <- hi_subs[!grepl("[0-9]", hi_subs$unigram), ]
+hi_subs <- hi_subs[!grepl("[[:punct:]]", hi_subs$unigram), ]
+hi_subs <- hi_subs %>% filter(unigram != "")
+hi_subs <- hi_subs[1:100000, ]
+
+# create fake words based on cue
+hi_fake_words <- get_fake(wordlist = hi_subs$unigram, #possibles
+                           language_hyp = hi_patterns, #hyphen rules
+                           replacewords = hi$hi_cue) #your words
+
+write.csv(hi_fake_words, "hi/hi_fake_cues.csv", row.names = F)
+
+# merge back into data
+hi <- merge(hi, 
+            hi_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "hi_cue", by.y = "original_word")
+hi$hi_fake_cue <- hi$replacement_word
+hi$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+hi_fake_words <- get_fake(wordlist = hi_subs$unigram, #possibles
+                           language_hyp = hi_patterns, #hyphen rules
+                           replacewords = hi$hi_target) #your words
+
+write.csv(hi_fake_words, "hi/hi_fake_targets.csv", row.names = F)
+
+# merge back into data
+hi <- merge(hi, 
+            hi_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "hi_target", by.y = "original_word")
+hi$hi_fake_target <- hi$replacement_word
+hi$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+hi_trials <- hi[ , c("hi_cue", "hi_target")]
+hi_trials$type <- "related"
+hi_trials$cue_type <- "word"
+hi_trials$target_type <- "word"
+
+hi_trials <- rbind(hi_trials,
+                   data.frame(hi_cue = hi$hi_cue, 
+                              hi_target = hi$hi_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(hi_cue = hi$hi_fake_cue, 
+                              hi_target = hi$hi_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(hi_cue = hi$hi_cue[sample(1:1000,
+                                                        1000)], 
+                              hi_target = hi$hi_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(hi_cue = hi$hi_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              hi_target = hi$hi_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(hi_trials[ , c("hi_cue", "hi_target")]))
+
+hi$hi_cosine <- NULL
+write.csv(hi, "hi/hi_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+hi_model <- read.table("/Volumes/SPAML Backup/wiki_vec/hi/wiki.hi.1e6.txt", quote="\"")
+hi_model <- na.omit(hi_model)
+hi_model$V1 <- tolower(hi_model$V1)
+hi_model <- hi_model[!duplicated(hi_model$V1), ]
+rownames(hi_model) <- hi_model$V1
+hi_model <- hi_model[ , -1]
+
+hi_trials$hi_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(hi_trials)){
+  
+  if(hi_trials$type[row] != "nonword") { 
+    
+    hi_trials$hi_cosine[row] <- cosine(as.matrix(t(hi_model[
+    c(hi_trials$hi_cue[row], hi_trials$hi_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(hi_trials$hi_cosine, hi_trials$type, mean, na.rm = T)
+tapply(hi_trials$hi_cosine, hi_trials$type, min, na.rm = T)
+tapply(hi_trials$hi_cosine, hi_trials$type, max, na.rm = T)
+
+rm(hi_model)
+
+gc()
+
+# write it out 
+write.csv(hi_trials, "hi/hi_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+## hr Croatian
+
+```{r eval = F}
+# get data ----
+hr <- words[ , c("hr_cue", "hr_target", "hr_fake_cue", "hr_fake_target", 
+                 "en_cue", "en_target")]
+hr$hr_cue <- tolower(hr$hr_cue)
+hr$hr_target <- tolower(hr$hr_target)
+
+# get patterns -----
+hr_patterns <- read.hyph.pat("hyphen/hyph-hr.tex", "hr")
+hr_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/hr/hr.zip"))
+hr_subs <- hr_subs[!grepl("[0-9]", hr_subs$unigram), ]
+hr_subs <- hr_subs[!grepl("[[:punct:]]", hr_subs$unigram), ]
+hr_subs <- hr_subs %>% filter(unigram != "")
+hr_subs <- hr_subs[1:100000, ]
+
+# create fake words based on cue
+hr_fake_words <- get_fake(wordlist = hr_subs$unigram, #possibles
+                           language_hyp = hr_patterns, #hyphen rules
+                           replacewords = hr$hr_cue) #your words
+
+write.csv(hr_fake_words, "hr/hr_fake_cues.csv", row.names = F)
+
+# merge back into data
+hr <- merge(hr, 
+            hr_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "hr_cue", by.y = "original_word")
+hr$hr_fake_cue <- hr$replacement_word
+hr$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+hr_fake_words <- get_fake(wordlist = hr_subs$unigram, #possibles
+                           language_hyp = hr_patterns, #hyphen rules
+                           replacewords = hr$hr_target) #your words
+
+write.csv(hr_fake_words, "hr/hr_fake_targets.csv", row.names = F)
+
+# merge back into data
+hr <- merge(hr, 
+            hr_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "hr_target", by.y = "original_word")
+hr$hr_fake_target <- hr$replacement_word
+hr$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+hr_trials <- hr[ , c("hr_cue", "hr_target")]
+hr_trials$type <- "related"
+hr_trials$cue_type <- "word"
+hr_trials$target_type <- "word"
+
+hr_trials <- rbind(hr_trials,
+                   data.frame(hr_cue = hr$hr_cue, 
+                              hr_target = hr$hr_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(hr_cue = hr$hr_fake_cue, 
+                              hr_target = hr$hr_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(hr_cue = hr$hr_cue[sample(1:1000,
+                                                        1000)], 
+                              hr_target = hr$hr_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(hr_cue = hr$hr_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              hr_target = hr$hr_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(hr_trials[ , c("hr_cue", "hr_target")]))
+
+hr$hr_cosine <- NULL
+write.csv(hr, "hr/hr_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+hr_model <- read.table("/Volumes/SPAML Backup/subs_vec/hr/subs.hr.1e6.txt", quote="\"")
+hr_model <- na.omit(hr_model)
+hr_model$V1 <- tolower(hr_model$V1)
+hr_model <- hr_model[!duplicated(hr_model$V1), ]
+rownames(hr_model) <- hr_model$V1
+hr_model <- hr_model[ , -1]
+
+hr_trials$hr_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(hr_trials)){
+  
+  if(hr_trials$type[row] != "nonword") { 
+    
+    hr_trials$hr_cosine[row] <- cosine(as.matrix(t(hr_model[
+    c(hr_trials$hr_cue[row], hr_trials$hr_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(hr_trials$hr_cosine, hr_trials$type, mean, na.rm = T)
+tapply(hr_trials$hr_cosine, hr_trials$type, min, na.rm = T)
+tapply(hr_trials$hr_cosine, hr_trials$type, max, na.rm = T)
+
+rm(hr_model)
+
+gc()
+
+# write it out 
+write.csv(hr_trials, "hr/hr_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
+
+
+## more 
+
+```{r eval = F}
+# get data ----
+af <- words[ , c("af_cue", "af_target", "af_fake_cue", "af_fake_target", 
+                 "en_cue", "en_target")]
+af$af_cue <- tolower(af$af_cue)
+af$af_target <- tolower(af$af_target)
+
+# get patterns -----
+af_patterns <- read.hyph.pat("hyphen/hyph-af.tex", "af")
+af_subs <- import(paste0("/Volumes/SPAML Backup/wiki_count/af/af.zip"))
+af_subs <- af_subs[!grepl("[0-9]", af_subs$unigram), ]
+af_subs <- af_subs[!grepl("[[:punct:]]", af_subs$unigram), ]
+af_subs <- af_subs %>% filter(unigram != "")
+af_subs <- af_subs[1:100000, ]
+
+# create fake words based on cue
+af_fake_words <- get_fake(wordlist = af_subs$unigram, #possibles
+                           language_hyp = af_patterns, #hyphen rules
+                           replacewords = af$af_cue) #your words
+
+write.csv(af_fake_words, "af/af_fake_cues.csv", row.names = F)
+
+# merge back into data
+af <- merge(af, 
+            af_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "af_cue", by.y = "original_word")
+af$af_fake_cue <- af$replacement_word
+af$replacement_word <- NULL
+
+gc()
+
+# create fake words based on target
+af_fake_words <- get_fake(wordlist = af_subs$unigram, #possibles
+                           language_hyp = af_patterns, #hyphen rules
+                           replacewords = af$af_target) #your words
+
+write.csv(af_fake_words, "af/af_fake_targets.csv", row.names = F)
+
+# merge back into data
+af <- merge(af, 
+            af_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "af_target", by.y = "original_word")
+af$af_fake_target <- af$replacement_word
+af$replacement_word <- NULL
+
+gc()
+
+# create possible trials ----
+af_trials <- af[ , c("af_cue", "af_target")]
+af_trials$type <- "related"
+af_trials$cue_type <- "word"
+af_trials$target_type <- "word"
+
+af_trials <- rbind(af_trials,
+                   data.frame(af_cue = af$af_cue, 
+                              af_target = af$af_target[sample(1:1000, 
+                                                              1000)],
+                              type = "unrelated",
+                              cue_type = "word", 
+                              target_type = "word"), 
+                   data.frame(af_cue = af$af_fake_cue, 
+                              af_target = af$af_target[sample(1:1000, 
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "word"),
+                   data.frame(af_cue = af$af_cue[sample(1:1000,
+                                                        1000)], 
+                              af_target = af$af_fake_target,
+                              type = "nonword",
+                              cue_type = "word", 
+                              target_type = "nonword"),
+                   data.frame(af_cue = af$af_fake_cue[sample(1:1000,
+                                                        1000)], 
+                              af_target = af$af_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword", 
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(af_trials[ , c("af_cue", "af_target")]))
+
+af$af_cosine <- NULL
+write.csv(af, "af/af_translate.csv", row.names = F)
+
+# get cosines -----
+
+# set up model
+af_model <- read.table("/Volumes/SPAML Backup/subs_vec/af/subs.af.1e6.txt", quote="\"")
+af_model <- na.omit(af_model)
+af_model$V1 <- tolower(af_model$V1)
+af_model <- af_model[!duplicated(af_model$V1), ]
+rownames(af_model) <- af_model$V1
+af_model <- af_model[ , -1]
+
+af_trials$af_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(af_trials)){
+  
+  if(af_trials$type[row] != "nonword") { 
+    
+    af_trials$af_cosine[row] <- cosine(as.matrix(t(af_model[
+    c(af_trials$af_cue[row], af_trials$af_target[row]) , ])))[2]
+
+  }
+  
+}
+
+tapply(af_trials$af_cosine, af_trials$type, mean, na.rm = T)
+tapply(af_trials$af_cosine, af_trials$type, min, na.rm = T)
+tapply(af_trials$af_cosine, af_trials$type, max, na.rm = T)
+
+rm(af_model)
+
+gc()
+
+# write it out 
+write.csv(af_trials, "af/af_trials.csv", row.names = F)
+
+rm(list = ls())
+
+gc()
+```
