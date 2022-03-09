@@ -20,7 +20,6 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 ```{r}
 library(dplyr)
 library(psych)
-library(reshape)
 library(tidyr)
 library(ggplot2)
 library(rio)
@@ -29,8 +28,8 @@ library(tidyverse)
 library(jsonlite)
 library(janitor)
 library(widyr)
-library(plyr)
 library(LexOPS)
+current_year <- 2022
 ```
 
 ## Functions
@@ -182,12 +181,18 @@ Note: after the pilot test, we will need to store these files in GitHub releases
 # collected data
 en_data_1 <- processData("input_data/data_en.sqlite")
 en_data_2 <- processData("input_data/data_en-z.sqlite")
-en_data_all <- do.call(rbind.fill, list(en_data_1, en_data_2))
+en_data_all <- do.call(bind_rows, list(en_data_1, en_data_2))
 ```
 
 ## Participant and Experiment Information 
 
 In this section, we will put together the demographic data and experiment information data to save as an overall participant information file. This information can be merged with the other data using the `observation` column. 
+
+We will mark participants who do not meet our criteria to exclude below:  
+
+Participant did not indicate at least 18 years of age. 
+Participant did not complete at least 100 trials. 
+Participant did not achieve 80% correct. 
 
 ```{r participant_data}
 ##create demographics only data
@@ -212,8 +217,29 @@ participant_DF <- merge(demos[ , demo_cols],
                         by = "observation", 
                         all = T)
 
-colnames(participant_DF) <- gsub(".x", "_demographics", colnames(participant_DF))
-colnames(participant_DF) <- gsub(".y", "_consent", colnames(participant_DF))
+colnames(participant_DF) <- gsub(".x$", "_demographics", colnames(participant_DF))
+colnames(participant_DF) <- gsub(".y$", "_consent", colnames(participant_DF))
+
+participant_DF$keep <- "keep"
+
+# only above 18
+participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
+
+# at least 100 trials + 80%
+number_trials <- en_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  group_by(observation) %>% 
+  summarize(n_trials = n(), 
+            correct = sum(correct, na.rm = T) / n())
+
+# merge with participant data
+participant_DF <- merge(participant_DF, 
+                        number_trials,
+                        by = "observation")
+
+# mark those last few as excluded
+participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
+participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 
 export(participant_DF, "output_data/participant_data.csv", row.names = F)
 ```
@@ -222,7 +248,7 @@ export(participant_DF, "output_data/participant_data.csv", row.names = F)
 
 Each language will be saved in a separate file with an item specific trial identification number to allow for matching concepts across languages (i.e., cat → katze → gatta). 
 
-Participants are expected to incorrectly answer trials, and these trials will be marked for potential exclusion. Further, computer errors or trials due to missing data (i.e., participant inattentiveness and timeout trials, internet disconnection, computer crashes) are already marked as such in the final data with NA values.
+Participants are expected to incorrectly answer trials; however, they are include in the raw trial level data for this output. Further, computer errors or trials due to missing data (i.e., participant inattentiveness and timeout trials, internet disconnection, computer crashes) are already marked as such in the final data with NA values.
 
 ```{r incorrect_trials}
 ##grab only real trials 
@@ -233,30 +259,45 @@ real_trials <- en_data_all %>% #data frame
          word, class, correct_response, correct)
 ```
 
-The response latencies from each participant's session will be z-scored in line with recommendations from Faust, Balota, Spieler, and Ferraro (1999).
+The response latencies from each participant's session will be z-scored in line with recommendations from Faust, Balota, Spieler, and Ferraro (1999). We will z-score these *without* the excluded trials:
+
+- Timeout trials (i.e., no response given in 5 s window).
+- Incorrectly answered trials.
+- Response latencies shorter than 160 ms. 
+
+Note that it's ok if we include participants in this file that should be overall excluded, as they will get excluded in the descriptive statistics calculations and before item level results. Basically, everything stays in this file but we mark them for keep or not keep. 
 
 ```{r z_score}
+real_trials$original_duration <- real_trials$duration #hang on to original time
+
 ##Separate out NA data for the z-score part
 ##this mostly controls for timeouts
 real_trials_NA <- real_trials %>% #data frame
-  filter(is.na(correct)) #filter out NA corrects 
-
-#set all Z_RTs to NA for time outs
-real_trials_NA$Z_RT = NA 
-#set all duration to NA for time outs
-real_trials_NA$duration = NA 
+  filter(is.na(correct) | #grab time out trials OR
+           correct == FALSE | #grab incorrect trials OR
+           duration < 160) %>%  #grab short rts 
+  mutate(Z_RT = NA, #set all Z_RTs to NA for these trials
+         duration = NA, 
+         keep = "exclude")
 
 ##this section z-scores the rest of the data
-##you do include incorrect trials for the z-score
 ##just not time outs
 real_trials_nonNA <- 
   real_trials %>% #data frame
   group_by(observation) %>% #group by participant
   filter(!is.na(correct)) %>% #take out the NA timeouts
-  mutate(Z_RT = scale(duration)) #create a z-score RT
+  filter(correct == TRUE) %>% #only correct trials
+  filter(duration >= 160) %>% #longer response latencies 
+  mutate(Z_RT = scale(duration), #create a z-score RT
+         keep = "keep")
 
 ##put the time outs with the answered trials 
 real_trials <- bind_rows(real_trials_NA, real_trials_nonNA)
+
+##indicate what participants to exclude
+real_trials <- real_trials %>% left_join((participant_DF %>% select(observation, keep) %>% 
+                                           rename(keep_participant = keep)), 
+                                         by = c("observation" = "observation"))
 
 ##write out raw trial data 
 write.csv(real_trials, "output_data/trial_data.csv", row.names = F)
@@ -264,25 +305,33 @@ write.csv(real_trials, "output_data/trial_data.csv", row.names = F)
 
 ## Item Data
 
-The item file will contain lexical information about all stimuli (length, frequency, orthographic neighborhood, bigram frequency). We will merge that information, and here we provide a simple example from `lexOps`.
+The item file will contain lexical information about all stimuli (length, frequency, orthographic neighborhood, bigram frequency). We will merge that information at the end of the study. 
 
-The descriptive statistics calculated from the trial level data will then be included: average response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. For averages and standard errors, the incorrect and missing trials will be excluded. The incorrect trials have the `Z_RT` marked as NA, which automatically excludes them from calculation.
+The descriptive statistics calculated from the trial level data will then be included: average response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. The exclusions applied above created `Z_RT` as NA, therefore, they are automatically excluded here as well. 
 
 ```{r merge_stimuli}
 ##read in stimuli data
 stimuli_data <- import("input_data/en_words.csv")
 
+describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not calculating any numbers on excluded trials 
+describeBy(real_trials$duration, group = real_trials$keep)
+
 ##create item level data by summarizing
 item_data <- real_trials %>% #data frame
-  filter(!is.na(word)) %>%  #take out blank participants with no trials
-  group_by(word) %>%  #group by word
+  filter(keep_participant == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  #note that duration is NA for excluded trials
+  #note that Z_RT is NA for excluded trials
+  #so the keep is just an extra column 
+  #need to keep all trials because otherwise accuracy is screwy
+  group_by(word, class) %>%  #group by word
   dplyr::summarize(avgRT = mean(duration, na.rm = T), #average RT
             avgZ_RT = mean(Z_RT, na.rm = T), #average Z RT
             samplesize = length(na.omit(Z_RT)), #sample size correct
             seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))), #SE RT
             seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))), #SE Z RT
             accuracy = length(na.omit(Z_RT))/length(Z_RT) #accuracy
-            )
+            ) #word type
 
 ##remove words that aren't part of the real data (testers)
 item_data <- item_data %>% 
@@ -296,8 +345,9 @@ No data will be excluded for being a potential outlier, however, we will recomme
 ##same as above with one extra filter
 item_data_2.5 <- real_trials %>% 
   filter(abs(Z_RT) < 2.5) %>% #take out trials above 2.5 z scores
-  filter(!is.na(word)) %>% 
-  group_by(word) %>% 
+  filter(keep_participant == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  group_by(word, class) %>% 
   dplyr::summarize(avgRT = mean(duration, na.rm = T),
             avgZ_RT = mean(Z_RT, na.rm = T),
             samplesize = length(na.omit(Z_RT)), 
@@ -305,14 +355,15 @@ item_data_2.5 <- real_trials %>%
             seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))))
 
 ##make new column names for these calculations
-colnames(item_data_2.5)[-1] <- paste("Z2.5_", colnames(item_data_2.5)[-1], sep = "")
+colnames(item_data_2.5)[-c(1,2)] <- paste("Z2.5_", colnames(item_data_2.5)[-c(1,2)], sep = "")
 
 ##example outlier exclusion for Z > 3.0
 ##same as above with one extra filter
 item_data_3.0 <- real_trials %>% 
-  filter(abs(Z_RT) < 3.0) %>% #take out trials above 2.5 z scores
-  filter(!is.na(word)) %>% 
-  group_by(word) %>% 
+  filter(abs(Z_RT) < 3.0) %>% #take out trials above 3.0 z scores
+  filter(keep_participant == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  group_by(word, class) %>% 
   dplyr::summarize(avgRT = mean(duration, na.rm = T),
             avgZ_RT = mean(Z_RT, na.rm = T),
             samplesize = length(na.omit(Z_RT)), 
@@ -320,11 +371,14 @@ item_data_3.0 <- real_trials %>%
             seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))))
 
 ##make new column names for these calculations
-colnames(item_data_3.0)[-1] <- paste("Z3.0_", colnames(item_data_3.0)[-1], sep = "")
+colnames(item_data_3.0)[-c(1,2)] <- paste("Z3.0_", colnames(item_data_3.0)[-c(1,2)], sep = "")
 
 #merge together two z score calculations
-item_data_combo <- merge(item_data, item_data_2.5, by = "word")
-item_data_combo <- merge(item_data_combo, item_data_3.0, by = "word")
+item_data_combo <- item_data %>% 
+  left_join(item_data_2.5, 
+            by = c("word" = "word", "class" = "class")) %>% 
+  left_join(item_data_3.0, 
+            by = c("word" = "word", "class" = "class")) 
 ```
 
 For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values will be indicated because these values do not exist for nonwords. (Example provided from lexops, real data to come after stimuli select set)
@@ -349,7 +403,11 @@ Priming is defined as the subtraction of average z-scored related response laten
 # figure out trial type ----
   # only select only a few columns
   priming_trials <- real_trials %>% 
-    select(observation, duration, word, class, correct, Z_RT, sender_id, timestamp) %>% 
+  filter(keep_participant == "keep") %>% #participants to keep
+  # note that we don't exclude trials here because we need to keep 
+  # them in order to pair together cue-target
+  # they will excluded in a minute 
+    select(observation, duration, word, class, correct, Z_RT, sender_id, timestamp, keep) %>% 
     arrange(observation, timestamp)
   # add trial code and if it's cue/target
   priming_trials$trial_code <- NA
@@ -380,12 +438,12 @@ Priming is defined as the subtraction of average z-scored related response laten
   priming_wide <- priming_wide[ , c("unique_trial", "observation.x", "word.x", 
                                     "class.x", "correct.x", "trial_code.x", 
                                     "duration.y", "word.y", "class.y", "correct.y", 
-                                    "Z_RT.y")]
+                                    "Z_RT.y", "keep.y")]
   # good names
   colnames(priming_wide) <- c("unique_trial", "observation", "cue_word", 
                               "cue_type", "cue_correct", "trial_order", 
                               "target_duration", "target_word", "target_type", 
-                              "target_correct", "target_Z_RT")
+                              "target_correct", "target_Z_RT", "target_keep")
   
   # only focus on related-unrelated
   priming_focus <- subset(priming_wide, target_type == "word" & cue_type == "word")
@@ -397,23 +455,11 @@ Priming is defined as the subtraction of average z-scored related response laten
                     by = "word_combo", all.x = T)
   
   # subset out NAs they are test / practice trials
-  priming_focus <- subset(priming_focus, !is.na(type))
-
-# participants with 100 trials + 80% ----
-  participant_summary <- real_trials %>% 
-    group_by(observation) %>% 
-    dplyr::summarize(trials = length(duration), 
-              correct = sum(correct == TRUE, na.rm = T))
-  participant_summary$percent <- participant_summary$correct / participant_summary$trials
-
-  use_data <- participant_summary %>% 
-    filter(trials >= 100) %>% 
-    filter(percent >= .80)
-    
-  priming_focus <- subset(priming_focus, observation %in% use_data$observation)
-
-# only correct answers for checking stimuli counts ----
-  priming_Z <- subset(priming_focus, target_correct == TRUE)
+  # only correct answers and trials to keep
+  priming_Z <- priming_focus %>% 
+    filter(!is.na(type)) %>% 
+    filter(target_keep == "keep") %>% 
+    filter(target_correct == TRUE) #probably not necessary since keep does this but doesn't hurt 
 
 # Calculate Statistics ----------------------------------------------------
 

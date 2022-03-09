@@ -1,0 +1,246 @@
+---
+title: "Descriptive Statistics"
+author: "Erin M. Buchanan"
+date: "Last Update `r Sys.Date()`"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(psych)
+library(tidyr)
+library(rio)
+set.seed(58902)
+current_year <- 2022
+
+# Suppress summarise info
+options(dplyr.summarise.inform = FALSE)
+```
+
+## Import the Files
+
+```{r}
+trials <- import("../05_Data/output_data/trial_data.csv")
+participants <- import("../05_Data/output_data/participant_data.csv")
+items <- import("../05_Data/output_data/item_data.csv")
+priming <- import("../05_Data/output_data/prime_data.csv") #also later for 2.5 and 3.0
+```
+
+We will import these files from our data folder for the final analyses. This example analysis examines the Semantic Priming Project data to simulate how to do some of the analyses.
+
+```{r}
+SPP_participant <- import("../02_Power/subjectdataLDT.zip")
+SPP_participant <- SPP_participant %>% 
+  filter(target.ACC == 1) %>%  # only correctly answered trials
+  filter(rel != "nw") %>% # exclude nonword trials 
+  filter(!is.na(Ztarget.RT)) %>%  # exclude NAs
+  select(rel, Ztarget.RT, target, Subject, Trial)
+```
+
+## Participant Demographics
+
+- Number of participants excluded 
+- All this information calculated after participants are excluded for less than 80%
+- Separate table provided for the excluded participants (to do later)
+- Overall and by language (included later) demographics
+
+```{r}
+# gender
+table(participants$please_tell_us_your_gender, useNA = "ifany")
+
+# age
+describe(current_year - as.numeric(participants$which_year_were_you_born), na.rm = T)
+
+# education level
+table(participants$please_tell_us_your_education_level, useNA = "ifany")
+
+# native language
+table(participants$native_language, useNA = "ifany")
+
+# sample size by lab
+table(participants$url_lab, useNA = "ifany")
+
+# information about computer
+table(participants$meta_platform, useNA = "ifany")
+
+# information about web browser
+participants$browser <- sapply(strsplit(participants$meta_user_agent, 
+                                        split = " "), tail, 1)
+participants <- participants %>% 
+  separate(col = browser,
+           into = c("browser", "browser_version"),
+           sep = "/", 
+           remove = TRUE)
+
+table(participants$browser, useNA = "ifany")
+
+# language locale versus language they took it in 
+table(participants$meta_locale, useNA = "ifany")
+
+# number of excluded participants
+table(participants$keep)
+```
+
+## Trial Level Data
+
+- After excluding participants, calculate these statistics ... you have to leave in the bad trials for accuracy and final time stamp.
+
+```{r}
+# amount of time the study last line tells you the length
+final_trials <- 
+  trials %>% 
+  filter(keep_participant == "keep") %>% 
+  group_by(observation) %>% 
+  arrange(desc(timestamp)) %>% 
+  filter(!duplicated(observation)) 
+
+describe(final_trials$time_commit / 1000 / 60 )
+
+# number of trials by word type 
+# accuracy of trials by word type
+trials %>% 
+  filter(keep_participant == "keep") %>% 
+  group_by(class) %>% 
+  summarize(number_trials = n(), 
+            accuracy_trials = sum(correct, na.rm = T)/n())
+```
+
+- Now we exclude those bad trials and calculate: 
+
+```{r}
+# response latencies by word type 
+# SE by word type
+describe_trials <- 
+  trials %>% 
+  filter(keep_participant == "keep") %>% 
+  group_by(class) %>% 
+  filter(keep == "keep")  #also take out bad trials 
+  #(this is really handled by Z_RT being NA, but doesn't hurt)
+
+describeBy(describe_trials$Z_RT, group = describe_trials$class)
+
+describe_trials <- 
+  trials %>% 
+  filter(keep_participant == "keep") %>% 
+  group_by(class) %>% 
+  filter(abs(Z_RT) < 2.5) %>% 
+  filter(keep == "keep")  #also take out bad trials 
+  #(this is really handled by Z_RT being NA, but doesn't hurt)
+
+describeBy(describe_trials$Z_RT, group = describe_trials$class)
+
+describe_trials <- 
+  trials %>% 
+  filter(keep_participant == "keep") %>% 
+  group_by(class) %>% 
+  filter(abs(Z_RT) < 3.0) %>% 
+  filter(keep == "keep")  #also take out bad trials 
+  #(this is really handled by Z_RT being NA, but doesn't hurt)
+
+describeBy(describe_trials$Z_RT, group = describe_trials$class)
+```
+
+## Item Level Data
+
+- All data has been filtered at this point: 
+
+```{r}
+# average sample size at the item level
+describeBy(items$samplesize, group = items$class)
+describeBy(items$Z2.5_samplesize, group = items$class)
+describeBy(items$Z3.0_samplesize, group = items$class)
+
+# accuracy of trials by word type
+describeBy(items$accuracy, group = items$class)
+
+# response latencies by word type 
+describeBy(items$avgZ_RT, group = items$class)
+describeBy(items$Z2.5_avgZ_RT, group = items$class)
+describeBy(items$Z3.0_avgZ_RT, group = items$class)
+
+# SE by word type 
+describeBy(items$seZ_RT, group = items$class)
+describeBy(items$Z2.5_seZ_RT, group = items$class)
+describeBy(items$Z3.0_seZ_RT, group = items$class)
+```
+
+## Priming Level Data
+
+```{r}
+# average priming 
+describe(priming$avgZ_prime)
+describe(priming$avgZ_RT_unrelated)
+describe(priming$avgZ_RT_related)
+describe(priming$samplesize_unrelated)
+describe(priming$samplesize_related)
+
+# total number of words with priming > 0 
+sum(priming$avgZ_prime > 0, na.rm = T)
+
+# also do this for the 2.5 and 3.0 trials 
+```
+
+### Split Half Reliability (Item)
+
+We will split the data in half and correlate the items together. This procedure will be repeated 100 times to avoid random poor splits. We will perform this on the trial level data - here is an example calculated on the SPP data. 
+
+```{r}
+save_correlation <- rep(NA, 100)
+
+for (i in 1:100){
+  
+  # split data in half
+  SPP_participant$split <- sample(1:2, nrow(SPP_participant), 
+                                  replace = T) 
+  
+  # summarize the data 
+  SPP_summary <- SPP_participant %>% 
+    group_by(target, rel, split) %>% #calculate by item, relation, split
+    summarize(meanZ_RT = mean(Ztarget.RT))
+  
+  # pivot
+  SPP_wide <- SPP_summary %>% 
+    pivot_wider(id_cols = target, 
+                names_from = c(rel, split), 
+                values_from = meanZ_RT) %>% 
+    mutate(prime_1 = un_1 - rel_1, 
+           prime_2 = un_2 - rel_2)
+  
+  save_correlation[i] <- cor(SPP_wide$prime_1, SPP_wide$prime_2)
+  
+}
+
+describe(save_correlation)
+```
+
+### Split Half Reliability (Person)
+
+```{r}
+SPP_participant$Trial_even <- (SPP_participant$Trial) %% 2 == 0
+
+SPP_summary <- SPP_participant %>% 
+  group_by(Subject, Trial_even, rel) %>% 
+  summarize(meanZ_RT = mean(Ztarget.RT)) %>% 
+  pivot_wider(id_cols = Subject,
+              names_from = c(Trial_even, rel),
+              values_from = meanZ_RT) %>% 
+  mutate(prime_1 = FALSE_un - FALSE_rel,
+         prime_2 = TRUE_un - TRUE_rel)
+
+cor(SPP_summary$prime_1, SPP_summary$prime_2)
+```
+
+
+
