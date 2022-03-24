@@ -37,9 +37,11 @@ colnames(canvas_contributions) <- c("Student", "Canvas_ID", "PSA_ID", "Login_Ema
                                     "Integration_ID", "Section", "words2many_formating",
                                     "subs2strudel_spelling", "power_dataset",
                                     "power_coding", "power_writing", "collab_agree", 
-                                    "submit_irb", "team_list", "SPAML_RR", "fall2021_pres", 
-                                    "SPAML_comments", "cc_points", "cf_points", "cuc_score", 
-                                    "cf_score", "cuf_score", "current_points", "final_points",
+                                    "submit_irb", "SPAML_RR", "team_list", "fall2021_pres",
+                                    "SPAML_comments", "fake_check", "spring_data",
+                                    "cc_points", "cf_points", "cc_score", 
+                                    "cuc_score", "cf_score", "cuf_score", 
+                                    "current_points", "final_points",
                                     "current_score", "uc_score", "final_score", "uf_score")
                                     
 # drop crap we don't need
@@ -141,9 +143,15 @@ ordered_author$full <- paste(ordered_author$`Full Name`,
                              ordered_author$`Full Affiliation`, 
                              ordered_author$`Email address`, 
                              sep = ", ")
+
+
 ```
 
 `r paste(ordered_author$full, collapse = "  \n")`
+
+### For second round RR sub, these are new
+
+`r paste(ordered_author$full[ordered_author$Tier == "2.1"], collapse = "  \n")`
 
 ## Credit
 
@@ -198,3 +206,7 @@ ordered_author$credit <- gsub(" ,", "", ordered_author$credit)
 ```
 
 `r paste(ordered_author$credit, collapse = "  \n")`
+
+### For second round RR sub, these are new
+
+`r paste(ordered_author$credit[ordered_author$Tier == "2.1"], collapse = "  \n")`
