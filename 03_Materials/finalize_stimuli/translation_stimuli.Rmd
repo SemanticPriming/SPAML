@@ -1,5 +1,5 @@
 ---
-title: "Finalize Stimuli"
+title: "Create Translation Stimuli"
 author: "Erin M. Buchanan"
 date: "`r Sys.Date()`"
 output: html_document
@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This document takes the proposed stimuli and finalizes the information for each one to be included in the experiment. This section includes languages we are currently running in the experiment. 
+This document takes the proposed stimuli and creates the information for each one to be included in the experiment for translation purposes. This section includes languages we are currently running in the experiment. 
 
 ## Libraries
 

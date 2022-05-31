@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(gsheet)
 library(rio)
 library(flextable)
+library(dplyr)
 ```
 
 ```{r}
@@ -88,19 +89,25 @@ autofit(flextable(subset(combined_sheet,
 ## Did Not Complete RR
 
 ```{r}
-autofit(flextable(subset(combined_sheet, 
-                         (is.na(SPAML_RR) | SPAML_RR == 0) & 
-                           !is.na(Tier) & !(PSA_ID %in% admin_team), 
-                 select = c(PSA_ID, `Full Name`, `Email address`))))
+autofit(flextable(
+  combined_sheet %>% 
+    filter(is.na(SPAML_RR) | SPAML_RR == 0) %>% 
+    filter(!is.na(Tier)) %>% 
+    filter(!(PSA_ID %in% admin_team)) %>% 
+    select(PSA_ID, `Full Name`, `Email address`)
+))
 ```
 
 ## Did Not Complete Collaborator Agreement 
 
 ```{r}
-autofit(flextable(subset(combined_sheet, 
-                         (is.na(collab_agree) | collab_agree == 0) & 
-                           !is.na(Tier) & !(PSA_ID %in% admin_team), 
-                 select = c(PSA_ID, `Full Name`, `Email address`))))
+autofit(flextable(
+  combined_sheet %>% 
+    filter(is.na(collab_agree) | collab_agree == 0) %>% 
+    filter(!is.na(Tier)) %>% 
+    filter(!(PSA_ID %in% admin_team)) %>% 
+    select(PSA_ID, `Full Name`, `Email address`)
+))
 ```
 
 ## Authorship
@@ -141,7 +148,7 @@ set.seed(5843902)
   
 ordered_author$full <- paste(ordered_author$`Full Name`, 
                              ordered_author$`Full Affiliation`, 
-                             ordered_author$`Email address`, 
+                             #ordered_author$`Email address`, 
                              sep = ", ")
 
 
@@ -210,3 +217,11 @@ ordered_author$credit <- gsub(" ,", "", ordered_author$credit)
 ### For second round RR sub, these are new
 
 `r paste(ordered_author$credit[ordered_author$Tier == "2.1"], collapse = "  \n")`
+
+```{r echo = F, eval = F, include = F}
+ordered_author %>% filter(Tier == "2.1") %>% 
+  select(Firstname, `Middle name`, Surname, `Email address`, 
+         `Primary affiliation`, `Secondary affiliation`, `Full Affiliation`, PSA_ID) %>% 
+  export(., "nhb_utf8_2.xlsx", "xlsx")
+```
+
