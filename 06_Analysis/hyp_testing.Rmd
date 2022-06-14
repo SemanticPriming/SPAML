@@ -3,7 +3,11 @@ title: "Confirmatory Hypothesis Testing"
 author: "Erin M. Buchanan"
 date: "Last Update `r Sys.Date()`"
 output:
-  pdf_document: default
+  html_document:
+    df_print: paged
+    toc: yes
+  pdf_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -27,6 +31,9 @@ library(faux)
 set.seed(58902)
 library(nlme)
 library(MuMIn)
+library(performance)
+library(parameters)
+
 ```
 
 ## Import the Files
@@ -100,9 +107,13 @@ tapply(sim_data_diff$avgZ_prime, sim_data_diff$Language, mean)
 Is semantic priming a non-zero effect? 
 
 ```{r}
+# run the analysis
 hyp1 <- lm(avgZ_prime ~ 1, data = sim_data_same)
+
+# print the results
 summary(hyp1)
-confint(hyp1)
+parameters(hyp1)
+model_performance(hyp1)
 ```
 
 ## Hypothesis 2 - Languages Same
@@ -110,17 +121,26 @@ confint(hyp1)
 Is semantic priming consistent by language? 
 
 ```{r}
+# run the model
 hyp2 <- lme(avgZ_prime ~ 1, 
             data = sim_data_same, 
             method = "REML", 
             random = ~1|Language)
-summary(hyp2)
 
+# model assumptions
+performance::check_model(hyp2)
+
+# print the results
+summary(hyp2)
+parameters(hyp2)
+model_performance(hyp2)
 intervals(hyp2)
 
+# compare models
 AIC(hyp1)
 AIC(hyp2)
 
+# effect size
 r.squaredGLMM(hyp2)
 ```
 
@@ -139,18 +159,20 @@ ggplot(sim_data_same, aes(Language, avgZ_prime)) +
   theme_classic() + 
   coord_flip() + 
   geom_hline(yintercept = 0)
-
 ```
-
 
 ## Hypothesis 1 - Languages Different
 
 Is semantic priming a non-zero effect? 
 
 ```{r}
+# run the analysis
 hyp1 <- lm(avgZ_prime ~ 1, data = sim_data_diff)
+
+# print the results
 summary(hyp1)
-confint(hyp1)
+parameters(hyp1)
+model_performance(hyp1)
 ```
 
 ## Hypothesis 2 - Languages Different 
@@ -158,17 +180,26 @@ confint(hyp1)
 Is semantic priming consistent by language? 
 
 ```{r}
+# run the model
 hyp2 <- lme(avgZ_prime ~ 1, 
             data = sim_data_diff, 
             method = "REML", 
             random = ~1|Language)
-summary(hyp2)
 
+# model assumptions
+performance::check_model(hyp2)
+
+# print the results
+summary(hyp2)
+parameters(hyp2)
+model_performance(hyp2)
 intervals(hyp2)
 
+# compare models
 AIC(hyp1)
 AIC(hyp2)
 
+# effect size
 r.squaredGLMM(hyp2)
 ```
 
@@ -187,6 +218,4 @@ ggplot(sim_data_diff, aes(Language, avgZ_prime)) +
   theme_classic() + 
   coord_flip() + 
   geom_hline(yintercept = 0)
-
 ```
-

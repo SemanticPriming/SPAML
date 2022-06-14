@@ -3,7 +3,9 @@ title: "Data Processing"
 author: "Erin M. Buchanan"
 date: "Last Update `r Sys.Date()`"
 output:
-  pdf_document: default
+  html_document:
+    df_print: paged
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -184,6 +186,12 @@ en_data_2 <- processData("input_data/data_en-z.sqlite")
 en_data_all <- do.call(bind_rows, list(en_data_1, en_data_2))
 ```
 
+### Original Data Structure
+
+```{r table}
+str(en_data_all)
+```
+
 ## Participant and Experiment Information 
 
 In this section, we will put together the demographic data and experiment information data to save as an overall participant information file. This information can be merged with the other data using the `observation` column. 
@@ -261,7 +269,7 @@ real_trials <- en_data_all %>% #data frame
 
 The response latencies from each participant's session will be z-scored in line with recommendations from Faust, Balota, Spieler, and Ferraro (1999). We will z-score these *without* the excluded trials:
 
-- Timeout trials (i.e., no response given in 5 s window).
+- Timeout trials (i.e., no response given in 3s window)
 - Incorrectly answered trials.
 - Response latencies shorter than 160 ms. 
 
@@ -295,7 +303,9 @@ real_trials_nonNA <-
 real_trials <- bind_rows(real_trials_NA, real_trials_nonNA)
 
 ##indicate what participants to exclude
-real_trials <- real_trials %>% left_join((participant_DF %>% select(observation, keep) %>% 
+real_trials <- real_trials %>% 
+  left_join((participant_DF %>% 
+               select(observation, keep) %>% 
                                            rename(keep_participant = keep)), 
                                          by = c("observation" = "observation"))
 

@@ -3,7 +3,11 @@ title: "Descriptive Statistics"
 author: "Erin M. Buchanan"
 date: "Last Update `r Sys.Date()`"
 output:
-  pdf_document: default
+  pdf_document:
+    toc: yes
+  html_document:
+    df_print: paged
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -22,6 +26,7 @@ library(dplyr)
 library(psych)
 library(tidyr)
 library(rio)
+library(knitr)
 set.seed(58902)
 current_year <- 2022
 
@@ -52,28 +57,35 @@ SPP_participant <- SPP_participant %>%
 ## Participant Demographics
 
 - Number of participants excluded 
-- All this information calculated after participants are excluded for less than 80%
-- Separate table provided for the excluded participants (to do later)
+- All this information calculated after participants are excluded for less than 80% correct across trials: 
+
+  - Gender 
+  - Age
+  - Education level
+  - Computer Type
+  - Browser Type
+
+- Separate tables will be provided for the excluded participants (to do later)
 - Overall and by language (included later) demographics
 
 ```{r}
 # gender
-table(participants$please_tell_us_your_gender, useNA = "ifany")
+kable(count(participants, please_tell_us_your_gender))
 
 # age
 describe(current_year - as.numeric(participants$which_year_were_you_born), na.rm = T)
 
 # education level
-table(participants$please_tell_us_your_education_level, useNA = "ifany")
+kable(count(participants, please_tell_us_your_education_level))
 
 # native language
-table(participants$native_language, useNA = "ifany")
+kable(count(participants, native_language))
 
 # sample size by lab
-table(participants$url_lab, useNA = "ifany")
+kable(count(participants, url_lab))
 
 # information about computer
-table(participants$meta_platform, useNA = "ifany")
+kable(count(participants, meta_platform))
 
 # information about web browser
 participants$browser <- sapply(strsplit(participants$meta_user_agent, 
@@ -84,13 +96,13 @@ participants <- participants %>%
            sep = "/", 
            remove = TRUE)
 
-table(participants$browser, useNA = "ifany")
+kable(count(participants, browser))
 
 # language locale versus language they took it in 
-table(participants$meta_locale, useNA = "ifany")
+kable(count(participants, meta_locale))
 
 # number of excluded participants
-table(participants$keep)
+kable(count(participants,keep))
 ```
 
 ## Trial Level Data
@@ -106,7 +118,7 @@ final_trials <-
   arrange(desc(timestamp)) %>% 
   filter(!duplicated(observation)) 
 
-describe(final_trials$time_commit / 1000 / 60 )
+kable(describe(final_trials$time_commit / 1000 / 60 ))
 
 # number of trials by word type 
 # accuracy of trials by word type
@@ -154,7 +166,7 @@ describeBy(describe_trials$Z_RT, group = describe_trials$class)
 
 ## Item Level Data
 
-- All data has been filtered at this point: 
+- All data has been filtered at this point
 
 ```{r}
 # average sample size at the item level
