@@ -14,8 +14,9 @@ This document takes in the translations for each of the finished languages, upda
 ## Libraries
 
 ```{r}
-# library(rio)
-# library(lsa)
+library(rio)
+library(stringi)
+library(lsa)
 # library(quanteda)
 # library(sylly)
 # library(dplyr)
@@ -25,111 +26,99 @@ This document takes in the translations for each of the finished languages, upda
 # library(stringdist)
 ```
 
-
-
-
-
-
-
-### haven't edited past here ###
-
-## Proposed Data
-
-```{r}
-words <- import("final_selected_words.xlsx")
-```
-
 Note: all models were downloaded from subs2vec github and stored on a separate drive, as they are very large. 
 
 ## en English
 
-```{r eval = F}
-# get data ----
-en <- words[ , c("en_cue", "en_target", "en_fake_cue", "en_fake_target", "en_cosine")]
-en$en_cue <- tolower(en$en_cue)
-en$en_target <- tolower(en$en_target)
+For English, we need to correct:
+  
+  - The fake trials that are not appropriate (fixed)
+  - The unrelated trials in ensure a low cosine 
+  
+```{r}
+# original words
+en <- import("en/en_translate.csv")
 
-# get patterns -----
-en_patterns <- read.hyph.pat("hyphen/hyph-en-us.tex", "en_us")
-en_subs <- import(paste0("/Volumes/SPAML Backup/subs_count/en/en.zip"))
-en_subs <- en_subs[!grepl("[0-9]", en_subs$unigram), ]
-en_subs <- en_subs[!grepl("[[:punct:]]", en_subs$unigram), ]
-en_subs <- en_subs %>% filter(unigram != "")
-en_subs <- en_subs[1:100000, ]
+# fix fake words ----
+en_update <- import("en/en_translate_checked.xlsx")
+cue_fix <- 
+  bind_rows(
+    (en_update %>% 
+      filter(cue_vowel == "no") %>%
+      select(en_cue, en_fake_cue)),
+    (en_update %>% 
+      filter(en_update$cue_pronounce == "no") %>% 
+      select(en_cue, en_fake_cue)), 
+    (en_update %>% 
+       filter(cue_real == "yes") %>% 
+       select(en_cue, en_fake_cue))
+  ) %>% unique()
 
-# create fake words based on cue
-en_fake_words <- get_fake(wordlist = en_subs$unigram, #possibles
-                           language_hyp = en_patterns, #hyphen rules
-                           replacewords = en$en_cue) #your words
+target_fix <- 
+  bind_rows(
+    (en_update %>% 
+      filter(target_vowel == "no") %>%
+      select(en_target, en_fake_target)),
+    (en_update %>% 
+      filter(en_update$target_pronounce == "no") %>% 
+      select(en_target, en_fake_target)), 
+    (en_update %>% 
+       filter(target_real == "yes") %>% 
+       select(en_target, en_fake_target))
+  ) %>% unique()
 
-write.csv(en_fake_words, "en/en_fake_cues.csv", row.names = F)
+# export(bind_rows(cue_fix, target_fix), "en/en_tofix.csv")
+en_update <- import("en/en_tofix_fixed.csv")
 
-# merge back into data
-en <- merge(en, 
-            en_fake_words[ , c("original_word", "replacement_word")], 
-            by.x = "en_cue", by.y = "original_word")
-en$en_fake_cue <- en$replacement_word
-en$replacement_word <- NULL
+cues <- en_update %>% filter(en_fake_cue != "")
+for (i in 1:nrow(cues)){
+  en$en_fake_cue[en$en_fake_cue == cues$en_fake_cue[i]
+                 & en$en_cue == cues$en_cue[i]] <- cues$fixed[i]
+}
 
-gc()
-
-# create fake words based on target
-en_fake_words <- get_fake(wordlist = en_subs$unigram, #possibles
-                           language_hyp = en_patterns, #hyphen rules
-                           replacewords = en$en_target) #your words
-
-write.csv(en_fake_words, "en/en_fake_targets.csv", row.names = F)
-
-# merge back into data
-en <- merge(en, 
-            en_fake_words[ , c("original_word", "replacement_word")], 
-            by.x = "en_target", by.y = "original_word")
-en$en_fake_target <- en$replacement_word
-en$replacement_word <- NULL
-
-gc()
+targets <- en_update %>% filter(en_fake_target != "")
+for (i in 1:nrow(targets)){
+  en$en_fake_target[en$en_fake_target == targets$en_fake_target[i]
+                    & en$en_target == targets$en_target[i]] <- targets$fixed[i]
+}
 
 # create possible trials ----
-en_trials <- en[ , c("en_cue", "en_target")]
-en_trials$type <- "related"
-en_trials$cue_type <- "word"
-en_trials$target_type <- "word"
+# en_trials <- en[ , c("en_cue", "en_target")]
+# en_trials$type <- "related"
+# en_trials$cue_type <- "word"
+# en_trials$target_type <- "word"
+# 
+# en_trials <- rbind(en_trials,
+#                    data.frame(en_cue = en$en_cue, 
+#                               en_target = en$en_target[sample(1:1000, 
+#                                                               1000)],
+#                               type = "unrelated",
+#                               cue_type = "word", 
+#                               target_type = "word"), 
+#                    data.frame(en_cue = en$en_fake_cue, 
+#                               en_target = en$en_target[sample(1:1000, 
+#                                                               1000)],
+#                               type = "nonword",
+#                               cue_type = "nonword", 
+#                               target_type = "word"),
+#                    data.frame(en_cue = en$en_cue[sample(1:1000,
+#                                                         1000)], 
+#                               en_target = en$en_fake_target,
+#                               type = "nonword",
+#                               cue_type = "word", 
+#                               target_type = "nonword"),
+#                    data.frame(en_cue = en$en_fake_cue[sample(1:1000,
+#                                                         1000)], 
+#                               en_target = en$en_fake_target[sample(1:1000,
+#                                                         1000)],
+#                               type = "nonword",
+#                               cue_type = "nonword", 
+#                               target_type = "nonword"))
+# 
+# # check dups run until 0
+# sum(duplicated(en_trials[ , c("en_cue", "en_target")]))
 
-en_trials <- rbind(en_trials,
-                   data.frame(en_cue = en$en_cue, 
-                              en_target = en$en_target[sample(1:1000, 
-                                                              1000)],
-                              type = "unrelated",
-                              cue_type = "word", 
-                              target_type = "word"), 
-                   data.frame(en_cue = en$en_fake_cue, 
-                              en_target = en$en_target[sample(1:1000, 
-                                                              1000)],
-                              type = "nonword",
-                              cue_type = "nonword", 
-                              target_type = "word"),
-                   data.frame(en_cue = en$en_cue[sample(1:1000,
-                                                        1000)], 
-                              en_target = en$en_fake_target,
-                              type = "nonword",
-                              cue_type = "word", 
-                              target_type = "nonword"),
-                   data.frame(en_cue = en$en_fake_cue[sample(1:1000,
-                                                        1000)], 
-                              en_target = en$en_fake_target[sample(1:1000,
-                                                        1000)],
-                              type = "nonword",
-                              cue_type = "nonword", 
-                              target_type = "nonword"))
-
-# check dups run until 0
-sum(duplicated(en_trials[ , c("en_cue", "en_target")]))
-
-en$en_cosine <- NULL
-write.csv(en, "en/en_translate.csv", row.names = F)
-
-# get cosines -----
-
+# update with low cosines from random shuffle ----
 # set up model
 en_model <- read.table("/Volumes/SPAML Backup/subs_vec/en/subs.en.1e6.txt", quote="\"")
 en_model <- na.omit(en_model)
@@ -152,20 +141,112 @@ for (row in 1:nrow(en_trials)){
   
 }
 
-tapply(en_trials$en_cosine, en_trials$type, mean, na.rm = T)
-tapply(en_trials$en_cosine, en_trials$type, min, na.rm = T)
-tapply(en_trials$en_cosine, en_trials$type, max, na.rm = T)
+# update trials that have cosines too big 
+en_trials$ok <- TRUE
+en_trials$ok[en_trials$type == "unrelated" & abs(en_trials$en_cosine) > .15] <- FALSE
+
+good_trials <- en_trials %>% filter(ok == TRUE)
+bad_trials <- en_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I evened out 
+bad_trials$en_target <- sample(bad_trials$en_target, 
+                               size = length(bad_trials$en_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$en_cosine[row] <- cosine(as.matrix(t(en_model[
+    c(bad_trials$en_cue[row], bad_trials$en_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(en_cosine < .15)))
+bad_trials <- bad_trials %>% filter(en_cosine >= .15)
+# end section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(en_model[c(
+  bad_trials$en_target,
+  unique(good_trials$en_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$en_target)){
+  
+  # find all words that could be paired with bad en_target
+  # as updated en_cue
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$en_target[i]] < .15] 
+  
+  # find all pairs of good en_target that could
+  # be paired with bad en_cue
+  potential_switch <- good_trials %>% filter(en_cue %in% potential_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(en_model[c(
+    bad_trials$en_cue[i],
+    potential_switch$en_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$en_cue[i], bad_trials$en_target[i],
+    potential_switch$en_cue[potential_switch$en_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_en_cue", "bad_en_target", 
+                           "good_en_cue", "good_en_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(en_cue %in% switch_todo$good_en_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  en_cue = c(switch_todo$bad_en_cue, switch_todo$good_en_cue),
+  en_target = c(switch_todo$good_en_target, switch_todo$bad_en_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  en_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$en_cosine[row] <- cosine(as.matrix(t(en_model[
+    c(new_good_trials$en_cue[row], new_good_trials$en_target[row]) , ])))[2]
+}
+
+en_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(en_final[ , c("en_cue", "en_target")]))
+
+
+tapply(en_final$en_cosine, en_final$type, mean, na.rm = T)
+tapply(en_final$en_cosine, en_final$type, min, na.rm = T)
+tapply(en_final$en_cosine, en_final$type, max, na.rm = T)
+
+en_final$ok <- NULL
+
+export(en_final, "en/en_trials_final.csv")
+```
+
+
+
+
+
+### haven't edited past here ###
+
+```{r eval = F}
+
+# get cosines -----
+
+
+
+
 
 rm(en_model)
 
-gc()
 
-# write it out 
-write.csv(en_trials, "en/en_trials.csv", row.names = F)
-
-rm(list = ls())
-
-gc()
 ```
 
 ## af Afrikaans wiki

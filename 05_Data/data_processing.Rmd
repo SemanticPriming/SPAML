@@ -296,7 +296,7 @@ real_trials_nonNA <-
   filter(!is.na(correct)) %>% #take out the NA timeouts
   filter(correct == TRUE) %>% #only correct trials
   filter(duration >= 160) %>% #longer response latencies 
-  mutate(Z_RT = scale(duration), #create a z-score RT
+  mutate(Z_RT = as.vector(scale(duration)), #create a z-score RT
          keep = "keep")
 
 ##put the time outs with the answered trials 
