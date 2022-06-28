@@ -13,3 +13,8 @@ en_summary <- import("/var/www/html/en/data/en_summary.csv")
 
 ru_participants <- import("/var/www/html/ru/data/ru_participants.csv")
 ru_summary <- import("/var/www/html/ru/data/ru_summary.csv") 
+
+# Turkish -----------------------------------------------------------------
+
+tr_participants <- import("/var/www/html/tr/data/tr_participants.csv")
+tr_summary <- import("/var/www/html/tr/data/tr_summary.csv") 

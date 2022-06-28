@@ -16,7 +16,8 @@ ui <- dashboardPage(skin = 'purple',
                     dashboardSidebar(
                         sidebarMenu(
                             menuItem(tags$b("English"), tabName = "english_tab"),
-                            menuItem(tags$b("Russian"), tabName = "russian_tab")
+                            menuItem(tags$b("Russian"), tabName = "russian_tab"),
+                            menuItem(tags$b("Turkish"), tabName = "turkish_tab")
                             )
                         ),
                     dashboardBody(
@@ -41,7 +42,8 @@ ui <- dashboardPage(skin = 'purple',
                         ## show the tab items
                         tabItems(
                           english_tab,
-                          russian_tab
+                          russian_tab,
+                          turkish_tab
                         ) # end tabItems
                     ) # end dashboardBody
                 ) # end dashboardPage
@@ -97,6 +99,32 @@ server <- function(input, output) {
     output$ru_summary_table <- renderDT({
       
       datatable(ru_summary[ru_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    # turkish ----
+    output$tr_participant_data <- renderDT({
+      
+      colnames(tr_participants) <- c("PSA_ID", "Time")
+      datatable(tr_participants, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$tr_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(tr_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$tr_summary_table <- renderDT({
+      
+      datatable(tr_summary[tr_summary$type != "nonword", ], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
