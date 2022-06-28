@@ -11,7 +11,8 @@ english_tab <-
               width = 12,
               p("You can use this information to determine when your 
                 participants were completing the study based on your 
-                individual lab link."), 
+                individual lab link. Participant codes will be 
+                shown below with time completed."), 
               DTOutput("en_participant_data"),  
               p(" "),
               p("You can view the summary of total lab participants in 
