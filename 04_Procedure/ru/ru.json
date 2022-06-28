@@ -27,7 +27,7 @@
         }
       ],
       "title": "Overall Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">В этом эксперименте изучается то, как люди обрабатывают слова. Вам будет предложено просмотреть серию слов и оценить их. Слова будут предъявляться в центре экрана. Вы должны будете ответить, какие из слов настоящие, а какие ненастоящие. </p>\n\n    <p class=\"text-left\">Если вы распознаете слово на экране (например, ХОЛОД), пожалуйста, нажмите клавишу <kbd>${ window.word_key }</kbd> для такого настоящего слова. Если же слово представляет собой бессмысленный набор букв (например, ЖЯРА), пожалуйста, нажмите клавишу <kbd>${ window.nonword_key }</kbd> для этого ненастоящего слова. Во время тренировки вы будете получать обратную связь.</p>\n\n    <p class=\"text-left\">Мы хотели бы попросить вас отвечать как можно быстрее, не теряя при этом в точности ответов. У вас будет три секунд на то, чтобы оценить каждое слово. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Пожалуйста, нажмите <kbd>ПРОБЕЛ</kbd>, чтобы перейти к тренировке перед основным заданием.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>инструкции</h2>\n    <p class=\"text-left\">В этом эксперименте изучается то, как люди обрабатывают слова. Вам будет предложено просмотреть серию слов и оценить их. Слова будут предъявляться в центре экрана. Вы должны будете ответить, какие из слов настоящие, а какие ненастоящие. </p>\n\n    <p class=\"text-left\">Если вы распознаете слово на экране (например, ХОЛОД), пожалуйста, нажмите клавишу <kbd>${ window.word_key }</kbd> для такого настоящего слова. Если же слово представляет собой бессмысленный набор букв (например, ЖЯРА), пожалуйста, нажмите клавишу <kbd>${ window.nonword_key }</kbd> для этого ненастоящего слова. Во время тренировки вы будете получать обратную связь.</p>\n\n    <p class=\"text-left\">Мы хотели бы попросить вас отвечать как можно быстрее, не теряя при этом в точности ответов. У вас будет три секунд на то, чтобы оценить каждое слово. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Пожалуйста, нажмите <kbd>ПРОБЕЛ</kbd>, чтобы перейти к тренировке перед основным заданием.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "scrollTop": true,
@@ -84,7 +84,7 @@
         }
       ],
       "title": "Task Practice",
-      "_tab": "Content",
+      "_tab": "Scripts",
       "tardy": true,
       "_collapsed": false
     },
@@ -120,7 +120,7 @@
       "children": [
         "2"
       ],
-      "_collapsed": true,
+      "_collapsed": false,
       "_tab": "Content",
       "tardy": true
     },
@@ -156,7 +156,7 @@
         }
       ],
       "title": "Trial Practice",
-      "_tab": "Behavior"
+      "_tab": "Scripts"
     },
     "5": {
       "id": "5",
@@ -1224,7 +1224,7 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "this.parameters.feedback = this.state.ended_on !== 'response'\n  ? 'Please answer faster!'\n  : (\n    this.state.correct\n      ? 'Correct!'\n      : 'Incorrect!'\n  )"
+          "code": "this.parameters.feedback = this.state.ended_on !== 'response'\n  ? 'Пожалуйста, отвечайте быстрее!'\n  : (\n    this.state.correct\n      ? 'Правильный!'\n      : 'Неправильно!'\n  )"
         }
       ],
       "viewport": [
@@ -1396,7 +1396,7 @@
       "children": [
         "54"
       ],
-      "_collapsed": false,
+      "_collapsed": true,
       "_tab": "Scripts",
       "tardy": true
     },
