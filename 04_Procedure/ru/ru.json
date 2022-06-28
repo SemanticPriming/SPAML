@@ -23,11 +23,11 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "if(this.state.dominanthand == \"left\") {\n  window.word_key = 'z'\n  window.nonword_key = '/'\n} else if(this.state.dominanthand == \"right\") {\n  window.word_key = '/'\n  window.nonword_key = 'z'\n}"
+          "code": "if(this.state.dominanthand == \"left\") {\n  window.word_key = 'я'\n  window.nonword_key = '.'\n} else if(this.state.dominanthand == \"right\") {\n  window.word_key = '.'\n  window.nonword_key = 'я'\n}"
         }
       ],
       "title": "Overall Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">This experiment is concerned with how people process words. You will be asked to view words and judge them.</p>\n\n    <p class=\"text-left\">The words will be presented in the middle of the screen. You should ask yourself if the word on the screen is a real word or a fake word.</p>\n\n    <p class=\"text-left\">If you recognize the word on the screen like <b>COLD</b>, please press the <kbd>${ window.word_key }</kbd> key for real word. If the word is made-up nonsense, like <b>WERM</b>, please press <kbd>${ window.nonword_key }</kbd> for fake word. During practice, we will give you feedback.</p>\n\n    <p class=\"text-left\">We'd like to ask to to respond as quickly as you can while remaining accurate. You have three seconds to respond to every word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to try a few for practice.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">В этом эксперименте изучается то, как люди обрабатывают слова. Вам будет предложено просмотреть серию слов и оценить их. Слова будут предъявляться в центре экрана. Вы должны будете ответить, какие из слов настоящие, а какие ненастоящие. </p>\n\n    <p class=\"text-left\">Если вы распознаете слово на экране (например, ХОЛОД), пожалуйста, нажмите клавишу <kbd>${ window.word_key }</kbd> для такого настоящего слова. Если же слово представляет собой бессмысленный набор букв (например, ЖЯРА), пожалуйста, нажмите клавишу <kbd>${ window.nonword_key }</kbd> для этого ненастоящего слова. Во время тренировки вы будете получать обратную связь.</p>\n\n    <p class=\"text-left\">Мы хотели бы попросить вас отвечать как можно быстрее, не теряя при этом в точности ответов. У вас будет три секунд на то, чтобы оценить каждое слово. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Пожалуйста, нажмите <kbd>ПРОБЕЛ</kbd>, чтобы перейти к тренировке перед основным заданием.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "scrollTop": true,
@@ -91,7 +91,7 @@
     "3": {
       "id": "3",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Пожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -337,7 +337,7 @@
     "7": {
       "id": "7",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\nПожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -366,8 +366,8 @@
       "children": [
         "9"
       ],
-      "_collapsed": false,
-      "_tab": "Files",
+      "_collapsed": true,
+      "_tab": "Content",
       "tardy": true
     },
     "8": {
@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Thank you!</h2>\n    \n    <p class=\"text-left\">You've now completed the experiment.</p>\n\n    <p class=\"text-left\">Your random participant id is: \n      ${ window.uuid }. You can use this number to give to your experimenter to show you completed the experiment.</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  You may now close the window.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Благодарю вас!</h2>\n    \n    <p class=\"text-left\">Вы завершили эксперимент.</p>\n\n    <p class=\"text-left\">Ваш случайный идентификатор участника:\n      ${ window.uuid }. Вы можете использовать этот номер, чтобы сообщить своему экспериментатору, что вы завершили эксперимент.</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Теперь вы можете закрыть окно.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
@@ -517,7 +517,7 @@
         }
       ],
       "title": "Real Task Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instructions</h2>\n    \n    <p class=\"text-left\">Great job! Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n\n    <p class=\"text-left\">You will now complete the real task, remember to go as quickly as possible while getting the correct answer. You will not see any feedback during this section.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instructions</h2>\n    \n    <p class=\"text-left\"> Отличная работа! Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n\n    <p class=\"text-left\">Сейчас вы перейдете к основному заданию. Не забывайте отвечать настолько быстро, насколько это возможно, стараясь давать правильный ответ. На этом этапе вы не увидите обратную связь. Пожалуйста, нажмите ПРОБЕЛ, чтобы продолжить.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n    Пожалуйста, нажмите <kbd>ПРОБЕЛ</kbd>, чтобы перейти к тренировке перед основным заданием.\n</footer>",
       "_tab": "Content",
       "tardy": true
     },
@@ -700,7 +700,7 @@
     "14": {
       "id": "14",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\nПожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -729,8 +729,8 @@
       "children": [
         "15"
       ],
-      "_collapsed": false,
-      "_tab": "Scripts",
+      "_collapsed": true,
+      "_tab": "Content",
       "tardy": true
     },
     "15": {
@@ -997,6 +997,38 @@
       "_tab": "Behavior",
       "tardy": true
     },
+    "19": {
+      "id": "19",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
+      "_tab": "Content",
+      "timeout": "60000",
+      "tardy": true
+    },
     "20": {
       "id": "20",
       "type": "lab.html.Screen",
@@ -1024,8 +1056,8 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
-      "_tab": "Behavior",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
+      "_tab": "Content",
       "timeout": "60000",
       "tardy": true
     },
@@ -1056,13 +1088,13 @@
         }
       ],
       "title": "Consent Form",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  <div style=\"width: 90%;\">\n    \n    <h2>CONSENT FORM</h2>\n\n    <h3>Understanding Word Processing and Meaning</h3>\n\n    <p class=\"text-left\">You are invited to be in a research study about how you read and process words, along with their meaning. We ask that you read this form and ask any questions you may have before agreeing to be in the study.</p>\n\n    <p class=\"text-left\">This study is being conducted by Dr. Erin M. Buchanan, Professor of Cognitive Analytics at Harrisburg University of Science and Technology.</p>\n\n    <p class=\"text-left\"><b>Background Information:</b>\n    <br />\n    In this study, you will be asked to complete different questions about word concepts. For example, you may be asked to define a word’s characteristics, rate how familiar you are with a word, or simply judge if a string of letters is a real word. </p>\n\n    <p class=\"text-left\"><b>Procedures:</b>\n    <br />\n    You will take this study entirely online from a desktop or laptop computer with a keyboard. You will be given instructions about the experiment sections which are randomly selected for each person. After you complete the experiment, you can learn more about the study and goals of the research. The entire study should take less than thirty minutes to complete. </p>\n    <p class=\"text-left\"><b>Risks and Benefits of being in the Study:</b>\n    <br />\n    No identifying information will be collected from you, and therefore, your responses should be anonymous. The current study is similar to an online game, which may cause some fatigue or boredom based on the task you are asked to complete.\n    <br />\n    There is no direct benefit to you for participating in this study. However, your responses will contribute to our understanding of language and cognitive memory processes.</p>\n\n    <p class=\"text-left\"><b>Compensation:</b>\n    <br />You may be compensated when taking part in this study through your local researcher. </p>\n\n    <p class=\"text-left\"><b>Confidentiality and Data Sharing:</b>\n    <br />\n    Measures are taken to ensure that all information you provide will be anonymous. The data from this project will be posted publicly for other researchers to use; however, no data will be directly linked to you. Your name or other identifying information will not be entered into the dataset and no references will be made in verbal or written reports that could link you to the study. In any publication, information will be provided in such a way that you cannot be identified.\n    <br />\n    Before your data are shared outside the research team, any potentially identifying information will be removed. The anonymous data may be used by the research team or shared with other researchers, for both related and unrelated research purposes in the future. Your anonymous data may also be made available in online data repositories such as the Open Science Framework (which are free data repositories that require registration to have access), which allow other researchers and interested parties to access the data for further analysis.\n    <br />\n    Please note that your data will be anonymous, which means you cannot ask for it to be removed once you have completed the study.\n\n    <p class=\"text-left\"><b>Voluntary Nature of the Study:</b>\n    <br />\n    Participation in this study is voluntary: Your decision whether to participate will not affect your current or future relations with Harrisburg University of Science and Technology or your local institution. If you decide to participate, you are free to not answer any question or withdraw at any time without affecting those relationships. </p>\n\n    <p class=\"text-left\"><b>Contacts and Questions:</b>\n    <br />\n    The researchers conducting this study are Dr. Erin M. Buchanan in partnership with the Psychological Science Accelerator. You may ask any questions you have now. If you have questions later, you are encouraged to contact Dr. Erin M. Buchanan at ebuchanan@harrisburgu.edu. </p>\n\n    <p class=\"text-left\"><b>Questions or Concerns:</b>\n    <br />\n    This study has been reviewed by Harrisburg University of Science and Technology’s Institutional Review Board (IRB).  The IRB has determined that this study fulfills the human research subject protections obligations required by state and federal law and University policies. \n\n    <p class=\"text-left\"><a href=\"https://osf.io/f47z9/download\"> A copy of this information to keep for your records will be provided upon request.</a></p>\n\n    </div>\n    \n</main>\n\n<footer>\n  Please press <kbd>Space</kbd> to consent to the study and continue.\n</footer>",
-      "_tab": "Scripts"
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  <div style=\"width: 90%;\">\n    \n    <h2>СОГЛАСИЕ НА УЧАСТИЕ В ЭКСПЕРИМЕНТЕ</h2>\n\n    <h3>Понимание обработки слов и их значений</h3>\n\n    <p class=\"text-left\">Вам предлагается принять участие в исследовании, в котором мы будем изучать, как вы читаете и обрабатываете слова и их значения. Прежде чем согласиться на участие, мы просим вас прочитать этот текст и задать любые возникшие вопросы.</p>\n\n    <p class=\"text-left\">Это исследование проводит доктор Эрин М. Бьюкенен, профессор когнитивной аналитики Гаррисбургского университета науки и технологий.</p>\n\n    <p class=\"text-left\"><b>Общие сведения:</b>\n    <br />\n    В этом исследовании вам будет предложено ответить на различные вопросы о словах. Например, вас могут попросить определить характеристики слова, оценить, насколько хорошо вы с ним знакомы, или просто сказать, является ли набор букв настоящим словом.</p>\n\n    <p class=\"text-left\"><b>Процедура:</b>\n    <br />\n    Вы будете проходить это исследование полностью онлайн с настольного компьютера или ноутбука с использованием клавиатуры. Вам будут даны инструкции для разделов эксперимента, которые выбираются случайным образом для каждого человека. После завершения эксперимента вы можете узнать больше об исследовании и его целях. Все исследование должно занять не более тридцати минут.</p>\n\n    <p class=\"text-left\"><b>Риски и выгода участия в исследовании:</b>\n    <br />\n    Мы не будем собирать данные, по которым можно было бы вас идентифицировать, поэтому ваши ответы должны быть даны в анонимной форме. Это исследование похоже на онлайн-игру, которая может вызвать некоторую усталость или скуку в зависимости от задачи, которую вас просят выполнить.\n    <br />\n    Участие в этом исследовании не принесет вам прямой выгоды. Однако ваши ответы внесут важный вклад в понимание языка и памяти.</p>\n\n    <p class=\"text-left\"><b>Компенсация:</b>\n    <br />Вы можете получить компенсацию за участие в этом исследовании через местную исследовательскую команду.</p>\n\n    <p class=\"text-left\"><b>Конфиденциальность и совместное использование данных:</b>\n    <br />\n    Приняты все меры для того, чтобы предоставленная вами информация была анонимной. Данные этого проекта будут опубликованы для использования другими исследователями; однако никакие данные не будут напрямую связаны с вами. Ваше имя или другая идентифицирующая информация не будут внесены в набор данных, также в устных, письменных отчетах и в публикациях не будет никаких упоминаний, по которым можно было бы установить ваше участие в исследовании. \n    <br />\n    Прежде чем ваши данные будут переданы за пределы исследовательской группы, любая потенциально идентифицирующая вас информация будет удалена. Анонимные данные могут быть использованы исследовательской группой или переданы другим исследователям как для связанных, так и для несвязанных исследовательских целей в будущем. Ваши анонимные данные также могут быть доступны в онлайн-хранилищах данных, таких как Open Science Framework (которые представляют собой бесплатные хранилища данных, для доступа к которым требуется регистрация), которые позволяют другим исследователям и заинтересованным сторонам получать доступ к данным для дальнейшего анализа.\n\n\n    <br />\n    Обратите внимание, что ваши данные будут анонимными, а это значит, что вы не сможете потребовать их удаления после прохождения исследования.\n\n    <p class=\"text-left\"><b>Добровольный характер исследования:</b>\n    <br />\n    Участие в этом исследовании является добровольным:\n    Ваше решение об участии не повлияет на ваши текущие или будущие отношения с Гаррисбергским университетом науки и технологий или вашим местным учреждением. Если вы решите участвовать, вы можете не отвечать ни на один вопрос или отказаться в любое время без каких-либо последствий.\n</p>\n\n    <p class=\"text-left\"><b>Контакты и вопросы:</b>\n    <br />\n    Исследователи, проводящие это исследование, — доктор Эрин М. Бьюкенен в партнерстве с Psychological Science Accelerator (Акселератором психологических наук). Сейчас вы можете задать любые интересующие вас вопросы. Если у вас возникнут вопросы после участия в эксперименте, мы предлагаем вам связаться с доктором Эрин М. Бьюкенен по e-mail ebuchanan@harrisburgu.edu.</p>\n\n    <p class=\"text-left\"><b>Вопросы или проблемы:</b>\n    <br />\n    Это исследование было рассмотрено специальным комитетом (Institutional Review Board) Гаррисбергского университета науки и технологий. Комитет определил, что это исследование соответствует обязательствам по защите прав людей как объектов научных исследований, требуемым законами штата и федеральным законодательством, а также политикой университета.\n\n    <p class=\"text-left\"><a href=\"https://osf.io/download/sjakc/\">Копия Согласия будет предоставлена по запросу.\n\n</a></p>\n\n    </div>\n    \n</main>\n\n<footer>\n  Пожалуйста, нажмите <kbd>Пробел</kbd>, чтобы дать согласие на исследование и продолжить.\n</footer>",
+      "_tab": "Content"
     },
     "22": {
       "id": "22",
       "type": "lab.html.Form",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n    <div style=\"width: 90%;\">\n      \n      <form id=\"page-form\" style=\"display: block;\">\n  \n        <h3 class=\"text-left\">Please tell us a little about yourself:</h3>\n  \n        <p class=\"text-left\"><b>Please tell us your gender:</b></p>\n  \n          <table class=\"table-plain page-item-table\">\n            <colgroup>\n              <col style=\"width: 7.5%\" />\n              <col style=\"width: 92.5%\" />\n            </colgroup>\n            <tbody>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"male\"\n                    id=\"please-tell-us-your-gender-male\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-male\" class= \"text-left\">\n                    Male\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"female\"\n                    id=\"please-tell-us-your-gender-female\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-female\" class= \"text-left\">\n                    Female\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"other\"\n                    id=\"please-tell-us-your-gender-other\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-other\" class= \"text-left\">\n                    Other\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"notsay\"\n                    id=\"please-tell-us-your-gender-notsay\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-notsay\" class= \"text-left\">\n                    Prefer not to say\n                  </label>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n  \n        <p class=\"text-left\"><b>Which year were you born? Please enter a four-digit year (must answer to continue):</b></p>\n        <input\n          name=\"which-year-were-you-born\"\n          style=\"width: 50%;\"\n          type=\"number\"\n          min=\"1920\"\n          max=\"2010\"\n          class=\"content-horizontal-left\"\n          required\n        />\n  \n        <p class=\"text-left\"><b>Please tell us your education level:</b></p>\n        <table class=\"table-plain page-item-table\">\n          <colgroup>\n            <col style=\"width: 7.5%\" />\n            <col style=\"width: 92.5%\" />\n          </colgroup>\n          <tbody>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"less than high school\"\n                  id=\"please-tell-us-your-education-level-less than high school\"\n                />\n              </td>\n              <td>\n                <label\n                  for=\"please-tell-us-your-education-level-less than high school\" class=\"text-left\">\n                  Less than High School\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"high school\"\n                  id=\"please-tell-us-your-education-level-high school\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-high school\" class=\"text-left\">\n                  High School\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"high school\"\n                  id=\"please-tell-us-your-education-level-associates\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-associates\" class=\"text-left\">\n                  Associate's Degree or Two-Year Degree\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"college\"\n                  id=\"please-tell-us-your-education-level-college\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-college\" class=\"text-left\">\n                  Bachelor's Degree or Four-Year Degree\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"master\"\n                  id=\"please-tell-us-your-education-level-master\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-master\" class=\"text-left\">\n                  Master's Degree or Equivalent\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"doctorate\"\n                  id=\"please-tell-us-your-education-level-doctorate\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-doctorate\" class=\"text-left\">\n                  Doctoral Degree or Equivalent\n                </label>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n  \n        <p class=\"text-left\"><b>What language is your native (first) language?</b></p>\n        <input\n          name=\"native-language\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        />\n\n        <p class=\"text-left\"><b>Are you primarily left or right-handed (must answer to continue)?</b></p>\n\n        <table class=\"table-plain page-item-table\">\n          <colgroup>\n            <col style=\"width: 7.5%\" />\n            <col style=\"width: 92.5%\" />\n          </colgroup>\n          <tbody>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"dominanthand\"\n                  value=\"left\"\n                  id=\"dominanthand-left\"\n                />\n              </td>\n              <td>\n                <label for=\"dominanthand-left\" class= \"text-left\">\n                  Left\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"dominanthand\"\n                  value=\"right\"\n                  id=\"dominanthand-right\"\n                  required\n                />\n              </td>\n              <td>\n                <label for=\"dominanthand-right\" class= \"text-left\">\n                  Right\n                </label>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n  \n      </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form\">\n      Continue →\n    </button>\n  </footer>\n  ",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n    <div style=\"width: 90%;\">\n      \n      <form id=\"page-form\" style=\"display: block;\">\n  \n        <h3 class=\"text-left\">Пожалуйста, расскажите нам немного о себе.</h3>\n  \n        <p class=\"text-left\"><b>Пожалуйста, укажите свой пол: </b></p>\n  \n          <table class=\"table-plain page-item-table\">\n            <colgroup>\n              <col style=\"width: 7.5%\" />\n              <col style=\"width: 92.5%\" />\n            </colgroup>\n            <tbody>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"male\"\n                    id=\"please-tell-us-your-gender-male\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-male\" class= \"text-left\">\n                    мужской\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"female\"\n                    id=\"please-tell-us-your-gender-female\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-female\" class= \"text-left\">\n                    женский\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"other\"\n                    id=\"please-tell-us-your-gender-other\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-other\" class= \"text-left\">\n                    другой\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"notsay\"\n                    id=\"please-tell-us-your-gender-notsay\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-notsay\" class= \"text-left\">\n                    предпочитаю не указывать\n                  </label>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n  \n        <p class=\"text-left\"><b>В каком году вы родились? Пожалуйста, введите год в формате четырех цифр:</b></p>\n        <input\n          name=\"which-year-were-you-born\"\n          style=\"width: 50%;\"\n          type=\"number\"\n          min=\"1920\"\n          max=\"2010\"\n          class=\"content-horizontal-left\"\n          required\n        />\n  \n        <p class=\"text-left\"><b>Пожалуйста, укажите свой уровень образования:</b></p>\n        <table class=\"table-plain page-item-table\">\n          <colgroup>\n            <col style=\"width: 7.5%\" />\n            <col style=\"width: 92.5%\" />\n          </colgroup>\n          <tbody>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"less than high school\"\n                  id=\"please-tell-us-your-education-level-less than high school\"\n                />\n              </td>\n              <td>\n                <label\n                  for=\"please-tell-us-your-education-level-less than high school\" class=\"text-left\">\n                  неполное среднее общее образование\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"high school\"\n                  id=\"please-tell-us-your-education-level-high school\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-high school\" class=\"text-left\">\n                  среднее общее образование\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"high school\"\n                  id=\"please-tell-us-your-education-level-associates\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-associates\" class=\"text-left\">\n                  среднее специальное образование\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"college\"\n                  id=\"please-tell-us-your-education-level-college\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-college\" class=\"text-left\">\n                  высшее образование - бакалавриат\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"master\"\n                  id=\"please-tell-us-your-education-level-master\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-master\" class=\"text-left\">\n                  магистратура\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"doctorate\"\n                  id=\"please-tell-us-your-education-level-doctorate\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-doctorate\" class=\"text-left\">\n                   аспирантура, кандидатская степень, докторская степень\n                </label>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n  \n        <p class=\"text-left\"><b>Какой ваш родной (первый) язык?</b></p>\n        <input\n          name=\"native-language\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        />\n\n        <p class=\"text-left\"><b>Вы преимущественно левша или правша (надо ответить, чтобы продолжить)?</b></p>\n\n        <table class=\"table-plain page-item-table\">\n          <colgroup>\n            <col style=\"width: 7.5%\" />\n            <col style=\"width: 92.5%\" />\n          </colgroup>\n          <tbody>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"dominanthand\"\n                  value=\"left\"\n                  id=\"dominanthand-left\"\n                />\n              </td>\n              <td>\n                <label for=\"dominanthand-left\" class= \"text-left\">\n                  оставил\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"dominanthand\"\n                  value=\"right\"\n                  id=\"dominanthand-right\"\n                  required\n                />\n              </td>\n              <td>\n                <label for=\"dominanthand-right\" class= \"text-left\">\n                  Правильно\n                </label>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n  \n      </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form\">\n      Продолжать →\n    </button>\n  </footer>\n  ",
       "files": [],
       "parameters": [
         {
@@ -1086,6 +1118,38 @@
       "title": "Demographics Form",
       "_tab": "Content",
       "scrollTop": true
+    },
+    "23": {
+      "id": "23",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
+      "_tab": "Content",
+      "timeout": "60000",
+      "tardy": true
     },
     "27": {
       "id": "27",
@@ -1199,8 +1263,8 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
-      "_tab": "Behavior",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
+      "_tab": "Content",
       "timeout": "60000",
       "tardy": true
     },
@@ -1231,7 +1295,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1263,8 +1327,8 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
-      "_tab": "Behavior",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
+      "_tab": "Content",
       "timeout": "60000",
       "tardy": true
     },
@@ -1295,15 +1359,15 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
-      "_tab": "Behavior",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>перерыв</h2>\n\n    <p class=\"text-left\">Пожалуйста, сделайте небольшой перерыв.</p>\n    \n    <p class=\"text-left\">Помните, что вы должны нажимать клавишу <kbd>${ window.word_key }</kbd> для настоящих слов и клавишу <kbd>${ window.nonword_key }</kbd> для ненастоящих слов. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Нажмите <kbd>ПРОБЕЛ</kbd>, когда будете готовы продолжить, или подождите, пока эта страница не исчезнет.\n</footer>",
+      "_tab": "Content",
       "timeout": "60000",
       "tardy": true
     },
     "53": {
       "id": "53",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Пожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -1332,8 +1396,8 @@
       "children": [
         "54"
       ],
-      "_collapsed": true,
-      "_tab": "Behavior",
+      "_collapsed": false,
+      "_tab": "Scripts",
       "tardy": true
     },
     "54": {
@@ -1603,7 +1667,7 @@
     "59": {
       "id": "59",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Пожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -1633,7 +1697,7 @@
         "60"
       ],
       "_collapsed": true,
-      "_tab": "Behavior",
+      "_tab": "Content",
       "tardy": true
     },
     "60": {
@@ -1903,7 +1967,7 @@
     "64": {
       "id": "64",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\nПожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2203,7 +2267,7 @@
     "69": {
       "id": "69",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\nПожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2233,7 +2297,7 @@
         "70"
       ],
       "_collapsed": true,
-      "_tab": "Behavior",
+      "_tab": "Content",
       "tardy": true
     },
     "70": {
@@ -2503,7 +2567,7 @@
     "74": {
       "id": "74",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\nПожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2533,7 +2597,7 @@
         "75"
       ],
       "_collapsed": true,
-      "_tab": "Behavior",
+      "_tab": "Content",
       "tardy": true
     },
     "75": {
@@ -2803,7 +2867,7 @@
     "79": {
       "id": "79",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\nПожалуйста, нажмите <kbd>${ window.word_key }</kbd> для настоящего слова и <kbd>${ window.nonword_key }</kbd> для ненастоящего слова. \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2832,8 +2896,8 @@
       "children": [
         "80"
       ],
-      "_collapsed": false,
-      "_tab": "Files",
+      "_collapsed": true,
+      "_tab": "Content",
       "tardy": true
     },
     "80": {
@@ -3121,7 +3185,9 @@
         "64",
         "52",
         "79",
+        "23",
         "7",
+        "19",
         "14",
         "8"
       ],

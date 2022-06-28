@@ -15,7 +15,8 @@ ui <- dashboardPage(skin = 'purple',
                     dashboardHeader(title = "PSA 007 Tracker"),
                     dashboardSidebar(
                         sidebarMenu(
-                            menuItem(tags$b("English"), tabName = "english_tab")
+                            menuItem(tags$b("English"), tabName = "english_tab"),
+                            menuItem(tags$b("Russian"), tabName = "russian_tab")
                             )
                         ),
                     dashboardBody(
@@ -39,7 +40,8 @@ ui <- dashboardPage(skin = 'purple',
                         
                         ## show the tab items
                         tabItems(
-                          english_tab
+                          english_tab,
+                          russian_tab
                         ) # end tabItems
                     ) # end dashboardBody
                 ) # end dashboardPage
@@ -47,6 +49,7 @@ ui <- dashboardPage(skin = 'purple',
 # Define the Server Logic -------------------------------------------------
 server <- function(input, output) {
     
+  # english ----
     output$en_participant_data <- renderDT({
 
         colnames(en_participants) <- c("PSA_ID", "Time")
@@ -68,6 +71,32 @@ server <- function(input, output) {
     output$en_summary_table <- renderDT({
       
       datatable(en_summary[en_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    # russian ----
+    output$ru_participant_data <- renderDT({
+      
+      colnames(ru_participants) <- c("PSA_ID", "Time")
+      datatable(ru_participants, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$ru_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(ru_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$ru_summary_table <- renderDT({
+      
+      datatable(ru_summary[ru_summary$type != "nonword", ], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })

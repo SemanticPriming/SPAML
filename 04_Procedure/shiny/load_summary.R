@@ -8,3 +8,8 @@ en_summary <- import("/var/www/html/en/data/en_summary.csv")
 
 # en_participants <- rbind(en_participants, en_participants2)
 # en_summary <- rbind(en_summary, en_summary2)
+
+# Russian -----------------------------------------------------------------
+
+ru_participants <- import("/var/www/html/ru/data/ru_participants.csv")
+ru_summary <- import("/var/www/html/ru/data/ru_summary.csv") 

@@ -366,7 +366,7 @@
       "children": [
         "9"
       ],
-      "_collapsed": false,
+      "_collapsed": true,
       "_tab": "Files",
       "tardy": true
     },
@@ -729,7 +729,7 @@
       "children": [
         "15"
       ],
-      "_collapsed": false,
+      "_collapsed": true,
       "_tab": "Scripts",
       "tardy": true
     },
@@ -1086,6 +1086,70 @@
       "title": "Demographics Form",
       "_tab": "Content",
       "scrollTop": true
+    },
+    "24": {
+      "id": "24",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "25": {
+      "id": "25",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
     },
     "27": {
       "id": "27",
@@ -2832,7 +2896,7 @@
       "children": [
         "80"
       ],
-      "_collapsed": false,
+      "_collapsed": true,
       "_tab": "Files",
       "tardy": true
     },
@@ -3121,7 +3185,9 @@
         "64",
         "52",
         "79",
+        "25",
         "7",
+        "24",
         "14",
         "8"
       ],
