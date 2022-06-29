@@ -54,7 +54,7 @@ server <- function(input, output) {
   # english ----
     output$en_participant_data <- renderDT({
 
-        colnames(en_participants) <- c("PSA_ID", "Time")
+        colnames(en_participants) <- c("PSA_ID", "Time", "Participant_ID")
         datatable(en_participants, rownames = F,
                   filter = "top",
                   options = list(dom = 'tp'))
@@ -80,7 +80,7 @@ server <- function(input, output) {
     # russian ----
     output$ru_participant_data <- renderDT({
       
-      colnames(ru_participants) <- c("PSA_ID", "Time")
+      colnames(ru_participants) <- c("PSA_ID", "Time", "Participant_ID")
       datatable(ru_participants, rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
@@ -106,7 +106,7 @@ server <- function(input, output) {
     # turkish ----
     output$tr_participant_data <- renderDT({
       
-      colnames(tr_participants) <- c("PSA_ID", "Time")
+      colnames(tr_participants) <- c("PSA_ID", "Time", "Participant_ID")
       datatable(tr_participants, rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
