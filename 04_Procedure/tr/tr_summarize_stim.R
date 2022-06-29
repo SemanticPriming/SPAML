@@ -349,7 +349,8 @@ write.csv(tr_merged, "/var/www/html/tr/data/tr_summary.csv", row.names = F)
 p_end <- tr_data_all$observation[tr_data_all$sender == "Real Frame Task 6"]
 p_lab <- tr_data_all[tr_data_all$observation %in% p_end, ]
 p_lab <- p_lab[!is.na(p_lab$url_lab), ]
-p_lab <- p_lab[ , c("url_lab", "timestamp")]
+#p_lab <- p_lab[!is.na(p_lab$uuid), ]
+p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid")]
 write.csv(p_lab, "/var/www/html/tr/data/tr_participants.csv", row.names = F)
 
 # generate new stimuli ----

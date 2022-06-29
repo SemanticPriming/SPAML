@@ -349,7 +349,8 @@ ru_data_all <- processData("./04_Procedure/ru/data/data.sqlite")
   p_end <- ru_data_all$observation[ru_data_all$sender == "Real Frame Task 6"]
   p_lab <- ru_data_all[ru_data_all$observation %in% p_end, ]
   p_lab <- p_lab[!is.na(p_lab$url_lab), ]
-  p_lab <- p_lab[ , c("url_lab", "timestamp")]
+  #p_lab <- p_lab[!is.na(p_lab$uuid), ]
+  p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid")]
   write.csv(p_lab, "./04_Procedure/ru/data/ru_participants.csv", row.names = F)
   
 # generate new stimuli ----

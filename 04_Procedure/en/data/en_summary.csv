@@ -485,7 +485,7 @@
 "breadlycrat","breadly","crat","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "breadlyvote","breadly","vote","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "breadwin","bread","win","unrelated","word","word",0.148955498487949,NA,NA,NA,NA,NA
-"bribeblackmail","bribe","blackmail","related","word","word",0.531870769789198,-0.453601418835689,NA,NA,1,FALSE
+"bribeblackmail","bribe","blackmail","related","word","word",0.531870769789198,-0.453601418835688,NA,NA,1,FALSE
 "bribegirls","bribe","girls","unrelated","word","word",0.119880117151873,NA,NA,NA,NA,NA
 "bribeprofesdled","bribe","profesdled","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "bridgeintentionally","bridge","intentionally","unrelated","word","word",0.111472597232243,NA,NA,NA,NA,NA
@@ -571,7 +571,7 @@
 "calibermotel","caliber","motel","unrelated","word","word",0.111499743555477,NA,NA,NA,NA,NA
 "callbulish","call","bulish","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "callexternal","call","external","unrelated","word","word",0.0844932046702991,NA,NA,NA,NA,NA
-"calltelephone","call","telephone","related","word","word",0.426659849049764,-0.265417845380751,NA,NA,1,FALSE
+"calltelephone","call","telephone","related","word","word",0.426659849049764,-0.265417845380752,NA,NA,1,FALSE
 "calvglisure","calv","glisure","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "calvreply","calv","reply","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "camerabuild","camera","build","unrelated","word","word",0.0671611477522508,NA,NA,NA,NA,NA
@@ -1061,7 +1061,7 @@
 "crawloweash","crawlow","eash","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "crawlowsubject","crawlow","subject","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "creambuord","cream","buord","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"creamevening","cream","evening","unrelated","word","word",0.142497516219031,NA,NA,NA,NA,NA
+"creamevening","cream","evening","unrelated","word","word",0.142497516219031,-0.670744442992155,NA,NA,1,FALSE
 "creamsauce","cream","sauce","related","word","word",0.510415706122926,NA,NA,NA,NA,NA
 "creategipy","create","gipy","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "createhard","create","hard","unrelated","word","word",0.112701533376288,NA,NA,NA,NA,NA
@@ -1128,7 +1128,7 @@
 "darkapyfoxvous","darkapy","foxvous","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "darkapyrecording","darkapy","recording","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "darknesseat","darkness","eat","unrelated","word","word",0.138074368701264,NA,NA,NA,NA,NA
-"darknesslight","darkness","light","related","word","word",0.523320357283627,-0.982553544222118,NA,NA,1,FALSE
+"darknesslight","darkness","light","related","word","word",0.523320357283627,-0.982553544222119,NA,NA,1,FALSE
 "darknessregor","darkness","regor","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "dataabsurd","data","absurd","unrelated","word","word",0.148460992087759,NA,NA,NA,NA,NA
 "datainformation","data","information","related","word","word",0.651174136118283,-0.791112550334403,NA,NA,1,FALSE
@@ -1169,7 +1169,7 @@
 "deltlewedding","deltle","wedding","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "demandcentle","demand","centle","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "demandlion","demand","lion","unrelated","word","word",0.109442083575594,NA,NA,NA,NA,NA
-"demandrequest","demand","request","related","word","word",0.473046172898669,-0.312670153367471,NA,NA,1,FALSE
+"demandrequest","demand","request","related","word","word",0.473046172898669,-0.312670153367472,NA,NA,1,FALSE
 "demostmissile","demost","missile","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "demostsynborne","demost","synborne","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "derehbungth","dereh","bungth","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1193,7 +1193,7 @@
 "deskoffice","desk","office","related","word","word",0.53189867885524,NA,NA,NA,NA,NA
 "deskpercabe","desk","percabe","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "desksteel","desk","steel","unrelated","word","word",0.139493884363402,NA,NA,NA,NA,NA
-"dessertcake","dessert","cake","related","word","word",0.625337812576163,-0.413671494048618,NA,NA,1,FALSE
+"dessertcake","dessert","cake","related","word","word",0.625337812576163,-0.413671494048617,NA,NA,1,FALSE
 "dessertoffisors","dessert","offisors","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "dessertowner","dessert","owner","unrelated","word","word",0.13464676277349,NA,NA,NA,NA,NA
 "dessfinlet","dess","finlet","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1247,7 +1247,7 @@
 "directchiep","direct","chiep","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "directdirectly","direct","directly","related","word","word",0.615047150304762,NA,NA,NA,NA,NA
 "directjewel","direct","jewel","unrelated","word","word",0.124497184398318,NA,NA,NA,NA,NA
-"dirtyabandon","dirty","abandon","unrelated","word","word",0.110991555318052,NA,NA,NA,NA,NA
+"dirtyabandon","dirty","abandon","unrelated","word","word",0.110991555318052,-0.504846220342239,NA,NA,1,FALSE
 "dirtydisgusting","dirty","disgusting","related","word","word",0.544560076123461,NA,NA,NA,NA,NA
 "dirtygu","dirty","gu","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "dishitexloads","dishit","exloads","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1319,7 +1319,7 @@
 "dremminus","drem","minus","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "dricndownvacy","dricn","downvacy","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "dricnspecialist","dricn","specialist","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"drinkbeer","drink","beer","related","word","word",0.65776696962484,-0.744470267501221,NA,NA,1,FALSE
+"drinkbeer","drink","beer","related","word","word",0.65776696962484,-0.74447026750122,NA,NA,1,FALSE
 "drinkdegung","drink","degung","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "drinkling","drink","ling","unrelated","word","word",0.124453942878252,NA,NA,NA,NA,NA
 "drivedemonhaustion","drive","demonhaustion","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -1349,7 +1349,7 @@
 "dusymap","dusy","map","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "dvdthat","dvd","that","unrelated","word","word",0.140534259712137,NA,NA,NA,NA,NA
 "dvdvicny","dvd","vicny","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"dvdvideo","dvd","video","related","word","word",0.614294835546007,NA,NA,NA,NA,NA
+"dvdvideo","dvd","video","related","word","word",0.614294835546007,0.336735640914191,NA,NA,1,FALSE
 "dynastyempire","dynasty","empire","related","word","word",0.626830351355654,NA,NA,NA,NA,NA
 "dynastyspatt","dynasty","spatt","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "dynastytell","dynasty","tell","unrelated","word","word",0.0922280815796906,NA,NA,NA,NA,NA
@@ -1638,7 +1638,7 @@
 "firmlygroip","firmly","groip","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "firmlystrongly","firmly","strongly","related","word","word",0.455159491474564,NA,NA,NA,NA,NA
 "firstisse","first","isse","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"firstlast","first","last","related","word","word",0.62265882915595,-0.460875378865096,NA,NA,1,FALSE
+"firstlast","first","last","related","word","word",0.62265882915595,-0.460875378865097,NA,NA,1,FALSE
 "firstoffend","first","offend","unrelated","word","word",0.137375246418703,NA,NA,NA,NA,NA
 "fisetdawn","fiset","dawn","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "fisetremune","fiset","remune","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2068,7 +2068,7 @@
 "hospitalityneed","hospitality","need","unrelated","word","word",0.110468562846796,NA,NA,NA,NA,NA
 "hospitalpavl","hospital","pavl","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "hostageprisoner","hostage","prisoner","related","word","word",0.530342994233111,NA,NA,NA,NA,NA
-"hostageproduce","hostage","produce","unrelated","word","word",0.0611889778242567,NA,NA,NA,NA,NA
+"hostageproduce","hostage","produce","unrelated","word","word",0.0611889778242567,0.0413759396073179,NA,NA,1,FALSE
 "hostagesurtans","hostage","surtans","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "hotcold","hot","cold","related","word","word",0.541749168291159,NA,NA,NA,NA,NA
 "hoteljuliet","hotel","juliet","unrelated","word","word",0.106367164478972,NA,NA,NA,NA,NA
@@ -2254,7 +2254,7 @@
 "invacantofria","invacant","ofria","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "invacanttie","invacant","tie","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "invasionattack","invasion","attack","related","word","word",0.564666206784969,NA,NA,NA,NA,NA
-"invasionfrighten","invasion","frighten","unrelated","word","word",0.120772087855983,NA,NA,NA,NA,NA
+"invasionfrighten","invasion","frighten","unrelated","word","word",0.120772087855983,-0.405488236722432,NA,NA,1,FALSE
 "invasionsyprive","invasion","syprive","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "iplehallucinamurthy","iple","hallucinamurthy","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "iplereas","iple","reas","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2517,7 +2517,7 @@
 "lowconfess","low","confess","unrelated","word","word",0.0592014638452802,NA,NA,NA,NA,NA
 "lowerdusty","lower","dusty","unrelated","word","word",0.118296184544087,NA,NA,NA,NA,NA
 "lowerjourit","lower","jourit","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"lowerupper","lower","upper","related","word","word",0.630863600627835,NA,NA,NA,NA,NA
+"lowerupper","lower","upper","related","word","word",0.630863600627835,-0.381471240681903,NA,NA,1,FALSE
 "lowhigh","low","high","related","word","word",0.700833541066792,NA,NA,NA,NA,NA
 "loyaldeparnell","loyal","deparnell","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "loyalfaithful","loyal","faithful","related","word","word",0.684497022344239,NA,NA,NA,NA,NA
@@ -3171,7 +3171,7 @@
 "physicsmathematics","physics","mathematics","related","word","word",0.74127001895254,NA,NA,NA,NA,NA
 "physicswalk","physics","walk","unrelated","word","word",0.0940829244831445,NA,NA,NA,NA,NA
 "pianocartel","piano","cartel","unrelated","word","word",0.127212743101396,NA,NA,NA,NA,NA
-"pianoguitar","piano","guitar","related","word","word",0.693877613489471,NA,NA,NA,NA,NA
+"pianoguitar","piano","guitar","related","word","word",0.693877613489471,-0.362718243773512,NA,NA,1,FALSE
 "pianosurrism","piano","surrism","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "pibconteen","pib","conteen","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "pibstupidity","pib","stupidity","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3352,7 +3352,7 @@
 "prescentpsymon","prescent","psymon","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "presenceabsence","presence","absence","related","word","word",0.508694231661509,NA,NA,NA,NA,NA
 "presenceliteralysts","presence","literalysts","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"presencespaghetti","presence","spaghetti","unrelated","word","word",0.0544704911902812,NA,NA,NA,NA,NA
+"presencespaghetti","presence","spaghetti","unrelated","word","word",0.0544704911902812,1.26961498711922,NA,NA,1,FALSE
 "preservemaintain","preserve","maintain","related","word","word",0.543143926061679,NA,NA,NA,NA,NA
 "preservemayor","preserve","mayor","unrelated","word","word",0.10798121825924,NA,NA,NA,NA,NA
 "preservereswerable","preserve","reswerable","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -3475,7 +3475,7 @@
 "purposelihool","purpose","lihool","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "purposewinter","purpose","winter","unrelated","word","word",0.122152591650333,NA,NA,NA,NA,NA
 "pushdruy","push","druy","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"pushpull","push","pull","related","word","word",0.53460979701705,-0.644916247332493,NA,NA,1,FALSE
+"pushpull","push","pull","related","word","word",0.53460979701705,-0.644916247332494,NA,NA,1,FALSE
 "pushvery","push","very","unrelated","word","word",0.104424754772713,NA,NA,NA,NA,NA
 "pyraahydetermination","pyraahy","determination","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "pyraahyexplotors","pyraahy","explotors","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -3767,7 +3767,7 @@
 "romeokoam","romeo","koam","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "ronedcognac","roned","cognac","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "ronedhampterday","roned","hampterday","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"roombedroom","room","bedroom","related","word","word",0.684741352916397,-0.29629128411371,NA,NA,1,FALSE
+"roombedroom","room","bedroom","related","word","word",0.684741352916397,-0.296291284113709,NA,NA,1,FALSE
 "roomevenagg","room","evenagg","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "roomfriendship","room","friendship","unrelated","word","word",0.0457195720801439,NA,NA,NA,NA,NA
 "rorystelephone","rorys","telephone","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -4406,7 +4406,7 @@
 "symptomvillage","symptom","village","unrelated","word","word",0.123047572187646,NA,NA,NA,NA,NA
 "sysnaclient","sysna","client","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "sysnaincryption","sysna","incryption","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"tablechair","table","chair","related","word","word",0.544248774408218,NA,NA,NA,NA,NA
+"tablechair","table","chair","related","word","word",0.544248774408218,-0.849555913513185,NA,NA,1,FALSE
 "tableconcert","table","concert","unrelated","word","word",0.122036963602571,NA,NA,NA,NA,NA
 "tableprophetti","table","prophetti","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "tabletfuel","tablet","fuel","unrelated","word","word",0.093353625950698,NA,NA,NA,NA,NA
@@ -4641,7 +4641,7 @@
 "trfysilros","trfy","silros","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "trickgenerence","trick","generence","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "trickindicate","trick","indicate","unrelated","word","word",0.144345605182506,NA,NA,NA,NA,NA
-"trickjoke","trick","joke","related","word","word",0.407017624759229,NA,NA,NA,NA,NA
+"trickjoke","trick","joke","related","word","word",0.407017624759229,-0.624766700572041,NA,NA,1,FALSE
 "triggeractivate","trigger","activate","related","word","word",0.518282899690891,NA,NA,NA,NA,NA
 "triggerfinlet","trigger","finlet","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "triggeroption","trigger","option","unrelated","word","word",0.101367844068883,NA,NA,NA,NA,NA
@@ -4891,7 +4891,7 @@
 "westbup","west","bup","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "westeast","west","east","related","word","word",0.888417597562888,NA,NA,NA,NA,NA
 "westmeal","west","meal","unrelated","word","word",0.0418603234088758,NA,NA,NA,NA,NA
-"whatadministrative","what","administrative","unrelated","word","word",0.136796040660712,NA,NA,NA,NA,NA
+"whatadministrative","what","administrative","unrelated","word","word",0.136796040660712,-0.530343716138696,NA,NA,1,FALSE
 "whatchamacalliterallyinstrument","whatchamacalliterally","instrument","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "whatchamacalliterallyotine","whatchamacalliterally","otine","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "whatferinghandkerrowed","whatfering","handkerrowed","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -4934,7 +4934,7 @@
 "winelewe","wine","lewe","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "winfelverify","winfel","verify","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "winfelwaks","winfel","waks","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"witnessdisappointment","witness","disappointment","unrelated","word","word",0.115811236563921,NA,NA,NA,NA,NA
+"witnessdisappointment","witness","disappointment","unrelated","word","word",0.115811236563921,-0.48411922375927,NA,NA,1,FALSE
 "witnessscarty","witness","scarty","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "witnesstestimony","witness","testimony","related","word","word",0.598645099809197,NA,NA,NA,NA,NA
 "wittyfunny","witty","funny","related","word","word",0.521396038862323,NA,NA,NA,NA,NA
