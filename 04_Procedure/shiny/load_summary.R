@@ -18,3 +18,8 @@ ru_summary <- import("/var/www/html/ru/data/ru_summary.csv")
 
 tr_participants <- import("/var/www/html/tr/data/tr_participants.csv")
 tr_summary <- import("/var/www/html/tr/data/tr_summary.csv") 
+
+# Korean -----------------------------------------------------------------
+
+ko_participants <- import("/var/www/html/ko/data/ko_participants.csv")
+ko_summary <- import("/var/www/html/ko/data/ko_summary.csv") 
