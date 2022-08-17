@@ -6,14 +6,9 @@ library(tidytext)
 library(stringdist)
 library(stringr)
 
-# DF <- import("03_materials/finalize_stimuli/cs/cs_translated.xlsx")
-# DF$cs_cue_final <- DF$cs_cue
-# DF$cs_target_final <- DF$cs_target
-# 
-# for (i in 1:nrow(DF)){
-#   if (!is.na(DF$cs_cue_trans[i])) {DF$cs_cue_final[i] <- DF$cs_cue_trans[i]}
-#   if (!is.na(DF$cs_target_trans[i])) {DF$cs_target_final[i] <- DF$cs_target_trans[i]}
-# }
+DF <- import("03_materials/finalize_stimuli/fr/fr_translate_wip.xlsx")
+DF$fr_cue_final <- DF$fr_cue_NEW
+DF$fr_target_final <- DF$fr_target_NEW
 
 get_fake <- function(wordlist, language_hyp, replacewords){
   
@@ -154,34 +149,25 @@ get_fake <- function(wordlist, language_hyp, replacewords){
   return(new_words) 
 }
 
-cs_patterns <- read.hyph.pat("03_materials/finalize_stimuli/hyphen/hyph-cs.tex", "cs")
+fr_patterns <- "fr"
+library(sylly.fr)
 
-# # create fake words based on cue
-# cs_fake_cue_update <- get_fake(wordlist = c(DF$cs_cue_final, DF$cs_target_final), #possibles
-#                           language_hyp = cs_patterns, #hyphen rules
-#                           replacewords = DF$cs_cue_final) #your words
-# 
-# DF <- DF %>% 
-#   left_join(cs_fake_cue_update %>% select(original_word, replacement_word), 
-#             by = c("cs_cue_final" = "original_word")) %>% rename("cs_fake_cue_update" = "replacement_word")
-# 
-# cs_fake_target_update <- get_fake(wordlist = c(DF$cs_cue_final, DF$cs_target_final), #possibles
-#                                   language_hyp = cs_patterns, #hyphen rules
-#                                   replacewords = DF$cs_target_final) #your words
-# 
-# DF <- DF %>% 
-#   left_join(cs_fake_target_update %>% select(original_word, replacement_word), 
-#             by = c("cs_target_final" = "original_word")) %>% 
-#   rename("cs_fake_target_update" = "replacement_word")
-# 
-# export(DF, "03_materials/finalize_stimuli/cs/cs_update.xlsx")
+# create fake words based on cue
+fr_fake_cue_update <- get_fake(wordlist = c(DF$fr_cue_final, DF$fr_target_final), #possibles
+                          language_hyp = fr_patterns, #hyphen rules
+                          replacewords = DF$fr_cue_final) #your words
 
-DF <- import("03_materials/finalize_stimuli/cs/cs_update2.xlsx")
+DF <- DF %>% 
+  left_join(fr_fake_cue_update %>% select(original_word, replacement_word), 
+            by = c("fr_cue_final" = "original_word")) %>% rename("fr_fake_cue_update" = "replacement_word")
 
-cs_fake_cue_update2 <- get_fake(wordlist = c(DF$cs_cue_final, DF$cs_target_final), #possibles
-                                language_hyp = cs_patterns, #hyphen rules
-                                replacewords = DF %>% filter(grepl("cue", Problematic)) %>% pull(cs_cue_final)) #your words
+fr_fake_target_update <- get_fake(wordlist = c(DF$fr_cue_final, DF$fr_target_final), #possibles
+                                  language_hyp = fr_patterns, #hyphen rules
+                                  replacewords = DF$fr_target_final) #your words
 
-cs_fake_target_update2 <- get_fake(wordlist = c(DF$cs_cue_final, DF$cs_target_final), #possibles
-                                language_hyp = cs_patterns, #hyphen rules
-                                replacewords = DF %>% filter(grepl("target", Problematic)) %>% pull(cs_target_final)) #your words
+DF <- DF %>% 
+  left_join(fr_fake_target_update %>% select(original_word, replacement_word), 
+            by = c("fr_target_final" = "original_word")) %>% 
+  rename("fr_fake_target_update" = "replacement_word")
+
+export(DF, "03_materials/finalize_stimuli/fr/fr_update.xlsx")

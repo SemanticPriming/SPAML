@@ -181,9 +181,10 @@ Note: after the pilot test, we will need to store these files in GitHub releases
 
 ```{r import_data}
 # collected data
-en_data_1 <- processData("input_data/data_en.sqlite")
-en_data_2 <- processData("input_data/data_en-z.sqlite")
-en_data_all <- do.call(bind_rows, list(en_data_1, en_data_2))
+# en_data_1 <- processData("input_data/data_en.sqlite")
+# en_data_2 <- processData("input_data/data_en-z.sqlite")
+# en_data_all <- do.call(bind_rows, list(en_data_1, en_data_2))
+en_data_all <- processData("input_data/data_0727.sqlite")
 ```
 
 ### Original Data Structure
@@ -191,6 +192,14 @@ en_data_all <- do.call(bind_rows, list(en_data_1, en_data_2))
 ```{r table}
 str(en_data_all)
 ```
+
+### Remove Test Data
+
+```{r}
+# temp to look at kelly's data 
+en_data_all <- en_data_all %>% filter(timestamp >= as.POSIXct("2022-07-01")) 
+```
+
 
 ## Participant and Experiment Information 
 
