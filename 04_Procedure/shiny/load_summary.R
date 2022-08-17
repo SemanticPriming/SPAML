@@ -1,25 +1,22 @@
 # English -----------------------------------------------------------------
 
-# en_participants <- import("/Users/erinbuchanan/GitHub/Research/2 projects/SPAML/SPAML-PSA/04_Procedure/en/data/en_participants.csv")
-# en_summary <- import("/Users/erinbuchanan/GitHub/Research/2 projects/SPAML/SPAML-PSA/04_Procedure/en/data/en_summary.csv")
+# en_participants <- import("~/GitHub/Research/2_projects/SPAML/SPAML-PSA/04_Procedure/summary_data/en_participants.csv")
+# en_summary <- import("~/GitHub/Research/2_projects/SPAML/SPAML-PSA/04_Procedure/summary_data/en_summary.csv")
  
-en_participants <- import("/var/www/html/en/data/en_participants.csv")
-en_summary <- import("/var/www/html/en/data/en_summary.csv")
-
-# en_participants <- rbind(en_participants, en_participants2)
-# en_summary <- rbind(en_summary, en_summary2)
+en_participants <- import("/var/www/html/summary_data/en_participants.csv")
+en_summary <- import("/var/www/html/summary_data/en_summary.csv")
 
 # Russian -----------------------------------------------------------------
 
-ru_participants <- import("/var/www/html/ru/data/ru_participants.csv")
-ru_summary <- import("/var/www/html/ru/data/ru_summary.csv") 
+ru_participants <- import("/var/www/html/summary_data/ru_participants.csv")
+ru_summary <- import("/var/www/html/summary_data/ru_summary.csv")
 
 # Turkish -----------------------------------------------------------------
 
-tr_participants <- import("/var/www/html/tr/data/tr_participants.csv")
-tr_summary <- import("/var/www/html/tr/data/tr_summary.csv") 
+tr_participants <- import("/var/www/html/summary_data/tr_participants.csv")
+tr_summary <- import("/var/www/html/summary_data/tr_summary.csv")
 
 # Korean -----------------------------------------------------------------
 
-ko_participants <- import("/var/www/html/ko/data/ko_participants.csv")
-ko_summary <- import("/var/www/html/ko/data/ko_summary.csv") 
+ko_participants <- import("/var/www/html/summary_data/ko_participants.csv")
+ko_summary <- import("/var/www/html/summary_data/ko_summary.csv")
