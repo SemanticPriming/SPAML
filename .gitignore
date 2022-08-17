@@ -8,6 +8,7 @@
 /04_Procedure/en2/*
 /04_Procedure/en3/*
 /04_Procedure/en4/*
+/05_Data/*/*.sqlite
 
 # Apple stuff
 .DS_Store
