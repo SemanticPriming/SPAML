@@ -200,7 +200,7 @@ korean_tab <-
             ),  # close box
             # ZPID ----
             box(
-              title = tags$b("Stimuli Counts + Tracker"),
+              title = tags$b("Special Code Tracker"),
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "primary",

@@ -78,7 +78,7 @@ server <- function(input, output) {
       
       datatable(en_summary[en_summary$type != "nonword", ], rownames = F,
                 filter = "top",
-                options = list(dom = 'tp'))
+                options = list(dom = 'tp', scrollX = TRUE))
     })
     
     output$englishN_total <- renderInfoBox({
@@ -116,7 +116,7 @@ server <- function(input, output) {
       
       datatable(ru_summary[ru_summary$type != "nonword", ], rownames = F,
                 filter = "top",
-                options = list(dom = 'tp'))
+                options = list(dom = 'tp', scrollX = TRUE))
     })
     
     # turkish ----
@@ -142,7 +142,7 @@ server <- function(input, output) {
       
       datatable(tr_summary[tr_summary$type != "nonword", ], rownames = F,
                 filter = "top",
-                options = list(dom = 'tp'))
+                options = list(dom = 'tp', scrollX = TRUE))
     })
  
     # korean ----
@@ -168,12 +168,12 @@ server <- function(input, output) {
       
       datatable(ko_summary[ko_summary$type != "nonword", ], rownames = F,
                 filter = "top",
-                options = list(dom = 'tp'))
+                options = list(dom = 'tp', scrollX = TRUE))
     })
     
     output$ko_zpid_summary <- renderDT({
       
-      datatable(ko_totals[ , "url_special_code"], rownames = F,
+      datatable(as.data.frame(unique(ko_totals[ , "url_special_code"])), rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
