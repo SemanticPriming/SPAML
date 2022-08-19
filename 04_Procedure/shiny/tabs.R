@@ -197,6 +197,17 @@ korean_tab <-
                 need participants. "), 
               DTOutput("ko_summary_table")  
               
+            ),  # close box
+            # ZPID ----
+            box(
+              title = tags$b("Stimuli Counts + Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table includes information for specific data collection."), 
+              DTOutput("ko_zpid_summary")  
+              
             )  # close box
           ) #close row
   ) #close tab

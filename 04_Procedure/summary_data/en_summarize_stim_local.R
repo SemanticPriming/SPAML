@@ -166,11 +166,16 @@ en_words <- import("./04_Procedure/en/en_words.csv")
 
 # collected data
 en_data_all <- 
-  bind_rows(processData("./04_Procedure/en/data/data.sqlite"),
-            processData("./04_Procedure/en1/data/data.sqlite"),
-            processData("./04_Procedure/en2/data/data.sqlite"),
-            processData("./04_Procedure/en3/data/data.sqlite"),
-            processData("./04_Procedure/en4/data/data.sqlite")) %>% unique()
+  bind_rows(processData("./04_Procedure/en/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("./04_Procedure/en1/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("./04_Procedure/en2/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("./04_Procedure/en3/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("./04_Procedure/en4/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started 
 en_data_all <- en_data_all %>% 

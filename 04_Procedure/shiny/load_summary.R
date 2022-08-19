@@ -22,4 +22,4 @@ tr_summary <- import("/var/www/html/summary_data/tr_summary.csv")
 # 
 ko_participants <- import("/var/www/html/summary_data/ko_participants.csv")
 ko_summary <- import("/var/www/html/summary_data/ko_summary.csv")
-ko_totals <- import("var/www/html/summary_data/ko_totals.csv")
+ko_totals <- import("/var/www/html/summary_data/ko_totals.csv")

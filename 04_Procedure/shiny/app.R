@@ -171,6 +171,13 @@ server <- function(input, output) {
                 options = list(dom = 'tp'))
     })
     
+    output$ko_zpid_summary <- renderDT({
+      
+      datatable(ko_totals[ , "url_special_code"], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
     output$koreanN_total <- renderInfoBox({
       infoBox(
         "korean", sum(grepl("keep", ko_totals$keep)), 
