@@ -15,6 +15,7 @@ ui <- dashboardPage(skin = 'purple',
                     dashboardHeader(title = "PSA 007 Tracker"),
                     dashboardSidebar(
                         sidebarMenu(
+                            menuItem(tags$b("Overall"), tabName = "overall_tab"),
                             menuItem(tags$b("English"), tabName = "english_tab"),
                             menuItem(tags$b("Russian"), tabName = "russian_tab"),
                             menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
@@ -42,6 +43,7 @@ ui <- dashboardPage(skin = 'purple',
                         
                         ## show the tab items
                         tabItems(
+                          overall_tab,
                           english_tab,
                           russian_tab,
                           turkish_tab, 
@@ -77,6 +79,18 @@ server <- function(input, output) {
       datatable(en_summary[en_summary$type != "nonword", ], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
+    })
+    
+    output$englishN_total <- renderInfoBox({
+      infoBox(
+        "English", sum(grepl("keep", en_totals$keep)), 
+        icon = icon("list"), color = "purple")
+    })
+    
+    output$englishWORD_total <- renderInfoBox({
+      infoBox(
+        "English", sum(en_summary$done, na.rm = T), 
+        icon = icon("list"), color = "purple")
     })
     
     # russian ----
@@ -155,6 +169,18 @@ server <- function(input, output) {
       datatable(ko_summary[ko_summary$type != "nonword", ], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
+    })
+    
+    output$koreanN_total <- renderInfoBox({
+      infoBox(
+        "korean", sum(grepl("keep", ko_totals$keep)), 
+        icon = icon("list"), color = "green")
+    })
+    
+    output$koreanWORD_total <- renderInfoBox({
+      infoBox(
+        "korean", sum(ko_summary$done, na.rm = T), 
+        icon = icon("list"), color = "green")
     })
        
 }

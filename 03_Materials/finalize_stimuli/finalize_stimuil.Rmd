@@ -636,7 +636,11 @@ export(tr_final, "tr/tr_trials_final.csv")
 
 ```{r eval = F}
 # original words
-ko <- import("ko/ko_translate.csv")
+# don't use the originlal trials because there are lot of weird typos
+# that were clearly fixed in the translated sheet
+ko <- import("ko/ko_translated.xlsx")
+ko_temp <- import("ko/ko_translate.csv")
+ko <- ko %>% select(colnames(ko_temp))
 
 # fix real words ----
 ko_update <- import("ko/ko_translated.xlsx")
@@ -745,6 +749,8 @@ for (row in 1:nrow(ko_trials)){
 }
 
 # update trials that have cosines too big 
+# if they are NA, they are zero 
+ko_trials$ko_cosine[is.na(ko_trials$ko_cosine) & ko_trials$type == "unrelated"] <- 0
 ko_trials$ok <- TRUE
 ko_trials$ok[ko_trials$type == "unrelated" & abs(ko_trials$ko_cosine) > .15] <- FALSE
 
@@ -761,7 +767,8 @@ for (row in 1:nrow(bad_trials)){
     c(bad_trials$ko_cue[row], bad_trials$ko_target[row]) , ])))[2]
 }
 
-# deal with 땡땡 this word is not actually in the dataset 
+# deal with zeros 
+bad_trials$ko_cosine[is.na(bad_trials$ko_cosine)] <- 0
 bad_trials$ko_cosine[bad_trials$ko_target == "땡땡"] <- 0
 bad_trials$ko_cosine[bad_trials$ko_target == "버리다"] <- 0
 
@@ -806,7 +813,7 @@ colnames(switch_todo) <- c("bad_ko_cue", "bad_ko_target",
                            "good_ko_cue", "good_ko_target")
 
 good_trials_small <- good_trials %>% 
-  filter(!(ko_cue %in% switch_todo$good_ko_cue & type == "unrelated"))
+  filter(!(ko_cue %in% switch_todo$good_ko_cue & type == "unrelated")) 
 
 new_good_trials <- data.frame(
   ko_cue = c(switch_todo$bad_ko_cue, switch_todo$good_ko_cue),
@@ -823,9 +830,9 @@ for (row in 1:nrow(new_good_trials)){
     c(new_good_trials$ko_cue[row], new_good_trials$ko_target[row]) , ])))[2]
 }
 
-ko_final <- bind_rows(good_trials_small, new_good_trials)
+# creates too many so sample 
+ko_final <- bind_rows(good_trials_small, new_good_trials[sample(1:nrow(new_good_trials), 5000-nrow(good_trials_small), replace = F), ])
 sum(duplicated(ko_final[ , c("ko_cue", "ko_target")]))
-
 
 tapply(ko_final$ko_cosine, ko_final$type, mean, na.rm = T)
 tapply(ko_final$ko_cosine, ko_final$type, min, na.rm = T)

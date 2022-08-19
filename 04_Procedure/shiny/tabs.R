@@ -1,3 +1,42 @@
+# Overall Data ------------------------------------------------------------
+
+overall_tab <- 
+  tabItem(tabName = "overall_tab",
+          fluidRow(
+            # Overall --------
+            box(
+              title = tags$b("Participant Counts"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This information bax gives you the total number of people we 
+                can use in each language. Please note that the specific 
+                language tab will show you total numbers from your lab, 
+                which may be higher (i.e., this excludes people who do not 
+                meet criteria)."), 
+              infoBoxOutput("englishN_total"),
+              infoBoxOutput("koreanN_total")
+            ),  # close box
+            
+            # words ----
+            box(
+              title = tags$b("Stimuli Counts"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This information box gives you an overview of the number 
+                of 'completed' words for each langauge. Note that this tracks 
+                the number who both have N = 50 and SE < .09, not just the 
+                minimum sample size."), 
+              infoBoxOutput("englishWORD_total"),
+              infoBoxOutput("koreanWORD_total")
+              
+            )  # close box
+          ) #close row
+  ) #close tab
+
 # English ------------------------------------------------------------------
 english_tab <- 
   tabItem(tabName = "english_tab",
@@ -28,7 +67,7 @@ english_tab <-
               status = "primary",
               width = 12,
               p("This table shows you the status of each item's data collection. 
-                While the non-word items are shown below, we are mainly tracking 
+                We are mainly tracking 
                 the related and unrelated conditions to reach 50 participants and a 
                 SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
                 points, they will be sampled less often than the words that still 
@@ -69,7 +108,7 @@ russian_tab <-
               status = "primary",
               width = 12,
               p("This table shows you the status of each item's data collection. 
-                While the non-word items are shown below, we are mainly tracking 
+                We are mainly tracking 
                 the related and unrelated conditions to reach 50 participants and a 
                 SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
                 points, they will be sampled less often than the words that still 
@@ -110,7 +149,7 @@ turkish_tab <-
               status = "primary",
               width = 12,
               p("This table shows you the status of each item's data collection. 
-                While the non-word items are shown below, we are mainly tracking 
+                We are mainly tracking 
                 the related and unrelated conditions to reach 50 participants and a 
                 SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
                 points, they will be sampled less often than the words that still 
@@ -151,7 +190,7 @@ korean_tab <-
               status = "primary",
               width = 12,
               p("This table shows you the status of each item's data collection. 
-                While the non-word items are shown below, we are mainly tracking 
+                We are mainly tracking 
                 the related and unrelated conditions to reach 50 participants and a 
                 SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
                 points, they will be sampled less often than the words that still 

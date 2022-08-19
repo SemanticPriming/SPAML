@@ -170,7 +170,7 @@ en_data_all <-
             processData("/var/www/html/en1/data/data.sqlite"),
             processData("/var/www/html/en2/data/data.sqlite"),
             processData("/var/www/html/en3/data/data.sqlite"),
-            processData("/var/www/html/en4/data/data.sqlite"))
+            processData("/var/www/html/en4/data/data.sqlite")) %>% unique()
 
 # delete stuff before we started 
 en_data_all <- en_data_all %>% 
@@ -230,6 +230,9 @@ participant_DF <- merge(participant_DF,
 participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
 participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 
+write.csv(participant_DF %>% select(please_tell_us_your_gender, keep), 
+          "/var/www/html/summary_data/en_totals.csv", row.names = F)
+
 # grab only real trials ----
 real_trials <- en_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
@@ -269,7 +272,9 @@ real_trials <- real_trials %>%
   left_join((participant_DF %>% 
                select(observation, keep) %>% 
                rename(keep_participant = keep)), 
-            by = c("observation" = "observation"))
+            by = c("observation" = "observation")) %>% 
+  # sort this so the trial type is right
+  arrange(observation, timestamp)
 
 # figure out trial type ----
 
@@ -279,7 +284,7 @@ real_trials$which <- NA
 for (person in unique(real_trials$observation)){
   
   real_trials$trial_code[real_trials$observation == person] <- 
-    rep(1:400, each = 2, length.out = length(real_trials$trial_code[real_trials$observation == person]))
+    rep(1:401, each = 2, length.out = length(real_trials$trial_code[real_trials$observation == person]))
   
   real_trials$which[real_trials$observation == person] <-
     rep(c("cue", "target"), times = 2, 
@@ -563,3 +568,6 @@ for (i in 1:number_folders){
     "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
   
 }
+
+
+

@@ -439,7 +439,7 @@ Priming is defined as the subtraction of average z-scored related response laten
   for (person in unique(priming_trials$observation)){
     
     priming_trials$trial_code[priming_trials$observation == person] <- 
-      rep(1:400, each = 2, length.out = length(priming_trials$trial_code[priming_trials$observation == person]))
+      rep(1:401, each = 2, length.out = length(priming_trials$trial_code[priming_trials$observation == person]))
     
     priming_trials$which[priming_trials$observation == person] <-
       rep(c("cue", "target"), times = 2, 
