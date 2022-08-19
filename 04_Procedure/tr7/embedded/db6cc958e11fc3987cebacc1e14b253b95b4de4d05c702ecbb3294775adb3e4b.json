@@ -1,0 +1,11 @@
+[
+  {"word": "스네", "class": "nonword"},
+  {"word": "입술", "class": "word"},
+  {"word": "타르", "class": "word"},
+  {"word": "궁한술", "class": "nonword"},
+  {"word": "해시쉬다하", "class": "nonword"},
+  {"word": "선물", "class": "word"},
+  {"word": "오스", "class": "nonword"},
+  {"word": "발사", "class": "word"},
+  {"word": "바멍이", "class": "nonword"},
+  {"word": "신병", "class": "word"}]
