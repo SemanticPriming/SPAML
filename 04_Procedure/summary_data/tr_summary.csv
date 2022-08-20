@@ -1315,7 +1315,7 @@
 "düzeltmektamirat","düzeltmek","tamirat","related","word","word",0.277433365285858,NA,NA,NA,NA,NA
 "dvdaraştırmak","dvd","araştırmak","unrelated","word","word",0.0733164024364303,NA,NA,NA,NA,NA
 "dvdsarockçı","dvd","sarockçı","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"dvdvideo","dvd","video","related","word","word",0.546198431339819,NA,NA,NA,NA,NA
+"dvdvideo","dvd","video","related","word","word",0.546198431339819,0.336735640914191,NA,NA,1,FALSE
 "edeplialet","edepli","alet","unrelated","word","word",0.127930333600105,NA,NA,NA,NA,NA
 "edeplibasün","edepli","basün","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "edeplidürüst","edepli","dürüst","related","word","word",0.42286700350314,NA,NA,NA,NA,NA

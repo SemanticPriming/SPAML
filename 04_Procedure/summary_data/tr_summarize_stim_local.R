@@ -435,16 +435,16 @@ if (static == TRUE){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
   # write practice to all folders 
   practice <- '[
-  {"word": "스네", "class": "nonword"},
-  {"word": "입술", "class": "word"},
-  {"word": "타르", "class": "word"},
-  {"word": "궁한술", "class": "nonword"},
-  {"word": "해시쉬다하", "class": "nonword"},
-  {"word": "선물", "class": "word"},
-  {"word": "오스", "class": "nonword"},
-  {"word": "발사", "class": "word"},
-  {"word": "바멍이", "class": "nonword"},
-  {"word": "신병", "class": "word"}]'
+  {"word": "nefsg", "class": "nonword"},
+  {"word": "dudaklar", "class": "word"},
+  {"word": "katran", "class": "word"},
+  {"word": "traklı", "class": "nonword"},
+  {"word": "yenipiş", "class": "nonword"},
+  {"word": "hediye", "class": "word"},
+  {"word": "hesmak", "class": "nonword"},
+  {"word": "atış", "class": "word"},
+  {"word": "sonhar", "class": "nonword"},
+  {"word": "çizme", "class": "word"}]'
   
   temp_all <- list()
   
@@ -699,16 +699,17 @@ if (adaptive == TRUE){
     # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
     
     practice <- '[
-    {"word": "스네", "class": "nonword"},
-    {"word": "입술", "class": "word"},
-    {"word": "타르", "class": "word"},
-    {"word": "궁한술", "class": "nonword"},
-    {"word": "해시쉬다하", "class": "nonword"},
-    {"word": "선물", "class": "word"},
-    {"word": "오스", "class": "nonword"},
-    {"word": "발사", "class": "word"},
-    {"word": "바멍이", "class": "nonword"},
-    {"word": "신병", "class": "word"}]'
+  {"word": "nefsg", "class": "nonword"},
+  {"word": "dudaklar", "class": "word"},
+  {"word": "katran", "class": "word"},
+  {"word": "traklı", "class": "nonword"},
+  {"word": "yenipiş", "class": "nonword"},
+  {"word": "hediye", "class": "word"},
+  {"word": "hesmak", "class": "nonword"},
+  {"word": "atış", "class": "word"},
+  {"word": "sonhar", "class": "nonword"},
+  {"word": "çizme", "class": "word"}]'
+    
     writeLines(practice, con = paste0(
       "./04_Procedure/tr", folder_num,
       "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))

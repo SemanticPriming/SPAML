@@ -206,7 +206,7 @@ ja_data_all <-
 # Participant did not achieve 80% correct.
 current_year <- 2022
 number_folders <- 14
-static <- TRUE
+static <- FALSE
 adaptive <- FALSE
 
 ##create demographics only data

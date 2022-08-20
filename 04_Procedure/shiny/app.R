@@ -119,6 +119,25 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
+    output$ru_zpid_summary <- renderDT({
+      
+      datatable(as.data.frame(unique(ru_totals[ , "url_special_code"])), rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$russianN_total <- renderInfoBox({
+      infoBox(
+        "Russian", sum(grepl("keep", ru_totals$keep)), 
+        icon = icon("list"), color = "green")
+    })
+    
+    output$russianWORD_total <- renderInfoBox({
+      infoBox(
+        "Russian", sum(ru_summary$done, na.rm = T), 
+        icon = icon("list"), color = "green")
+    })
+    
     # turkish ----
     output$tr_participant_data <- renderDT({
       
@@ -143,6 +162,25 @@ server <- function(input, output) {
       datatable(tr_summary[tr_summary$type != "nonword", ], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$tr_zpid_summary <- renderDT({
+      
+      datatable(as.data.frame(unique(tr_totals[ , "url_special_code"])), rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$turkishN_total <- renderInfoBox({
+      infoBox(
+        "Turkish", sum(grepl("keep", tr_totals$keep)), 
+        icon = icon("list"), color = "green")
+    })
+    
+    output$turkishWORD_total <- renderInfoBox({
+      infoBox(
+        "Turkish", sum(tr_summary$done, na.rm = T), 
+        icon = icon("list"), color = "green")
     })
  
     # korean ----
@@ -180,16 +218,106 @@ server <- function(input, output) {
     
     output$koreanN_total <- renderInfoBox({
       infoBox(
-        "korean", sum(grepl("keep", ko_totals$keep)), 
+        "Korean", sum(grepl("keep", ko_totals$keep)), 
         icon = icon("list"), color = "green")
     })
     
     output$koreanWORD_total <- renderInfoBox({
       infoBox(
-        "korean", sum(ko_summary$done, na.rm = T), 
+        "Korean", sum(ko_summary$done, na.rm = T), 
         icon = icon("list"), color = "green")
     })
        
+    # Japanese ----
+    output$ja_participant_data <- renderDT({
+      
+      colnames(ja_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(ja_participants, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$ja_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(ja_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$ja_summary_table <- renderDT({
+      
+      datatable(ja_summary[ja_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$ja_zpid_summary <- renderDT({
+      
+      datatable(as.data.frame(unique(ja_totals[ , "url_special_code"])), rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$japaneseN_total <- renderInfoBox({
+      infoBox(
+        "Japanese", sum(grepl("keep", ja_totals$keep)), 
+        icon = icon("list"), color = "green")
+    })
+    
+    output$japaneseWORD_total <- renderInfoBox({
+      infoBox(
+        "Japanese", sum(ja_summary$done, na.rm = T), 
+        icon = icon("list"), color = "green")
+    })
+    
+    # Czech ----
+    output$cs_participant_data <- renderDT({
+      
+      colnames(cs_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(cs_participants, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$cs_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(cs_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$cs_summary_table <- renderDT({
+      
+      datatable(cs_summary[cs_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$cs_zpid_summary <- renderDT({
+      
+      datatable(as.data.frame(unique(cs_totals[ , "url_special_code"])), rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$czechN_total <- renderInfoBox({
+      infoBox(
+        "Czech", sum(grepl("keep", cs_totals$keep)), 
+        icon = icon("list"), color = "green")
+    })
+    
+    output$czechWORD_total <- renderInfoBox({
+      infoBox(
+        "Czech", sum(cs_summary$done, na.rm = T), 
+        icon = icon("list"), color = "green")
+    })
+    
 }
 
 

@@ -16,7 +16,11 @@ overall_tab <-
                 which may be higher (i.e., this excludes people who do not 
                 meet criteria)."), 
               infoBoxOutput("englishN_total"),
-              infoBoxOutput("koreanN_total")
+              infoBoxOutput("koreanN_total"), 
+              infoBoxOutput("russianN_total"), 
+              infoBoxOutput("turkishN_total"), 
+              infoBoxOutput("czechN_total"), 
+              infoBoxOutput("japaneseN_total")
             ),  # close box
             
             # words ----
@@ -31,7 +35,11 @@ overall_tab <-
                 the number who both have N = 50 and SE < .09, not just the 
                 minimum sample size."), 
               infoBoxOutput("englishWORD_total"),
-              infoBoxOutput("koreanWORD_total")
+              infoBoxOutput("koreanWORD_total"),
+              infoBoxOutput("russianWORD_total"), 
+              infoBoxOutput("turkishWORD_total"), 
+              infoBoxOutput("czechWORD_total"), 
+              infoBoxOutput("japaneseWORD_total")
               
             )  # close box
           ) #close row
@@ -115,7 +123,17 @@ russian_tab <-
                 need participants. "), 
               DTOutput("ru_summary_table")  
               
-            )  # close box
+            ),  # close box
+            # ZPID ----
+            box(
+              title = tags$b("Special Code Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table includes information for specific data collection."), 
+              DTOutput("ru_zpid_summary")
+            ) # close box 
           ) #close row
   ) #close tab
 
@@ -156,7 +174,17 @@ turkish_tab <-
                 need participants. "), 
               DTOutput("tr_summary_table")  
               
-            )  # close box
+            ),  # close box
+            # ZPID ----
+            box(
+              title = tags$b("Special Code Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table includes information for specific data collection."), 
+              DTOutput("tr_zpid_summary")
+            ) # close box
           ) #close row
   ) #close tab
 
@@ -206,7 +234,111 @@ korean_tab <-
               status = "primary",
               width = 12,
               p("This table includes information for specific data collection."), 
-              DTOutput("ko_zpid_summary")  
+              DTOutput("ko_zpid_summary")
+              
+            )  # close box
+          ) #close row
+  ) #close tab
+
+# Japanese ------------------------------------------------------------------
+japanese_tab <- 
+  tabItem(tabName = "japanese_tab",
+          fluidRow(
+            # Overall --------
+            box(
+              title = tags$b("Participant Counts"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("You can use this information to determine when your 
+                participants were completing the study based on your 
+                individual lab link. Participant codes will be 
+                shown below with time completed."), 
+              DTOutput("ko_participant_data"),  
+              p(" "),
+              p("You can view the summary of total lab participants in 
+                this section."),
+              DTOutput("ja_participant_table")
+            ),  # close box
+            
+            # words ----
+            box(
+              title = tags$b("Stimuli Counts + Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table shows you the status of each item's data collection. 
+                We are mainly tracking 
+                the related and unrelated conditions to reach 50 participants and a 
+                SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
+                points, they will be sampled less often than the words that still 
+                need participants. "), 
+              DTOutput("ja_summary_table")  
+              
+            ),  # close box
+            # ZPID ----
+            box(
+              title = tags$b("Special Code Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table includes information for specific data collection."), 
+              DTOutput("ja_zpid_summary")
+              
+            )  # close box
+          ) #close row
+  ) #close tab
+
+# Czech ------------------------------------------------------------------
+czech_tab <- 
+  tabItem(tabName = "czech_tab",
+          fluidRow(
+            # Overall --------
+            box(
+              title = tags$b("Participant Counts"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("You can use this information to determine when your 
+                participants were completing the study based on your 
+                individual lab link. Participant codes will be 
+                shown below with time completed."), 
+              DTOutput("ko_participant_data"),  
+              p(" "),
+              p("You can view the summary of total lab participants in 
+                this section."),
+              DTOutput("cs_participant_table")
+            ),  # close box
+            
+            # words ----
+            box(
+              title = tags$b("Stimuli Counts + Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table shows you the status of each item's data collection. 
+                We are mainly tracking 
+                the related and unrelated conditions to reach 50 participants and a 
+                SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
+                points, they will be sampled less often than the words that still 
+                need participants. "), 
+              DTOutput("cs_summary_table")  
+              
+            ),  # close box
+            # ZPID ----
+            box(
+              title = tags$b("Special Code Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table includes information for specific data collection."), 
+              DTOutput("cs_zpid_summary")
               
             )  # close box
           ) #close row
