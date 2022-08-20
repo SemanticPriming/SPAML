@@ -484,6 +484,7 @@ for (i in 1:number_folders){
   {"word": "shot", "class": "word"},
   {"word": "foll", "class": "nonword"},
   {"word": "boot", "class": "word"}]'
+  
   writeLines(practice, con = paste0(
     "/var/www/html/en", folder_num,
     "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))

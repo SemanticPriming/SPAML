@@ -162,41 +162,41 @@ processData <- function(database) {
 # Data --------------------------------------------------------------------
 
 # original word lists
-ko_words <- import("./04_Procedure/ko/ko_words.csv")
+cs_words <- import("./04_Procedure/cs/cs_words.csv")
 
 # collected data
-ko_data_all <- 
-        bind_rows(processData("./04_Procedure/ko/data/data.sqlite") %>% 
+cs_data_all <- 
+        bind_rows(processData("./04_Procedure/cs/data/data.sqlite") %>% 
                mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko1/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs1/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko2/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs2/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko3/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs3/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko4/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs4/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko5/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs5/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko6/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs6/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko7/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs7/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko8/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs8/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko9/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs9/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko10/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs10/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko11/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs11/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko12/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs12/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ko13/data/data.sqlite") %>% 
+            processData("./04_Procedure/cs13/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started ----
-# ko_data_all <- ko_data_all %>% 
+# cs_data_all <- cs_data_all %>% 
 #  filter(timestamp > as.POSIXct("2022-08-01"))
 
 # Clean Up ----------------------------------------------------------------
@@ -210,11 +210,11 @@ static <- FALSE
 adaptive <- FALSE
 
 ##create demographics only data
-demos <- ko_data_all %>% #data frame
+demos <- cs_data_all %>% #data frame
   filter(sender == "Demographics Form") #filter out only demographics lines
 
 ##create experiment information data
-exp <- ko_data_all %>% 
+exp <- cs_data_all %>% 
   filter(sender == "Consent Form")
 
 demo_cols <- c("observation", "duration",
@@ -241,7 +241,7 @@ participant_DF$keep <- "keep"
 participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
 
 # at least 100 trials + 80%
-number_trials <- ko_data_all %>% #data frame
+number_trials <- cs_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
   summarize(n_trials = n(), 
@@ -257,13 +257,13 @@ participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
 participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 
 write.csv(participant_DF %>% select(please_tell_us_your_gender, keep, url_special_code), 
-          "./04_Procedure/summary_data/ko_totals.csv", row.names = F)
+          "./04_Procedure/summary_data/cs_totals.csv", row.names = F)
 
 # grab only real trials ----
-real_trials <- ko_data_all %>% #data frame
+real_trials <- cs_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   select(observation, sender_id, response, response_action, ended_on, duration,
-         colnames(ko_data_all)[grep("^time", colnames(ko_data_all))], 
+         colnames(cs_data_all)[grep("^time", colnames(cs_data_all))], 
          word, class, correct_response, correct)
 
 # z score participant data ----
@@ -322,48 +322,48 @@ for (person in unique(real_trials$observation)){
 real_trials$unique_trial <- paste(real_trials$observation, 
                                   real_trials$trial_code, sep = "_")
 # do it with merge because ugh pivot
-ko_real_wide <- merge(
+cs_real_wide <- merge(
   real_trials[real_trials$which == "cue" , ], #just cues
   real_trials[real_trials$which == "target" , ], #just targets
   by = "unique_trial",
   all = T
 )
 # take just what we need
-ko_real_wide <- ko_real_wide[ , c("unique_trial", "observation.x", "word.x", 
+cs_real_wide <- cs_real_wide[ , c("unique_trial", "observation.x", "word.x", 
                                   "class.x", "correct.x", "trial_code.x", 
                                   "duration.y", "word.y", "class.y", "correct.y", 
                                   "Z_RT.y", "keep.y", "keep_participant.y")]
 # good names
-colnames(ko_real_wide) <- c("unique_trial", "observation", "cue_word", 
+colnames(cs_real_wide) <- c("unique_trial", "observation", "cue_word", 
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
                             "target_correct", "target_Z_RT",
                             "keep_trial", "keep_participant")
 
 # only focus on related-unrelated
-ko_focus <- subset(ko_real_wide, target_type == "word" & cue_type == "word")
-ko_focus$word_combo <- paste0(ko_focus$cue_word, ko_focus$target_word)
+cs_focus <- subset(cs_real_wide, target_type == "word" & cue_type == "word")
+cs_focus$word_combo <- paste0(cs_focus$cue_word, cs_focus$target_word)
 
 # add if it's related or unrelated
-ko_words$word_combo <- paste0(ko_words$ko_cue, ko_words$ko_target)
-ko_focus <- merge(ko_focus, ko_words[ , c("type", "word_combo")], 
+cs_words$word_combo <- paste0(cs_words$cs_cue, cs_words$cs_target)
+cs_focus <- merge(cs_focus, cs_words[ , c("type", "word_combo")], 
                   by = "word_combo", all.x = T)
 
 ### HERE YOU WILL TURN ON ###
 # subset out NAs at some point they will be practice trials
-ko_focus <- subset(ko_focus, !is.na(type))
+cs_focus <- subset(cs_focus, !is.na(type))
 
 ### HERE YOU WILL TURN ON ###
-ko_focus <- subset(ko_focus, keep_participant == "keep")
+cs_focus <- subset(cs_focus, keep_participant == "keep")
 
 # only correct answers for checking stimuli counts ----
-ko_Z <- subset(ko_focus, target_correct == TRUE)
-ko_Z <- subset(ko_Z, keep_trial == "keep")
+cs_Z <- subset(cs_focus, target_correct == TRUE)
+cs_Z <- subset(cs_Z, keep_trial == "keep")
 
 # Calculate Statistics ----------------------------------------------------
 
 # calculates word, sample size, SE, "done" with <= .09 SE ----
-ko_Z_summary <- ko_Z %>% 
+cs_Z_summary <- cs_Z %>% 
   group_by(word_combo) %>% 
   summarize(M_Z = mean(target_Z_RT),
             SD_Z = sd(target_Z_RT),
@@ -371,34 +371,34 @@ ko_Z_summary <- ko_Z %>%
             sampleN = length(target_Z_RT))
 
 # are we done? ---- 
-ko_Z_summary$done <- (ko_Z_summary$sampleN >= 50 & ko_Z_summary$SE_Z <= .09) | ko_Z_summary$sampleN >= 320
+cs_Z_summary$done <- (cs_Z_summary$sampleN >= 50 & cs_Z_summary$SE_Z <= .09) | cs_Z_summary$sampleN >= 320
 
 # merge with complete stimuli list ---- 
-ko_merged <- merge(ko_words, ko_Z_summary, 
+cs_merged <- merge(cs_words, cs_Z_summary, 
                    by = "word_combo", all.x = T)
 
 # use data ----
-ko_use <- subset(ko_merged, is.na(done) | done == FALSE)
-ko_sample <- subset(ko_merged, done == TRUE)
+cs_use <- subset(cs_merged, is.na(done) | done == FALSE)
+cs_sample <- subset(cs_merged, done == TRUE)
 
 # Generate ----------------------------------------------------------------
 
 # generate summary chart for shiny ----
-write.csv(ko_merged, "./04_Procedure/summary_data/ko_summary.csv", row.names = F)
+write.csv(cs_merged, "./04_Procedure/summary_data/cs_summary.csv", row.names = F)
 
 # generate participant report for shiny ----
-p_end <- ko_data_all %>% 
+p_end <- cs_data_all %>% 
   filter(sender == "Stimulus Real") %>% 
   group_by(observation) %>% 
   summarize(n = n()) %>% 
   filter(n >= 100) %>% 
   pull(observation)
 
-p_lab <- ko_data_all[ko_data_all$observation %in% p_end, ]
+p_lab <- cs_data_all[cs_data_all$observation %in% p_end, ]
 p_lab <- p_lab[!is.na(p_lab$url_lab), ]
 #p_lab <- p_lab[!is.na(p_lab$uuid), ]
 p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid")]
-write.csv(p_lab, "./04_Procedure/summary_data/ko_participants.csv", row.names = F)
+write.csv(p_lab, "./04_Procedure/summary_data/cs_participants.csv", row.names = F)
 
 # generate new stimuli STATIC ---- 
 
@@ -408,50 +408,50 @@ if (static == TRUE){
   # create 14 different versions 
   # eight blocks of 100 trials = 800 trials = 400 pairs or 8 blocks of 50
   # 150 non word non word = 300 trials
-  temp <- subset(ko_merged, 
-                 ko_merged$cue_type == "nonword" &
-                   ko_merged$target_type == "nonword")
+  temp <- subset(cs_merged, 
+                 cs_merged$cue_type == "nonword" &
+                   cs_merged$target_type == "nonword")
   # shuffle the words 
   nonwords <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ]
   
   # 100 non word non word = 200 trials
-  temp <- subset(ko_merged, 
-                 (ko_merged$cue_type == "nonword" &
-                  ko_merged$target_type == "word") | 
-                   (ko_merged$cue_type == "word" & 
-                    ko_merged$target_type == "nonword"))
+  temp <- subset(cs_merged, 
+                 (cs_merged$cue_type == "nonword" &
+                  cs_merged$target_type == "word") | 
+                   (cs_merged$cue_type == "word" & 
+                    cs_merged$target_type == "nonword"))
   # shuffle the words
   nonwords_mix <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ]
   
   # 75 related pairs = 150 trials
-  temp <- subset(ko_merged, type == "related")
+  temp <- subset(cs_merged, type == "related")
   # shuffle the words
   related <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ]
   
   # 75 unrelated pairs = 150 trials
-  temp <- subset(ko_merged, type == "unrelated") %>% unique()
+  temp <- subset(cs_merged, type == "unrelated") %>% unique()
   unrelated <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ] 
   
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
   # write practice to all folders 
   practice <- '[
-  {"word": "스네", "class": "nonword"},
-  {"word": "입술", "class": "word"},
-  {"word": "타르", "class": "word"},
-  {"word": "궁한술", "class": "nonword"},
-  {"word": "해시쉬다하", "class": "nonword"},
-  {"word": "선물", "class": "word"},
-  {"word": "오스", "class": "nonword"},
-  {"word": "발사", "class": "word"},
-  {"word": "바멍이", "class": "nonword"},
-  {"word": "신병", "class": "word"}]'
+  {"word": "drzos", "class": "nonword"},
+  {"word": "pozice", "class": "word"},
+  {"word": "tým", "class": "word"},
+  {"word": "puh", "class": "nonword"},
+  {"word": "drub", "class": "nonword"},
+  {"word": "hladový", "class": "word"},
+  {"word": "koger", "class": "nonword"},
+  {"word": "dávka", "class": "word"},
+  {"word": "nethem", "class": "nonword"},
+  {"word": "pirát", "class": "word"}]'
   
   temp_all <- list()
   
   for (i in 1:number_folders){
     if (i == 1){ folder_num <- "" } else { folder_num <- i-1 }
   writeLines(practice, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
   
   # partition them out 
@@ -511,12 +511,12 @@ if (static == TRUE){
   
   
   all_trials$together <- paste('{"word": "',
-                               all_trials$ko_cue, 
+                               all_trials$cs_cue, 
                                '", "class": "',
                                all_trials$cue_type, 
                                '"}, ', #cue
                                '{"word": "',
-                               all_trials$ko_target, 
+                               all_trials$cs_target, 
                                '", "class": "',
                                all_trials$target_type, 
                                '"}', sep = "")
@@ -529,7 +529,7 @@ if (static == TRUE){
                 paste(all_trials$together[1:50], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"))
   
   # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
@@ -538,7 +538,7 @@ if (static == TRUE){
                 paste(all_trials$together[51:100], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"))
   
   # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
@@ -547,7 +547,7 @@ if (static == TRUE){
                 paste(all_trials$together[101:150], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"))
   
   # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
@@ -556,7 +556,7 @@ if (static == TRUE){
                 paste(all_trials$together[151:200], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"))
   
   # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
@@ -565,7 +565,7 @@ if (static == TRUE){
                 paste(all_trials$together[201:250], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"))
   
   # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
@@ -573,7 +573,7 @@ if (static == TRUE){
                 paste(all_trials$together[250:300], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"))
   
   # c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json is real7
@@ -581,7 +581,7 @@ if (static == TRUE){
                 paste(all_trials$together[301:350], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"))
   
   # 0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json is real8
@@ -589,7 +589,7 @@ if (static == TRUE){
                 paste(all_trials$together[351:400], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "./04_Procedure/ko", folder_num,
+    "./04_Procedure/cs", folder_num,
     "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
   
   }
@@ -613,21 +613,21 @@ if (adaptive == TRUE){
 
     # eight blocks of 100 trials = 800 trials = 400 pairs or 8 blocks of 50
     # 150 non word non word = 300 trials
-    if (nrow(ko_use[ko_use$cue_type == "nonword" &
-                    ko_use$target_type == "nonword", ]) >= 150){
+    if (nrow(cs_use[cs_use$cue_type == "nonword" &
+                    cs_use$target_type == "nonword", ]) >= 150){
 
-      temp <- subset(ko_use,
-                     ko_use$cue_type == "nonword" &
-                       ko_use$target_type == "nonword")
+      temp <- subset(cs_use,
+                     cs_use$cue_type == "nonword" &
+                       cs_use$target_type == "nonword")
       nonwords <- temp[sample(1:nrow(temp), 150, replace = F), ]
 
     }else{
 
-      nonwords <- ko_use[ko_use$cue_type == "nonword" &
-                           ko_use$target_type == "nonword", ]
-      temp <- subset(ko_sample,
-                     ko_use$cue_type == "nonword" &
-                       ko_use$target_type == "nonword")
+      nonwords <- cs_use[cs_use$cue_type == "nonword" &
+                           cs_use$target_type == "nonword", ]
+      temp <- subset(cs_sample,
+                     cs_use$cue_type == "nonword" &
+                       cs_use$target_type == "nonword")
       nonwords <- rbind(nonwords,
                         temp[sample(1:nrow(temp),
                                     150-nrow(nonwords),
@@ -635,29 +635,29 @@ if (adaptive == TRUE){
     }
 
     # 100 non word non word = 200 trials
-    if (nrow(ko_use[(ko_use$cue_type == "nonword" &
-                     ko_use$target_type == "word") |
-                    (ko_use$cue_type == "word" &
-                     ko_use$target_type == "nonword"), ]) >= 100){
+    if (nrow(cs_use[(cs_use$cue_type == "nonword" &
+                     cs_use$target_type == "word") |
+                    (cs_use$cue_type == "word" &
+                     cs_use$target_type == "nonword"), ]) >= 100){
 
-      temp <- subset(ko_use,
-                     (ko_use$cue_type == "nonword" &
-                        ko_use$target_type == "word") |
-                       (ko_use$cue_type == "word" &
-                          ko_use$target_type == "nonword"))
+      temp <- subset(cs_use,
+                     (cs_use$cue_type == "nonword" &
+                        cs_use$target_type == "word") |
+                       (cs_use$cue_type == "word" &
+                          cs_use$target_type == "nonword"))
       nonwords_mix <- temp[sample(1:nrow(temp), 100, replace = F), ]
 
     }else{
 
-      nonwords_mix <- ko_use[(ko_use$cue_type == "nonword" &
-                                ko_use$target_type == "word") |
-                               (ko_use$cue_type == "word" &
-                                  ko_use$target_type == "nonword"), ]
-      temp <- subset(ko_sample,
-                     (ko_use$cue_type == "nonword" &
-                        ko_use$target_type == "word") |
-                       (ko_use$cue_type == "word" &
-                          ko_use$target_type == "nonword"))
+      nonwords_mix <- cs_use[(cs_use$cue_type == "nonword" &
+                                cs_use$target_type == "word") |
+                               (cs_use$cue_type == "word" &
+                                  cs_use$target_type == "nonword"), ]
+      temp <- subset(cs_sample,
+                     (cs_use$cue_type == "nonword" &
+                        cs_use$target_type == "word") |
+                       (cs_use$cue_type == "word" &
+                          cs_use$target_type == "nonword"))
       nonwords_mix <- rbind(nonwords_mix,
                             temp[sample(1:nrow(temp),
                                         100-nrow(nonwords_mix),
@@ -665,15 +665,15 @@ if (adaptive == TRUE){
     }
 
     # 75 related pairs = 150 trials
-    if (nrow(ko_use[ko_use$type == "related" , ]) >= 75){
+    if (nrow(cs_use[cs_use$type == "related" , ]) >= 75){
 
-      temp <- subset(ko_use, type == "related")
+      temp <- subset(cs_use, type == "related")
       related <- temp[sample(1:nrow(temp), 75, replace = F), ]
 
     }else{
 
-      related <- ko_use[ko_use$type == "related", ]
-      temp <- subset(ko_sample, type == "related")
+      related <- cs_use[cs_use$type == "related", ]
+      temp <- subset(cs_sample, type == "related")
       related <- rbind(related,
                        temp[sample(1:nrow(temp),
                                    75-nrow(related),
@@ -681,15 +681,15 @@ if (adaptive == TRUE){
     }
 
     # 75 unrelated pairs = 150 trials
-    if (nrow(ko_use[ko_use$type == "unrelated" , ]) >= 75){
+    if (nrow(cs_use[cs_use$type == "unrelated" , ]) >= 75){
 
-      temp <- subset(ko_use, type == "unrelated")
+      temp <- subset(cs_use, type == "unrelated")
       unrelated <- temp[sample(1:nrow(temp), 75, replace = F), ]
 
     }else{
 
-      unrelated <- ko_use[ko_use$type == "unrelated", ]
-      temp <- subset(ko_sample, type == "unrelated")
+      unrelated <- cs_use[cs_use$type == "unrelated", ]
+      temp <- subset(cs_sample, type == "unrelated")
       unrelated <- rbind(unrelated,
                          temp[sample(1:nrow(temp),
                                      75-nrow(unrelated),
@@ -699,29 +699,30 @@ if (adaptive == TRUE){
     # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
     practice <- '[
-    {"word": "스네", "class": "nonword"},
-    {"word": "입술", "class": "word"},
-    {"word": "타르", "class": "word"},
-    {"word": "궁한술", "class": "nonword"},
-    {"word": "해시쉬다하", "class": "nonword"},
-    {"word": "선물", "class": "word"},
-    {"word": "오스", "class": "nonword"},
-    {"word": "발사", "class": "word"},
-    {"word": "바멍이", "class": "nonword"},
-    {"word": "신병", "class": "word"}]'
+  {"word": "drzos", "class": "nonword"},
+  {"word": "pozice", "class": "word"},
+  {"word": "tým", "class": "word"},
+  {"word": "puh", "class": "nonword"},
+  {"word": "drub", "class": "nonword"},
+  {"word": "hladový", "class": "word"},
+  {"word": "koger", "class": "nonword"},
+  {"word": "dávka", "class": "word"},
+  {"word": "nethem", "class": "nonword"},
+  {"word": "pirát", "class": "word"}]'
+    
     writeLines(practice, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
 
     all_trials <- rbind(nonwords, related, unrelated, nonwords_mix)
     all_trials <- all_trials[sample(1:nrow(all_trials), nrow(all_trials), replace = F), ]
     all_trials$together <- paste('{"word": "',
-                                 all_trials$ko_cue,
+                                 all_trials$cs_cue,
                                  '", "class": "',
                                  all_trials$cue_type,
                                  '"}, ', #cue
                                  '{"word": "',
-                                 all_trials$ko_target,
+                                 all_trials$cs_target,
                                  '", "class": "',
                                  all_trials$target_type,
                                  '"}', sep = "")
@@ -734,7 +735,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[1:50], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"))
 
     # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
@@ -743,7 +744,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[51:100], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"))
 
     # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
@@ -752,7 +753,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[101:150], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"))
 
     # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
@@ -761,7 +762,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[151:200], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"))
 
     # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
@@ -770,7 +771,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[201:250], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"))
 
     # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
@@ -778,7 +779,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[250:300], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"))
 
     # c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json is real7
@@ -786,7 +787,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[301:350], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"))
 
     # 0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json is real8
@@ -794,7 +795,7 @@ if (adaptive == TRUE){
                   paste(all_trials$together[351:400], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure/ko", folder_num,
+      "./04_Procedure/cs", folder_num,
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
