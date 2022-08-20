@@ -1,0 +1,125 @@
+# Specific files in folders
+*.udpipe
+/03_Materials/data/*/
+/03_Materials/frequency/*/
+/03_Materials/Translation/
+12_temp
+/04_Procedure/en1/*
+/04_Procedure/en2/*
+/04_Procedure/en3/*
+/04_Procedure/en4/*
+/05_Data/*/*.sqlite
+/04_Procedure/ko1/*
+/04_Procedure/ko2/*
+/04_Procedure/ko3/*
+/04_Procedure/ko4/*
+/04_Procedure/ko5/*
+/04_Procedure/ko6/*
+/04_Procedure/ko7/*
+/04_Procedure/ko8/*
+/04_Procedure/ko9/*
+/04_Procedure/ko10/*
+/04_Procedure/ko11/*
+/04_Procedure/ko12/*
+/04_Procedure/ko13/*
+/04_Procedure/ko14/*
+/04_Procedure/cs1/*
+/04_Procedure/cs2/*
+/04_Procedure/cs3/*
+/04_Procedure/cs4/*
+/04_Procedure/cs5/*
+/04_Procedure/cs6/*
+/04_Procedure/cs7/*
+/04_Procedure/cs8/*
+/04_Procedure/cs9/*
+/04_Procedure/cs10/*
+/04_Procedure/cs11/*
+/04_Procedure/cs12/*
+/04_Procedure/cs13/*
+/04_Procedure/cs14/*
+/04_Procedure/ja1/*
+/04_Procedure/ja2/*
+/04_Procedure/ja3/*
+/04_Procedure/ja4/*
+/04_Procedure/ja5/*
+/04_Procedure/ja6/*
+/04_Procedure/ja7/*
+/04_Procedure/ja8/*
+/04_Procedure/ja9/*
+/04_Procedure/ja10/*
+/04_Procedure/ja11/*
+/04_Procedure/ja12/*
+/04_Procedure/ja13/*
+/04_Procedure/ja14/*
+/04_Procedure/tr1/*
+/04_Procedure/tr2/*
+/04_Procedure/tr3/*
+/04_Procedure/tr4/*
+/04_Procedure/tr5/*
+/04_Procedure/tr6/*
+/04_Procedure/tr7/*
+/04_Procedure/tr8/*
+/04_Procedure/tr9/*
+/04_Procedure/tr10/*
+/04_Procedure/tr11/*
+/04_Procedure/tr12/*
+/04_Procedure/tr13/*
+/04_Procedure/tr14/*
+/04_Procedure/ru1/*
+/04_Procedure/ru2/*
+/04_Procedure/ru3/*
+/04_Procedure/ru4/*
+/04_Procedure/ru5/*
+/04_Procedure/ru6/*
+/04_Procedure/ru7/*
+/04_Procedure/ru8/*
+/04_Procedure/ru9/*
+/04_Procedure/ru10/*
+/04_Procedure/ru11/*
+/04_Procedure/ru12/*
+/04_Procedure/ru13/*
+/04_Procedure/ru14/*
+
+# Apple stuff
+.DS_Store
+
+# Word files
+~$*.docx
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+
+# Example code in package build process
+*-Ex.R
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+07_Manuscript/NHB_Reviews_V2.docx

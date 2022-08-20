@@ -1,0 +1,803 @@
+# Information -------------------------------------------------------------
+
+# This R script reads in the data from the SPAML experiment and then:
+# removes incorrect trials since they don't count
+# removes participants who could not get 80% correct on 100 minimum trials
+# z scores each participants data 
+# calculates word, sample size, SE, "done" with <= .09 SE 
+# creates participant ID list by lab 
+
+# From this data, the R script:
+# Writes out 8 blocks of 100 words that are probabilistically selected
+# Writes out summary table
+# Writes out participant summary 
+
+# Libraries ---------------------------------------------------------------
+
+library(rio)
+library(RSQLite)
+library(dplyr)
+library(tidyverse)
+library(jsonlite)
+library(janitor)
+library(widyr)
+
+# Functions ---------------------------------------------------------------
+
+# from labjs docs
+processData <- function(database) {
+  con <- dbConnect(
+    drv=RSQLite::SQLite(),
+    dbname=database
+  )
+  
+  # Extract main table
+  d <- dbGetQuery(
+    conn=con,
+    statement='SELECT * FROM labjs'
+  )
+  
+  # Close connection
+  dbDisconnect(
+    conn=con
+  )
+  
+  # Discard connection
+  rm(con)
+  
+  d.meta <- map_dfr(d$metadata, fromJSON) %>%
+    dplyr::rename(
+      observation=id
+    )
+  
+  d <- d %>%
+    bind_cols(d.meta) %>%
+    select(
+      -metadata # Remove metadata column
+    )
+  
+  # Remove temporary data frame
+  rm(d.meta)
+  
+  count_unique <- function(x) {
+    return(length(unique(x)))
+  }
+  
+  information_preserved <- function(x, length) {
+    return(
+      count_unique(str_sub(x, end=i)) ==
+        count_unique(x)
+    )
+  }
+  
+  # Figure out the length of the random ids needed
+  # to preserve the information therein. (five characters
+  # should usually be enougth, but better safe)
+  for (i in 5:36) {
+    if (
+      information_preserved(d$session, i) &&
+      information_preserved(d$observation, i)
+    ) {
+      break()
+    }
+  }
+  
+  d <- d %>%
+    dplyr::mutate(
+      session=str_sub(session, end=i),
+      observation=str_sub(observation, end=i)
+    )
+  
+  rm(i, count_unique, information_preserved)
+  
+  parseJSON <- function(input) {
+    return(input %>%
+             fromJSON(flatten=T) %>% {
+               # Coerce lists
+               if (class(.) == 'list') {
+                 discard(., is.null) %>%
+                   as_tibble()
+               } else {
+                 .
+               } } %>%
+             # Sanitize names
+             janitor::clean_names() %>%
+             # Use only strings for now, and re-encode types later
+             mutate_all(as.character)
+    )
+  }
+  
+  d.full <- d %>%
+    dplyr::filter(payload == 'full')
+  
+  if (nrow(d.full) > 0) {
+    d.full %>%
+      group_by(observation, id) %>%
+      do(
+        { map_dfr(.$data, parseJSON) } %>%
+          bind_rows()
+      ) %>%
+      ungroup() %>%
+      select(-id) -> d.full
+  } else {
+    # If there are no full datasets, start from an entirely empty df
+    # in order to avoid introducing unwanted columns into the following
+    # merge steps.
+    d.full <- tibble()
+  }
+  
+  d %>%
+    dplyr::filter(payload %in% c('incremental', 'latest')) %>%
+    group_by(observation, id) %>%
+    do(
+      { map_dfr(.$data, parseJSON) } %>%
+        bind_rows()
+    ) %>%
+    ungroup() %>%
+    select(-id) -> d.incremental
+  
+  if (nrow(d.full) > 0){
+    
+    d.output <- d.full %>%
+      bind_rows(
+        d.incremental %>% filter(!(observation %in% d.full$observation))
+      ) %>%
+      type_convert()
+    
+  } else {
+    
+    d.output <- d.incremental %>% type_convert()
+    
+  }
+  
+  d.output %>%
+    group_by(observation) %>%
+    fill(matches('code'), .direction='down') %>%
+    fill(matches('code'), .direction='up') %>%
+    ungroup() -> d.output
+  
+  return(d.output)
+}
+
+# Data --------------------------------------------------------------------
+
+# original word lists
+cs_words <- import("/var/www/html/cs/cs_words.csv")
+
+# collected data
+cs_data_all <- 
+  bind_rows(processData("/var/www/html/cs/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs1/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs2/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs3/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs4/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs5/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs6/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs7/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs8/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs9/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs10/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs11/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs12/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/cs13/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab))) %>% unique()
+
+# delete stuff before we started ----
+# cs_data_all <- cs_data_all %>% 
+#  filter(timestamp > as.POSIXct("2022-08-01"))
+
+# Clean Up ----------------------------------------------------------------
+
+# Participant did not indicate at least 18 years of age. 
+# Participant did not complete at least 100 trials. 
+# Participant did not achieve 80% correct.
+current_year <- 2022
+number_folders <- 14
+static <- TRUE
+adaptive <- FALSE
+
+##create demographics only data
+demos <- cs_data_all %>% #data frame
+  filter(sender == "Demographics Form") #filter out only demographics lines
+
+##create experiment information data
+exp <- cs_data_all %>% 
+  filter(sender == "Consent Form")
+
+demo_cols <- c("observation", "duration",
+               colnames(demos)[grep("^time", colnames(demos))],
+               "please_tell_us_your_gender", "which_year_were_you_born", 
+               "please_tell_us_your_education_level", "native_language",
+               "url_special_code")
+exp_cols <- c("observation", "duration",
+              colnames(exp)[grep("^time", colnames(exp))],
+              "url_lab", 
+              colnames(exp)[grep("meta", colnames(exp))])
+
+participant_DF <- merge(demos[ , demo_cols], 
+                        exp[ , exp_cols],
+                        by = "observation", 
+                        all = T)
+
+colnames(participant_DF) <- gsub(".x$", "_demographics", colnames(participant_DF))
+colnames(participant_DF) <- gsub(".y$", "_consent", colnames(participant_DF))
+
+participant_DF$keep <- "keep"
+
+# only above 18
+participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
+
+# at least 100 trials + 80%
+number_trials <- cs_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  group_by(observation) %>% 
+  summarize(n_trials = n(), 
+            correct = sum(correct, na.rm = T) / n())
+
+# merge with participant data
+participant_DF <- merge(participant_DF, 
+                        number_trials,
+                        by = "observation")
+
+# mark those last few as excluded
+participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
+participant_DF$keep[participant_DF$correct < .80] <- "exclude"
+
+write.csv(participant_DF %>% select(please_tell_us_your_gender, keep, url_special_code), 
+          "/var/www/html/summary_data/cs_totals.csv", row.names = F)
+
+# grab only real trials ----
+real_trials <- cs_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  select(observation, sender_id, response, response_action, ended_on, duration,
+         colnames(cs_data_all)[grep("^time", colnames(cs_data_all))], 
+         word, class, correct_response, correct)
+
+# z score participant data ----
+real_trials$original_duration <- real_trials$duration #hang on to original time
+
+##Separate out NA data for the z-score part
+##this mostly controls for timeouts
+real_trials_NA <- real_trials %>% #data frame
+  filter(is.na(correct) | #grab time out trials OR
+           correct == FALSE | #grab incorrect trials OR
+           duration < 160) %>%  #grab short rts 
+  mutate(Z_RT = NA, #set all Z_RTs to NA for these trials
+         duration = NA, 
+         keep = "exclude")
+
+##this section z-scores the rest of the data
+##just not time outs
+real_trials_nonNA <- 
+  real_trials %>% #data frame
+  group_by(observation) %>% #group by participant
+  filter(!is.na(correct)) %>% #take out the NA timeouts
+  filter(correct == TRUE) %>% #only correct trials
+  filter(duration >= 160) %>% #longer response latencies 
+  mutate(Z_RT = as.vector(scale(duration)), #create a z-score RT
+         keep = "keep")
+
+##put the time outs with the answered trials 
+real_trials <- bind_rows(real_trials_NA, real_trials_nonNA)
+
+##indicate what participants to exclude
+real_trials <- real_trials %>% 
+  left_join((participant_DF %>% 
+               select(observation, keep) %>% 
+               rename(keep_participant = keep)), 
+            by = c("observation" = "observation")) %>% 
+  # sort this so the trial type is right
+  arrange(observation, timestamp)
+
+# figure out trial type ----
+
+real_trials$trial_code <- NA
+real_trials$which <- NA
+# add that information 
+for (person in unique(real_trials$observation)){
+  
+  real_trials$trial_code[real_trials$observation == person] <- 
+    rep(1:401, each = 2, length.out = length(real_trials$trial_code[real_trials$observation == person]))
+  
+  real_trials$which[real_trials$observation == person] <-
+    rep(c("cue", "target"), times = 2, 
+        length.out = length(real_trials$trial_code[real_trials$observation == person]))
+  
+}
+
+# pivot wider with information you need
+real_trials$unique_trial <- paste(real_trials$observation, 
+                                  real_trials$trial_code, sep = "_")
+# do it with merge because ugh pivot
+cs_real_wide <- merge(
+  real_trials[real_trials$which == "cue" , ], #just cues
+  real_trials[real_trials$which == "target" , ], #just targets
+  by = "unique_trial",
+  all = T
+)
+# take just what we need
+cs_real_wide <- cs_real_wide[ , c("unique_trial", "observation.x", "word.x", 
+                                  "class.x", "correct.x", "trial_code.x", 
+                                  "duration.y", "word.y", "class.y", "correct.y", 
+                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+# good names
+colnames(cs_real_wide) <- c("unique_trial", "observation", "cue_word", 
+                            "cue_type", "cue_correct", "trial_order", 
+                            "target_duration", "target_word", "target_type", 
+                            "target_correct", "target_Z_RT",
+                            "keep_trial", "keep_participant")
+
+# only focus on related-unrelated
+cs_focus <- subset(cs_real_wide, target_type == "word" & cue_type == "word")
+cs_focus$word_combo <- paste0(cs_focus$cue_word, cs_focus$target_word)
+
+# add if it's related or unrelated
+cs_words$word_combo <- paste0(cs_words$cs_cue, cs_words$cs_target)
+cs_focus <- merge(cs_focus, cs_words[ , c("type", "word_combo")], 
+                  by = "word_combo", all.x = T)
+
+### HERE YOU WILL TURN ON ###
+# subset out NAs at some point they will be practice trials
+cs_focus <- subset(cs_focus, !is.na(type))
+
+### HERE YOU WILL TURN ON ###
+cs_focus <- subset(cs_focus, keep_participant == "keep")
+
+# only correct answers for checking stimuli counts ----
+cs_Z <- subset(cs_focus, target_correct == TRUE)
+cs_Z <- subset(cs_Z, keep_trial == "keep")
+
+# Calculate Statistics ----------------------------------------------------
+
+# calculates word, sample size, SE, "done" with <= .09 SE ----
+cs_Z_summary <- cs_Z %>% 
+  group_by(word_combo) %>% 
+  summarize(M_Z = mean(target_Z_RT),
+            SD_Z = sd(target_Z_RT),
+            SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
+            sampleN = length(target_Z_RT))
+
+# are we done? ---- 
+cs_Z_summary$done <- (cs_Z_summary$sampleN >= 50 & cs_Z_summary$SE_Z <= .09) | cs_Z_summary$sampleN >= 320
+
+# merge with complete stimuli list ---- 
+cs_merged <- merge(cs_words, cs_Z_summary, 
+                   by = "word_combo", all.x = T)
+
+# use data ----
+cs_use <- subset(cs_merged, is.na(done) | done == FALSE)
+cs_sample <- subset(cs_merged, done == TRUE)
+
+# Generate ----------------------------------------------------------------
+
+# generate summary chart for shiny ----
+write.csv(cs_merged, "/var/www/html/summary_data/cs_summary.csv", row.names = F)
+
+# generate participant report for shiny ----
+p_end <- cs_data_all %>% 
+  filter(sender == "Stimulus Real") %>% 
+  group_by(observation) %>% 
+  summarize(n = n()) %>% 
+  filter(n >= 100) %>% 
+  pull(observation)
+
+p_lab <- cs_data_all[cs_data_all$observation %in% p_end, ]
+p_lab <- p_lab[!is.na(p_lab$url_lab), ]
+#p_lab <- p_lab[!is.na(p_lab$uuid), ]
+p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid")]
+write.csv(p_lab, "/var/www/html/summary_data/cs_participants.csv", row.names = F)
+
+# generate new stimuli STATIC ---- 
+
+if (static == TRUE){
+  
+  # loop over the number of random folders you need
+  # create 14 different versions 
+  # eight blocks of 100 trials = 800 trials = 400 pairs or 8 blocks of 50
+  # 150 non word non word = 300 trials
+  temp <- subset(cs_merged, 
+                 cs_merged$cue_type == "nonword" &
+                   cs_merged$target_type == "nonword")
+  # shuffle the words 
+  nonwords <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ]
+  
+  # 100 non word non word = 200 trials
+  temp <- subset(cs_merged, 
+                 (cs_merged$cue_type == "nonword" &
+                    cs_merged$target_type == "word") | 
+                   (cs_merged$cue_type == "word" & 
+                      cs_merged$target_type == "nonword"))
+  # shuffle the words
+  nonwords_mix <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ]
+  
+  # 75 related pairs = 150 trials
+  temp <- subset(cs_merged, type == "related")
+  # shuffle the words
+  related <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ]
+  
+  # 75 unrelated pairs = 150 trials
+  temp <- subset(cs_merged, type == "unrelated") %>% unique()
+  unrelated <- temp[sample(1:nrow(temp), nrow(temp), replace = F), ] 
+  
+  # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
+  # write practice to all folders 
+  practice <- '[
+  {"word": "drzos", "class": "nonword"},
+  {"word": "pozice", "class": "word"},
+  {"word": "tým", "class": "word"},
+  {"word": "puh", "class": "nonword"},
+  {"word": "drub", "class": "nonword"},
+  {"word": "hladový", "class": "word"},
+  {"word": "koger", "class": "nonword"},
+  {"word": "dávka", "class": "word"},
+  {"word": "nethem", "class": "nonword"},
+  {"word": "pirát", "class": "word"}]'
+  
+  temp_all <- list()
+  
+  for (i in 1:number_folders){
+    if (i == 1){ folder_num <- "" } else { folder_num <- i-1 }
+    writeLines(practice, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
+    
+    # partition them out 
+    if (i == 1){ 
+      all_trials <- rbind(nonwords[1:150, ], related[1:75, ], 
+                          unrelated[1:75, ], nonwords_mix[1:100, ])
+    } else if (i == 2){
+      all_trials <- rbind(nonwords[151:300, ], related[76:150, ], 
+                          unrelated[76:150, ], nonwords_mix[101:200, ])      
+    } else if (i == 3){
+      all_trials <- rbind(nonwords[301:450, ], related[151:225, ], 
+                          unrelated[151:225, ], nonwords_mix[201:300, ])
+    } else if (i == 4){
+      all_trials <- rbind(nonwords[451:600, ], related[226:300, ], 
+                          unrelated[226:300, ], nonwords_mix[301:400, ])
+    } else if (i == 5){
+      all_trials <- rbind(nonwords[601:750, ], related[301:375, ], 
+                          unrelated[301:375, ], nonwords_mix[401:500, ])
+    } else if (i == 6){
+      all_trials <- rbind(nonwords[751:900, ], related[376:450, ], 
+                          unrelated[376:450, ], nonwords_mix[501:600, ])
+    } else if (i == 7){
+      nonwords <- nonwords[sample(1:nrow(nonwords), nrow(nonwords), replace = F), ]
+      all_trials <- rbind(nonwords[1:150, ], related[451:525, ], 
+                          unrelated[451:525, ], nonwords_mix[601:700, ])
+    } else if (i == 8){
+      all_trials <- rbind(nonwords[151:300, ], related[526:600, ], 
+                          unrelated[526:600, ], nonwords_mix[701:800, ])
+    } else if (i == 9){
+      all_trials <- rbind(nonwords[301:450, ], related[601:675, ], 
+                          unrelated[601:675, ], nonwords_mix[801:900, ])
+    } else if (i == 10){
+      all_trials <- rbind(nonwords[451:600, ], related[676:750, ], 
+                          unrelated[676:750, ], nonwords_mix[901:1000, ])
+    } else if (i == 11){
+      nonwords_mix <- nonwords_mix[sample(1:nrow(nonwords_mix), nrow(nonwords_mix), replace = F), ]
+      all_trials <- rbind(nonwords[601:750, ], related[751:825, ], 
+                          unrelated[751:825, ], nonwords_mix[1:100, ])
+    } else if (i == 12){
+      all_trials <- rbind(nonwords[751:900, ], related[826:900, ], 
+                          unrelated[826:900, ], nonwords_mix[101:200, ])
+    } else if (i == 13){
+      nonwords <- nonwords[sample(1:nrow(nonwords), nrow(nonwords), replace = F), ]
+      all_trials <- rbind(nonwords[1:150, ], related[901:975, ], 
+                          unrelated[901:975, ], nonwords_mix[201:300, ])
+    } else if (i == 14){
+      all_trials <- rbind(nonwords[151:300, ], related[c(976:1000, sample(1:974, 50, replace = F)), ], 
+                          unrelated[c(976:1000, sample(1:974, 50, replace = F)), ], nonwords_mix[301:400, ])
+    }
+    
+    all_trials <- all_trials[sample(1:nrow(all_trials), nrow(all_trials), replace = F), ]
+    
+    # double check
+    cat("\n", i, ": ", nrow(all_trials))
+    cat(table(all_trials$cue_type, all_trials$target_type, all_trials$type))
+    temp_all[[i]] <- all_trials
+    
+    
+    all_trials$together <- paste('{"word": "',
+                                 all_trials$cs_cue, 
+                                 '", "class": "',
+                                 all_trials$cue_type, 
+                                 '"}, ', #cue
+                                 '{"word": "',
+                                 all_trials$cs_target, 
+                                 '", "class": "',
+                                 all_trials$target_type, 
+                                 '"}', sep = "")
+    
+    
+    # 3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json is real1
+    
+    # remember these come in pairs
+    real <- paste('[', 
+                  paste(all_trials$together[1:50], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"))
+    
+    # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
+    
+    real <- paste('[', 
+                  paste(all_trials$together[51:100], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"))
+    
+    # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
+    
+    real <- paste('[', 
+                  paste(all_trials$together[101:150], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"))
+    
+    # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
+    
+    real <- paste('[', 
+                  paste(all_trials$together[151:200], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"))
+    
+    # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
+    
+    real <- paste('[', 
+                  paste(all_trials$together[201:250], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"))
+    
+    # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
+    real <- paste('[', 
+                  paste(all_trials$together[250:300], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"))
+    
+    # c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json is real7
+    real <- paste('[', 
+                  paste(all_trials$together[301:350], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"))
+    
+    # 0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json is real8
+    real <- paste('[', 
+                  paste(all_trials$together[351:400], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
+    
+  }
+  
+  temp_all <- bind_rows(temp_all)
+  nrow(temp_all)
+  temp_all %>%
+    group_by(word_combo, type) %>% 
+    summarize(n = n())
+  
+}
+
+if (adaptive == TRUE){
+  
+  # generate new stimuli ADAPTIVE ---- 
+  
+  # loop over the number of random folders you need
+  for (i in 1:number_folders){
+    
+    if (i == 1){ folder_num <- "" } else { folder_num <- i-1 }
+    
+    # eight blocks of 100 trials = 800 trials = 400 pairs or 8 blocks of 50
+    # 150 non word non word = 300 trials
+    if (nrow(cs_use[cs_use$cue_type == "nonword" &
+                    cs_use$target_type == "nonword", ]) >= 150){
+      
+      temp <- subset(cs_use,
+                     cs_use$cue_type == "nonword" &
+                       cs_use$target_type == "nonword")
+      nonwords <- temp[sample(1:nrow(temp), 150, replace = F), ]
+      
+    }else{
+      
+      nonwords <- cs_use[cs_use$cue_type == "nonword" &
+                           cs_use$target_type == "nonword", ]
+      temp <- subset(cs_sample,
+                     cs_use$cue_type == "nonword" &
+                       cs_use$target_type == "nonword")
+      nonwords <- rbind(nonwords,
+                        temp[sample(1:nrow(temp),
+                                    150-nrow(nonwords),
+                                    replace = F), ])
+    }
+    
+    # 100 non word non word = 200 trials
+    if (nrow(cs_use[(cs_use$cue_type == "nonword" &
+                     cs_use$target_type == "word") |
+                    (cs_use$cue_type == "word" &
+                     cs_use$target_type == "nonword"), ]) >= 100){
+      
+      temp <- subset(cs_use,
+                     (cs_use$cue_type == "nonword" &
+                        cs_use$target_type == "word") |
+                       (cs_use$cue_type == "word" &
+                          cs_use$target_type == "nonword"))
+      nonwords_mix <- temp[sample(1:nrow(temp), 100, replace = F), ]
+      
+    }else{
+      
+      nonwords_mix <- cs_use[(cs_use$cue_type == "nonword" &
+                                cs_use$target_type == "word") |
+                               (cs_use$cue_type == "word" &
+                                  cs_use$target_type == "nonword"), ]
+      temp <- subset(cs_sample,
+                     (cs_use$cue_type == "nonword" &
+                        cs_use$target_type == "word") |
+                       (cs_use$cue_type == "word" &
+                          cs_use$target_type == "nonword"))
+      nonwords_mix <- rbind(nonwords_mix,
+                            temp[sample(1:nrow(temp),
+                                        100-nrow(nonwords_mix),
+                                        replace = F), ])
+    }
+    
+    # 75 related pairs = 150 trials
+    if (nrow(cs_use[cs_use$type == "related" , ]) >= 75){
+      
+      temp <- subset(cs_use, type == "related")
+      related <- temp[sample(1:nrow(temp), 75, replace = F), ]
+      
+    }else{
+      
+      related <- cs_use[cs_use$type == "related", ]
+      temp <- subset(cs_sample, type == "related")
+      related <- rbind(related,
+                       temp[sample(1:nrow(temp),
+                                   75-nrow(related),
+                                   replace = F), ])
+    }
+    
+    # 75 unrelated pairs = 150 trials
+    if (nrow(cs_use[cs_use$type == "unrelated" , ]) >= 75){
+      
+      temp <- subset(cs_use, type == "unrelated")
+      unrelated <- temp[sample(1:nrow(temp), 75, replace = F), ]
+      
+    }else{
+      
+      unrelated <- cs_use[cs_use$type == "unrelated", ]
+      temp <- subset(cs_sample, type == "unrelated")
+      unrelated <- rbind(unrelated,
+                         temp[sample(1:nrow(temp),
+                                     75-nrow(unrelated),
+                                     replace = F), ])
+    }
+    
+    # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
+    
+    practice <- '[
+  {"word": "drzos", "class": "nonword"},
+  {"word": "pozice", "class": "word"},
+  {"word": "tým", "class": "word"},
+  {"word": "puh", "class": "nonword"},
+  {"word": "drub", "class": "nonword"},
+  {"word": "hladový", "class": "word"},
+  {"word": "koger", "class": "nonword"},
+  {"word": "dávka", "class": "word"},
+  {"word": "nethem", "class": "nonword"},
+  {"word": "pirát", "class": "word"}]'
+    
+    writeLines(practice, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
+    
+    all_trials <- rbind(nonwords, related, unrelated, nonwords_mix)
+    all_trials <- all_trials[sample(1:nrow(all_trials), nrow(all_trials), replace = F), ]
+    all_trials$together <- paste('{"word": "',
+                                 all_trials$cs_cue,
+                                 '", "class": "',
+                                 all_trials$cue_type,
+                                 '"}, ', #cue
+                                 '{"word": "',
+                                 all_trials$cs_target,
+                                 '", "class": "',
+                                 all_trials$target_type,
+                                 '"}', sep = "")
+    
+    
+    # 3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json is real1
+    
+    # remember these come in pairs
+    real <- paste('[',
+                  paste(all_trials$together[1:50], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"))
+    
+    # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
+    
+    real <- paste('[',
+                  paste(all_trials$together[51:100], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"))
+    
+    # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
+    
+    real <- paste('[',
+                  paste(all_trials$together[101:150], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"))
+    
+    # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
+    
+    real <- paste('[',
+                  paste(all_trials$together[151:200], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"))
+    
+    # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
+    
+    real <- paste('[',
+                  paste(all_trials$together[201:250], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"))
+    
+    # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
+    real <- paste('[',
+                  paste(all_trials$together[250:300], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"))
+    
+    # c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json is real7
+    real <- paste('[',
+                  paste(all_trials$together[301:350], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"))
+    
+    # 0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json is real8
+    real <- paste('[',
+                  paste(all_trials$together[351:400], collapse = ",", sep = ""),
+                  ']', collapse = "", sep = "")
+    writeLines(real, con = paste0(
+      "/var/www/html/cs", folder_num,
+      "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
+    
+  }
+  
+}

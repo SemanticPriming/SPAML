@@ -1,0 +1,52 @@
+% Part of BGHYPHEN package, version 1.5, May 2006.
+%   Georgi Boshnakov, School of Mathematics, The Universify of Manchester
+%   (Google my surname to find out my email address.)
+%
+% To install for babel:
+%    1) Copy the files bghyphen.tex bghyphsi.tex catmik.tex mik2t2.tex
+%         to, say, c:\texmf\tex\generic\hyphen\
+%    2) Instruct babel to use bghyphen.tex.
+%       (In MikTeX, goto MikTeX Options->Languages, 
+%           edit/add the entry for Bulgarian language, 
+%           specify bghyphen.tex as the hyphenation file,
+%    3) Regenerate the formats (LaTeX, PdfLaTeX etc.)
+%
+% Copyright 1996-2006 Georgi Boshnakov
+%   The mechanism used to include the patterns is taken from the ruhyph package,
+%   which is Copyright 1998-1999 Werner Lemberg, Vladimir Volovich,
+%   see the ruhyph.tex. 
+%
+% This package can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt; either
+% version 1 of the License, or (at your option) any later version.
+
+\begingroup
+
+\message{Bulgarian hyphenation patterns}
+
+%
+% Specify the internal (La)TeX cyrillic coding here. 
+% (Do nothing if you do not understand or bother about this.) 
+%
+\ifx\InternalCyrEnc\undefined
+\def\InternalCyrEnc{t2}
+\fi
+
+%
+% Specify which Bulagrian patterns to read.
+% (Do nothing if you do not understand or bother about this.) 
+%
+\ifx\PatternCyrEnc\undefined
+\def\PatternCyrEnc{si}
+\fi
+
+\input catmik
+\input mik2\InternalCyrEnc
+\input bghyph\PatternCyrEnc
+
+\endgroup
+
+\lefthyphenmin2
+\righthyphenmin2
+
