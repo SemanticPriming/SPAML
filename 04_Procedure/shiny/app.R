@@ -19,7 +19,9 @@ ui <- dashboardPage(skin = 'purple',
                             menuItem(tags$b("English"), tabName = "english_tab"),
                             menuItem(tags$b("Russian"), tabName = "russian_tab"),
                             menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
-                            menuItem(tags$b("Korean"), tabName = "korean_tab")
+                            menuItem(tags$b("Korean"), tabName = "korean_tab"),
+                            menuItem(tags$b("Czech"), tabName = "czech_tab"),
+                            menuItem(tags$b("Japanese"), tabName = "japanese_tab")
                             )
                         ),
                     dashboardBody(
@@ -129,13 +131,13 @@ server <- function(input, output) {
     output$russianN_total <- renderInfoBox({
       infoBox(
         "Russian", sum(grepl("keep", ru_totals$keep)), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "aqua")
     })
     
     output$russianWORD_total <- renderInfoBox({
       infoBox(
         "Russian", sum(ru_summary$done, na.rm = T), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "aqua")
     })
     
     # turkish ----
@@ -174,13 +176,13 @@ server <- function(input, output) {
     output$turkishN_total <- renderInfoBox({
       infoBox(
         "Turkish", sum(grepl("keep", tr_totals$keep)), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "red")
     })
     
     output$turkishWORD_total <- renderInfoBox({
       infoBox(
         "Turkish", sum(tr_summary$done, na.rm = T), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "red")
     })
  
     # korean ----
@@ -219,13 +221,13 @@ server <- function(input, output) {
     output$koreanN_total <- renderInfoBox({
       infoBox(
         "Korean", sum(grepl("keep", ko_totals$keep)), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "teal")
     })
     
     output$koreanWORD_total <- renderInfoBox({
       infoBox(
         "Korean", sum(ko_summary$done, na.rm = T), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "teal")
     })
        
     # Japanese ----
@@ -264,13 +266,13 @@ server <- function(input, output) {
     output$japaneseN_total <- renderInfoBox({
       infoBox(
         "Japanese", sum(grepl("keep", ja_totals$keep)), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "light-blue")
     })
     
     output$japaneseWORD_total <- renderInfoBox({
       infoBox(
         "Japanese", sum(ja_summary$done, na.rm = T), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "light-blue")
     })
     
     # Czech ----
@@ -309,13 +311,13 @@ server <- function(input, output) {
     output$czechN_total <- renderInfoBox({
       infoBox(
         "Czech", sum(grepl("keep", cs_totals$keep)), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "navy")
     })
     
     output$czechWORD_total <- renderInfoBox({
       infoBox(
         "Czech", sum(cs_summary$done, na.rm = T), 
-        icon = icon("list"), color = "green")
+        icon = icon("list"), color = "navy")
     })
     
 }
