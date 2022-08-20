@@ -48,7 +48,7 @@ ui <- dashboardPage(skin = 'purple',
                           overall_tab,
                           english_tab,
                           russian_tab,
-                          turkish_tab, 
+                          turkish_tab,
                           korean_tab,
                           czech_tab,
                           japanese_tab

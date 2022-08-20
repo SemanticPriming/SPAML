@@ -255,7 +255,7 @@ japanese_tab <-
                 participants were completing the study based on your 
                 individual lab link. Participant codes will be 
                 shown below with time completed."), 
-              DTOutput("ko_participant_data"),  
+              DTOutput("ja_participant_data"),  
               p(" "),
               p("You can view the summary of total lab participants in 
                 this section."),
