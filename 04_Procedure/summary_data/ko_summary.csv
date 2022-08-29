@@ -53,7 +53,7 @@
 "가추형러명","가추형","러명","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "가톨릭기독교","가톨릭","기독교","related","word","word",0.544913312522367,NA,NA,NA,NA,NA
 "가톨릭뽐내물","가톨릭","뽐내물","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"가톨릭추천하다","가톨릭","추천하다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"가톨릭추천하다","가톨릭","추천하다","unrelated","word","word",0,-0.193803657627273,NA,NA,1,FALSE
 "각지러프왔니","각지","러프왔니","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "각지카우보이","각지","카우보이","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "간다한깨어된 것","간다한","깨어된 것","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -74,7 +74,7 @@
 "갈등대령","갈등","대령","unrelated","word","word",0.0616040878594381,NA,NA,NA,NA,NA
 "갈등올리하다","갈등","올리하다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "갈색몰았사자","갈색","몰았사자","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"갈색푸른","갈색","푸른","related","word","word",0.4013159135415,NA,NA,NA,NA,NA
+"갈색푸른","갈색","푸른","related","word","word",0.4013159135415,0.235903147758144,NA,NA,1,FALSE
 "갈색품질","갈색","품질","unrelated","word","word",0.147961812088998,NA,NA,NA,NA,NA
 "갈수반부자","갈수반","부자","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "갈수반찮리","갈수반","찮리","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -108,9 +108,9 @@
 "개고양이","개","고양이","related","word","word",0.323942314389819,NA,NA,NA,NA,NA
 "개구리길","개구리","길","unrelated","word","word",0.174817033076368,NA,NA,NA,NA,NA
 "개구리날두","개구리","날두","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"개구리도마뱀","개구리","도마뱀","related","word","word",0.471732971152288,NA,NA,NA,NA,NA
+"개구리도마뱀","개구리","도마뱀","related","word","word",0.471732971152288,-0.43597883853214,NA,NA,1,FALSE
 "개념스박같은","개념","스박같은","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"개념자주","개념","자주","unrelated","word","word",0.128852803320108,NA,NA,NA,NA,NA
+"개념자주","개념","자주","unrelated","word","word",0.128852803320108,-0.049881794525062,NA,NA,1,FALSE
 "개념정의","개념","정의","related","word","word",0.429206583219305,NA,NA,NA,NA,NA
 "개보최근에","개보","최근에","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "개보피드","개보","피드","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -131,14 +131,14 @@
 "거뛸미어롭토 머니댜니 네다다","거뛸","미어롭토 머니댜니 네다다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "거뛸전투","거뛸","전투","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "거룩한리토","거룩한","리토","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"거룩한버스","거룩한","버스","unrelated","word","word",0.0653061955172584,NA,NA,NA,NA,NA
+"거룩한버스","거룩한","버스","unrelated","word","word",0.0653061955172584,-0.511110154340757,NA,NA,1,FALSE
 "거룩한영광","거룩한","영광","related","word","word",0.580496375080499,NA,NA,NA,NA,NA
 "거리누르다","거리","누르다","unrelated","word","word",0,NA,NA,NA,NA,NA
 "거리속도","거리","속도","related","word","word",0.267633761854603,NA,NA,NA,NA,NA
 "거리응괴","거리","응괴","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "거미곤충","거미","곤충","related","word","word",0.486868140070749,NA,NA,NA,NA,NA
 "거미시해","거미","시해","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"거미요구","거미","요구","unrelated","word","word",0.0939550897043781,NA,NA,NA,NA,NA
+"거미요구","거미","요구","unrelated","word","word",0.0939550897043781,0.215197357445767,NA,NA,1,FALSE
 "거였이성기","거였이","성기","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "거였이하겠물","거였이","하겠물","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "거위오리","거위","오리","related","word","word",0.398177551831804,NA,NA,NA,NA,NA
@@ -152,7 +152,7 @@
 "거주자엉덩이","거주자","엉덩이","unrelated","word","word",0,NA,NA,NA,NA,NA
 "거주자집주인","거주자","집주인","related","word","word",NA,NA,NA,NA,NA,NA
 "거주자파학 없는","거주자","파학 없는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"거짓말하다거짓말 쟁이","거짓말하다","거짓말 쟁이","related","word","word",NA,NA,NA,NA,NA,NA
+"거짓말하다거짓말 쟁이","거짓말하다","거짓말 쟁이","related","word","word",NA,-0.733122835119365,NA,NA,1,FALSE
 "거짓말하다수도희","거짓말하다","수도희","unrelated","word","word",0,NA,NA,NA,NA,NA
 "거짓말하다장한","거짓말하다","장한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "걱자겸통다","걱자","겸통다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -184,7 +184,7 @@
 "검메이당터","검","메이당터","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "검불안한","검","불안한","unrelated","word","word",0.142758500216106,NA,NA,NA,NA,NA
 "검사수염","검사","수염","unrelated","word","word",0.0930510296692484,NA,NA,NA,NA,NA
-"검사점검","검사","점검","related","word","word",0.41229886234789,NA,NA,NA,NA,NA
+"검사점검","검사","점검","related","word","word",0.41229886234789,-0.389895677024518,NA,NA,1,FALSE
 "검사트한자","검사","트한자","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "검색받을기","검색","받을기","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "검색벌거벗은","검색","벌거벗은","unrelated","word","word",0.0314152038500041,NA,NA,NA,NA,NA
@@ -243,7 +243,7 @@
 "경매못생긴","경매","못생긴","unrelated","word","word",0.131337985154953,NA,NA,NA,NA,NA
 "경매판매","경매","판매","related","word","word",0.531946509626634,NA,NA,NA,NA,NA
 "경비원개선","경비원","개선","unrelated","word","word",0.196170768590841,NA,NA,NA,NA,NA
-"경비원순찰","경비원","순찰","related","word","word",0.432441719908501,NA,NA,NA,NA,NA
+"경비원순찰","경비원","순찰","related","word","word",0.432441719908501,-0.342104010817266,NA,NA,1,FALSE
 "경비원책무한","경비원","책무한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "경아의이차다","경아의","이차다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "경아의작은","경아의","작은","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -260,7 +260,7 @@
 "경황인죽하다","경황","인죽하다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "계동능이","계동","능이","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "계동자금","계동","자금","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"계약닫힌","계약","닫힌","unrelated","word","word",0.148342728833949,NA,NA,NA,NA,NA
+"계약닫힌","계약","닫힌","unrelated","word","word",0.148342728833949,-0.605185141592204,NA,NA,1,FALSE
 "계약수탐","계약","수탐","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "계약합의","계약","합의","related","word","word",0.395792888092761,NA,NA,NA,NA,NA
 "계획전략","계획","전략","related","word","word",0.425828688460596,NA,NA,NA,NA,NA
@@ -327,7 +327,7 @@
 "공기가족","공기","가족","unrelated","word","word",0.105801165955989,NA,NA,NA,NA,NA
 "공기산소","공기","산소","related","word","word",0.385202309904314,NA,NA,NA,NA,NA
 "공기팽의","공기","팽의","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"공무상공식적인","공무상","공식적인","related","word","word",NA,NA,NA,NA,NA,NA
+"공무상공식적인","공무상","공식적인","related","word","word",NA,-0.619324983896205,NA,NA,1,FALSE
 "공무상통풍","공무상","통풍","unrelated","word","word",0,NA,NA,NA,NA,NA
 "공무상폰맏","공무상","폰맏","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "공샌인레름수 신끼변","공샌인레","름수 신끼변","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -342,7 +342,7 @@
 "공정한합리적인","공정한","합리적인","related","word","word",0.431345213936148,NA,NA,NA,NA,NA
 "공정한혼","공정한","혼","unrelated","word","word",0.0760032110021403,NA,NA,NA,NA,NA
 "공주모으다","공주","모으다","unrelated","word","word",0,NA,NA,NA,NA,NA
-"공주왕자","공주","왕자","related","word","word",0.415132407923679,NA,NA,NA,NA,NA
+"공주왕자","공주","왕자","related","word","word",0.415132407923679,-1.09895015068748,NA,NA,1,FALSE
 "공주이클","공주","이클","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "공포두려움","공포","두려움","related","word","word",0.472128439359596,NA,NA,NA,NA,NA
 "공포북쪽","공포","북쪽","unrelated","word","word",0.123196018545991,NA,NA,NA,NA,NA
@@ -350,8 +350,8 @@
 "과다나뚫을 수 없는","과다나","뚫을 수 없는","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "과다나씨두","과다나","씨두","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "과부대군적인","과부","대군적인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"과부여성","과부","여성","related","word","word",0.252720736639683,NA,NA,NA,NA,NA
-"과부총","과부","총","unrelated","word","word",0.092717409761315,NA,NA,NA,NA,NA
+"과부여성","과부","여성","related","word","word",0.252720736639683,-0.580218812335546,NA,NA,1,FALSE
+"과부총","과부","총","unrelated","word","word",0.092717409761315,-0.357048065593419,NA,NA,1,FALSE
 "과소평가하다과장하다","과소평가하다","과장하다","related","word","word",NA,NA,NA,NA,NA,NA
 "과소평가하다마이크로폰","과소평가하다","마이크로폰","unrelated","word","word",0,NA,NA,NA,NA,NA
 "과소평가하다복수니","과소평가하다","복수니","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -366,7 +366,7 @@
 "관리굴복드","관리","굴복드","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "관리랄드","관리","랄드","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "관리자대개","관리자","대개","unrelated","word","word",0.00554282928692183,NA,NA,NA,NA,NA
-"관리자사장","관리자","사장","related","word","word",0.421870335185345,NA,NA,NA,NA,NA
+"관리자사장","관리자","사장","related","word","word",0.421870335185345,-0.483159303261633,NA,NA,1,FALSE
 "관리자터상손","관리자","터상손","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "관리정부","관리","정부","related","word","word",0.355209093251256,NA,NA,NA,NA,NA
 "관리칠면조","관리","칠면조","unrelated","word","word",0.143376805325988,NA,NA,NA,NA,NA
@@ -394,7 +394,7 @@
 "광고업마케팅","광고업","마케팅","related","word","word",NA,NA,NA,NA,NA,NA
 "광고업배신자","광고업","배신자","unrelated","word","word",0,NA,NA,NA,NA,NA
 "광고업한줌","광고업","한줌","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"광고직관","광고","직관","unrelated","word","word",0,NA,NA,NA,NA,NA
+"광고직관","광고","직관","unrelated","word","word",0,-0.759368755776352,NA,NA,1,FALSE
 "광기망미","광기","망미","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "광기멍청함","광기","멍청함","related","word","word",NA,NA,NA,NA,NA,NA
 "광기문제","광기","문제","unrelated","word","word",0.142770287278152,NA,NA,NA,NA,NA
@@ -443,8 +443,8 @@
 "국만향수","국만","향수","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "국망사갈테","국망사","갈테","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "국망사보다","국망사","보다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"국제적인세계","국제적인","세계","related","word","word",0.208839878185258,NA,NA,NA,NA,NA
-"국제적인접시","국제적인","접시","unrelated","word","word",0.1086377678757,NA,NA,NA,NA,NA
+"국제적인세계","국제적인","세계","related","word","word",0.208839878185258,-0.382003672017293,NA,NA,1,FALSE
+"국제적인접시","국제적인","접시","unrelated","word","word",0.1086377678757,-0.762582031366855,NA,NA,1,FALSE
 "국제적인충룽적 인","국제적인","충룽적 인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "군구역","군","구역","related","word","word",0.201241018125913,NA,NA,NA,NA,NA
 "군다을 만하다끌다","군다을 만하다","끌다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -460,7 +460,7 @@
 "군옷은눈","군옷은","눈","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "군인공기","군인","공기","unrelated","word","word",0.133542366880356,NA,NA,NA,NA,NA
 "군인위엄","군인","위엄","unrelated","word","word",0.187758226539761,NA,NA,NA,NA,NA
-"군인전사","군인","전사","related","word","word",0.39649182668188,NA,NA,NA,NA,NA
+"군인전사","군인","전사","related","word","word",0.39649182668188,-0.627077592083546,NA,NA,1,FALSE
 "군인킷의","군인","킷의","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "군중검사","군중","검사","unrelated","word","word",0.103233052422282,NA,NA,NA,NA,NA
 "군중관중","군중","관중","related","word","word",0.541199581241145,NA,NA,NA,NA,NA
@@ -470,7 +470,7 @@
 "군한해임","군한","해임","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "궁전감추망에치","궁전","감추망에치","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "궁전물어보기","궁전","물어보기","unrelated","word","word",0.0951853953812061,NA,NA,NA,NA,NA
-"궁전성","궁전","성","related","word","word",0.367232112877716,NA,NA,NA,NA,NA
+"궁전성","궁전","성","related","word","word",0.367232112877716,-0.4305352136944,NA,NA,1,FALSE
 "권동죠한되는","권동","죠한되는","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "권동활동","권동","활동","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "권슈응","권슈","응","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -483,10 +483,10 @@
 "권하다틀어적인","권하다","틀어적인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "귀중한스인","귀중한","스인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "귀중한위","귀중한","위","unrelated","word","word",0.148537498757226,NA,NA,NA,NA,NA
-"귀중한중요한","귀중한","중요한","related","word","word",0.281543295376393,NA,NA,NA,NA,NA
+"귀중한중요한","귀중한","중요한","related","word","word",0.281543295376393,-0.655332256753184,NA,NA,1,FALSE
 "규칙니어들","규칙","니어들","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"규칙백작 부인","규칙","백작 부인","unrelated","word","word",0,NA,NA,NA,NA,NA
-"규칙조약","규칙","조약","related","word","word",0.356127955949485,NA,NA,NA,NA,NA
+"규칙백작 부인","규칙","백작 부인","unrelated","word","word",0,-0.257579493396467,NA,NA,1,FALSE
+"규칙조약","규칙","조약","related","word","word",0.356127955949485,-0.930440831762618,NA,NA,1,FALSE
 "균형맥주","균형","맥주","unrelated","word","word",0.133110179926855,NA,NA,NA,NA,NA
 "균형음조","균형","음조","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "균형조화","균형","조화","related","word","word",0.501526652987258,NA,NA,NA,NA,NA
@@ -523,7 +523,7 @@
 "근두기해","근두","기해","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "근두동상","근두","동상","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "근처에남그","근처에","남그","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"근처에멀리","근처에","멀리","related","word","word",0.17178951772715,NA,NA,NA,NA,NA
+"근처에멀리","근처에","멀리","related","word","word",0.17178951772715,-0.282628031041295,NA,NA,1,FALSE
 "근처에신뢰","근처에","신뢰","unrelated","word","word",0.101969298014529,NA,NA,NA,NA,NA
 "글로고 요기계식","글로고 요","기계식","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "글로고 요크립","글로고 요","크립","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -538,7 +538,7 @@
 "금유스타일","금유","스타일","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "금은","금","은","related","word","word",0.29155647448575,NA,NA,NA,NA,NA
 "금주스운","금","주스운","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"금지된금하다","금지된","금하다","related","word","word",NA,NA,NA,NA,NA,NA
+"금지된금하다","금지된","금하다","related","word","word",NA,-0.781700842411005,NA,NA,1,FALSE
 "금지된약","금지된","약","unrelated","word","word",0.122864040563093,NA,NA,NA,NA,NA
 "금지된재결","금지된","재결","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "긍정적 인먹겁","긍정적 인","먹겁","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -551,9 +551,9 @@
 "기념물동상","기념물","동상","related","word","word",NA,NA,NA,NA,NA,NA
 "기념물쓰레로운","기념물","쓰레로운","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "기념물화장실","기념물","화장실","unrelated","word","word",0,NA,NA,NA,NA,NA
-"기념일생일","기념일","생일","related","word","word",0.524474137556543,NA,NA,NA,NA,NA
+"기념일생일","기념일","생일","related","word","word",0.524474137556543,-0.195479993828565,NA,NA,1,FALSE
 "기념일제다","기념일","제다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"기념일폭발물","기념일","폭발물","unrelated","word","word",0.0639149158791832,NA,NA,NA,NA,NA
+"기념일폭발물","기념일","폭발물","unrelated","word","word",0.0639149158791832,-0.384562854801521,NA,NA,1,FALSE
 "기다리다심리학의","기다리다","심리학의","unrelated","word","word",0,NA,NA,NA,NA,NA
 "기다리다예상하다","기다리다","예상하다","related","word","word",NA,NA,NA,NA,NA,NA
 "기다리다히기","기다리다","히기","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -567,7 +567,7 @@
 "기병대포술","기병대","포술","related","word","word",NA,NA,NA,NA,NA,NA
 "기병틱창의력","기병틱","창의력","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "기병틱틀어적인","기병틱","틀어적인","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"기사바보","기사","바보","unrelated","word","word",0.142363470792548,NA,NA,NA,NA,NA
+"기사바보","기사","바보","unrelated","word","word",0.142363470792548,-0.688151273968534,NA,NA,1,FALSE
 "기사스나","기사","스나","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "기사신문","기사","신문","related","word","word",0.440986226700096,NA,NA,NA,NA,NA
 "기술과학","기술","과학","related","word","word",0.393962180039041,NA,NA,NA,NA,NA
@@ -639,8 +639,8 @@
 "끊잖으로앙카","끊잖으로","앙카","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "끔찍한관케한","끔찍한","관케한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "끔찍한불결한","끔찍한","불결한","related","word","word",0.285639136247349,NA,NA,NA,NA,NA
-"끔찍한의자","끔찍한","의자","unrelated","word","word",0.142325931722374,NA,NA,NA,NA,NA
-"끝마치다","끝","마치다","related","word","word",NA,NA,NA,NA,NA,NA
+"끔찍한의자","끔찍한","의자","unrelated","word","word",0.142325931722374,-0.803750561120806,NA,NA,1,FALSE
+"끝마치다","끝","마치다","related","word","word",NA,-0.411444996868602,NA,NA,1,FALSE
 "끝뵈도","끝","뵈도","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "끝입대학교","끝입","대학교","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "끝입짱이","끝입","짱이","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -672,10 +672,10 @@
 "나역꿈","나역","꿈","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "나역비밀클린","나역","비밀클린","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "나이 많은디혼","나이 많은","디혼","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"나이 많은싸움터","나이 많은","싸움터","unrelated","word","word",0,NA,NA,NA,NA,NA
+"나이 많은싸움터","나이 많은","싸움터","unrelated","word","word",0,-0.591309795827789,NA,NA,1,FALSE
 "나이 많은어린","나이 많은","어린","related","word","word",NA,NA,NA,NA,NA,NA
-"나체상벌거벗은","나체상","벌거벗은","related","word","word",NA,NA,NA,NA,NA,NA
-"나체상패배","나체상","패배","unrelated","word","word",0,NA,NA,NA,NA,NA
+"나체상벌거벗은","나체상","벌거벗은","related","word","word",NA,0.0104913289440097,NA,NA,1,FALSE
+"나체상패배","나체상","패배","unrelated","word","word",0,-0.494854339673847,NA,NA,1,FALSE
 "나체상하냐 조달","나체상","하냐 조달","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "나침반반죽경","나침반","반죽경","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "나침반자주","나침반","자주","unrelated","word","word",0.0926077716108609,NA,NA,NA,NA,NA
@@ -802,14 +802,14 @@
 "논평형제","논평","형제","unrelated","word","word",0,NA,NA,NA,NA,NA
 "놀라다실망","놀라다","실망","related","word","word",NA,NA,NA,NA,NA,NA
 "놀라다십당","놀라다","십당","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"놀라다흉터","놀라다","흉터","unrelated","word","word",0,NA,NA,NA,NA,NA
+"놀라다흉터","놀라다","흉터","unrelated","word","word",0,-0.466592526441012,NA,NA,1,FALSE
 "놀즈날두","놀즈","날두","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "놀즈아빠","놀즈","아빠","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "놈그세하융네번째","놈그세하융","네번째","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "놈그세하융실마","놈그세하융","실마","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "농구레도","농구","레도","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "농구원인","농구","원인","unrelated","word","word",0.0754833828239873,NA,NA,NA,NA,NA
-"농구축구","농구","축구","related","word","word",0.424017856391193,NA,NA,NA,NA,NA
+"농구축구","농구","축구","related","word","word",0.424017856391193,-0.709443245815316,NA,NA,1,FALSE
 "농장주노동자","농장주","노동자","related","word","word",NA,NA,NA,NA,NA,NA
 "농장주약탈","농장주","약탈","unrelated","word","word",0,NA,NA,NA,NA,NA
 "농장주토닌","농장주","토닌","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -850,7 +850,7 @@
 "늄토고르다","늄토","고르다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "늄토렀고","늄토","렀고","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "느린매니다","느린","매니다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"느린빠른","느린","빠른","related","word","word",0.502351876291607,NA,NA,NA,NA,NA
+"느린빠른","느린","빠른","related","word","word",0.502351876291607,-0.475420992192776,NA,NA,1,FALSE
 "느린정부","느린","정부","unrelated","word","word",0.102654588758472,NA,NA,NA,NA,NA
 "느슬다음악가","느슬다","음악가","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "느슬다해다사","느슬다","해다사","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -982,7 +982,7 @@
 "답소스요","답소","스요","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "답죠과학자","답죠","과학자","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "답죠짓거","답죠","짓거","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"당나귀교육","당나귀","교육","unrelated","word","word",0.136531334322302,NA,NA,NA,NA,NA
+"당나귀교육","당나귀","교육","unrelated","word","word",0.136531334322302,-0.714093381016182,NA,NA,1,FALSE
 "당나귀말","당나귀","말","related","word","word",0.279789487083234,NA,NA,NA,NA,NA
 "당나귀속곡","당나귀","속곡","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "당러리군이넷","당러리군","이넷","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1013,14 +1013,14 @@
 "대사관성실한","대사관","성실한","unrelated","word","word",0.149131674413617,NA,NA,NA,NA,NA
 "대사단단한","대사","단단한","unrelated","word","word",0.0578319748064457,NA,NA,NA,NA,NA
 "대사우면","대사","우면","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"대사장관","대사","장관","related","word","word",0.2447732878437,NA,NA,NA,NA,NA
+"대사장관","대사","장관","related","word","word",0.2447732878437,-0.640516875979745,NA,NA,1,FALSE
 "대조포자로핸식","대조포자","로핸식","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "대조포자할 수 없는","대조포자","할 수 없는","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "대학깨어된 것","대학","깨어된 것","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "대학대학교","대학","대학교","related","word","word",0.711661930302913,NA,NA,NA,NA,NA
 "대학캐리어","대학","캐리어","unrelated","word","word",0,NA,NA,NA,NA,NA
 "대화건인","대화","건인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"대화밝은","대화","밝은","unrelated","word","word",0.108981887768903,NA,NA,NA,NA,NA
+"대화밝은","대화","밝은","unrelated","word","word",0.108981887768903,-0.588225194234899,NA,NA,1,FALSE
 "대화상의","대화","상의","related","word","word",0.39554305035724,NA,NA,NA,NA,NA
 "댕산백작 부인","댕산","백작 부인","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "댕산우면","댕산","우면","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1083,7 +1083,7 @@
 "도움직함","도움","직함","unrelated","word","word",0,NA,NA,NA,NA,NA
 "도착니날","도착","니날","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "도착죄인","도착","죄인","unrelated","word","word",0.16301283403556,NA,NA,NA,NA,NA
-"도착출발","도착","출발","related","word","word",0.432378327398301,NA,NA,NA,NA,NA
+"도착출발","도착","출발","related","word","word",0.432378327398301,-0.727632744688522,NA,NA,1,FALSE
 "도착하다불쾌한","도착하다","불쾌한","unrelated","word","word",0,NA,NA,NA,NA,NA
 "도착하다브에","도착하다","브에","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "도착하다오다","도착하다","오다","related","word","word",NA,NA,NA,NA,NA,NA
@@ -1135,7 +1135,7 @@
 "둥근무료","둥근","무료","unrelated","word","word",0.120197594692881,NA,NA,NA,NA,NA
 "둥근주위에","둥근","주위에","related","word","word",0.36039918411268,NA,NA,NA,NA,NA
 "둥근펠리경","둥근","펠리경","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"둥지계란","둥지","계란","related","word","word",0.388262074015858,NA,NA,NA,NA,NA
+"둥지계란","둥지","계란","related","word","word",0.388262074015858,-0.458775581256165,NA,NA,1,FALSE
 "둥지깔보","둥지","깔보","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "둥지마지막","둥지","마지막","unrelated","word","word",0.107936718768187,NA,NA,NA,NA,NA
 "뒤력매기","뒤","력매기","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -1184,7 +1184,7 @@
 "디엔에이지문","디엔에이","지문","related","word","word",NA,NA,NA,NA,NA,NA
 "디저트땡땡","디저트","땡땡","unrelated","word","word",0,NA,NA,NA,NA,NA
 "디저트머저","디저트","머저","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"디저트케이크","디저트","케이크","related","word","word",0.50553049527483,NA,NA,NA,NA,NA
+"디저트케이크","디저트","케이크","related","word","word",0.50553049527483,2.74558218653834,NA,NA,1,FALSE
 "디타선수권 대회","디타","선수권 대회","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "디타컨심의","디타","컨심의","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "디폴락블에","디폴락","블에","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1225,7 +1225,7 @@
 "떨어타를객을","떨어타를","객을","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "떨어타를숙녀","떨어타를","숙녀","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "똑똑한변함회","똑똑한","변함회","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"똑똑한승인","똑똑한","승인","unrelated","word","word",0.0189572087677558,NA,NA,NA,NA,NA
+"똑똑한승인","똑똑한","승인","unrelated","word","word",0.0189572087677558,-0.716691880859344,NA,NA,1,FALSE
 "똑똑한지능적인","똑똑한","지능적인","related","word","word",NA,NA,NA,NA,NA,NA
 "똥에기뻔했한","똥에기","뻔했한","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "똥에기울타리","똥에기","울타리","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -1235,7 +1235,7 @@
 "라게실수","라게","실수","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "라디오래빨맨","라디오","래빨맨","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "라디오찌꺼기","라디오","찌꺼기","unrelated","word","word",0.135598298627522,NA,NA,NA,NA,NA
-"라디오텔레비전","라디오","텔레비전","related","word","word",0.410678631484553,NA,NA,NA,NA,NA
+"라디오텔레비전","라디오","텔레비전","related","word","word",0.410678631484553,-0.507246360224179,NA,NA,1,FALSE
 "라랑레스성","라랑","레스성","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "라랑유죄한","라랑","유죄한","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "라모즈글긴","라모","즈글긴","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1359,7 +1359,7 @@
 "로미대영역츠","로미대","영역츠","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "로미대전염병","로미대","전염병","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "로미오낫겠한","로미오","낫겠한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"로미오줄리엣","로미오","줄리엣","related","word","word",0.548922734721649,NA,NA,NA,NA,NA
+"로미오줄리엣","로미오","줄리엣","related","word","word",0.548922734721649,-0.434402582096584,NA,NA,1,FALSE
 "로미오콘텐츠","로미오","콘텐츠","unrelated","word","word",0,NA,NA,NA,NA,NA
 "로밀로그터","로밀","로그터","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "로밀재산","로밀","재산","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -1435,7 +1435,7 @@
 "리부해할","리부","해할","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "리서그럴듯한","리서","그럴듯한","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "리서형씨조","리서","형씨조","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"리셉션귀여운","리셉션","귀여운","unrelated","word","word",0,NA,NA,NA,NA,NA
+"리셉션귀여운","리셉션","귀여운","unrelated","word","word",0,-0.731435776082589,NA,NA,1,FALSE
 "리셉션비디식","리셉션","비디식","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "리셉션파티","리셉션","파티","related","word","word",NA,NA,NA,NA,NA,NA
 "리스들마녀","리스들","마녀","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -1478,7 +1478,7 @@
 "마랑만해루","마랑","만해루","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "마랑바닐라","마랑","바닐라","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "마련하다맙시","마련하다","맙시","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"마련하다정리하다","마련하다","정리하다","related","word","word",NA,NA,NA,NA,NA,NA
+"마련하다정리하다","마련하다","정리하다","related","word","word",NA,-0.587431704598029,NA,NA,1,FALSE
 "마련하다프로그램","마련하다","프로그램","unrelated","word","word",0,NA,NA,NA,NA,NA
 "마르히마사지","마르히","마사지","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "마르히틴이","마르히","틴이","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1536,7 +1536,7 @@
 "맛이 나다냄새가 나다","맛이 나다","냄새가 나다","related","word","word",NA,NA,NA,NA,NA,NA
 "맛이 나다봤었한","맛이 나다","봤었한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "맛이 나다플라스틱","맛이 나다","플라스틱","unrelated","word","word",0,NA,NA,NA,NA,NA
-"맛좋은맛있는","맛좋은","맛있는","related","word","word",NA,NA,NA,NA,NA,NA
+"맛좋은맛있는","맛좋은","맛있는","related","word","word",NA,-0.721402778766599,NA,NA,1,FALSE
 "맛좋은심도","맛좋은","심도","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "맛좋은지문","맛좋은","지문","unrelated","word","word",0,NA,NA,NA,NA,NA
 "망스골에","망스","골에","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1554,7 +1554,7 @@
 "매당학이수","매당","학이수","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "매디레재마이티의","매디레재","마이티의","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "매디레재보석","매디레재","보석","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"매력산","매력","산","unrelated","word","word",0.135598644459943,NA,NA,NA,NA,NA
+"매력산","매력","산","unrelated","word","word",0.135598644459943,0.0787385860375407,NA,NA,1,FALSE
 "매력아름다움","매력","아름다움","related","word","word",0.500677850926411,NA,NA,NA,NA,NA
 "매력템이","매력","템이","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "매인가지고 있다","매인","가지고 있다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -1604,8 +1604,8 @@
 "멀델히만","멀델","히만","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "멋진결석","멋진","결석","unrelated","word","word",0.154576005703951,NA,NA,NA,NA,NA
 "멋진매력적인","멋진","매력적인","related","word","word",0.412003452759757,NA,NA,NA,NA,NA
-"멋진연봉","멋진","연봉","unrelated","word","word",0.147206568499268,NA,NA,NA,NA,NA
-"멋진위쪽의","멋진","위쪽의","unrelated","word","word",0.149282837399179,NA,NA,NA,NA,NA
+"멋진연봉","멋진","연봉","unrelated","word","word",0.147206568499268,3.0611551585898,NA,NA,1,FALSE
+"멋진위쪽의","멋진","위쪽의","unrelated","word","word",0.149282837399179,0.75472026876003,NA,NA,1,FALSE
 "멋진틱한","멋진","틱한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "멋하인다사진 작가","멋하인다","사진 작가","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "멋하인다아가한","멋하인다","아가한","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -1636,7 +1636,7 @@
 "모니알파의","모니","알파의","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "모다핍다롤할","모다핍다","롤할","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "모다핍다불안한","모다핍다","불안한","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"모델비상","모델","비상","unrelated","word","word",0.11754640539169,NA,NA,NA,NA,NA
+"모델비상","모델","비상","unrelated","word","word",0.11754640539169,-0.614539026147846,NA,NA,1,FALSE
 "모델원기","모델","원기","related","word","word",NA,NA,NA,NA,NA,NA
 "모델페카다","모델","페카다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "모살자구역","모살자","구역","unrelated","word","word",0,NA,NA,NA,NA,NA
@@ -1648,7 +1648,7 @@
 "모파바그다","모파","바그다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "모파주제","모파","주제","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "목구멍목","목구멍","목","related","word","word",NA,NA,NA,NA,NA,NA
-"목구멍선장","목구멍","선장","unrelated","word","word",0,NA,NA,NA,NA,NA
+"목구멍선장","목구멍","선장","unrelated","word","word",0,-0.424669824101525,NA,NA,1,FALSE
 "목구멍켄드","목구멍","켄드","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "목소리기술","목소리","기술","unrelated","word","word",0.12246020536595,NA,NA,NA,NA,NA
 "목소리볼을 월","목소리","볼을 월","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -1691,7 +1691,7 @@
 "무정니 니오팀","무정니 니오","팀","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "무정부 상태게가","무정부 상태","게가","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "무정부 상태벽장","무정부 상태","벽장","unrelated","word","word",0,NA,NA,NA,NA,NA
-"무정부 상태자본주의","무정부 상태","자본주의","related","word","word",NA,NA,NA,NA,NA,NA
+"무정부 상태자본주의","무정부 상태","자본주의","related","word","word",NA,-0.309545915882225,NA,NA,1,FALSE
 "무죄한유죄한","무죄한","유죄한","related","word","word",NA,NA,NA,NA,NA,NA
 "무죄한츠키","무죄한","츠키","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "무죄한표현하다","무죄한","표현하다","unrelated","word","word",0,NA,NA,NA,NA,NA
@@ -1828,7 +1828,7 @@
 "밖의행복하다","밖의","행복하다","unrelated","word","word",0.0751504576361596,NA,NA,NA,NA,NA
 "밖이덜","밖","이덜","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "반경둘레","반경","둘레","related","word","word",NA,NA,NA,NA,NA,NA
-"반경예상하다","반경","예상하다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"반경예상하다","반경","예상하다","unrelated","word","word",0,-0.666240952091723,NA,NA,1,FALSE
 "반경의과사","반경","의과사","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "반길오매로 다니","반길오","매로 다니","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "반길오어린","반길오","어린","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -1941,7 +1941,7 @@
 "배펄한수학","배펄한","수학","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "백만답군","백만","답군","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "백만십억","백만","십억","related","word","word",0.638216504393477,NA,NA,NA,NA,NA
-"백만오리","백만","오리","unrelated","word","word",0.149935668547213,NA,NA,NA,NA,NA
+"백만오리","백만","오리","unrelated","word","word",0.149935668547213,0.41858090321316,NA,NA,1,FALSE
 "백화점가게","백화점","가게","related","word","word",0.184816806713977,NA,NA,NA,NA,NA
 "백화점운따","백화점","운따","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "백화점자주","백화점","자주","unrelated","word","word",0.0717766083993833,NA,NA,NA,NA,NA
@@ -1993,11 +1993,11 @@
 "베이한장례식","베이한","장례식","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "베이한지낼다","베이한","지낼다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "벽나운","벽","나운","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"벽울타리","벽","울타리","related","word","word",0.459487487385344,NA,NA,NA,NA,NA
+"벽울타리","벽","울타리","related","word","word",0.459487487385344,-0.156212979774143,NA,NA,1,FALSE
 "벽조종하다","벽","조종하다","unrelated","word","word",0,NA,NA,NA,NA,NA
 "변론받버리다","변론받","버리다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "변론받임에","변론받","임에","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"변호사검사","변호사","검사","related","word","word",0.24776476251585,NA,NA,NA,NA,NA
+"변호사검사","변호사","검사","related","word","word",0.24776476251585,-0.83231976222466,NA,NA,1,FALSE
 "변호사두려움","변호사","두려움","unrelated","word","word",0.00480619500706087,NA,NA,NA,NA,NA
 "변호사에이한","변호사","에이한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "변화개선","변화","개선","related","word","word",0.413373677561795,NA,NA,NA,NA,NA
@@ -2117,7 +2117,7 @@
 "부차적다돕","부차적","다돕","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "부차적보상","부차적","보상","unrelated","word","word",0,NA,NA,NA,NA,NA
 "부차적주요","부차적","주요","related","word","word",NA,NA,NA,NA,NA,NA
-"부츠기간","부츠","기간","unrelated","word","word",0.115848863810539,NA,NA,NA,NA,NA
+"부츠기간","부츠","기간","unrelated","word","word",0.115848863810539,-0.118658044708177,NA,NA,1,FALSE
 "부츠신발","부츠","신발","related","word","word",0.442024918477605,NA,NA,NA,NA,NA
 "부츠키면","부츠","키면","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "부특가쇠","부특","가쇠","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2139,7 +2139,7 @@
 "분인경위쪽의","분인경","위쪽의","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "불가능한대학교","불가능한","대학교","unrelated","word","word",0.0801981795092306,NA,NA,NA,NA,NA
 "불가능한사빈","불가능한","사빈","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"불가능한쉬운","불가능한","쉬운","related","word","word",0.258025868487889,NA,NA,NA,NA,NA
+"불가능한쉬운","불가능한","쉬운","related","word","word",0.258025868487889,-0.349366942974372,NA,NA,1,FALSE
 "불가실장팽의","불가실장","팽의","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "불가실장혼","불가실장","혼","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "불법적 인기나","불법적 인","기나","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2194,11 +2194,11 @@
 "비밀신비","비밀","신비","related","word","word",NA,NA,NA,NA,NA,NA
 "비밀육체","비밀","육체","unrelated","word","word",0.107633659807346,NA,NA,NA,NA,NA
 "비서인공의","비서","인공의","unrelated","word","word",0,NA,NA,NA,NA,NA
-"비서조수","비서","조수","related","word","word",0.476528457778903,NA,NA,NA,NA,NA
+"비서조수","비서","조수","related","word","word",0.476528457778903,-0.149443297946087,NA,NA,1,FALSE
 "비서터나","비서","터나","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "비슷한다른","비슷한","다른","related","word","word",0.267518046419637,NA,NA,NA,NA,NA
 "비슷한랬어","비슷한","랬어","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"비슷한샐러드","비슷한","샐러드","unrelated","word","word",0.118656706442215,NA,NA,NA,NA,NA
+"비슷한샐러드","비슷한","샐러드","unrelated","word","word",0.118656706442215,-0.364786376670385,NA,NA,1,FALSE
 "비싼기자","비싼","기자","unrelated","word","word",0.0542405518247411,NA,NA,NA,NA,NA
 "비싼싼","비싼","싼","related","word","word",0.451741053268664,NA,NA,NA,NA,NA
 "비싼짐자승","비싼","짐자승","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2231,13 +2231,13 @@
 "빨간색러와","빨간색","러와","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "빨다심무진","빨다","심무진","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "빨다위성","빨다","위성","unrelated","word","word",0,NA,NA,NA,NA,NA
-"빨다핥다","빨다","핥다","related","word","word",NA,NA,NA,NA,NA,NA
+"빨다핥다","빨다","핥다","related","word","word",NA,-0.463861778325455,NA,NA,1,FALSE
 "빨번대째맨롤라","빨번대째","맨롤라","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "빨번대째위성","빨번대째","위성","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "빵릿을","빵","릿을","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"빵이기다","빵","이기다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"빵이기다","빵","이기다","unrelated","word","word",0,-0.389920696967876,NA,NA,1,FALSE
 "빵치즈","빵","치즈","related","word","word",0.489740395609465,NA,NA,NA,NA,NA
-"뼈두개골","뼈","두개골","related","word","word",0.460229443269655,NA,NA,NA,NA,NA
+"뼈두개골","뼈","두개골","related","word","word",0.460229443269655,-0.424526852996351,NA,NA,1,FALSE
 "뼈샌가","뼈","샌가","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "뼈에대한","뼈","에대한","unrelated","word","word",0,NA,NA,NA,NA,NA
 "뿔기할","뿔","기할","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2334,7 +2334,7 @@
 "상태위치","상태","위치","related","word","word",0.388663607352933,NA,NA,NA,NA,NA
 "상표관대 한","상표","관대 한","unrelated","word","word",0,NA,NA,NA,NA,NA
 "상표됐다자","상표","됐다자","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"상표제품","상표","제품","related","word","word",NA,NA,NA,NA,NA,NA
+"상표제품","상표","제품","related","word","word",NA,0.917739497251341,NA,NA,1,FALSE
 "상황매힝테다","상황","매힝테다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "상황왕국","상황","왕국","unrelated","word","word",0.133263020810679,NA,NA,NA,NA,NA
 "상황위기","상황","위기","related","word","word",0.323501136717693,NA,NA,NA,NA,NA
@@ -2372,7 +2372,7 @@
 "서를릭필요","서를릭","필요","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "서비스말하다","서비스","말하다","unrelated","word","word",0.0809942761152525,NA,NA,NA,NA,NA
 "서비스밍","서비스","밍","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"서비스유지","서비스","유지","related","word","word",0.329324091291541,NA,NA,NA,NA,NA
+"서비스유지","서비스","유지","related","word","word",0.329324091291541,0.143851201646058,NA,NA,1,FALSE
 "서솔잔치","서솔","잔치","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "서솔트폰","서솔","트폰","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "서였다만스째","서였다","만스째","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2398,7 +2398,7 @@
 "선실거였운","선실","거였운","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "선실실망","선실","실망","unrelated","word","word",0.0713720154164919,NA,NA,NA,NA,NA
 "선택생자","선택","생자","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"선택쓰다","선택","쓰다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"선택쓰다","선택","쓰다","unrelated","word","word",0,0.0433246432674439,NA,NA,1,FALSE
 "선택옵션","선택","옵션","related","word","word",0.385056207085018,NA,NA,NA,NA,NA
 "선택하다고르다","선택하다","고르다","related","word","word",NA,NA,NA,NA,NA,NA
 "선택하다일욤","선택하다","일욤","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2429,7 +2429,7 @@
 "성경진료소","성경","진료소","unrelated","word","word",0.126829164766975,NA,NA,NA,NA,NA
 "성경책","성경","책","related","word","word",0.345871408755993,NA,NA,NA,NA,NA
 "성공레는","성공","레는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"성공보드카","성공","보드카","unrelated","word","word",0.120524704964378,NA,NA,NA,NA,NA
+"성공보드카","성공","보드카","unrelated","word","word",0.120524704964378,-0.377167674379513,NA,NA,1,FALSE
 "성공실패","성공","실패","related","word","word",0.5448926658177,NA,NA,NA,NA,NA
 "성과결과","성과","결과","related","word","word",0.223131302433272,NA,NA,NA,NA,NA
 "성과데렉정","성과","데렉정","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2440,7 +2440,7 @@
 "성인부모","성인","부모","related","word","word",0.347811592116913,NA,NA,NA,NA,NA
 "성인청몽","성인","청몽","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "성적독극","성적","독극","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"성적육체","성적","육체","related","word","word",0.458892711710514,NA,NA,NA,NA,NA
+"성적육체","성적","육체","related","word","word",0.458892711710514,-0.162285677472611,NA,NA,1,FALSE
 "성적일어나다","성적","일어나다","unrelated","word","word",0.134798074131185,NA,NA,NA,NA,NA
 "세가제자지","세가","제자지","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "세가카르텔","세가","카르텔","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2451,7 +2451,7 @@
 "세다고마하다","세다","고마하다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "세다커피","세다","커피","unrelated","word","word",0.0979119394170862,NA,NA,NA,NA,NA
 "세미나강의","세미나","강의","related","word","word",0.334144298044191,NA,NA,NA,NA,NA
-"세미나고기","세미나","고기","unrelated","word","word",0.145428720276475,NA,NA,NA,NA,NA
+"세미나고기","세미나","고기","unrelated","word","word",0.145428720276475,-0.389023553282474,NA,NA,1,FALSE
 "세미나통하운","세미나","통하운","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "세인화다매이","세인화다","매이","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "세인화다상","세인화다","상","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2526,16 +2526,16 @@
 "수량가다","수량","가다","unrelated","word","word",0,NA,NA,NA,NA,NA
 "수량선톨권 졌단","수량","선톨권 졌단","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "수량품질","수량","품질","related","word","word",NA,NA,NA,NA,NA,NA
-"수렵무너지다","수렵","무너지다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"수렵무너지다","수렵","무너지다","unrelated","word","word",0,-0.598826501691708,NA,NA,1,FALSE
 "수렵미낳감","수렵","미낳감","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "수렵어업","수렵","어업","related","word","word",NA,NA,NA,NA,NA,NA
 "수수료긷기","수수료","긷기","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "수수료사무라이","수수료","사무라이","unrelated","word","word",0.133930108039092,NA,NA,NA,NA,NA
-"수수료위원회","수수료","위원회","related","word","word",0.324883037898293,NA,NA,NA,NA,NA
+"수수료위원회","수수료","위원회","related","word","word",0.324883037898293,-0.188528023846391,NA,NA,1,FALSE
 "수스안정라이크","수스","안정라이크","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "수스저녁","수스","저녁","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "수업가르악은","수업","가르악은","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"수업모자","수업","모자","unrelated","word","word",0.105486414705948,NA,NA,NA,NA,NA
+"수업모자","수업","모자","unrelated","word","word",0.105486414705948,-0.911536477360623,NA,NA,1,FALSE
 "수업학교","수업","학교","related","word","word",0.363900768265435,NA,NA,NA,NA,NA
 "수요사자","수요","사자","unrelated","word","word",0,NA,NA,NA,NA,NA
 "수요업통","수요","업통","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2562,7 +2562,7 @@
 "숟가락포크","숟가락","포크","related","word","word",0.571004691657256,NA,NA,NA,NA,NA
 "술 취하지 않은넓은","술 취하지 않은","넓은","unrelated","word","word",0,NA,NA,NA,NA,NA
 "술 취하지 않은렸고","술 취하지 않은","렸고","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"술 취하지 않은술 취한","술 취하지 않은","술 취한","related","word","word",NA,NA,NA,NA,NA,NA
+"술 취하지 않은술 취한","술 취하지 않은","술 취한","related","word","word",NA,-0.148178003664449,NA,NA,1,FALSE
 "술미다구조","술미다","구조","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "술미다악감","술미다","악감","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "술블테운불어자","술블테운","불어자","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2591,7 +2591,7 @@
 "스크생각한다","스크","생각한다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "스크켄드","스크","켄드","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "스트레스연합","스트레스","연합","unrelated","word","word",0.140513192084984,NA,NA,NA,NA,NA
-"스트레스우울증","스트레스","우울증","related","word","word",0.410771703436526,NA,NA,NA,NA,NA
+"스트레스우울증","스트레스","우울증","related","word","word",0.410771703436526,-0.899644855689224,NA,NA,1,FALSE
 "스트레스자동히","스트레스","자동히","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "스트의시원한","스트의","시원한","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "스트의펴야","스트의","펴야","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2627,16 +2627,16 @@
 "승리손수건","승리","손수건","unrelated","word","word",0.137248418457363,NA,NA,NA,NA,NA
 "승리패배","승리","패배","related","word","word",0.596995835388466,NA,NA,NA,NA,NA
 "시나몬넓토","시나몬","넓토","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"시나몬바닐라","시나몬","바닐라","related","word","word",0.733063478483257,NA,NA,NA,NA,NA
-"시나몬의무","시나몬","의무","unrelated","word","word",0.113825144793221,NA,NA,NA,NA,NA
+"시나몬바닐라","시나몬","바닐라","related","word","word",0.733063478483257,-0.923042077063429,NA,NA,1,FALSE
+"시나몬의무","시나몬","의무","unrelated","word","word",0.113825144793221,0.05289655875584,NA,NA,1,FALSE
 "시러뒤쫓다","시러","뒤쫓다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "시러리뇌","시러","리뇌","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "시멘트렸고","시멘트","렸고","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"시멘트플라스틱","시멘트","플라스틱","related","word","word",0.357198729253077,NA,NA,NA,NA,NA
+"시멘트플라스틱","시멘트","플라스틱","related","word","word",0.357198729253077,-0.303945022834141,NA,NA,1,FALSE
 "시멘트황제","시멘트","황제","unrelated","word","word",0.183470179102152,NA,NA,NA,NA,NA
 "시민이군대","시민이","군대","related","word","word",0.313805330067093,NA,NA,NA,NA,NA
 "시민이그기색","시민이","그기색","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"시민이이빨","시민이","이빨","unrelated","word","word",0.0788322927989571,NA,NA,NA,NA,NA
+"시민이이빨","시민이","이빨","unrelated","word","word",0.0788322927989571,-0.440600379511849,NA,NA,1,FALSE
 "시브랍스터","시브","랍스터","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "시브원사","시브","원사","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "시선톤위험","시선톤","위험","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2654,7 +2654,7 @@
 "시저로마","시저","로마","related","word","word",0.307744784335776,NA,NA,NA,NA,NA
 "시저수주 같은","시저","수주 같은","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "시합경기","시합","경기","related","word","word",0.431140368086484,NA,NA,NA,NA,NA
-"시합끌다","시합","끌다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"시합끌다","시합","끌다","unrelated","word","word",0,0.441220377732041,NA,NA,1,FALSE
 "시합향합","시합","향합","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "시현범죄","시현","범죄","unrelated","word","word",0,NA,NA,NA,NA,NA
 "시현조아","시현","조아","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -2663,8 +2663,8 @@
 "식때티도다","식때","티도다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "식물꽃","식물","꽃","related","word","word",0.250673620524444,NA,NA,NA,NA,NA
 "식물카우워라","식물","카우워라","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"식물합의","식물","합의","unrelated","word","word",0.138142961266436,NA,NA,NA,NA,NA
-"식민지담배","식민지","담배","unrelated","word","word",0.0138633086305047,NA,NA,NA,NA,NA
+"식물합의","식물","합의","unrelated","word","word",0.138142961266436,-0.444564253405086,NA,NA,1,FALSE
+"식민지담배","식민지","담배","unrelated","word","word",0.0138633086305047,-0.494604140234328,NA,NA,1,FALSE
 "식민지연합","식민지","연합","related","word","word",0.582720407994585,NA,NA,NA,NA,NA
 "식민지일마","식민지","일마","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "식한지도자","식한","지도자","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2673,7 +2673,7 @@
 "신경은","신경","은","unrelated","word","word",0.0953062364476435,NA,NA,NA,NA,NA
 "신경피터증","신경","피터증","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "신나는런지","신나는","런지","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"신나는폐쇄","신나는","폐쇄","unrelated","word","word",0.110544884365494,NA,NA,NA,NA,NA
+"신나는폐쇄","신나는","폐쇄","unrelated","word","word",0.110544884365494,-0.905731850492655,NA,NA,1,FALSE
 "신나는흥미로운","신나는","흥미로운","related","word","word",0.400766298321914,NA,NA,NA,NA,NA
 "신랑나쁜","신랑","나쁜","unrelated","word","word",0.0538549212048856,NA,NA,NA,NA,NA
 "신랑신부","신랑","신부","related","word","word",0.493672548730133,NA,NA,NA,NA,NA
@@ -2693,10 +2693,10 @@
 "신장사로하다","신장","사로하다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "신장안녕히 가십시오","신장","안녕히 가십시오","unrelated","word","word",0,NA,NA,NA,NA,NA
 "신체곧장","신체","곧장","unrelated","word","word",0.0406021894256774,NA,NA,NA,NA,NA
-"신체시체","신체","시체","related","word","word",0.199912946497617,NA,NA,NA,NA,NA
+"신체시체","신체","시체","related","word","word",0.199912946497617,-0.696618737671762,NA,NA,1,FALSE
 "신체파로","신체","파로","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "신화로핸식","신화","로핸식","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"신화전설","신화","전설","related","word","word",0.566016149210645,NA,NA,NA,NA,NA
+"신화전설","신화","전설","related","word","word",0.566016149210645,-0.634133216125072,NA,NA,1,FALSE
 "신화편지","신화","편지","unrelated","word","word",0.100492929402025,NA,NA,NA,NA,NA
 "실섬똥키","실섬","똥키","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "실섬흉터","실섬","흉터","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2707,7 +2707,7 @@
 "실제로진짜","실제로","진짜","related","word","word",0.177411663202106,NA,NA,NA,NA,NA
 "실제로테나","실제로","테나","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "실패자상원","실패자","상원","unrelated","word","word",0,NA,NA,NA,NA,NA
-"실패자우승자","실패자","우승자","related","word","word",NA,NA,NA,NA,NA,NA
+"실패자우승자","실패자","우승자","related","word","word",NA,1.42919360633289,NA,NA,1,FALSE
 "실패자즐간","실패자","즐간","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "실험불쌍한","실험","불쌍한","unrelated","word","word",0.125890779153064,NA,NA,NA,NA,NA
 "실험시험","실험","시험","related","word","word",0.34248175945113,NA,NA,NA,NA,NA
@@ -2810,8 +2810,8 @@
 "안경일어전사다","안경","일어전사다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "안관선데","안관","선데","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "안관우승자","안관","우승자","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"안녕하세요민주주의","안녕하세요","민주주의","unrelated","word","word",0.159690687031916,NA,NA,NA,NA,NA
-"안녕하세요안녕히 가십시오","안녕하세요","안녕히 가십시오","related","word","word",NA,NA,NA,NA,NA,NA
+"안녕하세요민주주의","안녕하세요","민주주의","unrelated","word","word",0.159690687031916,-0.440421665627621,NA,NA,1,FALSE
+"안녕하세요안녕히 가십시오","안녕하세요","안녕히 가십시오","related","word","word",NA,-0.428229804630089,NA,NA,1,FALSE
 "안녕하세요중환","안녕하세요","중환","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "안느사랑하니운","안느","사랑하니운","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "안느헌신","안느","헌신","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2827,19 +2827,19 @@
 "알림에인","알림","에인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "알몸로배우","알몸로","배우","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "알몸로통아지길","알몸로","통아지길","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"알았어다이너마이트","알았어","다이너마이트","unrelated","word","word",0.161207151299368,NA,NA,NA,NA,NA
-"알았어링","알았어","링","unrelated","word","word",0.174682141049351,NA,NA,NA,NA,NA
+"알았어다이너마이트","알았어","다이너마이트","unrelated","word","word",0.161207151299368,-0.578288702422451,NA,NA,1,FALSE
+"알았어링","알았어","링","unrelated","word","word",0.174682141049351,0.592287221816434,NA,NA,1,FALSE
 "알았어수도원","알았어","수도원","unrelated","word","word",0.17725858316492,NA,NA,NA,NA,NA
 "알았어응","알았어","응","related","word","word",0.18044154619801,NA,NA,NA,NA,NA
 "알았어입자","알았어","입자","unrelated","word","word",0.107885100264141,NA,NA,NA,NA,NA
-"알았어전시회","알았어","전시회","unrelated","word","word",0.180269395788042,NA,NA,NA,NA,NA
+"알았어전시회","알았어","전시회","unrelated","word","word",0.180269395788042,-0.640899323680941,NA,NA,1,FALSE
 "알았어채답령","알았어","채답령","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "알았어판매","알았어","판매","unrelated","word","word",0.148793074064115,NA,NA,NA,NA,NA
 "알았어행사","알았어","행사","unrelated","word","word",0.104431324871362,NA,NA,NA,NA,NA
 "알현너구리","알현","너구리","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "알현로빈골","알현","로빈골","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "암호비밀번호","암호","비밀번호","related","word","word",0.501726809271135,NA,NA,NA,NA,NA
-"암호죽다","암호","죽다","unrelated","word","word",0.136614254317164,NA,NA,NA,NA,NA
+"암호죽다","암호","죽다","unrelated","word","word",0.136614254317164,-0.385234818998568,NA,NA,1,FALSE
 "암호지라","암호","지라","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "압에갈리","압에","갈리","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "압에검사","압에","검사","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -2871,7 +2871,7 @@
 "약들하냐 조달","약들","하냐 조달","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "약혼비랄만한","약혼","비랄만한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "약혼혼례","약혼","혼례","related","word","word",NA,NA,NA,NA,NA,NA
-"약혼환상적인 것","약혼","환상적인 것","unrelated","word","word",0,NA,NA,NA,NA,NA
+"약혼환상적인 것","약혼","환상적인 것","unrelated","word","word",0,0.649307672859622,NA,NA,1,FALSE
 "얇은두꺼운","얇은","두꺼운","related","word","word",0.557574842891703,NA,NA,NA,NA,NA
 "얇은비밀클린","얇은","비밀클린","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "얇은정보","얇은","정보","unrelated","word","word",0.12033969966357,NA,NA,NA,NA,NA
@@ -2882,7 +2882,7 @@
 "양육운느낄적인","양육운","느낄적인","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "양육운주스","양육운","주스","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "얘기하다고난리","얘기하다","고난리","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"얘기하다기타","얘기하다","기타","unrelated","word","word",0,NA,NA,NA,NA,NA
+"얘기하다기타","얘기하다","기타","unrelated","word","word",0,-0.430899790020532,NA,NA,1,FALSE
 "얘기하다알리다","얘기하다","알리다","related","word","word",NA,NA,NA,NA,NA,NA
 "어감숱이다관중","어감숱이다","관중","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "어감숱이다지내성","어감숱이다","지내성","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -2893,7 +2893,7 @@
 "어끊적는팅을","어끊적는","팅을","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "어다들요","어다","들요","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "어다실패","어다","실패","nonword","nonword","word",NA,NA,NA,NA,NA,NA
-"어둠빛","어둠","빛","related","word","word",0.502110339753932,NA,NA,NA,NA,NA
+"어둠빛","어둠","빛","related","word","word",0.502110339753932,-0.618413543105425,NA,NA,1,FALSE
 "어둠식당","어둠","식당","unrelated","word","word",0.099899998580682,NA,NA,NA,NA,NA
 "어둠즈는","어둠","즈는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "어드자다","어드","자다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3044,7 +3044,7 @@
 "열안올","열","안올","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "열여숲","열여","숲","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "열여으받사","열여","으받사","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"열온도","열","온도","related","word","word",0.16631467592389,NA,NA,NA,NA,NA
+"열온도","열","온도","related","word","word",0.16631467592389,0.511319110630794,NA,NA,1,FALSE
 "염려걱정하다","염려","걱정하다","related","word","word",NA,NA,NA,NA,NA,NA
 "염려돌연변이","염려","돌연변이","unrelated","word","word",0.135968012248277,NA,NA,NA,NA,NA
 "염려이버","염려","이버","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -3102,7 +3102,7 @@
 "오른쪽공상","오른쪽","공상","unrelated","word","word",0.168729440885811,NA,NA,NA,NA,NA
 "오른쪽바꾸","오른쪽","바꾸","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "오른쪽왼쪽","오른쪽","왼쪽","related","word","word",0.639112073252481,NA,NA,NA,NA,NA
-"오븐이론","오븐","이론","unrelated","word","word",0.111438259911935,NA,NA,NA,NA,NA
+"오븐이론","오븐","이론","unrelated","word","word",0.111438259911935,-0.401705090323349,NA,NA,1,FALSE
 "오븐틀렸실","오븐","틀렸실","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "오븐화덕","오븐","화덕","related","word","word",NA,NA,NA,NA,NA,NA
 "오셨한암살자","오셨한","암살자","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3146,7 +3146,7 @@
 "완출일갈리","완출일","갈리","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "완출일정보","완출일","정보","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "완쾌하다갈테","완쾌하다","갈테","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"완쾌하다전설","완쾌하다","전설","unrelated","word","word",0,NA,NA,NA,NA,NA
+"완쾌하다전설","완쾌하다","전설","unrelated","word","word",0,-0.616683592732123,NA,NA,1,FALSE
 "완쾌하다치유하다","완쾌하다","치유하다","related","word","word",NA,NA,NA,NA,NA,NA
 "왔냐히보코","왔냐히","보코","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "왔냐히신뢰","왔냐히","신뢰","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3241,11 +3241,11 @@
 "운건칼","운건","칼","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "운동선거","운동","선거","related","word","word",0.239317101832869,NA,NA,NA,NA,NA
 "운동스북","운동","스북","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"운동코냑","운동","코냑","unrelated","word","word",0,NA,NA,NA,NA,NA
+"운동코냑","운동","코냑","unrelated","word","word",0,1.78033064082863,NA,NA,1,FALSE
 "운의과도","운의","과도","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "운의큰 메달","운의","큰 메달","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "운이 없는더새양","운이 없는","더새양","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"운이 없는무엇","운이 없는","무엇","unrelated","word","word",0,NA,NA,NA,NA,NA
+"운이 없는무엇","운이 없는","무엇","unrelated","word","word",0,-0.658763563281955,NA,NA,1,FALSE
 "운이 없는불행","운이 없는","불행","related","word","word",NA,NA,NA,NA,NA,NA
 "운전하다침묵","운전하다","침묵","unrelated","word","word",0.113310384464918,NA,NA,NA,NA,NA
 "운전하다타다","운전하다","타다","related","word","word",0.5729011722724,NA,NA,NA,NA,NA
@@ -3260,7 +3260,7 @@
 "움보현지의","움보","현지의","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "웃되웨교육","웃되웨","교육","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "웃되웨쌍묻한","웃되웨","쌍묻한","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"워싱턴문장","워싱턴","문장","unrelated","word","word",0.132369864205375,NA,NA,NA,NA,NA
+"워싱턴문장","워싱턴","문장","unrelated","word","word",0.132369864205375,-0.585826853944019,NA,NA,1,FALSE
 "워싱턴보스턴","워싱턴","보스턴","related","word","word",0.48689327852066,NA,NA,NA,NA,NA
 "워싱턴프루","워싱턴","프루","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "워질소리","워질","소리","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3290,7 +3290,7 @@
 "월완수 있는","월","완수 있는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "월요일거짓","월요일","거짓","unrelated","word","word",0.104770123871225,NA,NA,NA,NA,NA
 "월요일락이","월요일","락이","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"월요일화요일","월요일","화요일","related","word","word",0.707269952844879,NA,NA,NA,NA,NA
+"월요일화요일","월요일","화요일","related","word","word",0.707269952844879,-0.749546640840427,NA,NA,1,FALSE
 "월주","월","주","related","word","word",0.160346630400098,NA,NA,NA,NA,NA
 "월포식자","월","포식자","unrelated","word","word",0.14961135244444,NA,NA,NA,NA,NA
 "웠다다아와","웠다다","아와","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -3321,7 +3321,7 @@
 "유용한엣은","유용한","엣은","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "유용한효과적인","유용한","효과적인","related","word","word",0.543442420399917,NA,NA,NA,NA,NA
 "유월맹올","유월","맹올","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"유월잔학","유월","잔학","unrelated","word","word",0,NA,NA,NA,NA,NA
+"유월잔학","유월","잔학","unrelated","word","word",0,-0.773758797519559,NA,NA,1,FALSE
 "유월칠월","유월","칠월","related","word","word",NA,NA,NA,NA,NA,NA
 "유치장감옥","유치장","감옥","related","word","word",NA,NA,NA,NA,NA,NA
 "유치장고릴","유치장","고릴","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -3356,14 +3356,14 @@
 "음모우우","음모","우우","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "음식사실내 다","음식","사실내 다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "음식식사","음식","식사","related","word","word",0.325512560944743,NA,NA,NA,NA,NA
-"음식위원","음식","위원","unrelated","word","word",0,NA,NA,NA,NA,NA
+"음식위원","음식","위원","unrelated","word","word",0,-1.00230168353092,NA,NA,1,FALSE
 "음었신부","음었","신부","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "음었응므","음었","응므","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "응접떼료도","응접떼","료도","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "응접떼제국","응접떼","제국","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "의견초콜릿","의견","초콜릿","unrelated","word","word",0.106592561528855,NA,NA,NA,NA,NA
 "의견치럭","의견","치럭","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"의견태도","의견","태도","related","word","word",0.445794099419303,NA,NA,NA,NA,NA
+"의견태도","의견","태도","related","word","word",0.445794099419303,-0.770370382319825,NA,NA,1,FALSE
 "의료모자","의료","모자","unrelated","word","word",0.105034411285019,NA,NA,NA,NA,NA
 "의료스태","의료","스태","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "의료심리학의","의료","심리학의","related","word","word",NA,NA,NA,NA,NA,NA
@@ -3371,12 +3371,12 @@
 "의마아사업가","의마아","사업가","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "의문라곤","의문","라곤","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "의문물어보기","의문","물어보기","related","word","word",0.316848605280062,NA,NA,NA,NA,NA
-"의문생선","의문","생선","unrelated","word","word",0.147874578700931,NA,NA,NA,NA,NA
+"의문생선","의문","생선","unrelated","word","word",0.147874578700931,1.18635003551397,NA,NA,1,FALSE
 "의미수영","의미","수영","unrelated","word","word",0.145253528371897,NA,NA,NA,NA,NA
 "의미접시 근절","의미","접시 근절","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "의미중요성","의미","중요성","related","word","word",0.343460461028638,NA,NA,NA,NA,NA
 "의식식들","의식","식들","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"의식한모금","의식","한모금","unrelated","word","word",0.171116563651463,NA,NA,NA,NA,NA
+"의식한모금","의식","한모금","unrelated","word","word",0.171116563651463,-0.394735248942596,NA,NA,1,FALSE
 "의식행사","의식","행사","related","word","word",0.175812757543299,NA,NA,NA,NA,NA
 "의심사분의 일","의심","사분의 일","unrelated","word","word",0,NA,NA,NA,NA,NA
 "의심실과","의심","실과","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -3400,7 +3400,7 @@
 "이동보새로 고이종","이동보","새로 고이종","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "이동보연봉","이동보","연봉","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "이동하다시가","이동하다","시가","unrelated","word","word",0,NA,NA,NA,NA,NA
-"이동하다옮기다","이동하다","옮기다","related","word","word",NA,NA,NA,NA,NA,NA
+"이동하다옮기다","이동하다","옮기다","related","word","word",NA,-0.669264790970526,NA,NA,1,FALSE
 "이동하다이넷","이동하다","이넷","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "이드의배마","이드의","배마","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "이드의조사자","이드의","조사자","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3427,7 +3427,7 @@
 "이상적인리처일","이상적인","리처일","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "이상적인완벽한","이상적인","완벽한","related","word","word",0.419990157982117,NA,NA,NA,NA,NA
 "이애인","이","애인","unrelated","word","word",0.128445660318991,NA,NA,NA,NA,NA
-"이야기하다말하다","이야기하다","말하다","related","word","word",NA,NA,NA,NA,NA,NA
+"이야기하다말하다","이야기하다","말하다","related","word","word",NA,0.244763782000551,NA,NA,1,FALSE
 "이야기하다미알","이야기하다","미알","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "이야기하다흡혈귀","이야기하다","흡혈귀","unrelated","word","word",0,NA,NA,NA,NA,NA
 "이야자근무하다","이야자","근무하다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -3501,8 +3501,8 @@
 "인터넷프트","인터넷","프트","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "인형오넬","인형","오넬","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "인형장난감","인형","장난감","related","word","word",0.34428606651246,NA,NA,NA,NA,NA
-"인형지능적인","인형","지능적인","unrelated","word","word",0,NA,NA,NA,NA,NA
-"일도망자","일","도망자","unrelated","word","word",0.144663176782323,NA,NA,NA,NA,NA
+"인형지능적인","인형","지능적인","unrelated","word","word",0,-0.395543035684432,NA,NA,1,FALSE
+"일도망자","일","도망자","unrelated","word","word",0.144663176782323,-0.00488163915328093,NA,NA,1,FALSE
 "일몰감사하다","일몰","감사하다","unrelated","word","word",0,NA,NA,NA,NA,NA
 "일몰새벽","일몰","새벽","related","word","word",0.423863399840609,NA,NA,NA,NA,NA
 "일몰줄도타주","일몰","줄도타주","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -3584,7 +3584,7 @@
 "자연스러운비오인","자연스러운","비오인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "자연스러운인공의","자연스러운","인공의","related","word","word",NA,NA,NA,NA,NA,NA
 "자원 봉사자놓자람","자원 봉사자","놓자람","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"자원 봉사자스포츠","자원 봉사자","스포츠","unrelated","word","word",0,NA,NA,NA,NA,NA
+"자원 봉사자스포츠","자원 봉사자","스포츠","unrelated","word","word",0,-0.382396842559385,NA,NA,1,FALSE
 "자원 봉사자자발적으로","자원 봉사자","자발적으로","related","word","word",NA,NA,NA,NA,NA,NA
 "자유롭게깝네","자유롭게","깝네","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "자유롭게무료","자유롭게","무료","related","word","word",0.184310669273978,NA,NA,NA,NA,NA
@@ -3636,7 +3636,7 @@
 "잡고있다고마워하다","잡고있다","고마워하다","unrelated","word","word",0,NA,NA,NA,NA,NA
 "잡고있다태고","잡고있다","태고","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "잡담생물학적","잡담","생물학적","unrelated","word","word",0.117557222750939,NA,NA,NA,NA,NA
-"잡담스캔들","잡담","스캔들","related","word","word",0.305360668867728,NA,NA,NA,NA,NA
+"잡담스캔들","잡담","스캔들","related","word","word",0.305360668867728,1.14992099789624,NA,NA,1,FALSE
 "잡담픽에","잡담","픽에","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "잡테일드라","잡테일","드라","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "잡테일증거","잡테일","증거","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -3727,7 +3727,7 @@
 "저주저기","저주","저기","unrelated","word","word",0.0597803126538879,NA,NA,NA,NA,NA
 "저주터술예","저주","터술예","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "저항다흠하다","저항","다흠하다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"저항재킷","저항","재킷","unrelated","word","word",0.148108766107158,NA,NA,NA,NA,NA
+"저항재킷","저항","재킷","unrelated","word","word",0.148108766107158,0.330296245721709,NA,NA,1,FALSE
 "저항저항하다","저항","저항하다","related","word","word",NA,NA,NA,NA,NA,NA
 "적닫어전기","적닫어","전기","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "적닫어져꺼","적닫어","져꺼","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -3815,7 +3815,7 @@
 "제안하다쿠가","제안하다","쿠가","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "제어반듯","제어","반듯","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "제어엄마","제어","엄마","unrelated","word","word",0.0618414291327913,NA,NA,NA,NA,NA
-"제어조종하다","제어","조종하다","related","word","word",NA,NA,NA,NA,NA,NA
+"제어조종하다","제어","조종하다","related","word","word",NA,-0.742097846254107,NA,NA,1,FALSE
 "제이인내비치다","제이인","내비치다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "제이인랩순패위","제이인","랩순패위","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "제작자감독","제작자","감독","related","word","word",0.459527428862721,NA,NA,NA,NA,NA
@@ -3830,8 +3830,8 @@
 "졌대정치","졌대","정치","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "조강소망","조강","소망","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "조강펴요 억","조강","펴요 억","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"조금한뉴스","조금한","뉴스","unrelated","word","word",0,NA,NA,NA,NA,NA
-"조금한작은","조금한","작은","related","word","word",NA,NA,NA,NA,NA,NA
+"조금한뉴스","조금한","뉴스","unrelated","word","word",0,-0.310110651745241,NA,NA,1,FALSE
+"조금한작은","조금한","작은","related","word","word",NA,-0.677789443118362,NA,NA,1,FALSE
 "조금한족과","조금한","족과","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "조너월돌","조너월","돌","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "조너월민롤","조너월","민롤","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -3949,12 +3949,12 @@
 "즐거움현지의","즐거움","현지의","unrelated","word","word",0,NA,NA,NA,NA,NA
 "즘사대행사","즘사","대행사","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "즘사트씨","즘사","트씨","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"증가하다골목","증가하다","골목","unrelated","word","word",0,NA,NA,NA,NA,NA
+"증가하다골목","증가하다","골목","unrelated","word","word",0,-0.409747214999046,NA,NA,1,FALSE
 "증가하다무너더를","증가하다","무너더를","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "증가하다줄이다","증가하다","줄이다","related","word","word",NA,NA,NA,NA,NA,NA
 "증거물띁떠","증거물","띁떠","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "증거물불행","증거물","불행","unrelated","word","word",0.120452757825257,NA,NA,NA,NA,NA
-"증거물증거","증거물","증거","related","word","word",0.742514039887158,NA,NA,NA,NA,NA
+"증거물증거","증거물","증거","related","word","word",0.742514039887158,-0.329844238552752,NA,NA,1,FALSE
 "증어둑은","증어","둑은","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "증어유지하다","증어","유지하다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "증인증언","증인","증언","related","word","word",0.534014645825094,NA,NA,NA,NA,NA
@@ -4036,14 +4036,14 @@
 "짐승동물","짐승","동물","related","word","word",0.358313650274443,NA,NA,NA,NA,NA
 "짐승상속","짐승","상속","unrelated","word","word",0.160561975418523,NA,NA,NA,NA,NA
 "짐승탱이","짐승","탱이","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"짐현실적인","짐","현실적인","unrelated","word","word",0.0565482609005641,NA,NA,NA,NA,NA
+"짐현실적인","짐","현실적인","unrelated","word","word",0.0565482609005641,1.95156355930857,NA,NA,1,FALSE
 "짐화물","짐","화물","related","word","word",0.259631072965843,NA,NA,NA,NA,NA
 "집분장다","집","분장다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "집불꽃","집","불꽃","unrelated","word","word",0.196722819235168,NA,NA,NA,NA,NA
 "집빼기","집","빼기","unrelated","word","word",0.198305176070868,NA,NA,NA,NA,NA
 "집아파트","집","아파트","related","word","word",0.410755783771492,NA,NA,NA,NA,NA
 "집안가족","집안","가족","related","word","word",0.350198793550171,NA,NA,NA,NA,NA
-"집안검증","집안","검증","unrelated","word","word",0.19948544613946,NA,NA,NA,NA,NA
+"집안검증","집안","검증","unrelated","word","word",0.19948544613946,-0.206706799876206,NA,NA,1,FALSE
 "집안애니들","집안","애니들","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "집주간","집","주간","unrelated","word","word",0.170672663987588,NA,NA,NA,NA,NA
 "집쥐","집","쥐","unrelated","word","word",0.197060092513994,NA,NA,NA,NA,NA
@@ -4077,16 +4077,16 @@
 "착륙하다파리","착륙하다","파리","related","word","word",NA,NA,NA,NA,NA,NA
 "참석결석","참석","결석","related","word","word",0.239096914617495,NA,NA,NA,NA,NA
 "참석물이가","참석","물이가","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"참석비참한","참석","비참한","unrelated","word","word",0.0860568822486766,NA,NA,NA,NA,NA
+"참석비참한","참석","비참한","unrelated","word","word",0.0860568822486766,-0.152946090016731,NA,NA,1,FALSE
 "참치랍스터","참치","랍스터","related","word","word",0.503644967361525,NA,NA,NA,NA,NA
 "참치사라짐","참치","사라짐","unrelated","word","word",0.116344319094574,NA,NA,NA,NA,NA
 "참치수태자","참치","수태자","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"창문문","창문","문","related","word","word",0.415604310971117,NA,NA,NA,NA,NA
+"창문문","창문","문","related","word","word",0.415604310971117,-0.696311349806048,NA,NA,1,FALSE
 "창문투자자","창문","투자자","unrelated","word","word",0.128445258939346,NA,NA,NA,NA,NA
 "창문해할","창문","해할","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "창조모호","창조","모호","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "창조운전사","창조","운전사","unrelated","word","word",0.130116713896575,NA,NA,NA,NA,NA
-"창조파괴","창조","파괴","related","word","word",0.496712496032969,NA,NA,NA,NA,NA
+"창조파괴","창조","파괴","related","word","word",0.496712496032969,0.121726423111173,NA,NA,1,FALSE
 "찾우넷로핀","찾우넷","로핀","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "찾우넷어린이","찾우넷","어린이","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "채널뉴스","채널","뉴스","related","word","word",0.4885085731304,NA,NA,NA,NA,NA
@@ -4097,7 +4097,7 @@
 "책상격봤","책상","격봤","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "책상굶주린","책상","굶주린","unrelated","word","word",0.104913623434151,NA,NA,NA,NA,NA
 "책상사무실","책상","사무실","related","word","word",0.503189939775444,NA,NA,NA,NA,NA
-"책상의자","책상","의자","related","word","word",0.469912306277766,NA,NA,NA,NA,NA
+"책상의자","책상","의자","related","word","word",0.469912306277766,-0.923617535756729,NA,NA,1,FALSE
 "책상최후의","책상","최후의","unrelated","word","word",0.121471839849385,NA,NA,NA,NA,NA
 "책상프게","책상","프게","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "책임삼","책임","삼","unrelated","word","word",0.114934802516765,NA,NA,NA,NA,NA
@@ -4122,11 +4122,11 @@
 "천사멋진부시","천사","멋진부시","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "천사비타민","천사","비타민","unrelated","word","word",0.0621972463557024,NA,NA,NA,NA,NA
 "천사악마","천사","악마","related","word","word",0.385022796267129,NA,NA,NA,NA,NA
-"천재과학자","천재","과학자","related","word","word",0.398170182659095,NA,NA,NA,NA,NA
+"천재과학자","천재","과학자","related","word","word",0.398170182659095,-0.460112361090185,NA,NA,1,FALSE
 "천재기해","천재","기해","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "천재호스","천재","호스","unrelated","word","word",0.187162598093855,NA,NA,NA,NA,NA
 "천천히국가","천천히","국가","unrelated","word","word",0.00911166416522115,NA,NA,NA,NA,NA
-"천천히빠르게","천천히","빠르게","related","word","word",0.357795265874797,NA,NA,NA,NA,NA
+"천천히빠르게","천천히","빠르게","related","word","word",0.357795265874797,-0.435206794558331,NA,NA,1,FALSE
 "천천히었싫","천천히","었싫","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "천함가","천","함가","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "천행정","천","행정","unrelated","word","word",0.15070180875942,NA,NA,NA,NA,NA
@@ -4137,7 +4137,7 @@
 "철팀","철","팀","unrelated","word","word",0.08886800731837,NA,NA,NA,NA,NA
 "철학기혼","철학","기혼","unrelated","word","word",0,NA,NA,NA,NA,NA
 "철학껀할","철학","껀할","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"철학종교","철학","종교","related","word","word",0.41622299067786,NA,NA,NA,NA,NA
+"철학종교","철학","종교","related","word","word",0.41622299067786,-0.761227380144665,NA,NA,1,FALSE
 "첩막의","첩","막의","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "첩애인","첩","애인","related","word","word",0.435425116732485,NA,NA,NA,NA,NA
 "첩죄검은 색","첩죄","검은 색","unrelated","word","word",0,NA,NA,NA,NA,NA
@@ -4163,7 +4163,7 @@
 "초록색주황색","초록색","주황색","related","word","word",0.530436966886586,NA,NA,NA,NA,NA
 "초분","초","분","related","word","word",0.259854459268041,NA,NA,NA,NA,NA
 "초었믿","초","었믿","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"초자연의강의","초자연의","강의","unrelated","word","word",0,NA,NA,NA,NA,NA
+"초자연의강의","초자연의","강의","unrelated","word","word",0,-0.834875370733791,NA,NA,1,FALSE
 "초자연의마라적 인","초자연의","마라적 인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "초자연의초자연적 인 것","초자연의","초자연적 인 것","related","word","word",NA,NA,NA,NA,NA,NA
 "초점을 맞추다금하다","초점을 맞추다","금하다","unrelated","word","word",0,NA,NA,NA,NA,NA
@@ -4187,7 +4187,7 @@
 "촬기영예상하다","촬기영","예상하다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "최저한의감외부 드는","최저한의","감외부 드는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "최저한의정치가","최저한의","정치가","unrelated","word","word",0,NA,NA,NA,NA,NA
-"최저한의최고","최저한의","최고","related","word","word",NA,NA,NA,NA,NA,NA
+"최저한의최고","최저한의","최고","related","word","word",NA,0.0218682546441061,NA,NA,1,FALSE
 "추가의놔거저","추가의","놔거저","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "추가의부가적인","추가의","부가적인","related","word","word",NA,NA,NA,NA,NA,NA
 "추가의화가","추가의","화가","unrelated","word","word",0,NA,NA,NA,NA,NA
@@ -4204,7 +4204,7 @@
 "출구입구","출구","입구","related","word","word",0.585422623844468,NA,NA,NA,NA,NA
 "출생두도","출생","두도","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "출생역겨운","출생","역겨운","unrelated","word","word",0.0677140327305882,NA,NA,NA,NA,NA
-"출생임신","출생","임신","related","word","word",0.269474755990795,NA,NA,NA,NA,NA
+"출생임신","출생","임신","related","word","word",0.269474755990795,-0.82789838079744,NA,NA,1,FALSE
 "출신실리토","출신실","리토","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "출신실왓슨","출신실","왓슨","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "출한동영상","출한","동영상","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -4235,7 +4235,7 @@
 "치냐차리적인","치냐","차리적인","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "치로전하","치로","전하","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "치로카우워라","치로","카우워라","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"치마드레스","치마","드레스","related","word","word",0.466396856588782,NA,NA,NA,NA,NA
+"치마드레스","치마","드레스","related","word","word",0.466396856588782,-0.0609227381335016,NA,NA,1,FALSE
 "치마들흔다","치마","들흔다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "치마조사자","치마","조사자","unrelated","word","word",0,NA,NA,NA,NA,NA
 "친척링스","친척","링스","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -4251,7 +4251,7 @@
 "칩추기경","칩","추기경","unrelated","word","word",0.0426756065999121,NA,NA,NA,NA,NA
 "칭찬배실","칭찬","배실","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "칭찬선물","칭찬","선물","related","word","word",0.27528232160271,NA,NA,NA,NA,NA
-"칭찬출입구","칭찬","출입구","unrelated","word","word",-0.00133571815491415,NA,NA,NA,NA,NA
+"칭찬출입구","칭찬","출입구","unrelated","word","word",-0.00133571815491415,-0.290684452816755,NA,NA,1,FALSE
 "카르폼고릴라","카르폼","고릴라","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "카르폼봤었한","카르폼","봤었한","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "카메라마이크로폰","카메라","마이크로폰","related","word","word",NA,NA,NA,NA,NA,NA
@@ -4354,7 +4354,7 @@
 "키아맛도워하다","키아","맛도워하다","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "키아합의","키아","합의","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "킬로그램","킬로","그램","related","word","word",0.608398722461999,NA,NA,NA,NA,NA
-"킬로미터명예","킬로미터","명예","unrelated","word","word",0,NA,NA,NA,NA,NA
+"킬로미터명예","킬로미터","명예","unrelated","word","word",0,-0.73708670902051,NA,NA,1,FALSE
 "킬로미터미터","킬로미터","미터","related","word","word",NA,NA,NA,NA,NA,NA
 "킬로미터좋겠실","킬로미터","좋겠실","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "킬로옳은","킬로","옳은","unrelated","word","word",0.0365967784950736,NA,NA,NA,NA,NA
@@ -4418,7 +4418,7 @@
 "태블릿감독","태블릿","감독","unrelated","word","word",0.147971123021609,NA,NA,NA,NA,NA
 "태블릿알약","태블릿","알약","related","word","word",0.535138979409387,NA,NA,NA,NA,NA
 "태블릿있겼쟀는","태블릿","있겼쟀는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"태평양대서양","태평양","대서양","related","word","word",0.644284782114145,NA,NA,NA,NA,NA
+"태평양대서양","태평양","대서양","related","word","word",0.644284782114145,1.06216890777716,NA,NA,1,FALSE
 "태평양볼","태평양","볼","unrelated","word","word",0.128105330439056,NA,NA,NA,NA,NA
 "태평양처근적인","태평양","처근적인","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "택시리무진","택시","리무진","related","word","word",0.30868812840892,NA,NA,NA,NA,NA
@@ -4505,7 +4505,7 @@
 "특이한해이들다","특이한","해이들다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "특출한놀랄만한","특출한","놀랄만한","related","word","word",NA,NA,NA,NA,NA,NA
 "특출한러명","특출한","러명","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"특출한폭발하다","특출한","폭발하다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"특출한폭발하다","특출한","폭발하다","unrelated","word","word",0,-0.694077426286523,NA,NA,1,FALSE
 "틀린옳은","틀린","옳은","related","word","word",0.419769629581891,NA,NA,NA,NA,NA
 "틀린주요","틀린","주요","unrelated","word","word",0.133598837175907,NA,NA,NA,NA,NA
 "틀린진범스턴트","틀린","진범스턴트","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -4565,7 +4565,7 @@
 "파하있첼의","파하있","첼의","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "판막올리하다","판막","올리하다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "판막정리하다","판막","정리하다","unrelated","word","word",0,NA,NA,NA,NA,NA
-"판막통풍","판막","통풍","related","word","word",NA,NA,NA,NA,NA,NA
+"판막통풍","판막","통풍","related","word","word",NA,-0.122332402107859,NA,NA,1,FALSE
 "팔구애니들","팔구","애니들","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "팔구역","팔구","역","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "패거리그룹","패거리","그룹","related","word","word",0.354478821239117,NA,NA,NA,NA,NA
@@ -4713,9 +4713,9 @@
 "피해망상적인미친","피해망상적인","미친","related","word","word",NA,NA,NA,NA,NA,NA
 "피해망상적인의샘교","피해망상적인","의샘교","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "피해망상적인청소부","피해망상적인","청소부","unrelated","word","word",0,NA,NA,NA,NA,NA
-"피해자공격자","피해자","공격자","related","word","word",NA,NA,NA,NA,NA,NA
+"피해자공격자","피해자","공격자","related","word","word",NA,-0.57729505323538,NA,NA,1,FALSE
 "피해자낌느기","피해자","낌느기","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"피해자춤","피해자","춤","unrelated","word","word",0.110789889061118,NA,NA,NA,NA,NA
+"피해자춤","피해자","춤","unrelated","word","word",0.110789889061118,-0.514176884550781,NA,NA,1,FALSE
 "픽에쉬운","픽에","쉬운","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "픽에일즈","픽에","일즈","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "필라무료","필라","무료","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -4732,7 +4732,7 @@
 "필요한이벤트","필요한","이벤트","unrelated","word","word",0.144318152471211,NA,NA,NA,NA,NA
 "필요한질걸","필요한","질걸","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "필요한필요","필요한","필요","related","word","word",0.569183719246276,NA,NA,NA,NA,NA
-"핑땡땡","핑","땡땡","related","word","word",0.440729570212424,NA,NA,NA,NA,NA
+"핑땡땡","핑","땡땡","related","word","word",0.440729570212424,2.20018316278491,NA,NA,1,FALSE
 "핑중요한","핑","중요한","unrelated","word","word",0.162266296409834,NA,NA,NA,NA,NA
 "핑튜미가치로즈는","핑튜미","가치로즈는","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "핑튜미정리하다","핑튜미","정리하다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
@@ -4781,7 +4781,7 @@
 "할겁멈추다","할겁","멈추다","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "할겁프릴이","할겁","프릴이","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
 "할수있게하다과장하다","할수있게하다","과장하다","unrelated","word","word",0,NA,NA,NA,NA,NA
-"할수있게하다제공하다","할수있게하다","제공하다","related","word","word",NA,NA,NA,NA,NA,NA
+"할수있게하다제공하다","할수있게하다","제공하다","related","word","word",NA,-0.889025676841746,NA,NA,1,FALSE
 "할수있게하다하냐 조달","할수있게하다","하냐 조달","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "할아버지기능의","할아버지","기능의","unrelated","word","word",0.173789371942871,NA,NA,NA,NA,NA
 "할아버지캐제","할아버지","캐제","nonword","word","nonword",NA,NA,NA,NA,NA,NA
@@ -4830,7 +4830,7 @@
 "행성골유한","행성","골유한","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "행성궤도","행성","궤도","related","word","word",0.384737798097222,NA,NA,NA,NA,NA
 "행성지도","행성","지도","unrelated","word","word",0.0175039220383113,NA,NA,NA,NA,NA
-"허가냉소적이다","허가","냉소적이다","unrelated","word","word",0,NA,NA,NA,NA,NA
+"허가냉소적이다","허가","냉소적이다","unrelated","word","word",0,-0.885051080123842,NA,NA,1,FALSE
 "허가승인","허가","승인","related","word","word",0.607686148390888,NA,NA,NA,NA,NA
 "허가일요","허가","일요","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "허리케인대선풍","허리케인","대선풍","related","word","word",NA,NA,NA,NA,NA,NA
@@ -4858,7 +4858,7 @@
 "현대의하죄범다","현대의","하죄범다","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "현상다구멍","현상다","구멍","nonword","nonword","word",NA,NA,NA,NA,NA,NA
 "현상다중신","현상다","중신","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
-"현상돼지","현상","돼지","unrelated","word","word",0.136654789286713,NA,NA,NA,NA,NA
+"현상돼지","현상","돼지","unrelated","word","word",0.136654789286713,3.50871190646317,NA,NA,1,FALSE
 "현상이벤트","현상","이벤트","related","word","word",0.40605510761724,NA,NA,NA,NA,NA
 "현상페르","현상","페르","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "현실공상","현실","공상","related","word","word",0.484348257102307,NA,NA,NA,NA,NA
@@ -4910,7 +4910,7 @@
 "화성금성","화성","금성","related","word","word",NA,NA,NA,NA,NA,NA
 "화성료는","화성","료는","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "화성야구","화성","야구","unrelated","word","word",0.109165424398447,NA,NA,NA,NA,NA
-"화약다이너마이트","화약","다이너마이트","related","word","word",0.540592091805796,NA,NA,NA,NA,NA
+"화약다이너마이트","화약","다이너마이트","related","word","word",0.540592091805796,4.32401535698182,NA,NA,1,FALSE
 "화약옳은","화약","옳은","unrelated","word","word",0.135322095237108,NA,NA,NA,NA,NA
 "화약임상에","화약","임상에","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "화임대","화","임대","unrelated","word","word",0.100416588522749,NA,NA,NA,NA,NA
@@ -4948,7 +4948,7 @@
 "환자고객","환자","고객","related","word","word",0.258885913752111,NA,NA,NA,NA,NA
 "환자솔직한","환자","솔직한","unrelated","word","word",0.120526893542408,NA,NA,NA,NA,NA
 "환자위단","환자","위단","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"활동적인갑판","활동적인","갑판","unrelated","word","word",0,NA,NA,NA,NA,NA
+"활동적인갑판","활동적인","갑판","unrelated","word","word",0,-0.338511861797753,NA,NA,1,FALSE
 "활동적인탕발","활동적인","탕발","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "활동적인활동","활동적인","활동","related","word","word",NA,NA,NA,NA,NA,NA
 "회는었믿","회는","었믿","nonword","nonword","nonword",NA,NA,NA,NA,NA,NA
@@ -4968,7 +4968,7 @@
 "회의모임","회의","모임","related","word","word",0.450243739738595,NA,NA,NA,NA,NA
 "회의살바","회의","살바","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "회전하다밤이가","회전하다","밤이가","nonword","word","nonword",NA,NA,NA,NA,NA,NA
-"회전하다순찰","회전하다","순찰","unrelated","word","word",0,NA,NA,NA,NA,NA
+"회전하다순찰","회전하다","순찰","unrelated","word","word",0,-0.63970551496011,NA,NA,1,FALSE
 "회전하다회전","회전하다","회전","related","word","word",NA,NA,NA,NA,NA,NA
 "후보자러와","후보자","러와","nonword","word","nonword",NA,NA,NA,NA,NA,NA
 "후보자투표자","후보자","투표자","related","word","word",NA,NA,NA,NA,NA,NA
