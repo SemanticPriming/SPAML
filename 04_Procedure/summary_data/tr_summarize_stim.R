@@ -245,8 +245,11 @@ number_trials <- tr_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
   summarize(n_trials = n(), 
-            correct = sum(correct, na.rm = T) / n(),
-            n_answered = sum(!is.na(response_action)))
+            correct = sum(correct, na.rm = T) / n(), 
+            n_answered = sum(!is.na(response_action)),
+            start = min(timestamp),
+            end = max(timestamp)) %>%
+  mutate(study_length = difftime(end, start, units = "mins"))
 
 # merge with participant data
 participant_DF <- merge(participant_DF, 
@@ -396,11 +399,12 @@ p_lab <- tr_data_all[tr_data_all$observation %in% p_end, ]
 p_lab <- p_lab[!is.na(p_lab$url_lab), ]
 p_lab <- p_lab %>% 
   left_join(participant_DF %>% 
-              select(keep, n_trials, correct, n_answered, observation), 
+              select(keep, n_trials, correct, n_answered, observation, 
+                     start, end, study_length), 
             by = c("observation" = "observation"))
 p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code", 
-                    "keep", "n_trials", "correct.y", "n_answered")]
-
+                    "keep", "n_trials", "correct.y", "n_answered", 
+                    "start", "end", "study_length")]
 write.csv(p_lab, "/var/www/html/summary_data/tr_participants.csv", row.names = F)
 
 # generate new stimuli STATIC ---- 

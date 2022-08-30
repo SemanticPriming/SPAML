@@ -224,7 +224,11 @@ number_trials <- en_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
   summarize(n_trials = n(), 
-            correct = sum(correct, na.rm = T) / n())
+            correct = sum(correct, na.rm = T) / n(), 
+            n_answered = sum(!is.na(response_action)),
+            start = min(timestamp),
+            end = max(timestamp)) %>% 
+  mutate(study_length = difftime(end, start, units = "mins"))
 
 # merge with participant data
 participant_DF <- merge(participant_DF, 
@@ -234,9 +238,6 @@ participant_DF <- merge(participant_DF,
 # mark those last few as excluded
 participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
 participant_DF$keep[participant_DF$correct < .80] <- "exclude"
-
-write.csv(participant_DF %>% select(please_tell_us_your_gender, keep), 
-          "/var/www/html/summary_data/en_totals.csv", row.names = F)
 
 # grab only real trials ----
 real_trials <- en_data_all %>% #data frame
@@ -375,8 +376,14 @@ p_end <- en_data_all %>%
 
 p_lab <- en_data_all[en_data_all$observation %in% p_end, ]
 p_lab <- p_lab[!is.na(p_lab$url_lab), ]
-#p_lab <- p_lab[!is.na(p_lab$uuid), ]
-p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid")]
+p_lab <- p_lab %>% 
+  left_join(participant_DF %>% 
+              select(keep, n_trials, correct, n_answered, observation, 
+                     start, end, study_length), 
+            by = c("observation" = "observation"))
+p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", 
+                    "keep", "n_trials", "correct.y", "n_answered", 
+                    "start", "end", "study_length")]
 write.csv(p_lab, "/var/www/html/summary_data/en_participants.csv", row.names = F)
 
 # generate new stimuli ----
@@ -574,6 +581,3 @@ for (i in 1:number_folders){
     "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
   
 }
-
-
-

@@ -167,37 +167,12 @@ ja_words <- import("./04_Procedure/ja/ja_words.csv")
 # collected data
 ja_data_all <- 
         bind_rows(processData("./04_Procedure/ja/data/data.sqlite") %>% 
-               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja1/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja2/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja3/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja4/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja5/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja6/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja7/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja8/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja9/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja10/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja11/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja12/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure/ja13/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started ----
+# this is fake data show all of it
 # ja_data_all <- ja_data_all %>% 
-#  filter(timestamp > as.POSIXct("2022-08-01"))
+#  filter(timestamp > as.POSIXct("2022-08-28"))
 
 # Clean Up ----------------------------------------------------------------
 
@@ -205,7 +180,7 @@ ja_data_all <-
 # Participant did not complete at least 100 trials. 
 # Participant did not achieve 80% correct.
 current_year <- 2022
-number_folders <- 14
+number_folders <- 1 # 14 normally
 static <- FALSE
 adaptive <- FALSE
 
@@ -245,7 +220,11 @@ number_trials <- ja_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
   summarize(n_trials = n(), 
-            correct = sum(correct, na.rm = T) / n())
+            correct = sum(correct, na.rm = T) / n(), 
+            n_answered = sum(!is.na(response_action)),
+            start = min(timestamp),
+            end = max(timestamp)) %>% 
+  mutate(study_length = difftime(end, start, units = "mins"))
 
 # merge with participant data
 participant_DF <- merge(participant_DF, 
@@ -255,9 +234,6 @@ participant_DF <- merge(participant_DF,
 # mark those last few as excluded
 participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
 participant_DF$keep[participant_DF$correct < .80] <- "exclude"
-
-write.csv(participant_DF %>% select(please_tell_us_your_gender, keep, url_special_code), 
-          "./04_Procedure/summary_data/ja_totals.csv", row.names = F)
 
 # grab only real trials ----
 real_trials <- ja_data_all %>% #data frame
@@ -391,13 +367,18 @@ p_end <- ja_data_all %>%
   filter(sender == "Stimulus Real") %>% 
   group_by(observation) %>% 
   summarize(n = n()) %>% 
-  filter(n >= 100) %>% 
   pull(observation)
 
 p_lab <- ja_data_all[ja_data_all$observation %in% p_end, ]
 p_lab <- p_lab[!is.na(p_lab$url_lab), ]
-#p_lab <- p_lab[!is.na(p_lab$uuid), ]
-p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid")]
+p_lab <- p_lab %>% 
+  left_join(participant_DF %>% 
+              select(keep, n_trials, correct, n_answered, observation, 
+                     start, end, study_length), 
+            by = c("observation" = "observation"))
+p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code", 
+                    "keep", "n_trials", "correct.y", "n_answered", 
+                    "start", "end", "study_length")]
 write.csv(p_lab, "./04_Procedure/summary_data/ja_participants.csv", row.names = F)
 
 # generate new stimuli STATIC ---- 
