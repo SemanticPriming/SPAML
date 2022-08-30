@@ -123,16 +123,6 @@ russian_tab <-
                 need participants. "), 
               DTOutput("ru_summary_table")  
               
-            ),  # close box
-            # ZPID ----
-            box(
-              title = tags$b("Special Code Tracker"),
-              collapsible = TRUE,
-              solidHeader = TRUE,
-              status = "primary",
-              width = 12,
-              p("This table includes information for specific data collection."), 
-              DTOutput("ru_zpid_summary")
             ) # close box 
           ) #close row
   ) #close tab
@@ -174,16 +164,6 @@ turkish_tab <-
                 need participants. "), 
               DTOutput("tr_summary_table")  
               
-            ),  # close box
-            # ZPID ----
-            box(
-              title = tags$b("Special Code Tracker"),
-              collapsible = TRUE,
-              solidHeader = TRUE,
-              status = "primary",
-              width = 12,
-              p("This table includes information for specific data collection."), 
-              DTOutput("tr_zpid_summary")
             ) # close box
           ) #close row
   ) #close tab
@@ -225,18 +205,7 @@ korean_tab <-
                 need participants. "), 
               DTOutput("ko_summary_table")  
               
-            ),  # close box
-            # ZPID ----
-            box(
-              title = tags$b("Special Code Tracker"),
-              collapsible = TRUE,
-              solidHeader = TRUE,
-              status = "primary",
-              width = 12,
-              p("This table includes information for specific data collection."), 
-              DTOutput("ko_zpid_summary")
-              
-            )  # close box
+            ) # close box
           ) #close row
   ) #close tab
 
@@ -276,17 +245,6 @@ japanese_tab <-
                 points, they will be sampled less often than the words that still 
                 need participants. "), 
               DTOutput("ja_summary_table")  
-              
-            ),  # close box
-            # ZPID ----
-            box(
-              title = tags$b("Special Code Tracker"),
-              collapsible = TRUE,
-              solidHeader = TRUE,
-              status = "primary",
-              width = 12,
-              p("This table includes information for specific data collection."), 
-              DTOutput("ja_zpid_summary")
               
             )  # close box
           ) #close row
@@ -329,18 +287,7 @@ czech_tab <-
                 need participants. "), 
               DTOutput("cs_summary_table")  
               
-            ),  # close box
-            # ZPID ----
-            box(
-              title = tags$b("Special Code Tracker"),
-              collapsible = TRUE,
-              solidHeader = TRUE,
-              status = "primary",
-              width = 12,
-              p("This table includes information for specific data collection."), 
-              DTOutput("cs_zpid_summary")
-              
-            )  # close box
+            ) # close box
           ) #close row
   ) #close tab
 

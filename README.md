@@ -14,9 +14,11 @@ Please see readme files within in each folder for more information about individ
 
 `03_Materials`: This folder contains the materials and translations for the languages that we ran the study in. 
 
-`04_Procedure`: This folder contains example versions of the experiment and all materials for setting up the experiment on your own php enabled server. 
+`04_Procedure`: This folder contains example versions of the experiment, and all materials for setting up the experiment on your own php enabled server. Please note that our real versions often included multiple copies of the same experiment to control for too many people taking it at once. All the data provided in this folder and scripts are run on example data.  
 
-`05_Data`: This folder contains the template for data processing from raw data into the analysis data. Note that we may store the data files in on GitHub in a release if they become too large. 
+`05_Data`: This folder contains the template for data processing from raw data into the analysis data. All examples provided in this folder are from example data, as the real data is too large to store on GitHub directly. Further, some SQLite files from the real data include participant numbers from places like Mturk, Respondi, etc. and these need to be excluded from final shared data. 
+
+Secondary, non-shared versions of the Procedure and Data folder are stored to run the actual analyses for data sharing after all codes have been removed. 
 
 `06_Analysis`: This folder contains the files that calculate descriptive statistics, hypothesis tests, and transition probabilities. 
 
@@ -32,7 +34,11 @@ Please see readme files within in each folder for more information about individ
 
 # Presentations
 
-Buchanan, E. M., Valentine, K. D., Maxwell, N., Taylor, J. E., Montefinese, M. (2020, November). Power simulations for linguistic norm data collection. Spoken presentation at the Annual Meeting of the Psychonomic Society. 
+Buchanan, E. M., Valentine, K. D., Maxwell, N., Taylor, J. E., Montefinese, M. (2020, November). Power simulations for linguistic norm data collection. Spoken presentation at the Annual Meeting of the Psychonomic Society. [Link](https://youtu.be/80B_Mxk4BpQ)
+
+Buchanan, E.M., Korn, J., & Newman, M. (2020, November). Using STRUDEL to create concept-feature norms for many languages. Spoken presentation for the Annual Meeting of the Society for Computation in Psychology. [Link](https://youtu.be/R0_QYTPPmVM)
+
+Grim II, P. A. & Buchanan, E.M. (2020, November). Testing the assumption of model similar- ity across languages. Spoken presentation for the Annual Meeting of the Society for Computation in Psychology. [Link](https://youtu.be/AyT1vx768Wg)
 
 Buchanan, E. M., Cuccolo, K., Lewis, S.,  Evans, T., Geiger, S., Ribeiro, G., Huggins, R., Ambrosini, E., Brick, C., Arriaga, P., Baker, B., Mandair, J., Montefinese, M., Szumowska, E., Verheyenm, S., Sievers, E., Pfuhl, G., Suchow, J. W., Shelton, C., Martinez, M., Baskin, E., Chin, S.-C., Barzykowski, K., Vanpaemel, W., Kuzminska, A., Mizak, S., Paterlini, J. V., Schlyfestone, A. R., Lynott, D., Taylor, J., Sigfrids, F., Levitan, C., Burin, D., Lee, S., Nwadiogo, A., Vaughn, L. A., Metz, J., Cain, J., Monteiro, L. C., Al-Hoorie, A., Vaidis, D., Neta, M., Sanders, A., Godbersen, H., Davis, W., Ruiz-Fernandez, S., Roer, J. P., & Elsherif, M. M. (2021, November). Creating a cross-referenced multi-linguistic dataset to investigate semantic priming. Spoken presentation at the Annual Meeting of the Psychonomic Society. [Link](https://youtu.be/BOtfCxNCbG0)
 

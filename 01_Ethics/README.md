@@ -12,6 +12,6 @@ File information:
 The rest of the documents are IRB information from Harrisburg University: 
 
 - Each document labeled `_Approval` indicates an approval to an update or the original IRB. 
-- Each document is labeled with `_Modification` or `_extension` were updates to the original IRB. 
+- Each document is labeled with `_Modification` or `_Extension` were updates to the original IRB. 
 - Each document is versioned with V1, V2, etc. 
 - The V2 full document is a combination of V1 application + V2 modification to help teams put together their IRBs. These were both done before anyone else started their IRB applications. 

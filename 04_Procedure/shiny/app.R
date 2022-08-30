@@ -87,7 +87,7 @@ server <- function(input, output) {
     
     output$englishN_total <- renderInfoBox({
       infoBox(
-        "English", sum(grepl("keep", en_totals$keep)), 
+        "English", sum(grepl("keep", en_participants$keep)), 
         icon = icon("list"), color = "purple")
     })
     
@@ -123,16 +123,9 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$ru_zpid_summary <- renderDT({
-      
-      datatable(as.data.frame(unique(ru_totals[ , "url_special_code"])), rownames = F,
-                filter = "top",
-                options = list(dom = 'tp'))
-    })
-    
     output$russianN_total <- renderInfoBox({
       infoBox(
-        "Russian", sum(grepl("keep", ru_totals$keep)), 
+        "Russian", sum(grepl("keep", ru_participants$keep)), 
         icon = icon("list"), color = "aqua")
     })
     
@@ -168,16 +161,9 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$tr_zpid_summary <- renderDT({
-      
-      datatable(as.data.frame(unique(tr_totals[ , "url_special_code"])), rownames = F,
-                filter = "top",
-                options = list(dom = 'tp'))
-    })
-    
     output$turkishN_total <- renderInfoBox({
       infoBox(
-        "Turkish", sum(grepl("keep", tr_totals$keep)), 
+        "Turkish", sum(grepl("keep", tr_participants$keep)), 
         icon = icon("list"), color = "red")
     })
     
@@ -213,16 +199,9 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$ko_zpid_summary <- renderDT({
-      
-      datatable(as.data.frame(unique(ko_totals[ , "url_special_code"])), rownames = F,
-                filter = "top",
-                options = list(dom = 'tp'))
-    })
-    
     output$koreanN_total <- renderInfoBox({
       infoBox(
-        "Korean", sum(grepl("keep", ko_totals$keep)), 
+        "Korean", sum(grepl("keep", ko_participants$keep)), 
         icon = icon("list"), color = "teal")
     })
     
@@ -258,16 +237,9 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$ja_zpid_summary <- renderDT({
-      
-      datatable(as.data.frame(unique(ja_totals[ , "url_special_code"])), rownames = F,
-                filter = "top",
-                options = list(dom = 'tp'))
-    })
-    
     output$japaneseN_total <- renderInfoBox({
       infoBox(
-        "Japanese", sum(grepl("keep", ja_totals$keep)), 
+        "Japanese", sum(grepl("keep", ja_participants$keep)), 
         icon = icon("list"), color = "light-blue")
     })
     
@@ -303,16 +275,9 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$cs_zpid_summary <- renderDT({
-      
-      datatable(as.data.frame(unique(cs_totals[ , "url_special_code"])), rownames = F,
-                filter = "top",
-                options = list(dom = 'tp'))
-    })
-    
     output$czechN_total <- renderInfoBox({
       infoBox(
-        "Czech", sum(grepl("keep", cs_totals$keep)), 
+        "Czech", sum(grepl("keep", cs_participants$keep)), 
         icon = icon("list"), color = "navy")
     })
     
