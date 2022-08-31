@@ -63,7 +63,7 @@ server <- function(input, output) {
     output$en_participant_data <- renderDT({
 
         colnames(en_participants) <- c("PSA_ID", "Time", "Participant_ID")
-        datatable(en_participants, rownames = F,
+        datatable(en_participants[ , 1:3], rownames = F,
                   filter = "top",
                   options = list(dom = 'tp'))
     })
@@ -101,7 +101,7 @@ server <- function(input, output) {
     output$ru_participant_data <- renderDT({
       
       colnames(ru_participants) <- c("PSA_ID", "Time", "Participant_ID")
-      datatable(ru_participants, rownames = F,
+      datatable(ru_participants[ , 1:3], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
@@ -139,7 +139,7 @@ server <- function(input, output) {
     output$tr_participant_data <- renderDT({
       
       colnames(tr_participants) <- c("PSA_ID", "Time", "Participant_ID")
-      datatable(tr_participants, rownames = F,
+      datatable(tr_participants[ , 1:3], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
@@ -177,7 +177,7 @@ server <- function(input, output) {
     output$ko_participant_data <- renderDT({
       
       colnames(ko_participants) <- c("PSA_ID", "Time", "Participant_ID")
-      datatable(ko_participants, rownames = F,
+      datatable(ko_participants[ , 1:3], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
@@ -215,7 +215,7 @@ server <- function(input, output) {
     output$ja_participant_data <- renderDT({
       
       colnames(ja_participants) <- c("PSA_ID", "Time", "Participant_ID")
-      datatable(ja_participants, rownames = F,
+      datatable(ja_participants[ , 1:3], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })
@@ -253,7 +253,7 @@ server <- function(input, output) {
     output$cs_participant_data <- renderDT({
       
       colnames(cs_participants) <- c("PSA_ID", "Time", "Participant_ID")
-      datatable(cs_participants, rownames = F,
+      datatable(cs_participants[ , 1:3], rownames = F,
                 filter = "top",
                 options = list(dom = 'tp'))
     })

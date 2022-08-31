@@ -174,6 +174,22 @@ tr_data_all <-
 # tr_data_all <- tr_data_all %>% 
 #  filter(timestamp > as.POSIXct("2022-08-27"))
 
+# fix the issue of double displays that happened before 2022-09-01
+  # 13_0_98 == 15_0_0 
+  # 13_0_99 == 15_0_1
+  # figure out everyone who saw 15_100 and 15_101 which means extra
+  obs_extra <- tr_data_all %>% 
+    filter(grepl("15_0_100", sender_id)) %>% 
+    pull(observation) %>% 
+    unique()
+  # remove second instance of trials so 15_0_0* or 15_0_1*
+  # be specific because regex coding
+  
+  tr_data_all <- tr_data_all %>% 
+    filter(!(observation %in% obs_extra &
+               grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
+    ))
+
 # Clean Up ----------------------------------------------------------------
 
 # Participant did not indicate at least 18 years of age. 
@@ -552,7 +568,7 @@ if (static == TRUE){
     
     # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
     real <- paste('[', 
-                  paste(all_trials$together[250:300], collapse = ",", sep = ""),
+                  paste(all_trials$together[251:300], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
       "./04_Procedure/tr", folder_num,
@@ -758,7 +774,7 @@ if (adaptive == TRUE){
     
     # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
     real <- paste('[',
-                  paste(all_trials$together[250:300], collapse = ",", sep = ""),
+                  paste(all_trials$together[251:300], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
       "./04_Procedure/tr", folder_num,
