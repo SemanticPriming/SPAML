@@ -214,7 +214,7 @@ ru_data_all <- ru_data_all %>%
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
 # Clean Up ----------------------------------------------------------------
 
 # Participant did not indicate at least 18 years of age. 
@@ -260,6 +260,7 @@ participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_yo
 number_trials <- ru_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
+  filter(!is.na(word)) %>% #ignore trials with nothing on them because duh
   summarize(n_trials = n(), 
             correct = sum(correct, na.rm = T) / n(), 
             n_answered = sum(!is.na(response_action)),
@@ -393,6 +394,7 @@ ru_Z_summary$done <- (ru_Z_summary$sampleN >= 50 & ru_Z_summary$SE_Z <= .09) | r
 # merge with complete stimuli list ---- 
 ru_merged <- merge(ru_words, ru_Z_summary, 
                    by = "word_combo", all.x = T)
+# подростковый,сто check excluded 
 
 # use data ----
 ru_use <- subset(ru_merged, is.na(done) | done == FALSE)

@@ -253,20 +253,23 @@ for (i in 1:nrow(targets)){
     targets$ru_target_trans[i] #new target 
 }
 
-# fix fake words ----
-cues <- ru_update %>% filter(ru_fake_cue_trans != "")
-for (i in 1:nrow(cues)){
-  ru$ru_fake_cue[ru$ru_fake_cue == cues$ru_fake_cue[i] #original cue match
-            & ru$en_cue == cues$en_cue[i]] <- #english match 
-    cues$ru_fake_cue_trans[i] #new cue 
-}
+# # fix fake words ----
+# cues <- ru_update %>% filter(ru_fake_cue_trans != "")
+# for (i in 1:nrow(cues)){
+#   ru$ru_fake_cue[ru$ru_fake_cue == cues$ru_fake_cue[i] #original cue match
+#             & ru$en_cue == cues$en_cue[i]] <- #english match 
+#     cues$ru_fake_cue_trans[i] #new cue 
+# }
+# 
+# targets <- ru_update %>% filter(ru_fake_target_trans != "")
+# for (i in 1:nrow(targets)){
+#   ru$ru_fake_target[ru$ru_fake_target == targets$ru_fake_target[i] #original target match
+#             & ru$en_target == targets$en_target[i]] <- #english match 
+#     targets$ru_fake_target_trans[i] #new target 
+# }
 
-targets <- ru_update %>% filter(ru_fake_target_trans != "")
-for (i in 1:nrow(targets)){
-  ru$ru_fake_target[ru$ru_fake_target == targets$ru_fake_target[i] #original target match
-            & ru$en_target == targets$en_target[i]] <- #english match 
-    targets$ru_fake_target_trans[i] #new target 
-}
+ru$ru_fake_target <- ru_update$ru_fake_target_fix
+ru$ru_fake_cue <- ru_update$ru_fake_cue_fix
 
 sum(duplicated(ru$ru_cue))
 sum(duplicated(ru$ru_target))

@@ -235,6 +235,7 @@ participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_yo
 number_trials <- ru_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
+  filter(!is.na(word)) %>% #ignore trials with nothing on them because duh
   summarize(n_trials = n(), 
             correct = sum(correct, na.rm = T) / n(), 
             n_answered = sum(!is.na(response_action)),
