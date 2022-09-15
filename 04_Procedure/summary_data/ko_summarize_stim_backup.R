@@ -352,13 +352,15 @@ ko_real_wide <- merge(
 ko_real_wide <- ko_real_wide[ , c("unique_trial", "observation.x", "word.x", 
                                   "class.x", "correct.x", "trial_code.x", 
                                   "duration.y", "word.y", "class.y", "correct.y", 
-                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+                                  "Z_RT.y", "keep.y", "keep_participant.y", 
+                                  "ended_on.x", "ended_on.y")]
 # good names
 colnames(ko_real_wide) <- c("unique_trial", "observation", "cue_word", 
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
                             "target_correct", "target_Z_RT",
-                            "keep_trial", "keep_participant")
+                            "keep_trial", "keep_participant", 
+                            "cue_end_of_trial", "target_end_of_trial")
 
 # only focus on related-unrelated
 ko_focus <- subset(ko_real_wide, target_type == "word" & cue_type == "word")
@@ -372,6 +374,18 @@ ko_focus <- merge(ko_focus, ko_words[ , c("type", "word_combo")],
 ### HERE YOU WILL TURN ON ###
 # subset out NAs at some point they will be practice trials
 ko_focus <- subset(ko_focus, !is.na(type))
+
+# calculate the total N versus timeout N
+ko_num_trials <- ko_focus %>% 
+  group_by(word_combo) %>% 
+  summarize(target_correct = sum(target_correct, na.rm = T),
+            target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+            target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+            target_prop_correct = target_correct/target_answeredN,
+            cue_correct = sum(cue_correct, na.rm = T),
+            cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+            cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+            cue_prop_correct = cue_correct/cue_answeredN)
 
 ### HERE YOU WILL TURN ON ###
 ko_focus <- subset(ko_focus, keep_participant == "keep")
@@ -390,27 +404,17 @@ ko_Z_summary <- ko_Z %>%
             SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
             sampleN = length(target_Z_RT))
 
-# are we done? ---- 
-ko_Z_summary$done_both <- (ko_Z_summary$sampleN >= 50 & ko_Z_summary$SE_Z <= .09) | ko_Z_summary$sampleN >= 320
-ko_Z_summary$done <- ko_Z_summary$sampleN >= 50
-
 # merge with complete stimuli list ---- 
 ko_merged <- merge(ko_words, ko_Z_summary, 
                    by = "word_combo", all.x = T)
 
-# merge with old data ----
-# pull in other information from previous weeks
-list_ko_data <- lapply(list.files(path = "/var/www/html/summary_data", 
-                                  pattern = "ko_summary_[0-9].*.csv", full.names = T),
-                       import)
-ko_summaries <- bind_rows(list_ko_data, ko_merged)
-ko_merged <- ko_summaries %>%
-  group_by(word_combo) %>% 
-  summarize(M_Z = weighted.mean(M_Z, sampleN), 
-            SD_Z = weighted.mean(SD_Z, sampleN), 
-            SE_Z = weighted.mean(SE_Z, sampleN),
-            sampleN = sum(sampleN), 
-            across())
+ko_merged <- merge(ko_merged, ko_num_trials, 
+                   by = "word_combo", all.x = T)
+
+# are we done? ---- 
+ko_merged$done_both <- (ko_merged$target_answeredN >= 50 & ko_merged$SE_Z <= .09) | ko_merged$target_answeredN >= 320
+ko_merged$done_totalN <- ko_merged$target_answeredN >= 50
+ko_merged$done <- ko_merged$sampleN >= 50
 
 # use data ----
 ko_use <- subset(ko_merged, is.na(done) | done == FALSE)

@@ -93,7 +93,9 @@ server <- function(input, output) {
     
     output$englishWORD_total <- renderInfoBox({
       infoBox(
-        "English", sum(en_summary$done, na.rm = T), 
+        "English", paste(sum(en_summary$done, na.rm = T), 
+                         sum(en_summary$done_totalN, na.rm = T), 
+                         sep = " - "), 
         icon = icon("list"), color = "purple")
     })
     
@@ -131,7 +133,9 @@ server <- function(input, output) {
     
     output$russianWORD_total <- renderInfoBox({
       infoBox(
-        "Russian", sum(ru_summary$done, na.rm = T), 
+        "Russian", paste(sum(ru_summary$done, na.rm = T), 
+                         sum(ru_summary$done_totalN, na.rm = T), 
+                         sep = " - "), 
         icon = icon("list"), color = "aqua")
     })
     
@@ -169,7 +173,9 @@ server <- function(input, output) {
     
     output$turkishWORD_total <- renderInfoBox({
       infoBox(
-        "Turkish", sum(tr_summary$done, na.rm = T), 
+        "Turkish", paste(sum(tr_summary$done, na.rm = T), 
+                         sum(tr_summary$done_totalN, na.rm = T), 
+                         sep = " - "), 
         icon = icon("list"), color = "red")
     })
  
@@ -207,7 +213,9 @@ server <- function(input, output) {
     
     output$koreanWORD_total <- renderInfoBox({
       infoBox(
-        "Korean", sum(ko_summary$done, na.rm = T), 
+        "Korean", paste(sum(ko_summary$done, na.rm = T), 
+                        sum(ko_summary$done_totalN, na.rm = T), 
+                        sep = " - "),
         icon = icon("list"), color = "teal")
     })
        
@@ -245,7 +253,9 @@ server <- function(input, output) {
     
     output$japaneseWORD_total <- renderInfoBox({
       infoBox(
-        "Japanese", sum(ja_summary$done, na.rm = T), 
+        "Japanese", paste(sum(ja_summary$done, na.rm = T), 
+                          sum(ja_summary$done_totalN, na.rm = T), 
+                          sep = " - "), 
         icon = icon("list"), color = "light-blue")
     })
     
@@ -283,7 +293,9 @@ server <- function(input, output) {
     
     output$czechWORD_total <- renderInfoBox({
       infoBox(
-        "Czech", sum(cs_summary$done, na.rm = T), 
+        "Czech", paste(sum(cs_summary$done, na.rm = T), 
+                       sum(cs_summary$done_totalN, na.rm = T), 
+                       sep = " - "), 
         icon = icon("list"), color = "navy")
     })
     

@@ -428,7 +428,7 @@ ko_cue,ko_target,type,cue_type,target_type,ko_cosine
 바다,대양,related,word,word,
 반대,상반하는,related,word,word,
 긴급한,비상,related,word,word,0.378452437355402
-밖,에대한,related,word,word,
+밖,~에 대한,related,word,word,
 인종 차별 주의자,공산주의자,related,word,word,
 은행가,투자자,related,word,word,0.364619932899539
 무게,키,related,word,word,0.299058790437961
@@ -1363,7 +1363,7 @@ ko_cue,ko_target,type,cue_type,target_type,ko_cosine
 노예,대선풍,unrelated,word,word,0
 빈도,침착한,unrelated,word,word,0
 조용한,어업,unrelated,word,word,0
-뼈,에대한,unrelated,word,word,0
+뼈,~에 대한,unrelated,word,word,0
 바람,일반적으로,unrelated,word,word,0.110323368755157
 관리하다,가슴,unrelated,word,word,0
 브리프 케이스,능력,unrelated,word,word,0
@@ -1517,7 +1517,7 @@ ko_cue,ko_target,type,cue_type,target_type,ko_cosine
 거뛸,전투,nonword,nonword,word,
 거였이,성기,nonword,nonword,word,
 거존한,상징,nonword,nonword,word,
-걱자,에대한,nonword,nonword,word,
+걱자,~에 대한,nonword,nonword,word,
 건만,긴,nonword,nonword,word,
 건사다,박물관,nonword,nonword,word,
 건지있는,미친,nonword,nonword,word,
