@@ -628,7 +628,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[351:400], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/htmk/en", folder_num,
+    "/var/www/html/en", folder_num,
     "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
   
 }
