@@ -72,7 +72,7 @@ processData <- function(database) {
   
   # Figure out the length of the random ids needed
   # to preserve the information therein. (five characters
-  # should usually be enougth, but better safe)
+  # should usually be enough, but better safe)
   for (i in 5:36) {
     if (
       information_preserved(d$session, i) &&
@@ -200,20 +200,20 @@ ko_data_all <- ko_data_all %>%
   filter(timestamp > as.POSIXct("2022-08-28"))
 
 # fix the issue of double displays that happened before 2022-09-01
-  # 13_0_98 == 15_0_0 
-  # 13_0_99 == 15_0_1
-  # figure out everyone who saw 15_100 and 15_101 which means extra
-  obs_extra <- ko_data_all %>% 
-    filter(grepl("15_0_100", sender_id)) %>% 
-    pull(observation) %>% 
-    unique()
-  # remove second instance of trials so 15_0_0* or 15_0_1*
-  # be specific because regex coding
-  
-  ko_data_all <- ko_data_all %>% 
-    filter(!(observation %in% obs_extra &
-               grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
-    ))
+# 13_0_98 == 15_0_0 
+# 13_0_99 == 15_0_1
+# figure out everyone who saw 15_100 and 15_101 which means extra
+obs_extra <- ko_data_all %>% 
+  filter(grepl("15_0_100", sender_id)) %>% 
+  pull(observation) %>% 
+  unique()
+# remove second instance of trials so 15_0_0* or 15_0_1*
+# be specific because regex coding
+
+ko_data_all <- ko_data_all %>% 
+  filter(!(observation %in% obs_extra &
+             grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
+  ))
 
 # Clean Up ----------------------------------------------------------------
 
@@ -223,7 +223,7 @@ ko_data_all <- ko_data_all %>%
 current_year <- 2022
 number_folders <- 14
 static <- FALSE
-adaptive <- FALSE
+adaptive <- TRUE
 
 ##create demographics only data
 demos <- ko_data_all %>% #data frame
@@ -251,7 +251,7 @@ participant_DF <- merge(demos[ , demo_cols],
 colnames(participant_DF) <- gsub(".x$", "_demographics", colnames(participant_DF))
 colnames(participant_DF) <- gsub(".y$", "_consent", colnames(participant_DF))
 
-participant_DF$keep <- "keep"
+if (nrow(participant_DF) > 0){participant_DF$keep <- "keep"}
 
 # only above 18
 participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
@@ -387,12 +387,29 @@ ko_Z_summary <- ko_Z %>%
             SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
             sampleN = length(target_Z_RT))
 
-# are we done? ---- 
-ko_Z_summary$done <- (ko_Z_summary$sampleN >= 50 & ko_Z_summary$SE_Z <= .09) | ko_Z_summary$sampleN >= 320
-
 # merge with complete stimuli list ---- 
 ko_merged <- merge(ko_words, ko_Z_summary, 
                    by = "word_combo", all.x = T)
+
+# merge with old data ----
+# pull in other information from previous weeks
+list_ko_data <- lapply(list.files(path = "/var/www/html/summary_data", 
+                                  pattern = "ko_summary_[0-9].*.csv", full.names = T),
+                       import)
+ko_summaries <- bind_rows(list_ko_data, ko_merged)
+ko_merged <- ko_summaries %>%
+  select(-done_both, -done) %>% 
+  group_by(word_combo, ko_cue, ko_target, type, cue_type, 
+           target_type, ko_cosine) %>% 
+  summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T), 
+            SD_Z = weighted.mean(SD_Z, sampleN, na.rm = T), 
+            SE_Z = weighted.mean(SE_Z, sampleN, na.rm = T), 
+            sampleN = sum(sampleN, na.rm = T), 
+            across(), .groups  = "keep")
+
+# are we done? ---- 
+ko_merged$done_both <- (ko_merged$sampleN >= 50 & ko_merged$SE_Z <= .09) | ko_merged$sampleN >= 320
+ko_merged$done <- ko_merged$sampleN >= 50
 
 # use data ----
 ko_use <- subset(ko_merged, is.na(done) | done == FALSE)
@@ -421,6 +438,22 @@ p_lab <- p_lab %>%
 p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code", 
                     "keep", "n_trials", "correct.y", "n_answered", 
                     "start", "end", "study_length")]
+
+# merge with old data ----
+# pull in other information from previous weeks
+list_ko_data <- lapply(list.files(path = "/var/www/html/summary_data", 
+                                  pattern = "ko_participants_[0-9].*.csv", full.names = T),
+                       import)
+if (nrow(p_lab) > 0){
+  p_lab <- unique(bind_rows(bind_rows(list_ko_data) %>% 
+                              mutate(url_lab = as.character(url_lab),
+                                     url_special_code = as.character(url_special_code)), 
+                            p_lab %>% 
+                              mutate(url_special_code = as.character(url_special_code),
+                                     study_length = as.numeric(study_length))))
+} else {
+  p_lab <- unique(bind_rows(list_ko_data))
+}
 write.csv(p_lab, "/var/www/html/summary_data/ko_participants.csv", row.names = F)
 
 # generate new stimuli STATIC ---- 

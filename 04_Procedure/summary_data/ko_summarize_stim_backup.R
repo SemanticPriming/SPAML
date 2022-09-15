@@ -1,0 +1,449 @@
+# Information -------------------------------------------------------------
+
+# This R script reads in the data from the SPAML experiment and then:
+# removes incorrect trials since they don't count
+# removes participants who could not get 80% correct on 100 minimum trials
+# z scores each participants data 
+# calculates word, sample size, SE, "done" with <= .09 SE 
+# creates participant ID list by lab 
+
+# From this data, the R script:
+# Writes out 8 blocks of 100 words that are probabilistically selected
+# Writes out summary table
+# Writes out participant summary 
+
+# Libraries ---------------------------------------------------------------
+
+library(rio)
+library(RSQLite)
+library(dplyr)
+library(tidyverse)
+library(jsonlite)
+library(janitor)
+library(widyr)
+
+# Functions ---------------------------------------------------------------
+
+# from labjs docs
+processData <- function(database) {
+  con <- dbConnect(
+    drv=RSQLite::SQLite(),
+    dbname=database
+  )
+  
+  # Extract main table
+  d <- dbGetQuery(
+    conn=con,
+    statement='SELECT * FROM labjs'
+  )
+  
+  # Close connection
+  dbDisconnect(
+    conn=con
+  )
+  
+  # Discard connection
+  rm(con)
+  
+  d.meta <- map_dfr(d$metadata, fromJSON) %>%
+    dplyr::rename(
+      observation=id
+    )
+  
+  d <- d %>%
+    bind_cols(d.meta) %>%
+    select(
+      -metadata # Remove metadata column
+    )
+  
+  # Remove temporary data frame
+  rm(d.meta)
+  
+  count_unique <- function(x) {
+    return(length(unique(x)))
+  }
+  
+  information_preserved <- function(x, length) {
+    return(
+      count_unique(str_sub(x, end=i)) ==
+        count_unique(x)
+    )
+  }
+  
+  # Figure out the length of the random ids needed
+  # to preserve the information therein. (five characters
+  # should usually be enougth, but better safe)
+  for (i in 5:36) {
+    if (
+      information_preserved(d$session, i) &&
+      information_preserved(d$observation, i)
+    ) {
+      break()
+    }
+  }
+  
+  d <- d %>%
+    dplyr::mutate(
+      session=str_sub(session, end=i),
+      observation=str_sub(observation, end=i)
+    )
+  
+  rm(i, count_unique, information_preserved)
+  
+  parseJSON <- function(input) {
+    return(input %>%
+             fromJSON(flatten=T) %>% {
+               # Coerce lists
+               if (class(.) == 'list') {
+                 discard(., is.null) %>%
+                   as_tibble()
+               } else {
+                 .
+               } } %>%
+             # Sanitize names
+             janitor::clean_names() %>%
+             # Use only strings for now, and re-encode types later
+             mutate_all(as.character)
+    )
+  }
+  
+  d.full <- d %>%
+    dplyr::filter(payload == 'full')
+  
+  if (nrow(d.full) > 0) {
+    d.full %>%
+      group_by(observation, id) %>%
+      do(
+        { map_dfr(.$data, parseJSON) } %>%
+          bind_rows()
+      ) %>%
+      ungroup() %>%
+      select(-id) -> d.full
+  } else {
+    # If there are no full datasets, start from an entirely empty df
+    # in order to avoid introducing unwanted columns into the following
+    # merge steps.
+    d.full <- tibble()
+  }
+  
+  d %>%
+    dplyr::filter(payload %in% c('incremental', 'latest')) %>%
+    group_by(observation, id) %>%
+    do(
+      { map_dfr(.$data, parseJSON) } %>%
+        bind_rows()
+    ) %>%
+    ungroup() %>%
+    select(-id) -> d.incremental
+  
+  if (nrow(d.full) > 0){
+    
+    d.output <- d.full %>%
+      bind_rows(
+        d.incremental %>% filter(!(observation %in% d.full$observation))
+      ) %>%
+      type_convert()
+    
+  } else {
+    
+    d.output <- d.incremental %>% type_convert()
+    
+  }
+  
+  d.output %>%
+    group_by(observation) %>%
+    fill(matches('code'), .direction='down') %>%
+    fill(matches('code'), .direction='up') %>%
+    ungroup() -> d.output
+  
+  return(d.output)
+}
+
+# Data --------------------------------------------------------------------
+
+# # set working directory
+# setwd("/Users/erinbuchanan/GitHub/Research/2_projects/SPAML/SPAML-PSA")
+
+# original word lists
+ko_words <- import("/var/www/html/ko/ko_words.csv")
+
+# collected data
+ko_data_all <- 
+        bind_rows(processData("/var/www/html/ko/data/data.sqlite") %>% 
+               mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko1/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko2/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko3/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko4/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko5/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko6/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko7/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko8/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko9/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko10/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko11/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko12/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/ko13/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab))) %>% unique()
+
+# delete stuff before we started ----
+ ko_data_all <- ko_data_all %>% 
+  filter(timestamp > as.POSIXct("2022-08-28"))
+
+# fix the issue of double displays that happened before 2022-09-01
+  # 13_0_98 == 15_0_0 
+  # 13_0_99 == 15_0_1
+  # figure out everyone who saw 15_100 and 15_101 which means extra
+  obs_extra <- ko_data_all %>% 
+    filter(grepl("15_0_100", sender_id)) %>% 
+    pull(observation) %>% 
+    unique()
+  # remove second instance of trials so 15_0_0* or 15_0_1*
+  # be specific because regex coding
+  
+  ko_data_all <- ko_data_all %>% 
+    filter(!(observation %in% obs_extra &
+               grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
+    ))
+
+# Clean Up ----------------------------------------------------------------
+
+# Participant did not indicate at least 18 years of age. 
+# Participant did not complete at least 100 trials. 
+# Participant did not achieve 80% correct.
+current_year <- 2022
+number_folders <- 14
+static <- FALSE
+adaptive <- TRUE
+
+##create demographics only data
+demos <- ko_data_all %>% #data frame
+  filter(sender == "Demographics Form") #filter out only demographics lines
+
+##create experiment information data
+exp <- ko_data_all %>% 
+  filter(sender == "Consent Form")
+
+demo_cols <- c("observation", "duration",
+               colnames(demos)[grep("^time", colnames(demos))],
+               "please_tell_us_your_gender", "which_year_were_you_born", 
+               "please_tell_us_your_education_level", "native_language",
+               "url_special_code")
+exp_cols <- c("observation", "duration",
+              colnames(exp)[grep("^time", colnames(exp))],
+              "url_lab", 
+              colnames(exp)[grep("meta", colnames(exp))])
+
+participant_DF <- merge(demos[ , demo_cols], 
+                        exp[ , exp_cols],
+                        by = "observation", 
+                        all = T)
+
+colnames(participant_DF) <- gsub(".x$", "_demographics", colnames(participant_DF))
+colnames(participant_DF) <- gsub(".y$", "_consent", colnames(participant_DF))
+
+participant_DF$keep <- "keep"
+
+# only above 18
+participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
+
+# at least 100 trials + 80%
+number_trials <- ko_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  group_by(observation) %>% 
+  summarize(n_trials = n(), 
+            correct = sum(correct, na.rm = T) / n(), 
+            n_answered = sum(!is.na(response_action)),
+            start = min(timestamp),
+            end = max(timestamp)) %>% 
+  mutate(study_length = difftime(end, start, units = "mins"))
+
+# merge with participant data
+participant_DF <- merge(participant_DF, 
+                        number_trials,
+                        by = "observation")
+
+# mark those last few as excluded
+participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
+participant_DF$keep[participant_DF$correct < .80] <- "exclude"
+
+# grab only real trials ----
+real_trials <- ko_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  select(observation, sender_id, response, response_action, ended_on, duration,
+         colnames(ko_data_all)[grep("^time", colnames(ko_data_all))], 
+         word, class, correct_response, correct)
+
+# z score participant data ----
+real_trials$original_duration <- real_trials$duration #hang on to original time
+
+##Separate out NA data for the z-score part
+##this mostly controls for timeouts
+real_trials_NA <- real_trials %>% #data frame
+  filter(is.na(correct) | #grab time out trials OR
+           correct == FALSE | #grab incorrect trials OR
+           duration < 160) %>%  #grab short rts 
+  mutate(Z_RT = NA, #set all Z_RTs to NA for these trials
+         duration = NA, 
+         keep = "exclude")
+
+##this section z-scores the rest of the data
+##just not time outs
+real_trials_nonNA <- 
+  real_trials %>% #data frame
+  group_by(observation) %>% #group by participant
+  filter(!is.na(correct)) %>% #take out the NA timeouts
+  filter(correct == TRUE) %>% #only correct trials
+  filter(duration >= 160) %>% #longer response latencies 
+  mutate(Z_RT = as.vector(scale(duration)), #create a z-score RT
+         keep = "keep")
+
+##put the time outs with the answered trials 
+real_trials <- bind_rows(real_trials_NA, real_trials_nonNA)
+
+##indicate what participants to exclude
+real_trials <- real_trials %>% 
+  left_join((participant_DF %>% 
+               select(observation, keep) %>% 
+               rename(keep_participant = keep)), 
+            by = c("observation" = "observation")) %>% 
+  # sort this so the trial type is right
+  arrange(observation, timestamp)
+
+# figure out trial type ----
+
+real_trials$trial_code <- NA
+real_trials$which <- NA
+# add that information 
+for (person in unique(real_trials$observation)){
+  
+  real_trials$trial_code[real_trials$observation == person] <- 
+    rep(1:401, each = 2, length.out = length(real_trials$trial_code[real_trials$observation == person]))
+  
+  real_trials$which[real_trials$observation == person] <-
+    rep(c("cue", "target"), times = 2, 
+        length.out = length(real_trials$trial_code[real_trials$observation == person]))
+  
+}
+
+# pivot wider with information you need
+real_trials$unique_trial <- paste(real_trials$observation, 
+                                  real_trials$trial_code, sep = "_")
+# do it with merge because ugh pivot
+ko_real_wide <- merge(
+  real_trials[real_trials$which == "cue" , ], #just cues
+  real_trials[real_trials$which == "target" , ], #just targets
+  by = "unique_trial",
+  all = T
+)
+# take just what we need
+ko_real_wide <- ko_real_wide[ , c("unique_trial", "observation.x", "word.x", 
+                                  "class.x", "correct.x", "trial_code.x", 
+                                  "duration.y", "word.y", "class.y", "correct.y", 
+                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+# good names
+colnames(ko_real_wide) <- c("unique_trial", "observation", "cue_word", 
+                            "cue_type", "cue_correct", "trial_order", 
+                            "target_duration", "target_word", "target_type", 
+                            "target_correct", "target_Z_RT",
+                            "keep_trial", "keep_participant")
+
+# only focus on related-unrelated
+ko_focus <- subset(ko_real_wide, target_type == "word" & cue_type == "word")
+ko_focus$word_combo <- paste0(ko_focus$cue_word, ko_focus$target_word)
+
+# add if it's related or unrelated
+ko_words$word_combo <- paste0(ko_words$ko_cue, ko_words$ko_target)
+ko_focus <- merge(ko_focus, ko_words[ , c("type", "word_combo")], 
+                  by = "word_combo", all.x = T)
+
+### HERE YOU WILL TURN ON ###
+# subset out NAs at some point they will be practice trials
+ko_focus <- subset(ko_focus, !is.na(type))
+
+### HERE YOU WILL TURN ON ###
+ko_focus <- subset(ko_focus, keep_participant == "keep")
+
+# only correct answers for checking stimuli counts ----
+ko_Z <- subset(ko_focus, target_correct == TRUE)
+ko_Z <- subset(ko_Z, keep_trial == "keep")
+
+# Calculate Statistics ----------------------------------------------------
+
+# calculates word, sample size, SE, "done" with <= .09 SE ----
+ko_Z_summary <- ko_Z %>% 
+  group_by(word_combo) %>% 
+  summarize(M_Z = mean(target_Z_RT),
+            SD_Z = sd(target_Z_RT),
+            SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
+            sampleN = length(target_Z_RT))
+
+# are we done? ---- 
+ko_Z_summary$done_both <- (ko_Z_summary$sampleN >= 50 & ko_Z_summary$SE_Z <= .09) | ko_Z_summary$sampleN >= 320
+ko_Z_summary$done <- ko_Z_summary$sampleN >= 50
+
+# merge with complete stimuli list ---- 
+ko_merged <- merge(ko_words, ko_Z_summary, 
+                   by = "word_combo", all.x = T)
+
+# merge with old data ----
+# pull in other information from previous weeks
+list_ko_data <- lapply(list.files(path = "/var/www/html/summary_data", 
+                                  pattern = "ko_summary_[0-9].*.csv", full.names = T),
+                       import)
+ko_summaries <- bind_rows(list_ko_data, ko_merged)
+ko_merged <- ko_summaries %>%
+  group_by(word_combo) %>% 
+  summarize(M_Z = weighted.mean(M_Z, sampleN), 
+            SD_Z = weighted.mean(SD_Z, sampleN), 
+            SE_Z = weighted.mean(SE_Z, sampleN),
+            sampleN = sum(sampleN), 
+            across())
+
+# use data ----
+ko_use <- subset(ko_merged, is.na(done) | done == FALSE)
+ko_sample <- subset(ko_merged, done == TRUE)
+
+# Generate ----------------------------------------------------------------
+
+# generate summary chart for shiny ----
+write.csv(ko_merged, 
+          paste("/var/www/html/summary_data/ko_summary_",
+                Sys.time(), ".csv", sep = ""),
+          row.names = F)
+
+# generate participant report for shiny ----
+p_end <- ko_data_all %>% 
+  filter(sender == "Stimulus Real") %>% 
+  group_by(observation) %>% 
+  summarize(n = n()) %>% 
+  filter(n >= 100) %>% 
+  pull(observation)
+
+p_lab <- ko_data_all[ko_data_all$observation %in% p_end, ]
+p_lab <- p_lab[!is.na(p_lab$url_lab), ]
+p_lab <- p_lab %>% 
+  left_join(participant_DF %>% 
+              select(keep, n_trials, correct, n_answered, observation, 
+                     start, end, study_length), 
+            by = c("observation" = "observation"))
+p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code", 
+                    "keep", "n_trials", "correct.y", "n_answered", 
+                    "start", "end", "study_length")]
+
+write.csv(p_lab, 
+          paste("/var/www/html/summary_data/ko_participants_",
+                Sys.time(), ".csv", sep = ""),
+          row.names = F)
