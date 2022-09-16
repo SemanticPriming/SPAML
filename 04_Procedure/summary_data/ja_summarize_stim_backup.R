@@ -353,13 +353,15 @@ ja_real_wide <- merge(
 ja_real_wide <- ja_real_wide[ , c("unique_trial", "observation.x", "word.x", 
                                   "class.x", "correct.x", "trial_code.x", 
                                   "duration.y", "word.y", "class.y", "correct.y", 
-                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+                                  "Z_RT.y", "keep.y", "keep_participant.y", 
+                                  "ended_on.x", "ended_on.y")]
 # good names
 colnames(ja_real_wide) <- c("unique_trial", "observation", "cue_word", 
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
                             "target_correct", "target_Z_RT",
-                            "keep_trial", "keep_participant")
+                            "keep_trial", "keep_participant", 
+                            "cue_end_of_trial", "target_end_of_trial")
 
 # only focus on related-unrelated
 ja_focus <- subset(ja_real_wide, target_type == "word" & cue_type == "word")
@@ -373,6 +375,18 @@ ja_focus <- merge(ja_focus, ja_words[ , c("type", "word_combo")],
 ### HERE YOU WILL TURN ON ###
 # subset out NAs at some point they will be practice trials
 ja_focus <- subset(ja_focus, !is.na(type))
+
+# calculate the total N versus timeout N
+ja_num_trials <- ja_focus %>% 
+  group_by(word_combo) %>% 
+  summarize(target_correct = sum(target_correct, na.rm = T),
+            target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+            target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+            target_prop_correct = target_correct/target_answeredN,
+            cue_correct = sum(cue_correct, na.rm = T),
+            cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+            cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+            cue_prop_correct = cue_correct/cue_answeredN)
 
 ### HERE YOU WILL TURN ON ###
 ja_focus <- subset(ja_focus, keep_participant == "keep")
@@ -391,13 +405,17 @@ ja_Z_summary <- ja_Z %>%
             SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
             sampleN = length(target_Z_RT))
 
-# are we done? ---- 
-ja_Z_summary$done_both <- (ja_Z_summary$sampleN >= 50 & ja_Z_summary$SE_Z <= .09) | ja_Z_summary$sampleN >= 320
-ja_Z_summary$done <- ja_Z_summary$sampleN >= 50 
-
 # merge with complete stimuli list ---- 
 ja_merged <- merge(ja_words, ja_Z_summary, 
                    by = "word_combo", all.x = T)
+
+ja_merged <- merge(ja_merged, ja_num_trials, 
+                   by = "word_combo", all.x = T)
+
+# are we done? ---- 
+ja_merged$done_both <- (ja_merged$target_answeredN >= 50 & ja_merged$SE_Z <= .09) | ja_merged$target_answeredN >= 320
+ja_merged$done_totalN <- ja_merged$target_answeredN >= 50
+ja_merged$done <- ja_merged$sampleN >= 50
 
 # use data ----
 ja_use <- subset(ja_merged, is.na(done) | done == FALSE)
