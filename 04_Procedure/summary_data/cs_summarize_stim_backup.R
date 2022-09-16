@@ -352,13 +352,15 @@ cs_real_wide <- merge(
 cs_real_wide <- cs_real_wide[ , c("unique_trial", "observation.x", "word.x", 
                                   "class.x", "correct.x", "trial_code.x", 
                                   "duration.y", "word.y", "class.y", "correct.y", 
-                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+                                  "Z_RT.y", "keep.y", "keep_participant.y", 
+                                  "ended_on.x", "ended_on.y")]
 # good names
 colnames(cs_real_wide) <- c("unique_trial", "observation", "cue_word", 
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
                             "target_correct", "target_Z_RT",
-                            "keep_trial", "keep_participant")
+                            "keep_trial", "keep_participant", 
+                            "cue_end_of_trial", "target_end_of_trial")
 
 # only focus on related-unrelated
 cs_focus <- subset(cs_real_wide, target_type == "word" & cue_type == "word")
@@ -373,6 +375,18 @@ cs_focus <- merge(cs_focus, cs_words[ , c("type", "word_combo")],
 # subset out NAs at some point they will be practice trials
 cs_focus <- subset(cs_focus, !is.na(type))
 
+# calculate the total N versus timeout N
+cs_num_trials <- cs_focus %>% 
+  group_by(word_combo) %>% 
+  summarize(target_correct = sum(target_correct, na.rm = T),
+            target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+            target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+            target_prop_correct = target_correct/target_answeredN,
+            cue_correct = sum(cue_correct, na.rm = T),
+            cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+            cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+            cue_prop_correct = cue_correct/cue_answeredN)
+
 ### HERE YOU WILL TURN ON ###
 cs_focus <- subset(cs_focus, keep_participant == "keep")
 
@@ -384,6 +398,7 @@ cs_Z <- subset(cs_Z, keep_trial == "keep")
 
 # calculates word, sample size, SE, "done" with <= .09 SE ----
 cs_Z_summary <- cs_Z %>% 
+  select(-done_both, -done_totalN, -done) %>% 
   group_by(word_combo) %>% 
   summarize(M_Z = mean(target_Z_RT),
             SD_Z = sd(target_Z_RT),
@@ -397,6 +412,13 @@ cs_Z_summary$done <- cs_Z_summary$sampleN >= 50
 # merge with complete stimuli list ---- 
 cs_merged <- merge(cs_words, cs_Z_summary, 
                    by = "word_combo", all.x = T)
+
+cs_merged <- merge(cs_merged, cs_num_trials, 
+                   by = "word_combo", all.x = T)
+
+cs_merged$done_both <- (cs_merged$target_answeredN >= 50 & cs_merged$SE_Z <= .09) | cs_merged$target_answeredN >= 320
+cs_merged$done_totalN <- cs_merged$target_answeredN >= 50
+cs_merged$done <- cs_merged$sampleN >= 50
 
 # use data ----
 cs_use <- subset(cs_merged, is.na(done) | done == FALSE)

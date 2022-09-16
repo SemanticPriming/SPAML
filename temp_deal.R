@@ -1,19 +1,19 @@
-target_table <- ja_words %>% 
+target_table <- cs_words %>% 
   filter(target_type == "word") %>% 
   filter(type != "nonword") %>% 
-  count(ja_target) %>% 
+  count(cs_target) %>% 
   filter(n != 2)
 
-weird_trials <- ja_words %>% 
+weird_trials <- cs_words %>% 
   filter(target_type == "word") %>% 
   filter(type != "nonword") %>% 
-  filter(ja_target %in% target_table$ja_target)
+  filter(cs_target %in% target_table$cs_target)
 
-write.csv(weird_trials, "ja_fix.csv")
+write.csv(weird_trials, "cs_fix.csv")
 
-target_table <- ja_words %>% 
+target_table <- cs_words %>% 
   filter(target_type == "word") %>% 
   filter(type != "nonword") %>% 
-  count(ja_target, type) %>% 
-  group_by(ja_target) %>% 
+  count(cs_target, type) %>% 
+  group_by(cs_target) %>% 
   mutate(total_trial = sum(n))
