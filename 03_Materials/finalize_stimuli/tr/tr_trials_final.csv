@@ -438,7 +438,7 @@ talep,istek,related,word,word,0.46094615022443
 istifa,kovmak,related,word,word,0.33192111253282
 gurur,itibar,related,word,word,0.410790987401252
 kariyer,şöhret,related,word,word,0.416829899038757
-itiraf etmek,günay çıkartmak,related,word,word,
+itiraf etmek,günah çıkartmak,related,word,word,
 harika,iyi,related,word,word,0.601461124442605
 kurtulmak,iyileşmek,related,word,word,0.381567019065702
 müsaade,izin,related,word,word,0.537043603056513
@@ -1172,7 +1172,7 @@ sopa,tanışmak,unrelated,word,word,0.145261224080337
 memnun,zamanlayıcı,unrelated,word,word,0.0571804470257055
 koy,borç,unrelated,word,word,0.0666527032163745
 üs,elektrikli,unrelated,word,word,0.0870266890997536
-düşük,günay çıkartmak,unrelated,word,word,
+düşük,günah çıkartmak,unrelated,word,word,
 haşmet,başparmak,unrelated,word,word,0.140337067715957
 yol,davranmak,unrelated,word,word,0.136347213555193
 çatlak,psikoloji,unrelated,word,word,0.133337995524571
@@ -2554,7 +2554,7 @@ bümis,mermi,nonword,nonword,word,
 hötin,salak,nonword,nonword,word,
 tüiss,haksız,nonword,nonword,word,
 taaçıkca,ürpertici,nonword,nonword,word,
-kısrack,günay çıkartmak,nonword,nonword,word,
+kısrack,günah çıkartmak,nonword,nonword,word,
 endiamondli,garaj,nonword,nonword,word,
 norlık,kamyonet,nonword,nonword,word,
 emedilmek,mektup,nonword,nonword,word,
