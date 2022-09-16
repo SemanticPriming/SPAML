@@ -422,6 +422,7 @@ ja_merged <- ja_summaries %>%
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T), 
             SD_Z = weighted.mean(SD_Z, sampleN, na.rm = T), 
             SE_Z = weighted.mean(SE_Z, sampleN, na.rm = T), 
+            sampleN = sum(sampleN, na.rm = T),
             target_correct = sum(target_correct, na.rm = T), 
             target_answeredN = sum(target_answeredN, na.rm = T), 
             target_timeoutN = sum(target_timeoutN, na.rm = T), 
