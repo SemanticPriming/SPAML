@@ -878,7 +878,7 @@ ru_cue,ru_target,type,cue_type,target_type,ru_cosine
 толкать,тянуть,related,word,word,0.456902560550723
 суицид,убийство,related,word,word,0.426833538478618
 отравлять,убивать,related,word,word,0.433915015007401
-наемник,асассин,related,word,word,
+наемник,ассасин,related,word,word,
 киллер,убийца,related,word,word,0.50747067204801
 уважение,уверенность,related,word,word,0.416304457697125
 отставка,увольнение,related,word,word,0.399981672776437
@@ -1530,7 +1530,7 @@ ru_cue,ru_target,type,cue_type,target_type,ru_cosine
 портфель,умение,unrelated,word,word,0.133182322646628
 луна,система,unrelated,word,word,0.146994010568293
 слой,позволять,unrelated,word,word,0.114356539014138
-флаг,асассин,unrelated,word,word,
+флаг,ассасин,unrelated,word,word,
 иголка,креативность,unrelated,word,word,0.126894998576963
 лига,салат,unrelated,word,word,0.0975291337428903
 гольф,комитет,unrelated,word,word,0.107790903724145
@@ -2392,7 +2392,7 @@ prать,закрытый,nonword,nonword,word,
 прайраться,болезнь,nonword,nonword,word,
 медикринский,слава,nonword,nonword,word,
 флиртомия,определение,nonword,nonword,word,
-бавитька,асассин,nonword,nonword,word,
+бавитька,ассасин,nonword,nonword,word,
 катуар,лизать,nonword,nonword,word,
 размыс,храбрый,nonword,nonword,word,
 ханд,телефон,nonword,nonword,word,

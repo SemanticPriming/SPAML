@@ -165,37 +165,37 @@ processData <- function(database) {
 # setwd("/Users/erinbuchanan/GitHub/Research/2_projects/SPAML/SPAML-PSA")
 
 # original word lists
-ru_words <- import("/var/www/html/ru/ru_words.csv")
+ru_words <- import("./04_Procedure_real/ru/ru_words.csv")
 
 # collected data
 ru_data_all <- 
-  bind_rows(processData("/var/www/html/ru/data/data.sqlite") %>% 
+  bind_rows(processData("./04_Procedure_real/ru/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru1/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru1/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru2/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru2/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru3/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru3/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru4/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru4/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru5/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru5/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru6/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru6/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru7/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru7/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru8/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru8/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru9/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru9/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru10/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru10/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru11/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru11/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru12/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru12/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/ru13/data/data.sqlite") %>% 
+            processData("./04_Procedure_real/ru13/data/data_2022-09-15T0234.sqlite") %>% 
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started ----
@@ -353,13 +353,15 @@ ru_real_wide <- merge(
 ru_real_wide <- ru_real_wide[ , c("unique_trial", "observation.x", "word.x", 
                                   "class.x", "correct.x", "trial_code.x", 
                                   "duration.y", "word.y", "class.y", "correct.y", 
-                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+                                  "Z_RT.y", "keep.y", "keep_participant.y", 
+                                  "ended_on.x", "ended_on.y")]
 # good names
 colnames(ru_real_wide) <- c("unique_trial", "observation", "cue_word", 
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
                             "target_correct", "target_Z_RT",
-                            "keep_trial", "keep_participant")
+                            "keep_trial", "keep_participant", 
+                            "cue_end_of_trial", "target_end_of_trial")
 
 # only focus on related-unrelated
 ru_focus <- subset(ru_real_wide, target_type == "word" & cue_type == "word")
@@ -373,6 +375,18 @@ ru_focus <- merge(ru_focus, ru_words[ , c("type", "word_combo")],
 ### HERE YOU WILL TURN ON ###
 # subset out NAs at some point they will be practice trials
 ru_focus <- subset(ru_focus, !is.na(type))
+
+# calculate the total N versus timeout N
+ru_num_trials <- ru_focus %>% 
+  group_by(word_combo) %>% 
+  summarize(target_correct = sum(target_correct, na.rm = T),
+            target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+            target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+            target_prop_correct = target_correct/target_answeredN,
+            cue_correct = sum(cue_correct, na.rm = T),
+            cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+            cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+            cue_prop_correct = cue_correct/cue_answeredN)
 
 ### HERE YOU WILL TURN ON ###
 ru_focus <- subset(ru_focus, keep_participant == "keep")
@@ -391,14 +405,16 @@ ru_Z_summary <- ru_Z %>%
             SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
             sampleN = length(target_Z_RT))
 
-# are we done? ---- 
-ru_Z_summary$done_both <- (ru_Z_summary$sampleN >= 50 & ru_Z_summary$SE_Z <= .09) | ru_Z_summary$sampleN >= 320
-ru_Z_summary$done <- ru_Z_summary$sampleN >= 50
-
 # merge with complete stimuli list ---- 
 ru_merged <- merge(ru_words, ru_Z_summary, 
                    by = "word_combo", all.x = T)
-# подростковый,сто check excluded 
+ru_merged <- merge(ru_merged, ru_num_trials, 
+                   by = "word_combo", all.x = T)
+
+# are we done? ----
+ru_merged$done_both <- (ru_merged$target_answeredN >= 50 & ru_merged$SE_Z <= .09) | ru_merged$target_answeredN >= 320
+ru_merged$done_totalN <- ru_merged$target_answeredN >= 50
+ru_merged$done <- ru_merged$sampleN >= 50
 
 # use data ----
 ru_use <- subset(ru_merged, is.na(done) | done == FALSE)
@@ -408,7 +424,7 @@ ru_sample <- subset(ru_merged, done == TRUE)
 
 # generate summary chart for shiny ----
 write.csv(ru_merged, 
-          paste("/var/www/html/summary_data/ru_summary_",
+          paste("./04_Procedure_real/summary_data/ru_summary_",
                 Sys.time(), ".csv", sep = ""),
           row.names = F)
 
@@ -432,6 +448,6 @@ p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
                     "start", "end", "study_length")]
 
 write.csv(p_lab, 
-          paste("/var/www/html/summary_data/ru_participants_",
+          paste("./04_Procedure_real/summary_data/ru_participants_",
                 Sys.time(), ".csv", sep = ""),
           row.names = F)

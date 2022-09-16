@@ -349,11 +349,13 @@ tr_real_wide <- merge(
 tr_real_wide <- tr_real_wide[ , c("unique_trial", "observation.x", "word.x", 
                                   "class.x", "correct.x", "trial_code.x", 
                                   "duration.y", "word.y", "class.y", "correct.y", 
-                                  "Z_RT.y", "keep.y", "keep_participant.y")]
+                                  "Z_RT.y", "keep.y", "keep_participant.y", 
+                                  "ended_on.x", "ended_on.y")]
 # good names
 colnames(tr_real_wide) <- c("unique_trial", "observation", "cue_word", 
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
+                            "target_correct", "target_Z_RT",
                             "target_correct", "target_Z_RT",
                             "keep_trial", "keep_participant")
 
@@ -369,6 +371,18 @@ tr_focus <- merge(tr_focus, tr_words[ , c("type", "word_combo")],
 ### HERE YOU WILL TURN ON ###
 # subset out NAs at some point they will be practice trials
 tr_focus <- subset(tr_focus, !is.na(type))
+
+# calculate the total N versus timeout N
+tr_num_trials <- tr_focus %>% 
+  group_by(word_combo) %>% 
+  summarize(target_correct = sum(target_correct, na.rm = T),
+            target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+            target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+            target_prop_correct = target_correct/target_answeredN,
+            cue_correct = sum(cue_correct, na.rm = T),
+            cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+            cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+            cue_prop_correct = cue_correct/cue_answeredN)
 
 ### HERE YOU WILL TURN ON ###
 tr_focus <- subset(tr_focus, keep_participant == "keep")
@@ -391,6 +405,9 @@ tr_Z_summary <- tr_Z %>%
 tr_merged <- merge(tr_words, tr_Z_summary, 
                    by = "word_combo", all.x = T)
 
+tr_merged <- merge(tr_merged, tr_num_trials, 
+                   by = "word_combo", all.x = T)
+
 # merge with old data ----
 # pull in other information from previous weeks
 list_tr_data <- lapply(list.files(path = "/var/www/html/summary_data", 
@@ -398,18 +415,27 @@ list_tr_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 tr_summaries <- bind_rows(list_tr_data, tr_merged)
 tr_merged <- tr_summaries %>%
-  select(-done_both, -done) %>% 
+  select(-done_both, -done_totalN, -done) %>% 
   group_by(word_combo, tr_cue, tr_target, type, cue_type, 
            target_type, tr_cosine) %>% 
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T), 
             SD_Z = weighted.mean(SD_Z, sampleN, na.rm = T), 
             SE_Z = weighted.mean(SE_Z, sampleN, na.rm = T), 
-            sampleN = sum(sampleN, na.rm = T), 
+            sampleN = sum(sampleN, na.rm = T),
+            target_correct = sum(target_correct, na.rm = T), 
+            target_answeredN = sum(target_answeredN, na.rm = T), 
+            target_timeoutN = sum(target_timeoutN, na.rm = T), 
+            target_prop_correct = target_correct/target_answeredN * 100, 
+            cue_correct = sum(cue_correct, na.rm = T), 
+            cue_answeredN = sum(cue_answeredN, na.rm = T), 
+            cue_timeoutN = sum(cue_timeoutN, na.rm = T), 
+            cue_prop_correct = cue_correct/cue_answeredN * 100,
             across(), .groups  = "keep")
 
 # are we done? ---- 
-tr_merged$done_both <- (tr_merged$sampleN >= 50 & tr_merged$SE_Z <= .09) | tr_merged$sampleN >= 320
-tr_merged$done <- tr_merged$sampleN >= 50 
+tr_merged$done_both <- (tr_merged$target_answeredN >= 50 & tr_merged$SE_Z <= .09) | tr_merged$target_answeredN >= 320
+tr_merged$done_totalN <- tr_merged$target_answeredN >= 50
+tr_merged$done <- tr_merged$sampleN >= 50
 
 # use data ----
 tr_use <- subset(tr_merged, is.na(done) | done == FALSE)
@@ -445,12 +471,7 @@ list_tr_data <- lapply(list.files(path = "/var/www/html/summary_data",
                                   pattern = "tr_participants_[0-9].*.csv", full.names = T),
                        import)
 if (nrow(p_lab) > 0){
-  p_lab <- unique(bind_rows(bind_rows(list_tr_data) %>% 
-                              mutate(url_lab = as.character(url_lab),
-                                     url_special_code = as.character(url_special_code)), 
-                            p_lab %>% 
-                              mutate(url_special_code = as.character(url_special_code),
-                                     study_length = as.numeric(study_length))))
+  p_lab <- unique(bind_rows(list_tr_data, p_lab))
 } else {
   p_lab <- unique(bind_rows(list_tr_data))
 }
