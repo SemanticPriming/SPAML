@@ -398,7 +398,6 @@ cs_Z <- subset(cs_Z, keep_trial == "keep")
 
 # calculates word, sample size, SE, "done" with <= .09 SE ----
 cs_Z_summary <- cs_Z %>% 
-  select(-done_both, -done_totalN, -done) %>% 
   group_by(word_combo) %>% 
   summarize(M_Z = mean(target_Z_RT),
             SD_Z = sd(target_Z_RT),
