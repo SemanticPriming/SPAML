@@ -165,37 +165,37 @@ processData <- function(database) {
 # setwd("/Users/erinbuchanan/GitHub/Research/2_projects/SPAML/SPAML-PSA")
 
 # original word lists
-ru_words <- import("./04_Procedure_real/ru/ru_words.csv")
+ru_words <- import("/var/www/html/ru/ru_words.csv")
 
 # collected data
 ru_data_all <- 
-  bind_rows(processData("./04_Procedure_real/ru/data/data_2022-09-15T0234.sqlite") %>% 
+  bind_rows(processData("/var/www/html/ru/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru1/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru1/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru2/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru2/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru3/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru3/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru4/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru4/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru5/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru5/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru6/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru6/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru7/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru7/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru8/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru8/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru9/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru9/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru10/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru10/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru11/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru11/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru12/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru12/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/ru13/data/data_2022-09-15T0234.sqlite") %>% 
+            processData("/var/www/html/ru13/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started ----
@@ -424,7 +424,7 @@ ru_sample <- subset(ru_merged, done == TRUE)
 
 # generate summary chart for shiny ----
 write.csv(ru_merged, 
-          paste("./04_Procedure_real/summary_data/ru_summary_",
+          paste("/var/www/html/summary_data/ru_summary_",
                 Sys.time(), ".csv", sep = ""),
           row.names = F)
 
@@ -448,6 +448,6 @@ p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
                     "start", "end", "study_length")]
 
 write.csv(p_lab, 
-          paste("./04_Procedure_real/summary_data/ru_participants_",
+          paste("/var/www/html/summary_data/ru_participants_",
                 Sys.time(), ".csv", sep = ""),
           row.names = F)
