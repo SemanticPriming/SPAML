@@ -471,7 +471,12 @@ list_tr_data <- lapply(list.files(path = "/var/www/html/summary_data",
                                   pattern = "tr_participants_[0-9].*.csv", full.names = T),
                        import)
 if (nrow(p_lab) > 0){
-  p_lab <- unique(bind_rows(list_tr_data, p_lab))
+  p_lab <- unique(bind_rows(bind_rows(list_tr_data) %>% 
+                              mutate(url_lab = as.character(url_lab),
+                                     url_special_code = as.character(url_special_code)), 
+                            p_lab %>% 
+                              mutate(url_special_code = as.character(url_special_code),
+                                     study_length = as.numeric(study_length))))
 } else {
   p_lab <- unique(bind_rows(list_tr_data))
 }

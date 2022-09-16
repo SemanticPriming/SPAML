@@ -359,8 +359,8 @@ colnames(tr_real_wide) <- c("unique_trial", "observation", "cue_word",
                             "cue_type", "cue_correct", "trial_order", 
                             "target_duration", "target_word", "target_type", 
                             "target_correct", "target_Z_RT",
-                            "target_correct", "target_Z_RT",
-                            "keep_trial", "keep_participant")
+                            "keep_trial", "keep_participant", 
+                            "cue_end_of_trial", "target_end_of_trial")
 
 # only focus on related-unrelated
 tr_focus <- subset(tr_real_wide, target_type == "word" & cue_type == "word")
