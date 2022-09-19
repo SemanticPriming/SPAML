@@ -470,6 +470,10 @@ p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
 list_cs_data <- lapply(list.files(path = "/var/www/html/summary_data", 
                                   pattern = "cs_participants_[0-9].*.csv", full.names = T),
                        import)
+
+list_cs_data <- lapply(list_cs_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
+list_cs_data <- lapply(list_cs_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+
 if (nrow(p_lab) > 0){
   p_lab <- unique(bind_rows(bind_rows(list_cs_data) %>% 
                               mutate(url_lab = as.character(url_lab),
