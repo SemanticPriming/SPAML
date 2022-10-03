@@ -176,7 +176,7 @@ en_data_all <-
               mutate(url_lab = as.character(url_lab)),
             processData("/var/www/html/en4/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/en_35/data/data.sqlite") %>% 
+            processData("/var/www/html/en5/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started 
@@ -205,7 +205,7 @@ en_data_all <- en_data_all %>%
 # Participant did not complete at least 100 trials. 
 # Participant did not achieve 80% correct.
 current_year <- 2022
-number_folders <- 5
+number_folders <- 6
 
 ##create demographics only data
 demos <- en_data_all %>% #data frame
