@@ -167,33 +167,47 @@ ko_words <- import("/var/www/html/ko/ko_words.csv")
 # collected data
 ko_data_all <- 
   bind_rows(processData("/var/www/html/ko/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko1/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko2/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko3/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko4/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko5/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko6/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko7/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko8/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko9/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko10/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko11/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko12/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab)),
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ko13/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code))) %>% unique()
 
 # delete stuff before we started ----
 ko_data_all <- ko_data_all %>% 
