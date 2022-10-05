@@ -7,13 +7,13 @@ library(stringdist)
 library(stringr)
 
 DF <- import("03_materials/finalize_stimuli/ro/ro_translate.xlsx")
-DF$ro_cue_final <- DF$ro_cue
-DF$ro_target_final <- DF$ro_target
-
-for (i in 1:nrow(DF)){
-  if (!is.na(DF$ro_cue_trans[i])) {DF$ro_cue_final[i] <- DF$ro_cue_trans[i]}
-  if (!is.na(DF$ro_target_trans[i])) {DF$ro_target_final[i] <- DF$ro_target_trans[i]}
-}
+DF$ro_cue_final <- tolower(DF$ro_cue_trans)
+DF$ro_target_final <- tolower(DF$ro_target_trans)
+# 
+# for (i in 1:nrow(DF)){
+#   if (!is.na(DF$ro_cue_trans[i])) {DF$ro_cue_final[i] <- DF$ro_cue_trans[i]}
+#   if (!is.na(DF$ro_target_trans[i])) {DF$ro_target_final[i] <- DF$ro_target_trans[i]}
+# }
 
 get_fake <- function(wordlist, language_hyp, replacewords){
   

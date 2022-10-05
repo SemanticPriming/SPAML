@@ -6,9 +6,11 @@ library(tidytext)
 library(stringdist)
 library(stringr)
 
-DF <- import("03_materials/finalize_stimuli/fr/fr_translate_wip.xlsx")
-DF$fr_cue_final <- DF$fr_cue_NEW
-DF$fr_target_final <- DF$fr_target_NEW
+#DF <- import("03_materials/finalize_stimuli/fr/fr_translate_wip.xlsx")
+DF <- import("03_materials/finalize_stimuli/fr/fr_translate_wip2.xlsx")
+
+#DF$fr_cue_final <- DF$fr_cue_NEW
+#DF$fr_target_final <- DF$fr_target_NEW
 
 get_fake <- function(wordlist, language_hyp, replacewords){
   
@@ -141,7 +143,8 @@ get_fake <- function(wordlist, language_hyp, replacewords){
   # frequency diff to be < 2 but lowest
   replace_options <- replace_options %>% 
     group_by(original_word) %>% 
-    arrange(char_diff, freq_diff, letter_diff, .by_group = TRUE)
+    arrange(char_diff, freq_diff, letter_diff, .by_group = TRUE) %>% 
+    slice(-1) # take the second for this adventure 
   
   new_words <- replace_options %>% 
     filter(!duplicated(original_word))
@@ -157,9 +160,9 @@ fr_fake_cue_update <- get_fake(wordlist = c(DF$fr_cue_final, DF$fr_target_final)
                           language_hyp = fr_patterns, #hyphen rules
                           replacewords = DF$fr_cue_final) #your words
 
-DF <- DF %>% 
-  left_join(fr_fake_cue_update %>% select(original_word, replacement_word), 
-            by = c("fr_cue_final" = "original_word")) %>% rename("fr_fake_cue_update" = "replacement_word")
+DF <- DF %>%
+  left_join(fr_fake_cue_update %>% select(original_word, replacement_word),
+            by = c("fr_cue_final" = "original_word")) %>% rename("fr_fake_cue_update2" = "replacement_word")
 
 fr_fake_target_update <- get_fake(wordlist = c(DF$fr_cue_final, DF$fr_target_final), #possibles
                                   language_hyp = fr_patterns, #hyphen rules
@@ -168,6 +171,6 @@ fr_fake_target_update <- get_fake(wordlist = c(DF$fr_cue_final, DF$fr_target_fin
 DF <- DF %>% 
   left_join(fr_fake_target_update %>% select(original_word, replacement_word), 
             by = c("fr_target_final" = "original_word")) %>% 
-  rename("fr_fake_target_update" = "replacement_word")
+  rename("fr_fake_target_update2" = "replacement_word")
 
-export(DF, "03_materials/finalize_stimuli/fr/fr_update.xlsx")
+export(DF, "03_materials/finalize_stimuli/fr/fr_update_2.xlsx")
