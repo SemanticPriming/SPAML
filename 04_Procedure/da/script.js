@@ -1344,7 +1344,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "End of Experiment",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EMange tak!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EDu har nu gennemført eksperimentet.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EDit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. \u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Du må nu lukke denne side.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EMange tak!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EDu har nu gennemført eksperimentet.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EDit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. \u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EUdfyld venligst følgende undersøgelse for betaling: \u003Ca href=\"https:\u002F\u002Fsurvey.au.dk\u002FLinkCollector?key=LGR4NJDFJJCK\"\u003Ehttps:\u002F\u002Fsurvey.au.dk\u002FLinkCollector?key=LGR4NJDFJJCK.\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Du må nu lukke denne side.\n\u003C\u002Ffooter\u003E",
       "plugins": [],
       "tardy": true
     }

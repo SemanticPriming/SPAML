@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mange tak!</h2>\n    \n    <p class=\"text-left\">Du har nu gennemført eksperimentet.</p>\n\n    <p class=\"text-left\">Dit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. </p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Du må nu lukke denne side.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mange tak!</h2>\n    \n    <p class=\"text-left\">Du har nu gennemført eksperimentet.</p>\n\n    <p class=\"text-left\">Dit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. </p>\n    </p>\n\n    <p class=\"text-left\">Udfyld venligst følgende undersøgelse for betaling: <a href=\"https://survey.au.dk/LinkCollector?key=LGR4NJDFJJCK\">https://survey.au.dk/LinkCollector?key=LGR4NJDFJJCK.\n\n  </div>\n</main>\n\n<footer>\n  Du må nu lukke denne side.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
