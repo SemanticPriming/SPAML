@@ -20,7 +20,8 @@ overall_tab <-
               infoBoxOutput("russianN_total"), 
               infoBoxOutput("turkishN_total"), 
               infoBoxOutput("czechN_total"), 
-              infoBoxOutput("japaneseN_total")
+              infoBoxOutput("japaneseN_total"),
+              infoBoxOutput("danishN_total"),
             ),  # close box
             
             # words ----
@@ -39,7 +40,8 @@ overall_tab <-
               infoBoxOutput("russianWORD_total"), 
               infoBoxOutput("turkishWORD_total"), 
               infoBoxOutput("czechWORD_total"), 
-              infoBoxOutput("japaneseWORD_total")
+              infoBoxOutput("japaneseWORD_total"),
+              infoBoxOutput("danishWORD_total")
               
             )  # close box
           ) #close row
