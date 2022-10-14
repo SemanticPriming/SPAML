@@ -286,3 +286,16 @@ chmod 777 /var/www/html/en2/data/data.sqlite
 chmod 777 /var/www/html/en3/data/data.sqlite
 chmod 777 /var/www/html/en4/data/data.sqlite
 chmod 777 /var/www/html/en5/data/data.sqlite
+
+# ---- danish -----
+# summarize the data
+Rscript /var/www/html/summary_data/da_summarize_stim_backup.R
+
+# move the data file
+mv /var/www/html/da/data/data.sqlite /var/www/html/da/data/data_$(date +"%FT%H%M").sqlite
+
+# copy over temp data
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/da/data/
+
+# give the data the right permissions
+chmod 777 /var/www/html/da/data/data.sqlite
