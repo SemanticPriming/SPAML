@@ -1,1 +1,11 @@
-[{"word":"DOCTOR","class":"word"},{"word":"NURSE","class":"word"},{"word":"HICE","class":"nonword"},{"word":"BOSSIL","class":"nonword"}]
+[
+  {"word": "sneife", "class": "nonword"},
+  {"word": "læber", "class": "word"},
+  {"word": "tjære", "class": "word"},
+  {"word": "sødo", "class": "nonword"},
+  {"word": "nwede", "class": "nonword"},
+  {"word": "gave", "class": "word"},
+  {"word": "kegthe", "class": "nonword"},
+  {"word": "skud", "class": "word"},
+  {"word": "ethorår", "class": "nonword"},
+  {"word": "støvle", "class": "word"}]

@@ -1,9 +1,5 @@
 # English -----------------------------------------------------------------
 
-# en_participants <- import("~/GitHub/Research/2_projects/SPAML/SPAML-PSA/04_Procedure/summary_data/en_participants.csv")
-# en_summary <- import("~/GitHub/Research/2_projects/SPAML/SPAML-PSA/04_Procedure/summary_data/en_summary.csv")
-# en_totals <- import("~/GitHub/Research/2_projects/SPAML/SPAML-PSA/04_Procedure/summary_data/en_totals.csv")
-
 en_participants <- import("/var/www/html/summary_data/en_participants.csv")
 en_summary <- import("/var/www/html/summary_data/en_summary.csv")
 
@@ -31,3 +27,8 @@ ja_summary <- import("/var/www/html/summary_data/ja_summary.csv")
 
 cs_participants <- import("/var/www/html/summary_data/cs_participants.csv")
 cs_summary <- import("/var/www/html/summary_data/cs_summary.csv")
+
+# Danish -----------------------------------------------------------------
+
+da_participants <- import("/var/www/html/summary_data/da_participants.csv")
+da_summary <- import("/var/www/html/summary_data/da_summary.csv")

@@ -21,7 +21,8 @@ ui <- dashboardPage(skin = 'purple',
                             menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
                             menuItem(tags$b("Korean"), tabName = "korean_tab"),
                             menuItem(tags$b("Czech"), tabName = "czech_tab"),
-                            menuItem(tags$b("Japanese"), tabName = "japanese_tab")
+                            menuItem(tags$b("Japanese"), tabName = "japanese_tab"),
+                            menuItem(tags$b("Danish"), tabName = "danish_tab")
                             )
                         ),
                     dashboardBody(
@@ -51,7 +52,8 @@ ui <- dashboardPage(skin = 'purple',
                           turkish_tab,
                           korean_tab,
                           czech_tab,
-                          japanese_tab
+                          japanese_tab,
+                          danish_tab
                         ) # end tabItems
                     ) # end dashboardBody
                 ) # end dashboardPage
@@ -295,6 +297,46 @@ server <- function(input, output) {
       infoBox(
         "Czech", paste(sum(cs_summary$done, na.rm = T), 
                        sum(cs_summary$done_totalN, na.rm = T), 
+                       sep = " - "), 
+        icon = icon("list"), color = "navy")
+    })
+    
+    # danish ----
+    output$da_participant_data <- renderDT({
+      
+      colnames(da_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(da_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$da_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(da_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$da_summary_table <- renderDT({
+      
+      datatable(da_summary[da_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$danishN_total <- renderInfoBox({
+      infoBox(
+        "Danish", sum(grepl("keep", da_participants$keep)), 
+        icon = icon("list"), color = "navy")
+    })
+    
+    output$danishWORD_total <- renderInfoBox({
+      infoBox(
+        "Danish", paste(sum(da_summary$done, na.rm = T), 
+                       sum(da_summary$done_totalN, na.rm = T), 
                        sep = " - "), 
         icon = icon("list"), color = "navy")
     })
