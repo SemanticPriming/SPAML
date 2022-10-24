@@ -404,6 +404,11 @@ list_en_data <- lapply(list.files(path = "/var/www/html/summary_data",
                                   pattern = "en_summary_[0-9].*.csv", full.names = T),
                        import)
 en_summaries <- bind_rows(list_en_data, en_merged)
+
+# a choice here to merge digusting with disgusting 
+en_summaries$en_cue <- gsub("digusting", "disgusting", en_summaries$en_cue)
+en_summaries$word_combo <- gsub("digusting", "disgusting", en_summaries$word_combo)
+
 en_merged <- en_summaries %>%
   select(-done_both, -done_totalN, -done) %>% 
   group_by(word_combo, en_cue, en_target, type, cue_type, 

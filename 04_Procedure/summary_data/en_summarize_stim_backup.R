@@ -392,6 +392,7 @@ en_data_all <- en_data_all %>%
               sampleN = length(target_Z_RT))
 
 # merge with complete stimuli list ---- 
+  
   en_merged <- merge(en_words, en_Z_summary, 
                      by = "word_combo", all.x = T)
   

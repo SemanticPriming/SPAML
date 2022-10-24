@@ -95,8 +95,9 @@ server <- function(input, output) {
     
     output$englishWORD_total <- renderInfoBox({
       infoBox(
-        "English", paste(sum(en_summary$done, na.rm = T), 
-                         sum(en_summary$done_totalN, na.rm = T), 
+        "English", paste(round(sum(en_summary$done_both, na.rm = T)/2000*100,1),
+                         round(sum(en_summary$done, na.rm = T)/2000*100,1), 
+                         round(sum(en_summary$done_totalN, na.rm = T)/2000*100,1), 
                          sep = " - "), 
         icon = icon("list"), color = "purple")
     })
@@ -135,8 +136,9 @@ server <- function(input, output) {
     
     output$russianWORD_total <- renderInfoBox({
       infoBox(
-        "Russian", paste(sum(ru_summary$done, na.rm = T), 
-                         sum(ru_summary$done_totalN, na.rm = T), 
+        "Russian", paste(round(sum(ru_summary$done_both, na.rm = T)/2000*100,1), 
+                         round(sum(ru_summary$done, na.rm = T)/2000*100,1), 
+                         round(sum(ru_summary$done_totalN, na.rm = T)/2000*100,1), 
                          sep = " - "), 
         icon = icon("list"), color = "aqua")
     })
@@ -175,8 +177,9 @@ server <- function(input, output) {
     
     output$turkishWORD_total <- renderInfoBox({
       infoBox(
-        "Turkish", paste(sum(tr_summary$done, na.rm = T), 
-                         sum(tr_summary$done_totalN, na.rm = T), 
+        "Turkish", paste(round(sum(tr_summary$done_both, na.rm = T)/2000*100,1), 
+                         round(sum(tr_summary$done, na.rm = T)/2000*100,1), 
+                         round(sum(tr_summary$done_totalN, na.rm = T)/2000*100,1), 
                          sep = " - "), 
         icon = icon("list"), color = "red")
     })
@@ -215,8 +218,9 @@ server <- function(input, output) {
     
     output$koreanWORD_total <- renderInfoBox({
       infoBox(
-        "Korean", paste(sum(ko_summary$done, na.rm = T), 
-                        sum(ko_summary$done_totalN, na.rm = T), 
+        "Korean", paste(round(sum(ko_summary$done_both, na.rm = T)/2033*100,1), 
+                        round(sum(ko_summary$done, na.rm = T)/2033*100,1), 
+                        round(sum(ko_summary$done_totalN, na.rm = T)/2033*100,1), 
                         sep = " - "),
         icon = icon("list"), color = "teal")
     })
@@ -255,8 +259,9 @@ server <- function(input, output) {
     
     output$japaneseWORD_total <- renderInfoBox({
       infoBox(
-        "Japanese", paste(sum(ja_summary$done, na.rm = T), 
-                          sum(ja_summary$done_totalN, na.rm = T), 
+        "Japanese", paste(round(sum(ja_summary$done_both, na.rm = T)/2000*100,1), 
+                          round(sum(ja_summary$done, na.rm = T)/2000*100,1), 
+                          round(sum(ja_summary$done_totalN, na.rm = T)/2000*100,1), 
                           sep = " - "), 
         icon = icon("list"), color = "light-blue")
     })
@@ -295,8 +300,9 @@ server <- function(input, output) {
     
     output$czechWORD_total <- renderInfoBox({
       infoBox(
-        "Czech", paste(sum(cs_summary$done, na.rm = T), 
-                       sum(cs_summary$done_totalN, na.rm = T), 
+        "Czech", paste(round(sum(cs_summary$done_both, na.rm = T)/2000*100,1), 
+                       round(sum(cs_summary$done, na.rm = T)/2000*100,1), 
+                       round(sum(cs_summary$done_totalN, na.rm = T)/2000*100,1), 
                        sep = " - "), 
         icon = icon("list"), color = "navy")
     })
@@ -335,8 +341,9 @@ server <- function(input, output) {
     
     output$danishWORD_total <- renderInfoBox({
       infoBox(
-        "Danish", paste(sum(da_summary$done, na.rm = T), 
-                       sum(da_summary$done_totalN, na.rm = T), 
+        "Danish", paste(round(sum(da_summary$done_both, na.rm = T)/2000*100,1), 
+                        round(sum(da_summary$done, na.rm = T)/2000*100,1), 
+                        round(sum(da_summary$done_totalN, na.rm = T)/2000*100,1), 
                        sep = " - "), 
         icon = icon("list"), color = "navy")
     })

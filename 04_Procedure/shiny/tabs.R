@@ -31,10 +31,21 @@ overall_tab <-
               solidHeader = TRUE,
               status = "primary",
               width = 12,
-              p("This information box gives you an overview of the number 
-                of 'completed' words for each langauge. Note that this tracks 
-                the number who both have N = 50 and SE < .09, not just the 
-                minimum sample size."), 
+              p("This information box gives you an overview of the percent 
+                of 'completed' words for each langauge. There are three 
+                numbers presented for each language:"), 
+              p("1) The percent of words that have 50 people who have 
+                answered the word (total sample target >= 50 AND 
+                the SE for the word is less than .09 OR at least 
+                320 people have answered the word (the pre-registered 
+                stopping and maximum rules)"), 
+              p("2) The percent of words with at least 50 people who
+              have gotten the answer right 
+                for the word (target answered correctly, a slightly 
+                better minimum value we hope to achieve)"), 
+              p("3) The percent of words with at least 50 
+              people have answered the word (the 
+                pre-registered minimum)"), 
               infoBoxOutput("englishWORD_total"),
               infoBoxOutput("koreanWORD_total"),
               infoBoxOutput("russianWORD_total"), 
