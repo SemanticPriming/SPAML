@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mange tak!</h2>\n    \n    <p class=\"text-left\">Du har nu gennemført eksperimentet.</p>\n\n    <p class=\"text-left\">Dit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. </p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Du må nu lukke denne side.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mange tak!</h2>\n    \n    <p class=\"text-left\">Du har nu gennemført eksperimentet.</p>\n\n    <p class=\"text-left\">Dit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. </p>\n    </p>\n\n    <p class=\"text-left\">Denne undersøgelse handlede om, hvordan man processerer ord og deres betydning. Specifikt testede undersøgelsen, om man er hurtigere til at reagere på et ord (f.eks. temperatur), hvis man lige har set et ord, der har en beslægtet betydning (f.eks. kulde).</p>\n\n    <p class=\"text-left\">Klik venligst på dette \n      link for at modtage betaling: https://survey.au.dk/LinkCollector?key=LGR4NJDFJJCK</p>\n\n  </div>\n</main>\n\n<footer>\n  Du må nu lukke denne side.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
