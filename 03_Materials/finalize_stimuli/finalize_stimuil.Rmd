@@ -1212,7 +1212,7 @@ export(ja_final, "ja/ja_trials_final.csv")
 da <- import("da/da_translate.csv")
 
 # fix real words ----
-da_update <- import("da/da_translated-v3.xlsx")
+da_update <- import("da/da_translated-v4.xlsx")
 
 cues <- da_update %>% filter(da_cue_trans != "")
 for (i in 1:nrow(cues)){
@@ -1229,19 +1229,21 @@ for (i in 1:nrow(targets)){
 }
 
 # fix fake words ----
-cues <- da_update %>% filter(da_fake_cue_trans != "")
-for (i in 1:nrow(cues)){
-  da$da_fake_cue[da$da_fake_cue == cues$da_fake_cue[i] #original cue match
-            & da$en_cue == cues$en_cue[i]] <- #english match
-    cues$da_fake_cue_trans[i] #new cue
-}
-
-targets <- da_update %>% filter(da_fake_target_trans != "")
-for (i in 1:nrow(targets)){
-  da$da_fake_target[da$da_fake_target == targets$da_fake_target[i] #original target match
-            & da$en_target == targets$en_target[i]] <- #english match
-    targets$da_fake_target_trans[i] #new target
-}
+# cues <- da_update %>% filter(da_fake_cue_trans != "")
+# for (i in 1:nrow(cues)){
+#   da$da_fake_cue[da$da_fake_cue == cues$da_fake_cue[i] #original cue match
+#             & da$en_cue == cues$en_cue[i]] <- #english match
+#     cues$da_fake_cue_trans[i] #new cue
+# }
+# 
+# targets <- da_update %>% filter(da_fake_target_trans != "")
+# for (i in 1:nrow(targets)){
+#   da$da_fake_target[da$da_fake_target == targets$da_fake_target[i] #original target match
+#             & da$en_target == targets$en_target[i]] <- #english match
+#     targets$da_fake_target_trans[i] #new target
+# }
+da$da_fake_target <- da_update$da_fake_target_final
+da$da_fake_cue <- da_update$da_fake_cue_final
 
 sum(duplicated(da$da_cue))
 sum(duplicated(da$da_target))
