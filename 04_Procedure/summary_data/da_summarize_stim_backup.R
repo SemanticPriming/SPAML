@@ -173,8 +173,8 @@ da_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started 
-da_data_all <- da_data_all %>% 
-  filter(timestamp > as.POSIXct("2022-10-15"))
+# da_data_all <- da_data_all %>% 
+#  filter(timestamp > as.POSIXct("2022-10-15"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0 

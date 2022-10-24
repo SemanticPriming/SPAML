@@ -170,8 +170,8 @@ da_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started 
-da_data_all <- da_data_all %>% 
-  filter(timestamp > as.POSIXct("2022-10-15"))
+# da_data_all <- da_data_all %>% 
+#  filter(timestamp > as.POSIXct("2022-10-15"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0 
@@ -445,12 +445,14 @@ list_da_data <- lapply(list_da_data, function(df) dplyr::mutate_at(df, vars(matc
 list_da_data <- lapply(list_da_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
 
 if (nrow(p_lab) > 0){
-  p_lab <- unique(bind_rows(bind_rows(list_da_data) %>% 
-                              mutate(url_lab = as.character(url_lab),
-                                     url_special_code = as.character(url_special_code)), 
-                            p_lab %>% 
-                              mutate(url_special_code = as.character(url_special_code),
-                                     study_length = as.numeric(study_length))))
+  if (length(list_da_data) > 0){
+    p_lab <- unique(bind_rows(bind_rows(list_da_data) %>% 
+                                mutate(url_lab = as.character(url_lab),
+                                       url_special_code = as.character(url_special_code)), 
+                              p_lab %>% 
+                                mutate(url_special_code = as.character(url_special_code),
+                                       study_length = as.numeric(study_length))))
+  }
 } else {
   p_lab <- unique(bind_rows(list_da_data))
 }
