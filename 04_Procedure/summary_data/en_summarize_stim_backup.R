@@ -183,6 +183,9 @@ en_data_all <-
                      url_special_code = as.character(url_special_code)),
             processData("/var/www/html/en5/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/en6/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
                      url_special_code = as.character(url_special_code))) %>% unique()
 
 # delete stuff before we started 
@@ -211,7 +214,7 @@ en_data_all <- en_data_all %>%
   # Participant did not complete at least 100 trials. 
   # Participant did not achieve 80% correct.
   current_year <- 2022
-  number_folders <- 6
+  number_folders <- 7
   
   ##create demographics only data
   demos <- en_data_all %>% #data frame
@@ -401,8 +404,8 @@ en_data_all <- en_data_all %>%
   en_merged$done <- en_merged$sampleN >= 50
 
 # use data ----
-  en_use <- subset(en_merged, is.na(done) | done == FALSE)
-  en_sample <- subset(en_merged, done == TRUE)
+  en_use <- subset(en_merged, is.na(done_both) | done_both == FALSE)
+  en_sample <- subset(en_merged, done_both == TRUE)
 
 # Generate ----------------------------------------------------------------
 

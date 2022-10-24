@@ -420,8 +420,8 @@ cs_merged$done_totalN <- cs_merged$target_answeredN >= 50
 cs_merged$done <- cs_merged$sampleN >= 50
 
 # use data ----
-cs_use <- subset(cs_merged, is.na(done) | done == FALSE)
-cs_sample <- subset(cs_merged, done == TRUE)
+cs_use <- subset(cs_merged, is.na(done_both) | done_both == FALSE)
+cs_sample <- subset(cs_merged, done_both == TRUE)
 
 # Generate ----------------------------------------------------------------
 

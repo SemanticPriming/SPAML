@@ -193,6 +193,8 @@ tr_data_all <-
             processData("/var/www/html/tr12/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab)),
             processData("/var/www/html/tr13/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/tr14/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started ----
@@ -221,7 +223,7 @@ tr_data_all <- tr_data_all %>%
 # Participant did not complete at least 100 trials. 
 # Participant did not achieve 80% correct.
 current_year <- 2022
-number_folders <- 14
+number_folders <- 15
 static <- FALSE
 adaptive <- TRUE
 
@@ -438,8 +440,8 @@ tr_merged$done_totalN <- tr_merged$target_answeredN >= 50
 tr_merged$done <- tr_merged$sampleN >= 50
 
 # use data ----
-tr_use <- subset(tr_merged, is.na(done) | done == FALSE)
-tr_sample <- subset(tr_merged, done == TRUE)
+tr_use <- subset(tr_merged, is.na(done_both) | done_both == FALSE)
+tr_sample <- subset(tr_merged, done_both == TRUE)
 
 # Generate ----------------------------------------------------------------
 

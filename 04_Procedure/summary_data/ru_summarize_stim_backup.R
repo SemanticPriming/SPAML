@@ -417,8 +417,8 @@ ru_merged$done_totalN <- ru_merged$target_answeredN >= 50
 ru_merged$done <- ru_merged$sampleN >= 50
 
 # use data ----
-ru_use <- subset(ru_merged, is.na(done) | done == FALSE)
-ru_sample <- subset(ru_merged, done == TRUE)
+ru_use <- subset(ru_merged, is.na(done_both) | done_both == FALSE)
+ru_sample <- subset(ru_merged, done_both == TRUE)
 
 # Generate ----------------------------------------------------------------
 

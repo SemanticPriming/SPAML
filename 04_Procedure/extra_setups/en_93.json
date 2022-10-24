@@ -1,0 +1,3291 @@
+{
+  "components": {
+    "1": {
+      "id": "1",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "if(this.state.dominanthand == \"left\") {\n  window.word_key = 'z'\n  window.nonword_key = '/'\n} else if(this.state.dominanthand == \"right\") {\n  window.word_key = '/'\n  window.nonword_key = 'z'\n}"
+        }
+      ],
+      "title": "Overall Instructions",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instructions</h2>\n    <p class=\"text-left\">This experiment is concerned with how people process words. You will be asked to view words and judge them.</p>\n\n    <p class=\"text-left\">The words will be presented in the middle of the screen. You should ask yourself if the word on the screen is a real word or a fake word.</p>\n\n    <p class=\"text-left\">If you recognize the word on the screen like <b>COLD</b>, please press the <kbd>${ window.word_key }</kbd> key for real word. If the word is made-up nonsense, like <b>WERM</b>, please press <kbd>${ window.nonword_key }</kbd> for fake word. During practice, we will give you feedback.</p>\n\n    <p class=\"text-left\">We'd like to ask to to respond as quickly as you can while remaining accurate. You have three seconds to respond to every word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to try a few for practice.\n</footer>",
+      "_tab": "Content",
+      "plugins": [],
+      "scrollTop": true,
+      "tardy": true
+    },
+    "2": {
+      "id": "2",
+      "type": "lab.flow.Loop",
+      "children": [
+        "4"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_practice.json",
+          "poolPath": "embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "draw-shuffle"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_practice.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Practice",
+      "_tab": "Content",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "3": {
+      "id": "3",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Task Frame Practice",
+      "children": [
+        "2"
+      ],
+      "_collapsed": false,
+      "_tab": "Content",
+      "tardy": true
+    },
+    "4": {
+      "id": "4",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "5",
+        "6",
+        "27"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Practice",
+      "_tab": "Behavior"
+    },
+    "5": {
+      "id": "5",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Practice",
+      "timeout": "500",
+      "_tab": "Behavior"
+    },
+    "6": {
+      "id": "6",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "getKeys",
+          "message": "before:prepare",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Practice",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "7": {
+      "id": "7",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 7",
+      "children": [
+        "9"
+      ],
+      "_collapsed": true,
+      "_tab": "Files",
+      "tardy": true
+    },
+    "8": {
+      "id": "8",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "End of Experiment",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Thank you!</h2>\n    \n    <p class=\"text-left\">You've now completed the experiment.</p>\n\n    <p class=\"text-left\">Your random participant id is: \n      ${ window.uuid }. You can use this number to give to your experimenter to show you completed the experiment.</p>\n    \n    <p class=\"text-left\">Please use this link \n      <a href = \"https://forms.gle/LaAfAPEfdWrcRYDG9\">https://forms.gle/LaAfAPEfdWrcRYDG9</a> to enter your information for \n      credit for your researcher.\n    </p> \n\n  </div>\n</main>\n\n<footer>\n  You may now close the window.\n</footer>",
+      "_tab": "Content",
+      "plugins": [],
+      "tardy": true
+    },
+    "9": {
+      "id": "9",
+      "type": "lab.flow.Loop",
+      "children": [
+        "10"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real7.json",
+          "poolPath": "embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real7.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Files",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "10": {
+      "id": "10",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "12",
+        "13"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Scripts"
+    },
+    "11": {
+      "id": "11",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Real Task Instructions",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instructions</h2>\n    \n    <p class=\"text-left\">Great job! Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n\n    <p class=\"text-left\">You will now complete the real task, remember to go as quickly as possible while getting the correct answer. You will not see any feedback during this section.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue.\n</footer>",
+      "_tab": "Content",
+      "tardy": true
+    },
+    "12": {
+      "id": "12",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Behavior"
+    },
+    "13": {
+      "id": "13",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "14": {
+      "id": "14",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 8",
+      "children": [
+        "15"
+      ],
+      "_collapsed": false,
+      "_tab": "Files",
+      "tardy": true
+    },
+    "15": {
+      "id": "15",
+      "type": "lab.flow.Loop",
+      "children": [
+        "16"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real8.json",
+          "poolPath": "embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real8.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Files",
+      "tardy": true,
+      "_collapsed": true
+    },
+    "16": {
+      "id": "16",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "17",
+        "18"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Scripts"
+    },
+    "17": {
+      "id": "17",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Behavior"
+    },
+    "18": {
+      "id": "18",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "20": {
+      "id": "20",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "21": {
+      "id": "21",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid"
+        }
+      ],
+      "title": "Consent Form",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  <div style=\"width: 90%;\">\n    \n    <h2>CONSENT FORM</h2>\n\n    <h3>Understanding Word Processing and Meaning</h3>\n\n    <p class=\"text-left\">You are invited to be in a research study about how you read and process words, along with their meaning. We ask that you read this form and ask any questions you may have before agreeing to be in the study.</p>\n\n    <p class=\"text-left\">This study is being conducted by Dr. Erin M. Buchanan, Professor of Cognitive Analytics at Harrisburg University of Science and Technology.</p>\n\n    <p class=\"text-left\"><b>Background Information:</b>\n    <br />\n    In this study, you will be asked to complete different questions about word concepts. For example, you may be asked to define a word’s characteristics, rate how familiar you are with a word, or simply judge if a string of letters is a real word. </p>\n\n    <p class=\"text-left\"><b>Procedures:</b>\n    <br />\n    You will take this study entirely online from a desktop or laptop computer with a keyboard. You will be given instructions about the experiment sections which are randomly selected for each person. After you complete the experiment, you can learn more about the study and goals of the research. The entire study should take less than thirty minutes to complete. </p>\n    <p class=\"text-left\"><b>Risks and Benefits of being in the Study:</b>\n    <br />\n    No identifying information will be collected from you, and therefore, your responses should be anonymous. The current study is similar to an online game, which may cause some fatigue or boredom based on the task you are asked to complete.\n    <br />\n    There is no direct benefit to you for participating in this study. However, your responses will contribute to our understanding of language and cognitive memory processes.</p>\n\n    <p class=\"text-left\"><b>Compensation:</b>\n    <br />You may be compensated when taking part in this study through your local researcher. </p>\n\n    <p class=\"text-left\"><b>Confidentiality and Data Sharing:</b>\n    <br />\n    Measures are taken to ensure that all information you provide will be anonymous. The data from this project will be posted publicly for other researchers to use; however, no data will be directly linked to you. Your name or other identifying information will not be entered into the dataset and no references will be made in verbal or written reports that could link you to the study. In any publication, information will be provided in such a way that you cannot be identified.\n    <br />\n    Before your data are shared outside the research team, any potentially identifying information will be removed. The anonymous data may be used by the research team or shared with other researchers, for both related and unrelated research purposes in the future. Your anonymous data may also be made available in online data repositories such as the Open Science Framework (which are free data repositories that require registration to have access), which allow other researchers and interested parties to access the data for further analysis.\n    <br />\n    Please note that your data will be anonymous, which means you cannot ask for it to be removed once you have completed the study.\n\n    <p class=\"text-left\"><b>Voluntary Nature of the Study:</b>\n    <br />\n    Participation in this study is voluntary: Your decision whether to participate will not affect your current or future relations with Harrisburg University of Science and Technology or your local institution. If you decide to participate, you are free to not answer any question or withdraw at any time without affecting those relationships. </p>\n\n    <p class=\"text-left\"><b>Contacts and Questions:</b>\n    <br />\n    The researchers conducting this study are Dr. Erin M. Buchanan in partnership with the Psychological Science Accelerator. You may ask any questions you have now. If you have questions later, you are encouraged to contact Dr. Erin M. Buchanan at ebuchanan@harrisburgu.edu. </p>\n\n    <p class=\"text-left\"><b>Questions or Concerns:</b>\n    <br />\n    This study has been reviewed by Harrisburg University of Science and Technology’s Institutional Review Board (IRB).  The IRB has determined that this study fulfills the human research subject protections obligations required by state and federal law and University policies. \n\n    <p class=\"text-left\"><a href=\"https://osf.io/f47z9/download\"> A copy of this information to keep for your records will be provided upon request.</a></p>\n\n    </div>\n    \n</main>\n\n<footer>\n  Please press <kbd>Space</kbd> to consent to the study and continue.\n</footer>",
+      "_tab": "Scripts"
+    },
+    "22": {
+      "id": "22",
+      "type": "lab.html.Form",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n    <div style=\"width: 90%;\">\n      \n      <form id=\"page-form\" style=\"display: block;\">\n  \n        <h3 class=\"text-left\">Please tell us a little about yourself:</h3>\n  \n        <p class=\"text-left\"><b>Please tell us your gender:</b></p>\n  \n          <table class=\"table-plain page-item-table\">\n            <colgroup>\n              <col style=\"width: 7.5%\" />\n              <col style=\"width: 92.5%\" />\n            </colgroup>\n            <tbody>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"male\"\n                    id=\"please-tell-us-your-gender-male\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-male\" class= \"text-left\">\n                    Male\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"female\"\n                    id=\"please-tell-us-your-gender-female\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-female\" class= \"text-left\">\n                    Female\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"other\"\n                    id=\"please-tell-us-your-gender-other\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-other\" class= \"text-left\">\n                    Other\n                  </label>\n                </td>\n              </tr>\n              <tr>\n                <td>\n                  <input\n                    type=\"radio\"\n                    name=\"please-tell-us-your-gender\"\n                    value=\"notsay\"\n                    id=\"please-tell-us-your-gender-notsay\"\n                  />\n                </td>\n                <td>\n                  <label for=\"please-tell-us-your-gender-notsay\" class= \"text-left\">\n                    Prefer not to say\n                  </label>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n  \n        <p class=\"text-left\"><b>Which year were you born? Please enter a four-digit year (must answer to continue):</b></p>\n        <input\n          name=\"which-year-were-you-born\"\n          style=\"width: 50%;\"\n          type=\"number\"\n          min=\"1920\"\n          max=\"2010\"\n          class=\"content-horizontal-left\"\n          required\n        />\n  \n        <p class=\"text-left\"><b>Please tell us your education level:</b></p>\n        <table class=\"table-plain page-item-table\">\n          <colgroup>\n            <col style=\"width: 7.5%\" />\n            <col style=\"width: 92.5%\" />\n          </colgroup>\n          <tbody>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"less than high school\"\n                  id=\"please-tell-us-your-education-level-less than high school\"\n                />\n              </td>\n              <td>\n                <label\n                  for=\"please-tell-us-your-education-level-less than high school\" class=\"text-left\">\n                  Less than High School\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"high school\"\n                  id=\"please-tell-us-your-education-level-high school\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-high school\" class=\"text-left\">\n                  High School\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"high school\"\n                  id=\"please-tell-us-your-education-level-associates\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-associates\" class=\"text-left\">\n                  Associate's Degree or Two-Year Degree\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"college\"\n                  id=\"please-tell-us-your-education-level-college\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-college\" class=\"text-left\">\n                  Bachelor's Degree or Four-Year Degree\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"master\"\n                  id=\"please-tell-us-your-education-level-master\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-master\" class=\"text-left\">\n                  Master's Degree or Equivalent\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"please-tell-us-your-education-level\"\n                  value=\"doctorate\"\n                  id=\"please-tell-us-your-education-level-doctorate\"\n                />\n              </td>\n              <td>\n                <label for=\"please-tell-us-your-education-level-doctorate\" class=\"text-left\">\n                  Doctoral Degree or Equivalent\n                </label>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n  \n        <p class=\"text-left\"><b>What language is your native (first) language?</b></p>\n        <input\n          name=\"native-language\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        />\n\n        <p class=\"text-left\"><b>Are you primarily left or right-handed (must answer to continue)?</b></p>\n\n        <table class=\"table-plain page-item-table\">\n          <colgroup>\n            <col style=\"width: 7.5%\" />\n            <col style=\"width: 92.5%\" />\n          </colgroup>\n          <tbody>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"dominanthand\"\n                  value=\"left\"\n                  id=\"dominanthand-left\"\n                />\n              </td>\n              <td>\n                <label for=\"dominanthand-left\" class= \"text-left\">\n                  Left\n                </label>\n              </td>\n            </tr>\n            <tr>\n              <td>\n                <input\n                  type=\"radio\"\n                  name=\"dominanthand\"\n                  value=\"right\"\n                  id=\"dominanthand-right\"\n                  required\n                />\n              </td>\n              <td>\n                <label for=\"dominanthand-right\" class= \"text-left\">\n                  Right\n                </label>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n  \n      </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form\">\n      Continue →\n    </button>\n  </footer>\n  ",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "dominanthand"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Demographics Form",
+      "_tab": "Content",
+      "scrollTop": true
+    },
+    "24": {
+      "id": "24",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "25": {
+      "id": "25",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "27": {
+      "id": "27",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 380.78,
+          "height": 36.16,
+          "fill": "#222222",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.feedback }",
+          "fontSize": "32",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "70",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "this.parameters.feedback = this.state.ended_on !== 'response'\n  ? 'Please answer faster!'\n  : (\n    this.state.correct\n      ? 'Correct!'\n      : 'Incorrect!'\n  )"
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "ITI / Feedback",
+      "timeout": "${ this.state.correct === true ? 500 : 1500 }",
+      "tardy": true,
+      "_tab": "Scripts"
+    },
+    "29": {
+      "id": "29",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "35": {
+      "id": "35",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Content",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "36": {
+      "id": "36",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "52": {
+      "id": "52",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "continue",
+          "event": "keypress",
+          "target": "",
+          "filter": "Space"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Break",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Break</h2>\n\n    <p class=\"text-left\">Take a short break.</p>\n    \n    <p class=\"text-left\">Remember you should use the <kbd>${ window.word_key }</kbd> key for real word, and the <kbd>${ window.nonword_key } </kbd> for fake word.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Please press the <kbd>Space Bar</kbd> to continue or wait until this page disappears.\n</footer>",
+      "_tab": "Behavior",
+      "timeout": "60000",
+      "tardy": true
+    },
+    "53": {
+      "id": "53",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 1",
+      "children": [
+        "54"
+      ],
+      "_collapsed": true,
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "54": {
+      "id": "54",
+      "type": "lab.flow.Loop",
+      "children": [
+        "55"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real1.json",
+          "poolPath": "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real1.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Content",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "55": {
+      "id": "55",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "56",
+        "57"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Behavior"
+    },
+    "56": {
+      "id": "56",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Behavior"
+    },
+    "57": {
+      "id": "57",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "59": {
+      "id": "59",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 2",
+      "children": [
+        "60"
+      ],
+      "_collapsed": true,
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "60": {
+      "id": "60",
+      "type": "lab.flow.Loop",
+      "children": [
+        "61"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real2.json",
+          "poolPath": "embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real2.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Behavior",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "61": {
+      "id": "61",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "62",
+        "63"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Scripts"
+    },
+    "62": {
+      "id": "62",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Scripts"
+    },
+    "63": {
+      "id": "63",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "64": {
+      "id": "64",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 5",
+      "children": [
+        "65"
+      ],
+      "_collapsed": true,
+      "_tab": "Content",
+      "tardy": true
+    },
+    "65": {
+      "id": "65",
+      "type": "lab.flow.Loop",
+      "children": [
+        "66"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real5.json",
+          "poolPath": "embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real5.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Content",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "66": {
+      "id": "66",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "67",
+        "68"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Content"
+    },
+    "67": {
+      "id": "67",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Scripts"
+    },
+    "68": {
+      "id": "68",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "69": {
+      "id": "69",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 4",
+      "children": [
+        "70"
+      ],
+      "_collapsed": true,
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "70": {
+      "id": "70",
+      "type": "lab.flow.Loop",
+      "children": [
+        "71"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real4.json",
+          "poolPath": "embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real4.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Content",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "71": {
+      "id": "71",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "72",
+        "73"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Content"
+    },
+    "72": {
+      "id": "72",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Scripts"
+    },
+    "73": {
+      "id": "73",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "74": {
+      "id": "74",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 3",
+      "children": [
+        "75"
+      ],
+      "_collapsed": true,
+      "_tab": "Files",
+      "tardy": true
+    },
+    "75": {
+      "id": "75",
+      "type": "lab.flow.Loop",
+      "children": [
+        "76"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real3.json",
+          "poolPath": "embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real3.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Files",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "76": {
+      "id": "76",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "77",
+        "78"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Files"
+    },
+    "77": {
+      "id": "77",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Scripts"
+    },
+    "78": {
+      "id": "78",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Scripts",
+      "tardy": true
+    },
+    "79": {
+      "id": "79",
+      "type": "lab.canvas.Frame",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Please press <kbd>${ window.word_key }</kbd> if the above is a real word, \n  and <kbd>${ window.nonword_key }</kbd> if it is a fake word.\n</footer>",
+      "contextSelector": "canvas",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "language",
+          "message": "run",
+          "code": ""
+        }
+      ],
+      "title": "Real Frame Task 6",
+      "children": [
+        "80"
+      ],
+      "_collapsed": true,
+      "_tab": "Files",
+      "tardy": true
+    },
+    "80": {
+      "id": "80",
+      "type": "lab.flow.Loop",
+      "children": [
+        "81"
+      ],
+      "files": [
+        {
+          "localPath": "stimuli_english_real6.json",
+          "poolPath": "embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "templateParameters": {
+        "columns": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "rows": []
+      },
+      "sample": {
+        "mode": "sequential"
+      },
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "before:prepare",
+          "code": "const response = await fetch(this.files['stimuli_english_real6.json'])\n\nthis.options.templateParameters = await response.json()"
+        }
+      ],
+      "title": "Task Real",
+      "_tab": "Files",
+      "tardy": true,
+      "_collapsed": false
+    },
+    "81": {
+      "id": "81",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "82",
+        "83"
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "Trial Real",
+      "_tab": "Scripts"
+    },
+    "82": {
+      "id": "82",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 24.53,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "+",
+          "fontSize": "42",
+          "fontWeight": "normal",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "14",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Fixation Cross Real",
+      "timeout": "500",
+      "_tab": "Behavior"
+    },
+    "83": {
+      "id": "83",
+      "type": "lab.canvas.Screen",
+      "content": [
+        {
+          "type": "i-text",
+          "version": "2.7.0",
+          "originX": "center",
+          "originY": "center",
+          "left": 0,
+          "top": 0,
+          "width": 504.19,
+          "height": 47.46,
+          "fill": "black",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "round",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "text": "${ this.parameters.word }",
+          "fontSize": "42",
+          "fontWeight": "bold",
+          "fontFamily": "sans-serif",
+          "fontStyle": "normal",
+          "lineHeight": 1.16,
+          "underline": false,
+          "overline": false,
+          "linethrough": false,
+          "textAlign": "center",
+          "textBackgroundColor": "",
+          "charSpacing": 0,
+          "id": "15",
+          "styles": {}
+        }
+      ],
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "word",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.word_key }"
+        },
+        {
+          "label": "nonword",
+          "event": "keypress",
+          "target": "",
+          "filter": "${ window.nonword_key }"
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "viewport": [
+        800,
+        600
+      ],
+      "title": "Stimulus Real",
+      "timeout": "3000",
+      "correctResponse": "${ this.parameters.class }",
+      "_tab": "Behavior",
+      "tardy": true
+    },
+    "root": {
+      "id": "root",
+      "title": "root",
+      "type": "lab.flow.Sequence",
+      "children": [
+        "21",
+        "22",
+        "1",
+        "3",
+        "11",
+        "53",
+        "20",
+        "59",
+        "29",
+        "74",
+        "36",
+        "69",
+        "35",
+        "64",
+        "52",
+        "79",
+        "25",
+        "7",
+        "24",
+        "14",
+        "8"
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "plugins": [
+        {
+          "type": "lab.plugins.Metadata"
+        }
+      ],
+      "metadata": {
+        "title": "Lexical decision task",
+        "description": "SPAML English Language Task",
+        "repository": "https://github.com/doomlab/SPAML",
+        "contributors": "Erin Buchanan\nFelix Henninger\nNiels van Berkel"
+      },
+      "messageHandlers": [],
+      "files": []
+    }
+  },
+  "version": [
+    20,
+    2,
+    4
+  ],
+  "files": {
+    "files": {
+      "index.html": {
+        "content": "data:text/html,%3C!doctype%20html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%20%20%3Cmeta%20charset%3D%22utf-8%22%3E%0A%20%20%3Ctitle%3EExperiment%3C%2Ftitle%3E%0A%20%20%3C!--%20viewport%20setup%20--%3E%0A%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1%22%3E%0A%20%20%3C!--%20lab.js%20library%20and%20experiment%20code%20--%3E%0A%20%20%24%7B%20header%20%7D%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%3C!--%20If%20you'd%20rather%20have%20a%20container%20with%20a%20fixed%20width%0A%20%20%20%20%20%20%20and%20variable%20height%2C%20try%20removing%20the%20fullscreen%20class%20below%20--%3E%0A%20%20%3Cdiv%20class%3D%22container%20fullscreen%22%20data-labjs-section%3D%22main%22%3E%0A%20%20%20%20%3Cmain%20class%3D%22content-vertical-center%20content-horizontal-center%22%3E%0A%20%20%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20%20%20%3Ch2%3ELoading%20Experiment%3C%2Fh2%3E%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20experiment%20is%20loading%20and%20should%20start%20in%20a%20few%20seconds%3C%2Fp%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%3C%2Fmain%3E%0A%20%20%3C%2Fdiv%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A",
+        "source": "library"
+      },
+      "style.css": {
+        "content": "data:text/css,%2F*%20Please%20define%20your%20custom%20styles%20here%20*%2F",
+        "source": "library"
+      },
+      "embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUiIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6Ik5VUlNFIiwiY2xhc3MiOiJ3b3JkIn0seyJ3b3JkIjoiSElDRSIsImNsYXNzIjoibm9ud29yZCJ9LHsid29yZCI6IkJPU1NJTCIsImNsYXNzIjoibm9ud29yZCJ9XQ==",
+        "source": "embedded",
+        "checkSum": "db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b"
+      },
+      "embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjIiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41"
+      },
+      "embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjk4IiwiY2xhc3MiOiJ3b3JkIn0seyJ3b3JkIjoiTlVSU0UiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJISUNFIiwiY2xhc3MiOiJub253b3JkIn0seyJ3b3JkIjoiQk9TU0lMIiwiY2xhc3MiOiJub253b3JkIn1dCg==",
+        "source": "embedded",
+        "checkSum": "ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871"
+      },
+      "embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjg5MCIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6Ik5VUlNFIiwiY2xhc3MiOiJ3b3JkIn0seyJ3b3JkIjoiSElDRSIsImNsYXNzIjoibm9ud29yZCJ9LHsid29yZCI6IkJPU1NJTCIsImNsYXNzIjoibm9ud29yZCJ9XQo=",
+        "source": "embedded",
+        "checkSum": "3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e"
+      },
+      "embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjYiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06"
+      },
+      "embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjUiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee"
+      },
+      "embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json": {
+        "content": "data:application/json;base64,W3sid29yZCI6IkRPQ1RPUjMiLCJjbGFzcyI6IndvcmQifSx7IndvcmQiOiJOVVJTRSIsImNsYXNzIjoid29yZCJ9LHsid29yZCI6IkhJQ0UiLCJjbGFzcyI6Im5vbndvcmQifSx7IndvcmQiOiJCT1NTSUwiLCJjbGFzcyI6Im5vbndvcmQifV0K",
+        "source": "embedded",
+        "checkSum": "cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99"
+      }
+    },
+    "bundledFiles": {
+      "lib/lab.js": {
+        "type": "application/javascript"
+      },
+      "lib/lab.js.map": {
+        "type": "text/plain"
+      },
+      "lib/lab.fallback.js": {
+        "type": "application/javascript"
+      },
+      "lib/lab.legacy.js": {
+        "type": "application/javascript"
+      },
+      "lib/lab.legacy.js.map": {
+        "type": "text/plain"
+      },
+      "lib/lab.css": {
+        "type": "text/css"
+      },
+      "lib/loading.svg": {
+        "type": "image/svg+xml"
+      }
+    }
+  }
+}

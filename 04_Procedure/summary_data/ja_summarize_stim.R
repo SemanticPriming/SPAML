@@ -439,8 +439,8 @@ ja_merged$done_totalN <- ja_merged$target_answeredN >= 50
 ja_merged$done <- ja_merged$sampleN >= 50
 
 # use data ----
-ja_use <- subset(ja_merged, is.na(done) | done == FALSE)
-ja_sample <- subset(ja_merged, done == TRUE)
+ja_use <- subset(ja_merged, is.na(done_both) | done_both == FALSE)
+ja_sample <- subset(ja_merged, done_both == TRUE)
 
 # Generate ----------------------------------------------------------------
 
