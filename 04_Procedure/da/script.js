@@ -1091,7 +1091,7 @@ this.options.templateParameters = await response.json()
       "content": {
         "type": "lab.flow.Loop",
         "files": {
-          "stimuli_english_real7.json": "embedded\u002Fcd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"
+          "stimuli_english_real7.json": "embedded\u002Fc378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"
         },
         "parameters": {},
         "templateParameters": [],
@@ -1227,7 +1227,7 @@ this.options.templateParameters = await response.json()
       "content": {
         "type": "lab.flow.Loop",
         "files": {
-          "stimuli_english_real8.json": "embedded\u002Fdb6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"
+          "stimuli_english_real8.json": "embedded\u002F0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"
         },
         "parameters": {},
         "templateParameters": [],

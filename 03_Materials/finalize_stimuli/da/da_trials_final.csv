@@ -181,7 +181,7 @@ elendig,ynkelig,related,word,word,0.399298590033666
 bortskaffe,fjerne,related,word,word,0.305364583153353
 en,tre,related,word,word,0.239424314681348
 ende,afslutte,related,word,word,0.417021175456431
-endelig,til sidst,related,word,word,
+slutteligt,endeligt,related,word,word,
 enestående,bemærkelsesværdig,related,word,word,0.553706193256858
 forlovelse,bryllup,related,word,word,0.487623726402438
 engel,djævel,related,word,word,0.471600478066483
@@ -1136,7 +1136,7 @@ udgang,løgner,unrelated,word,word,0.107905368079279
 pest,søvn,unrelated,word,word,0.0911621778584952
 udstyr,ærlig,unrelated,word,word,0.0205741665398656
 observation,trone,unrelated,word,word,0.0923765020579
-endelig,båd,unrelated,word,word,0.0912153694349987
+slutteligt,båd,unrelated,word,word,0.0912153694349987
 undervurdere,mikrofon,unrelated,word,word,0.0466451094416844
 stolt,heroin,unrelated,word,word,0.119636040440947
 tilgive,demonstration,unrelated,word,word,0.0878116533659221
@@ -1209,7 +1209,7 @@ hævn,bomuld,unrelated,word,word,0.0535867139599271
 forgifte,udsagn,unrelated,word,word,0.122181126976425
 dronning,danskvand,unrelated,word,word,0.139549464614734
 royal,pris,unrelated,word,word,0.112603248653387
-genkende,til sidst,unrelated,word,word,
+genkende,endeligt,unrelated,word,word,
 erfaring,binde,unrelated,word,word,0.0363949281110494
 herre,privatliv,unrelated,word,word,0.0128731929274416
 lejer,numse,unrelated,word,word,0.133203529794141
@@ -1860,7 +1860,7 @@ aspiudt,depression,nonword,nonword,word,
 røsk,privatliv,nonword,nonword,word,
 astrobilt,evaluering,nonword,nonword,word,
 sjons,psykologi,nonword,nonword,word,
-atonym,til sidst,nonword,nonword,word,
+atonym,endeligt,nonword,nonword,word,
 littion,kartel,nonword,nonword,word,
 autopert,familie,nonword,nonword,word,
 rynne,mærkelig,nonword,nonword,word,
@@ -3357,7 +3357,7 @@ sund,mystetimeter,nonword,word,nonword,
 tilgivelse,skræmmosfære,nonword,word,nonword,
 kapsel,millisnit,nonword,word,nonword,
 holde,sprænsætter,nonword,word,nonword,
-endelig,tåndert,nonword,word,nonword,
+slutteligt,tåndert,nonword,word,nonword,
 aske,sovesimum,nonword,word,nonword,
 kanal,elstof,nonword,word,nonword,
 ryge,beslutsomkomst,nonword,word,nonword,
