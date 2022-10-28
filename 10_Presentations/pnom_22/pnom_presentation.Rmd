@@ -119,7 +119,7 @@ knitr::include_graphics("cropped-cropped-psa.png")
 
 ## Data Provided
 
-- This procedure creates data at many levels
+- The data will be provided in several forms: 
   - Subject/trial level: for every participant 
   - Item level: for each individual item, rather than just cue or just concept
   - Priming level: for each related pair compared to the unrelated pair
@@ -132,7 +132,7 @@ knitr::include_graphics("shiny.png")
 
 *Big thanks to [ZPID](https://leibniz-psychology.org/en/) and Harrisburg U
 
-## Priming Distribution Results
+## Overall Priming Distribution Results
 
 <center>
 
@@ -156,7 +156,7 @@ prime_dist
 
 </center>
 
-## Priming Comparison 
+## Overall Priming Comparison 
 
 <center>
 
@@ -178,7 +178,7 @@ ggplot(overall, aes(lang, avgZ_prime, color = lang)) +
 
 </center>
 
-## Item Level Priming Results 
+## Individual Item Priming Results 
 
 <center> 
 
@@ -209,12 +209,22 @@ ggplot(overall_plot, aes(count, avgZ_prime, color = lang)) +
 
 ## Recruitment and any Questions?
 
+:::: {.columns}
+::: {.column width="70%"}
 - Thank you for listening!
 - We want you - join our team for data collection by contacting me
   - All levels of researchers welcome
   - Authorship is provided for those who meet the collaboration agreement 
-- Interested in the code? Check out https://github.com/SemanticPriming/SPAML
 - All PSA collaborators are listed with their author information online
+:::
+::: {.column width="30%"}
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("QR_links.png")
+```
+:::
+::::
+
+
 
 
 
