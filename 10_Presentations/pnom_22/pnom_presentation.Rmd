@@ -4,7 +4,7 @@ title: 'Is priming consistent across languages? Preliminary findings from the SP
 author: "Erin M. Buchanan & The Psychological Science Accelerator"
 output:
   beamer_presentation:
-    incremental: yes
+    incremental: no
   slidy_presentation:
     incremental: yes
     css: bootstrap.min.css
