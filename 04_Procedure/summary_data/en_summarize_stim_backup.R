@@ -186,6 +186,18 @@ en_data_all <-
                      url_special_code = as.character(url_special_code)),
             processData("/var/www/html/en6/data/data.sqlite") %>% 
               mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)), 
+            processData("/var/www/html/en7/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/en8/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/en9/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)), 
+            processData("/var/www/html/en10/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
                      url_special_code = as.character(url_special_code))) %>% unique()
 
 # delete stuff before we started 
