@@ -258,6 +258,15 @@ if (nrow(participant_DF) > 0){participant_DF$keep <- "keep"}
 # only above 18
 participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
 
+# special issue with lab 91 as they made us take age question out
+# but we verified they were 18
+# get the ids
+ids_91 <- en_data_all %>% 
+  filter(url_lab == "91") %>% 
+  pull(observation)
+# make these keep
+participant_DF$keep[participant_DF$observation %in% ids_91] <- "keep"
+
 # at least 100 trials + 80%
 number_trials <- en_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
