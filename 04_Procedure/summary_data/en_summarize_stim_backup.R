@@ -226,7 +226,7 @@ en_data_all <- en_data_all %>%
   # Participant did not complete at least 100 trials. 
   # Participant did not achieve 80% correct.
   current_year <- 2022
-  number_folders <- 7
+  number_folders <- 11
   
   ##create demographics only data
   demos <- en_data_all %>% #data frame
