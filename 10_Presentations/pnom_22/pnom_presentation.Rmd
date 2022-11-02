@@ -3,11 +3,11 @@ title: 'Is priming consistent across languages? Preliminary findings from the SP
   Semantic Priming Across Many Languages'
 author: "Erin M. Buchanan & The Psychological Science Accelerator"
 output:
-  beamer_presentation:
-    incremental: no
   slidy_presentation:
     incremental: yes
     css: bootstrap.min.css
+  beamer_presentation:
+    incremental: no
 ---
 
 ```{r setup, include=FALSE}
