@@ -431,8 +431,8 @@ ko_merged$done_totalN <- ko_merged$target_answeredN >= 50
 ko_merged$done <- ko_merged$sampleN >= 50
 
 # use data ----
-ko_use <- subset(ko_merged, is.na(done) | done == FALSE)
-ko_sample <- subset(ko_merged, done == TRUE)
+ko_use <- subset(ko_merged, is.na(done_both) | done_both == FALSE)
+ko_sample <- subset(ko_merged, done_both == TRUE)
 
 # Generate ----------------------------------------------------------------
 
