@@ -1,12 +1,17 @@
 ---
 title: 'Is priming consistent across languages? Preliminary findings from the SPAML: Semantic Priming Across Many Languages'
 author: "Erin M. Buchanan & The Psychological Science Accelerator"
-output:
-  slidy_presentation:
-    incremental: yes
-    css: bootstrap.min.css
-  beamer_presentation:
-    incremental: no
+institute: "Harrisburg University"
+format: 
+  revealjs:
+    theme: night
+    smaller: true
+editor: source
+incremental: true 
+scrollable: true 
+preview-links: true
+code-copy: true 
+highlight-style: github 
 ---
 
 ```{r setup, include=FALSE}
@@ -131,11 +136,11 @@ knitr::include_graphics("shiny.png")
 
 *Big thanks to [ZPID](https://leibniz-psychology.org/en/) and Harrisburg U
 
-## Overall Priming Distribution Results
+## Overall Priming Distribution Results{.r-fit-text}
 
 <center>
 
-```{r graph1, out.height="100%", out.width="60%"}
+```{r graph1, out.height="100%", out.width="100%"}
 prime_dist <- overall %>%
   select(avgZ_prime, lang) %>%
   ggplot(aes(x = lang, y = avgZ_prime, fill = lang)) +
@@ -159,7 +164,7 @@ prime_dist
 
 <center>
 
-```{r graph2, out.height="100%", out.width="60%", message=FALSE, warning=FALSE}
+```{r graph2, out.height="100%", out.width="100%", message=FALSE, warning=FALSE}
 ggplot(overall, aes(lang, avgZ_prime, color = lang)) + 
   theme_classic() + 
   xlab("Language") + 
@@ -181,7 +186,7 @@ ggplot(overall, aes(lang, avgZ_prime, color = lang)) +
 
 <center> 
 
-```{r graph3, out.height="100%", out.width="60%"}
+```{r graph3, out.height="100%", out.width="100%"}
 overall_plot <- overall %>% 
   group_by(lang) %>% 
   arrange(avgZ_prime) %>% 
@@ -222,8 +227,3 @@ knitr::include_graphics("QR_links.png")
 ```
 :::
 ::::
-
-
-
-
-
