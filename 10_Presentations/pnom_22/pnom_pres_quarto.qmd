@@ -5,14 +5,22 @@ institute: "Harrisburg University"
 format: 
   revealjs:
     theme: night
-    smaller: true
 editor: source
 incremental: true 
 scrollable: true 
 preview-links: true
 code-copy: true 
 highlight-style: github 
+embed-resources: true
 ---
+
+## The Psychological Science Accelerator{.smaller}
+
+```{css}
+h1.title {
+font-size: 1.5em;
+}
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -39,8 +47,6 @@ overall <- bind_rows(
 )
 ```
 
-## The Psychological Science Accelerator 
-
 :::: {.columns}
 ::: {.column width="70%"}
 - The PSA is a CERN for psychological science
@@ -55,14 +61,14 @@ knitr::include_graphics("cropped-cropped-psa.png")
 :::
 ::::
 
-## Semantic Priming 
+## Semantic Priming{.smaller} 
 
 - Semantic priming has a rich history in cognitive psychology
 - Semantic priming occurs when response latencies are facilitated (faster) for related word-pairs than unrelated word-pairs
 - Usually measured with the lexical decision or naming task 
 - The Semantic Priming Project (Hutchison et al., 2013) provided priming values for 1661 English word-pairs
 
-## Semantic Priming
+## Semantic Priming{.smaller}
 
 - **Semantic** priming replicates pretty well
 - WEIRD words 
@@ -74,14 +80,14 @@ knitr::include_graphics("cropped-cropped-psa.png")
   - Provide a large-scale data set for reuse in linguistics 
 - Registered Report at *Nature Human Behaviour*
 
-## The Stimuli
+## The Stimuli{.smaller}
 
 - Corpus Text Data: [Open Subtitles Project](http://opus.nlpl.eu/OpenSubtitles-v2018.php)
 - Subtitles have shown to be critically useful data sets for word frequency calculation (New et al., 2007; Brysbaert & New, 2009; Keuleers et al., 2010; Cuetos et al., 2012; Van Heuven et al., 2014; Mandera et al., 2015; and more)
 - Freely available subtitles in 63 languages for computational analysis
 - Approximately 43 languages contain enough data to be usable for these projects
 
-## The Stimuli
+## The Stimuli{.smaller}
 
 - For each language:
   - Collect the top 10,000 most frequent nouns, verbs, adjectives, and adverbs
@@ -91,7 +97,7 @@ knitr::include_graphics("cropped-cropped-psa.png")
   - 1000 final pairs
 - Important: driven by the language, not English translation
   
-## Nonwords and Translators
+## Nonwords and Translators{.smaller}
 
 - Nonwords are generated with a Wuggy-like algorithm (Keuleers & Brysbaert, 2010)
 - Translators check all pairs for proper translation, form, and meaning
@@ -99,7 +105,7 @@ knitr::include_graphics("cropped-cropped-psa.png")
 - They fix nonwords to ensure they are pronounceable, not too fake
 - Dialects are considered and separated when appropriate 
 
-## Procedure 
+## Procedure{.smaller} 
 
 - View a simple version: https://psa007.psysciacc.org/
 - Overall task: 
@@ -112,7 +118,7 @@ knitr::include_graphics("cropped-cropped-psa.png")
   - Keyboards are WILD
   - 400 pairs = 800 trials
 
-## Power and Study Design 
+## Power and Study Design{.smaller} 
 
 - Power focused on using accuracy in parameter estimation to adequately measure each individual item (see anything by Ken Kelley)
 - We simulated using the English Lexicon Project and Semantic Priming Project
@@ -121,14 +127,14 @@ knitr::include_graphics("cropped-cropped-psa.png")
   - Maximum = *n* = 320 
 - Adaptive sampling checks and samples pairs once an hour to randomize the study 
 
-## Data Provided
+## Data Provided{.smaller}
 
 - The data will be provided in several forms: 
   - Subject/trial level: for every participant 
   - Item level: for each individual item, rather than just cue or just concept
   - Priming level: for each related pair compared to the unrelated pair
 
-## Current Data Collection
+## Current Data Collection{.smaller}
 
 ```{r shiny, out.width="80%"}
 knitr::include_graphics("shiny.png")
@@ -136,7 +142,7 @@ knitr::include_graphics("shiny.png")
 
 *Big thanks to [ZPID](https://leibniz-psychology.org/en/) and Harrisburg U
 
-## Overall Priming Distribution Results{.r-fit-text}
+## Priming Distribution Results{.smaller}
 
 <center>
 
@@ -160,7 +166,7 @@ prime_dist
 
 </center>
 
-## Overall Priming Comparison 
+## Priming Comparison{.smaller} 
 
 <center>
 
@@ -182,7 +188,7 @@ ggplot(overall, aes(lang, avgZ_prime, color = lang)) +
 
 </center>
 
-## Individual Item Priming Results 
+## Item Priming Results{.smaller} 
 
 <center> 
 
@@ -204,14 +210,14 @@ ggplot(overall_plot, aes(count, avgZ_prime, color = lang)) +
 
 </center> 
 
-## Final Thoughts 
+## Final Thoughts{.smaller} 
 
 - This work to diversify participants, languages, and researchers represented is aided by big team science approaches
 - Priming effects are found across different writing systems 
 - Variability between languages appears to be approximately .02
 - More languages currently underway 
 
-## Recruitment and any Questions?
+## Recruitment and any Questions?{.smaller}
 
 :::: {.columns}
 ::: {.column width="70%"}
