@@ -11,7 +11,6 @@ scrollable: true
 preview-links: true
 code-copy: true 
 highlight-style: github 
-embed-resources: true
 ---
 
 ## The Psychological Science Accelerator{.smaller}
@@ -27,6 +26,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(rio)
 library(dplyr)
 library(ggplot2)
+library(GGally)
+library(ggrepel)
 ```
 
 ```{r data}
@@ -38,13 +39,47 @@ ru_prime <- read.csv("../../05_Data_real/output_data/ru_prime_data.csv")
 tr_prime <- read.csv("../../05_Data_real/output_data/tr_prime_data.csv")
 
 overall <- bind_rows(
-  cs_prime %>% mutate(lang = "Czech"),
-  en_prime %>% mutate(lang = "English"),
-  ja_prime %>% mutate(lang = "Japanese"),
-  ko_prime %>% mutate(lang = "Korean"),
-  ru_prime %>% mutate(lang = "Russian"),
-  tr_prime %>% mutate(lang = "Turkish")
+  cs_prime %>% mutate(lang = "Czech", 
+                      target_word_unique = tolower(target_word_unique)),
+  en_prime %>% mutate(lang = "English", 
+                      target_word_unique = tolower(target_word_unique)),
+  ja_prime %>% mutate(lang = "Japanese", 
+                      target_word_unique = tolower(target_word_unique)),
+  ko_prime %>% mutate(lang = "Korean", 
+                      target_word_unique = tolower(target_word_unique)),
+  ru_prime %>% mutate(lang = "Russian", 
+                      target_word_unique = tolower(target_word_unique)),
+  tr_prime %>% mutate(lang = "Turkish", 
+                      target_word_unique = tolower(target_word_unique))
 )
+
+matched <- read.csv("../../03_Materials/matched_stimuli/matched_stimuli.csv")
+
+matched2 <- matched %>% 
+  left_join(overall %>% filter(lang == "English") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(en_avgZ_prime = avgZ_prime), 
+            by = c("en_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Japanese") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ja_avgZ_prime = avgZ_prime), 
+            by = c("ja_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Korean") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ko_avgZ_prime = avgZ_prime), 
+            by = c("ko_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Russian") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ru_avgZ_prime = avgZ_prime), 
+            by = c("ru_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Czech") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(cs_avgZ_prime = avgZ_prime), 
+            by = c("cs_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Turkish") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(tr_avgZ_prime = avgZ_prime), 
+            by = c("tr_target_word_unique" = "target_word_unique")) 
 ```
 
 :::: {.columns}
@@ -209,6 +244,52 @@ ggplot(overall_plot, aes(count, avgZ_prime, color = lang)) +
 ```
 
 </center> 
+
+## Cross Cultural Comparison
+
+<center>
+
+```{r graph4, out.height="100%", out.width="100%"}
+matched2$prop_work <- apply(matched2 %>% select(en_avgZ_prime:tr_avgZ_prime), 1, function(x) sum(x > 0))
+
+props <- 
+  matched2 %>% 
+  group_by(prop_work) %>% 
+  count() %>% 
+  mutate(hsize = 3,
+         prop_work = as.factor(prop_work)) %>% 
+  ungroup() %>% 
+  arrange(desc(prop_work)) %>% 
+  mutate(csum = cumsum(n), 
+         pos = n/2 + lag(csum, 1),
+         pos = if_else(is.na(pos), n/2, pos))
+
+ggplot(props, aes(x = hsize, y = n, fill = prop_work)) +
+  geom_col() +
+  coord_polar(theta = "y") +
+  xlim(c(0.2, 3 + 0.5)) +
+  theme_void() + 
+  geom_text(aes(label = round((n/1000*100))),
+            position = position_stack(vjust = 0.5)) + 
+  scale_fill_brewer(palette = "Paired") + 
+  geom_label_repel(data = props,
+                   aes(y = pos, label = paste0(prop_work)),
+                   size = 4.5, nudge_x = 1, show.legend = FALSE,
+                   segment.colour = NA) + 
+  theme(legend.position = "none")
+```
+
+</center>
+
+## Cross Cultural Comparison
+
+<center>
+
+```{r graph5, out.height="100%", out.width="100%", message = FALSE}
+ggpairs(matched2[ , 45:50]) + theme_bw()
+```
+
+</center>
 
 ## Final Thoughts{.smaller} 
 

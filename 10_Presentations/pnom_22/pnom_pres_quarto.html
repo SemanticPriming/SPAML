@@ -7,7 +7,7 @@
 <link href="pnom_pres_quarto_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="pnom_pres_quarto_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="pnom_pres_quarto_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.0.36">
+  <meta name="generator" content="quarto-1.1.189">
 
   <meta name="author" content="Erin M. Buchanan &amp; The Psychological Science Accelerator">
   <title>Is priming consistent across languages? Preliminary findings from the SPAML: Semantic Priming Across Many Languages</title>
@@ -19,10 +19,15 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
   </style>
   <link rel="stylesheet" href="pnom_pres_quarto_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="pnom_pres_quarto_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -490,6 +495,26 @@ font-size: 1.5em;
 </div>
 </center>
 </section>
+<section id="cross-cultural-comparison" class="slide level2">
+<h2>Cross Cultural Comparison</h2>
+<center>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="pnom_pres_quarto_files/figure-revealjs/graph4-1.png" style="width:100.0%;height:100.0%"></p>
+</div>
+</div>
+</center>
+</section>
+<section id="cross-cultural-comparison-1" class="slide level2">
+<h2>Cross Cultural Comparison</h2>
+<center>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="pnom_pres_quarto_files/figure-revealjs/graph5-1.png" style="width:100.0%;height:100.0%"></p>
+</div>
+</div>
+</center>
+</section>
 <section id="final-thoughts" class="slide level2 smaller">
 <h2>Final Thoughts</h2>
 <ul>
@@ -845,7 +870,8 @@ font-size: 1.5em;
       for (var i=0; i<noterefs.length; i++) {
         const ref = noterefs[i];
         tippyHover(ref, function() {
-          let href = ref.getAttribute('href');
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);

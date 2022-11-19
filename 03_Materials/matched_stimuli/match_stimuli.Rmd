@@ -1,0 +1,112 @@
+---
+title: "Match Stimuli"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries 
+
+```{r}
+library(rio)
+library(dplyr)
+library(tidyr)
+```
+
+## Data
+
+```{r}
+matchDF <- import("en_matched.csv") %>% mutate(across(everything(), tolower)) %>% 
+  full_join(
+    import("cs_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  full_join(
+    import("da_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  full_join(
+    import("de_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  full_join(
+    import("ja_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  full_join(
+    import("ko_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  full_join(
+    import("ru_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  full_join(
+    import("tr_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  )
+
+# make each pair unique by language 
+uniqueDF <- bind_rows(import("cs_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower),
+                               lang = "Czech"),
+                      import("en_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower), 
+                               lang = "English"),
+                      import("ja_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower),
+                               lang = "Japanese"),
+                      import("ko_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower), 
+                               lang = "Korean"), 
+                      import("tr_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower),
+                               lang = "Turkish"),
+                      import("ru_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower),
+                               lang = "Russian"))
+
+matchDF2 <- matchDF %>% 
+  mutate(en_word_combo = paste0(en_cue,en_target)) %>% 
+  left_join(uniqueDF %>% filter(lang == "English") %>% 
+              select(-lang), 
+            by = c("en_word_combo" = "word_combo")) %>% 
+  rename(en_target_word_unique = target_word_unique) %>% 
+  # cs
+  mutate(cs_word_combo = paste0(cs_cue,cs_target)) %>%
+  left_join(uniqueDF %>% filter(lang == "Czech") %>% 
+              select(-lang), 
+            by = c("cs_word_combo" = "word_combo")) %>% 
+  rename(cs_target_word_unique = target_word_unique) %>% 
+  # ja
+  mutate(ja_word_combo = paste0(ja_cue,ja_target)) %>%
+  left_join(uniqueDF %>% filter(lang == "Japanese") %>% 
+              select(-lang), 
+            by = c("ja_word_combo" = "word_combo")) %>% 
+  rename(ja_target_word_unique = target_word_unique) %>% 
+  # ko
+  mutate(ko_word_combo = paste0(ko_cue,ko_target)) %>%
+  left_join(uniqueDF %>% filter(lang == "Korean") %>% 
+              select(-lang), 
+            by = c("ko_word_combo" = "word_combo")) %>% 
+  rename(ko_target_word_unique = target_word_unique) %>% 
+  # tr
+  mutate(tr_word_combo = paste0(tr_cue,tr_target)) %>%
+  left_join(uniqueDF %>% filter(lang == "Turkish") %>% 
+              select(-lang), 
+            by = c("tr_word_combo" = "word_combo")) %>% 
+  rename(tr_target_word_unique = target_word_unique) %>% 
+  # ru
+  mutate(ru_word_combo = paste0(ru_cue,ru_target)) %>%
+  left_join(uniqueDF %>% filter(lang == "Russian") %>% 
+              select(-lang), 
+            by = c("ru_word_combo" = "word_combo")) %>% 
+  rename(ru_target_word_unique = target_word_unique) 
+
+export(matchDF2, "matched_stimuli.csv", row.names = F)
+```
+
