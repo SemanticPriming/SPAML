@@ -2799,7 +2799,7 @@ el_final$ok <- NULL
 export(el_final, "el/el_trials_final.csv")
 ```
 
-## he Hebrew TO DO 
+## he Hebrew
 
 ```{r eval = F}
 # original words
@@ -2807,7 +2807,7 @@ he <- import("he/he_translate.csv")
 he$en_cue <- gsub("digusting", "disgusting", he$en_cue)
 
 # fix real words ----
-he_update <- import("he/he_translate2 SPAML Apr 2022.xlsx") %>% 
+he_update <- import("he/he_translated.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -2826,19 +2826,8 @@ for (i in 1:nrow(targets)){
 }
 
 # fix fake words ----
-cues <- he_update %>% filter(he_fake_cue_trans != "")
-for (i in 1:nrow(cues)){
-  he$he_fake_cue[he$he_fake_cue == cues$he_fake_cue[i] #original cue match
-            & he$en_cue == cues$en_cue[i]] <- #english match
-    cues$he_fake_cue_trans[i] #new cue
-}
-
-targets <- he_update %>% filter(he_fake_target_trans != "")
-for (i in 1:nrow(targets)){
-  he$he_fake_target[he$he_fake_target == targets$he_fake_target[i] #original target match
-            & he$en_target == targets$en_target[i]] <- #english match
-    targets$he_fake_target_trans[i] #new target
-}
+he$he_fake_target <- he_update$he_fake_target_final
+he$he_fake_cue <- he_update$he_fake_cue_final
 
 sum(duplicated(he$he_cue))
 sum(duplicated(he$he_target))
@@ -2850,7 +2839,7 @@ nrow(he %>% filter(he_cue == he_target))
 export(he, "../matched_stimuli/he_matched.csv", row.names = F)
 
 # create possible trials ----
-he_trials <- ur[ , c("he_cue", "he_target")]
+he_trials <- he[ , c("he_cue", "he_target")]
 he_trials$type <- "related"
 he_trials$cue_type <- "word"
 he_trials$target_type <- "word"
@@ -2894,7 +2883,7 @@ sum(duplicated(he_trials[ , c("he_cue", "he_target")]))
 
 # update with low cosines from random shuffle ----
 # set up model
-he_model <- read.table("/Volumes/SPAML Backup/wiki_vec/he/wiki.ur.1e6.txt", quote="\"")
+he_model <- read.table("/Volumes/SPAML Backup/subs_vec/he/subs.he.1e6.txt", quote="\"")
 he_model <- na.omit(he_model)
 he_model$V1 <- tolower(he_model$V1)
 he_model <- he_model[!duplicated(he_model$V1), ]
@@ -3012,10 +3001,6 @@ weird_trials <- he_final %>%
   filter(type != "nonword") %>% 
   filter(he_target %in% target_table$he_target)
 
-# drop extra
-he_final <- he_final %>% 
-  filter(!(he_cue == "پرخطر" & he_target == "لکھیں"))
-
 # check for NA
 sum(is.na(he_final$he_cue))
 sum(is.na(he_final$he_target))
@@ -3031,10 +3016,9 @@ he_final$ok <- NULL
 export(he_final, "he/he_trials_final.csv")
 ```
 
-
 ## hi Hindi NEED WORDS  
 
-## hu Hungarian FIX DUPLICATES
+## hu Hungarian
 
 ```{r eval = F}
 # original words
@@ -3082,7 +3066,7 @@ sum(duplicated(hu$hu_fake_target))
 
 nrow(hu %>% filter(hu_cue == hu_target))
 
-export(ur, "../matched_stimuli/hu_matched.csv", row.names = F)
+export(hu, "../matched_stimuli/hu_matched.csv", row.names = F)
 
 # create possible trials ----
 hu_trials <- hu[ , c("hu_cue", "hu_target")]
@@ -3129,7 +3113,7 @@ sum(duplicated(hu_trials[ , c("hu_cue", "hu_target")]))
 
 # update with low cosines from random shuffle ----
 # set up model
-hu_model <- read.table("/Volumes/SPAML Backup/subs_vec/hu_br/subs.pt.1e6.txt", quote="\"")
+hu_model <- read.table("/Volumes/SPAML Backup/subs_vec/hu/subs.hu.1e6.txt", quote="\"")
 hu_model <- na.omit(hu_model)
 hu_model$V1 <- tolower(hu_model$V1)
 hu_model <- hu_model[!duplicated(hu_model$V1), ]
@@ -3259,7 +3243,7 @@ table(hu_final$type, hu_final$cue_type, hu_final$target_type)
 
 hu_final$ok <- NULL
 
-export(hu_final, "hu_br/hu_trials_final.csv")
+export(hu_final, "hu/hu_trials_final.csv")
 ```
 
 ## zh Simplified Chinese NEED FINAL
