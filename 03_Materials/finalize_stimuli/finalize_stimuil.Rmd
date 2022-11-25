@@ -388,22 +388,22 @@ for (i in 1:length(bad_trials$ru_target)){
   
   # find all words that could be paired with bad ru_target
   # as updated ru_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$ru_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$ru_target[i]] < .15] 
   
   # find all pairs of good ru_target that could
   # be paired with bad ru_cue
-  potrutial_switch <- good_trials %>% filter(ru_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(ru_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(ru_model[c(
     bad_trials$ru_cue[i],
-    potrutial_switch$ru_target), 
+    potential_switch$ru_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$ru_cue[i], bad_trials$ru_target[i],
-    potrutial_switch$ru_cue[potrutial_switch$ru_target == new_target],
+    potential_switch$ru_cue[potential_switch$ru_target == new_target],
     new_target)
 
 }
@@ -594,22 +594,22 @@ for (i in 1:length(bad_trials$tr_target)){
   
   # find all words that could be paired with bad tr_target
   # as updated tr_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$tr_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$tr_target[i]] < .15] 
   
   # find all pairs of good tr_target that could
   # be paired with bad tr_cue
-  potrutial_switch <- good_trials %>% filter(tr_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(tr_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(tr_model[c(
     bad_trials$tr_cue[i],
-    potrutial_switch$tr_target), 
+    potential_switch$tr_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$tr_cue[i], bad_trials$tr_target[i],
-    potrutial_switch$tr_cue[potrutial_switch$tr_target == new_target],
+    potential_switch$tr_cue[potential_switch$tr_target == new_target],
     new_target)
 
 }
@@ -1378,22 +1378,22 @@ for (i in 1:length(bad_trials$da_target)){
   
   # find all words that could be paired with bad da_target
   # as updated da_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$da_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$da_target[i]] < .15] 
   
   # find all pairs of good da_target that could
   # be paired with bad da_cue
-  potrutial_switch <- good_trials %>% filter(da_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(da_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(da_model[c(
     bad_trials$da_cue[i],
-    potrutial_switch$da_target), 
+    potential_switch$da_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$da_cue[i], bad_trials$da_target[i],
-    potrutial_switch$da_cue[potrutial_switch$da_target == new_target],
+    potential_switch$da_cue[potential_switch$da_target == new_target],
     new_target)
 
 }
@@ -1611,22 +1611,22 @@ for (i in 1:length(bad_trials$de_target)){
   
   # find all words that could be paired with bad de_target
   # as updated de_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$de_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$de_target[i]] < .15] 
   
   # find all pairs of good de_target that could
   # be paired with bad de_cue
-  potrutial_switch <- good_trials %>% filter(de_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(de_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(de_model[c(
     bad_trials$de_cue[i],
-    potrutial_switch$de_target), 
+    potential_switch$de_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$de_cue[i], bad_trials$de_target[i],
-    potrutial_switch$de_cue[potrutial_switch$de_target == new_target],
+    potential_switch$de_cue[potential_switch$de_target == new_target],
     new_target)
 
 }
@@ -1843,22 +1843,22 @@ for (i in 1:length(bad_trials$ar_target)){
   
   # find all words that could be paired with bad ar_target
   # as updated ar_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$ar_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$ar_target[i]] < .15] 
   
   # find all pairs of good ar_target that could
   # be paired with bad ar_cue
-  potrutial_switch <- good_trials %>% filter(ar_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(ar_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(ar_model[c(
     bad_trials$ar_cue[i],
-    potrutial_switch$ar_target), 
+    potential_switch$ar_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$ar_cue[i], bad_trials$ar_target[i],
-    potrutial_switch$ar_cue[potrutial_switch$ar_target == new_target],
+    potential_switch$ar_cue[potential_switch$ar_target == new_target],
     new_target)
 
 }
@@ -1920,7 +1920,7 @@ ar_final$ok <- NULL
 export(ar_final, "ar/ar_trials_final.csv")
 ```
 
-## fa Farsi NEED NEW WORDS  
+## fa Farsi
 
 ```{r eval = F}
 # original words
@@ -1928,7 +1928,7 @@ fa <- import("fa/fa_translate.csv")
 fa$en_cue <- gsub("digusting", "disgusting", fa$en_cue)
 
 # fix real words ----
-fa_update <- import("fa/fa_translate.xlsx") %>% 
+fa_update <- import("fa/fa_translated.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -1968,10 +1968,10 @@ sum(duplicated(fa$fa_fake_target))
 
 nrow(fa %>% filter(fa_cue == fa_target))
 
-export(fi, "../matched_stimuli/fa_matched.csv", row.names = F)
+export(fa, "../matched_stimuli/fa_matched.csv", row.names = F)
 
 # create possible trials ----
-fa_trials <- fi[ , c("fa_cue", "fa_target")]
+fa_trials <- fa[ , c("fa_cue", "fa_target")]
 fa_trials$type <- "related"
 fa_trials$cue_type <- "word"
 fa_trials$target_type <- "word"
@@ -2015,7 +2015,7 @@ sum(duplicated(fa_trials[ , c("fa_cue", "fa_target")]))
 
 # update with low cosines from random shuffle ----
 # set up model
-fa_model <- read.table("/Volumes/SPAML Backup/subs_vec/fa_br/subs.pt.1e6.txt", quote="\"")
+fa_model <- read.table("/Volumes/SPAML Backup/subs_vec/fa/subs.fa.1e6.txt", quote="\"")
 fa_model <- na.omit(fa_model)
 fa_model$V1 <- tolower(fa_model$V1)
 fa_model <- fa_model[!duplicated(fa_model$V1), ]
@@ -2071,22 +2071,22 @@ for (i in 1:length(bad_trials$fa_target)){
   
   # find all words that could be paired with bad fa_target
   # as updated fa_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$fa_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$fa_target[i]] < .15] 
   
   # find all pairs of good fa_target that could
   # be paired with bad fa_cue
-  potrutial_switch <- good_trials %>% filter(fa_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(fa_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(fa_model[c(
     bad_trials$fa_cue[i],
-    potrutial_switch$fa_target), 
+    potential_switch$fa_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$fa_cue[i], bad_trials$fa_target[i],
-    potrutial_switch$fa_cue[potrutial_switch$fa_target == new_target],
+    potential_switch$fa_cue[potential_switch$fa_target == new_target],
     new_target)
 
 }
@@ -2133,6 +2133,27 @@ weird_trials <- fa_final %>%
   filter(type != "nonword") %>% 
   filter(fa_target %in% target_table$fa_target)
 
+# deal with mismatches
+fa_final$fa_target[fa_final$fa_cue == "هوشیار" & fa_final$fa_target == "امضاء"] = "رئیس پلیس"
+fa_final$fa_target[fa_final$fa_cue == "پایین" & fa_final$fa_target == "بتمن"] = "ماهواره"
+
+# check that everyone has a mate
+target_table <- fa_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(fa_target) %>% 
+  filter(n != 2)
+
+weird_trials <- fa_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(fa_target %in% target_table$fa_target)
+
+# delete extras
+fa_final <- fa_final %>% 
+  filter(!(fa_cue == "عملیاتی" & fa_target == "بغل")) %>% 
+  filter(!(fa_cue == "بررسی" & fa_target == "متاهل"))
+
 # check for NA
 sum(is.na(fa_final$fa_cue))
 sum(is.na(fa_final$fa_target))
@@ -2145,7 +2166,7 @@ table(fa_final$type, fa_final$cue_type, fa_final$target_type)
 
 fa_final$ok <- NULL
 
-export(fa_final, "fa_br/fa_trials_final.csv")
+export(fa_final, "fa/fa_trials_final.csv")
 ```
 
 ## fi Finnish
@@ -2299,22 +2320,22 @@ for (i in 1:length(bad_trials$fi_target)){
   
   # find all words that could be paired with bad fi_target
   # as updated fi_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$fi_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$fi_target[i]] < .15] 
   
   # find all pairs of good fi_target that could
   # be paired with bad fi_cue
-  potrutial_switch <- good_trials %>% filter(fi_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(fi_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(fi_model[c(
     bad_trials$fi_cue[i],
-    potrutial_switch$fi_target), 
+    potential_switch$fi_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$fi_cue[i], bad_trials$fi_target[i],
-    potrutial_switch$fi_cue[potrutial_switch$fi_target == new_target],
+    potential_switch$fi_cue[potential_switch$fi_target == new_target],
     new_target)
 
 }
@@ -2494,22 +2515,22 @@ for (i in 1:length(bad_trials$fr_target)){
   
   # find all words that could be paired with bad fr_target
   # as updated fr_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$fr_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$fr_target[i]] < .15] 
   
   # find all pairs of good fr_target that could
   # be paired with bad fr_cue
-  potrutial_switch <- good_trials %>% filter(fr_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(fr_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(fr_model[c(
     bad_trials$fr_cue[i],
-    potrutial_switch$fr_target), 
+    potential_switch$fr_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$fr_cue[i], bad_trials$fr_target[i],
-    potrutial_switch$fr_cue[potrutial_switch$fr_target == new_target],
+    potential_switch$fr_cue[potential_switch$fr_target == new_target],
     new_target)
 
 }
@@ -2722,22 +2743,22 @@ for (i in 1:length(bad_trials$el_target)){
   
   # find all words that could be paired with bad el_target
   # as updated el_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$el_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$el_target[i]] < .15] 
   
   # find all pairs of good el_target that could
   # be paired with bad el_cue
-  potrutial_switch <- good_trials %>% filter(el_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(el_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(el_model[c(
     bad_trials$el_cue[i],
-    potrutial_switch$el_target), 
+    potential_switch$el_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$el_cue[i], bad_trials$el_target[i],
-    potrutial_switch$el_cue[potrutial_switch$el_target == new_target],
+    potential_switch$el_cue[potential_switch$el_target == new_target],
     new_target)
 
 }
@@ -2939,22 +2960,22 @@ for (i in 1:length(bad_trials$he_target)){
   
   # find all words that could be paired with bad he_target
   # as updated he_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$he_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$he_target[i]] < .15] 
   
   # find all pairs of good he_target that could
   # be paired with bad he_cue
-  potrutial_switch <- good_trials %>% filter(he_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(he_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(he_model[c(
     bad_trials$he_cue[i],
-    potrutial_switch$he_target), 
+    potential_switch$he_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$he_cue[i], bad_trials$he_target[i],
-    potrutial_switch$he_cue[potrutial_switch$he_target == new_target],
+    potential_switch$he_cue[potential_switch$he_target == new_target],
     new_target)
 
 }
@@ -3169,22 +3190,22 @@ for (i in 1:length(bad_trials$hu_target)){
   
   # find all words that could be paired with bad hu_target
   # as updated hu_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$hu_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$hu_target[i]] < .15] 
   
   # find all pairs of good hu_target that could
   # be paired with bad hu_cue
-  potrutial_switch <- good_trials %>% filter(hu_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(hu_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(hu_model[c(
     bad_trials$hu_cue[i],
-    potrutial_switch$hu_target), 
+    potential_switch$hu_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$hu_cue[i], bad_trials$hu_target[i],
-    potrutial_switch$hu_cue[potrutial_switch$hu_target == new_target],
+    potential_switch$hu_cue[potential_switch$hu_target == new_target],
     new_target)
 
 }
@@ -3246,11 +3267,212 @@ hu_final$ok <- NULL
 export(hu_final, "hu/hu_trials_final.csv")
 ```
 
-## zh Simplified Chinese NEED FINAL
+## zh Simplified Chinese
 
-## zh Traditional Chinese NEED FINAL
+```{r eval = F}
+# fix real words ----
+zh_update <- import("zh/simplified/zh_translated_final.xlsx") %>% 
+  mutate(across(everything(), tolower))
 
-## pt Portuguese COSINE 
+zh <- zh_update %>% 
+  select(zh_cue_Melinna, zh_target_Melinna, 
+         en_cue, en_target, 
+         zh_fake_cue_trans, zh_fake_target_trans) %>% 
+  rename(zh_cue = zh_cue_Melinna, 
+         zh_target = zh_target_Melinna, 
+         zh_fake_cue = zh_fake_cue_trans, 
+         zh_fake_target = zh_fake_target_trans)
+
+sum(duplicated(zh$zh_cue))
+sum(duplicated(zh$zh_target))
+sum(duplicated(zh$zh_fake_cue))
+sum(duplicated(zh$zh_fake_target))
+
+nrow(zh %>% filter(zh_cue == zh_target)) # after so much trouble, two is ok 
+
+export(zh, "../matched_stimuli/zh_simple_matched.csv", row.names = F)
+
+# create possible trials ----
+zh_trials <- zh[ , c("zh_cue", "zh_target")]
+zh_trials$type <- "related"
+zh_trials$cue_type <- "word"
+zh_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+zh$en_cue <- tolower(zh$en_cue)
+zh$en_target <- tolower(zh$en_target)
+# match unrelated pairs as a start 
+zh_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(zh_unrelated)){
+  zh_unrelated$en_cue[i] <- zh$zh_cue[zh$en_cue == zh_unrelated$en_cue[i]]
+  zh_unrelated$en_target[i] <- zh$zh_target[zh$en_target == zh_unrelated$en_target[i]]
+}
+
+zh_trials <- rbind(zh_trials,
+                   zh_unrelated %>% select(-en_cosine) %>% 
+                     rename("zh_cue" = "en_cue", 
+                            "zh_target" = "en_target"), 
+                   data.frame(zh_cue = zh$zh_fake_cue,
+                              zh_target = zh$zh_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(zh_cue = zh$zh_cue[sample(1:1000,
+                                                        1000)],
+                              zh_target = zh$zh_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(zh_cue = zh$zh_fake_cue[sample(1:1000,
+                                                        1000)],
+                              zh_target = zh$zh_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(zh_trials[ , c("zh_cue", "zh_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+zh_model <- read.csv("/Volumes/SPAML Backup/subs_vec/zh_cn/zh_300_5_sg_wxd.csv", quote="\"")
+zh_model <- na.omit(zh_model)
+zh_model$word <- tolower(zh_model$word)
+zh_model <- zh_model[!duplicated(zh_model$word), ]
+rownames(zh_model) <- zh_model$word
+zh_model <- zh_model[ , -1]
+
+zh_trials$zh_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(zh_trials)){
+  
+  if(zh_trials$type[row] != "nonword") { 
+    
+    zh_trials$zh_cosine[row] <- cosine(as.matrix(t(zh_model[
+    c(zh_trials$zh_cue[row], zh_trials$zh_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+zh_trials$ok <- TRUE
+zh_trials$ok[zh_trials$type == "unrelated" & abs(zh_trials$zh_cosine) > .15] <- FALSE
+
+good_trials <- zh_trials %>% filter(ok == TRUE)
+bad_trials <- zh_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$zh_target <- sample(bad_trials$zh_target, 
+                               size = length(bad_trials$zh_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$zh_cosine[row] <- cosine(as.matrix(t(zh_model[
+    c(bad_trials$zh_cue[row], bad_trials$zh_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(zh_cosine < .15)))
+bad_trials <- bad_trials %>% filter(zh_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+# whats_left <- cosine(as.matrix(t(zh_model[c(
+#   bad_trials$zh_target,
+#   unique(good_trials$zh_cue[good_trials$type == "unrelated"])) , ])))
+# whats_left <- as.data.frame(whats_left)
+# 
+# switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+#                       ncol = 4)
+# # find suggestions that the switch is ok 
+# for (i in 1:length(bad_trials$zh_target)){
+#   
+#   # find all words that could be paired with bad zh_target
+#   # as updated zh_cue
+#   potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$zh_target[i]] < .15] 
+#   
+#   # find all pairs of good zh_target that could
+#   # be paired with bad zh_cue
+#   potential_switch <- good_trials %>% filter(zh_cue %in% potential_cues) %>% filter(type == "unrelated")
+#   
+#   # find switchables 
+#   switches <- cosine(as.matrix(t(zh_model[c(
+#     bad_trials$zh_cue[i],
+#     potential_switch$zh_target), 
+#   ])))
+#   
+#   new_target <- names(which.min(switches[1, ]))
+#   
+#   switch_todo[i , ] <- c(bad_trials$zh_cue[i], bad_trials$zh_target[i],
+#     potential_switch$zh_cue[potential_switch$zh_target == new_target],
+#     new_target)
+# 
+# }
+# 
+# switch_todo <- as.data.frame(switch_todo)
+# colnames(switch_todo) <- c("bad_zh_cue", "bad_zh_target", 
+#                            "good_zh_cue", "good_zh_target")
+# 
+# good_trials_small <- good_trials %>% 
+#   filter(!(zh_cue %in% switch_todo$good_zh_cue & type == "unrelated"))
+# 
+# new_good_trials <- data.frame(
+#   zh_cue = c(switch_todo$bad_zh_cue, switch_todo$good_zh_cue),
+#   zh_target = c(switch_todo$good_zh_target, switch_todo$bad_zh_target),
+#   type = rep("unrelated", nrow(switch_todo)*2),
+#   cue_type = rep("word", nrow(switch_todo)*2),
+#   target_type = rep("word", nrow(switch_todo)*2),
+#   zh_cosine = rep(NA, nrow(switch_todo)*2),
+#   ok = rep(FALSE, nrow(switch_todo)*2)
+# )
+# 
+# for (row in 1:nrow(new_good_trials)){
+#     new_good_trials$zh_cosine[row] <- cosine(as.matrix(t(zh_model[
+#     c(new_good_trials$zh_cue[row], new_good_trials$zh_target[row]) , ])))[2]
+# }
+
+zh_final <- bind_rows(good_trials, bad_trials)
+sum(duplicated(zh_final[ , c("zh_cue", "zh_target")]))
+
+# check cosines
+tapply(zh_final$zh_cosine, zh_final$type, mean, na.rm = T)
+tapply(zh_final$zh_cosine, zh_final$type, min, na.rm = T)
+tapply(zh_final$zh_cosine, zh_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- zh_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(zh_target) %>% 
+  filter(n != 2)
+
+weird_trials <- zh_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(zh_target %in% target_table$zh_target)
+
+# check for NA
+sum(is.na(zh_final$zh_cue))
+sum(is.na(zh_final$zh_target))
+sum(grepl("^NA", zh_final$zh_cue))
+sum(grepl("^NA", zh_final$zh_target))
+
+# check rows
+nrow(zh_final)
+table(zh_final$type, zh_final$cue_type, zh_final$target_type)
+
+zh_final$ok <- NULL
+
+export(zh_final, "zh/zh_trials_final.csv")
+```
+
+## zh Traditional Chinese NEED WORDS
+
+## pt Portuguese 
 
 ```{r eval = F}
 # original words
@@ -3401,22 +3623,22 @@ for (i in 1:length(bad_trials$pt_target)){
   
   # find all words that could be paired with bad pt_target
   # as updated pt_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$pt_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$pt_target[i]] < .15] 
   
   # find all pairs of good pt_target that could
   # be paired with bad pt_cue
-  potrutial_switch <- good_trials %>% filter(pt_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(pt_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(pt_model[c(
     bad_trials$pt_cue[i],
-    potrutial_switch$pt_target), 
+    potential_switch$pt_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$pt_cue[i], bad_trials$pt_target[i],
-    potrutial_switch$pt_cue[potrutial_switch$pt_target == new_target],
+    potential_switch$pt_cue[potential_switch$pt_target == new_target],
     new_target)
 
 }
@@ -3478,7 +3700,7 @@ pt_final$ok <- NULL
 export(pt_final, "pt/pt_trials_final.csv")
 ```
 
-## pt_br Brazilian Portuguese COSINE
+## pt_br Brazilian Portuguese
 
 ```{r eval = F}
 # original words
@@ -3529,7 +3751,7 @@ nrow(pt_br %>% filter(pt_cue == pt_target))
 export(pt_br, "../matched_stimuli/pt_br_matched.csv", row.names = F)
 
 # create possible trials ----
-pt_br_trials <- pt_br[ , c("pt_br_cue", "pt_br_target")]
+pt_br_trials <- pt_br[ , c("pt_cue", "pt_target")]
 pt_br_trials$type <- "related"
 pt_br_trials$cue_type <- "word"
 pt_br_trials$target_type <- "word"
@@ -3540,40 +3762,40 @@ pt_br$en_target <- tolower(pt_br$en_target)
 # match unrelated pairs as a start 
 pt_br_unrelated <- en %>% filter(type == "unrelated")
 for (i in 1:nrow(pt_br_unrelated)){
-  pt_br_unrelated$en_cue[i] <- pt_br$pt_br_cue[pt_br$en_cue == pt_br_unrelated$en_cue[i]]
-  pt_br_unrelated$en_target[i] <- pt_br$pt_br_target[pt_br$en_target == pt_br_unrelated$en_target[i]]
+  pt_br_unrelated$en_cue[i] <- pt_br$pt_cue[pt_br$en_cue == pt_br_unrelated$en_cue[i]]
+  pt_br_unrelated$en_target[i] <- pt_br$pt_target[pt_br$en_target == pt_br_unrelated$en_target[i]]
 }
 
 pt_br_trials <- rbind(pt_br_trials,
                    pt_br_unrelated %>% select(-en_cosine) %>% 
-                     rename("pt_br_cue" = "en_cue", 
-                            "pt_br_target" = "en_target"), 
-                   data.frame(pt_br_cue = pt_br$pt_br_fake_cue,
-                              pt_br_target = pt_br$pt_br_target[sample(1:1000,
+                     rename("pt_cue" = "en_cue", 
+                            "pt_target" = "en_target"), 
+                   data.frame(pt_cue = pt_br$pt_fake_cue,
+                              pt_target = pt_br$pt_target[sample(1:1000,
                                                               1000)],
                               type = "nonword",
                               cue_type = "nonword",
                               target_type = "word"),
-                   data.frame(pt_br_cue = pt_br$pt_br_cue[sample(1:1000,
+                   data.frame(pt_cue = pt_br$pt_cue[sample(1:1000,
                                                         1000)],
-                              pt_br_target = pt_br$pt_br_fake_target,
+                              pt_target = pt_br$pt_fake_target,
                               type = "nonword",
                               cue_type = "word",
                               target_type = "nonword"),
-                   data.frame(pt_br_cue = pt_br$pt_br_fake_cue[sample(1:1000,
+                   data.frame(pt_cue = pt_br$pt_fake_cue[sample(1:1000,
                                                         1000)],
-                              pt_br_target = pt_br$pt_br_fake_target[sample(1:1000,
+                              pt_target = pt_br$pt_fake_target[sample(1:1000,
                                                         1000)],
                               type = "nonword",
                               cue_type = "nonword",
                               target_type = "nonword"))
 
 # check dups run until 0
-sum(duplicated(pt_br_trials[ , c("pt_br_cue", "pt_br_target")]))
+sum(duplicated(pt_br_trials[ , c("pt_cue", "pt_target")]))
 
 # update with low cosines from random shuffle ----
 # set up model
-pt_br_model <- read.table("/Volumes/SPAML Backup/subs_vec/pt_br_br/subs.pt.1e6.txt", quote="\"")
+pt_br_model <- read.table("/Volumes/SPAML Backup/subs_vec/pt/subs.pt.1e6.txt", quote="\"")
 pt_br_model <- na.omit(pt_br_model)
 pt_br_model$V1 <- tolower(pt_br_model$V1)
 pt_br_model <- pt_br_model[!duplicated(pt_br_model$V1), ]
@@ -3588,7 +3810,7 @@ for (row in 1:nrow(pt_br_trials)){
   if(pt_br_trials$type[row] != "nonword") { 
     
     pt_br_trials$pt_br_cosine[row] <- cosine(as.matrix(t(pt_br_model[
-    c(pt_br_trials$pt_br_cue[row], pt_br_trials$pt_br_target[row]) , ])))[2]
+    c(pt_br_trials$pt_cue[row], pt_br_trials$pt_target[row]) , ])))[2]
 
   }
   
@@ -3603,12 +3825,12 @@ bad_trials <- pt_br_trials %>% filter(ok == FALSE)
 
 # iterate on those bad trials until all gone 
 # literally I ran this until I got this worked out 
-bad_trials$pt_br_target <- sample(bad_trials$pt_br_target, 
-                               size = length(bad_trials$pt_br_target), 
+bad_trials$pt_target <- sample(bad_trials$pt_target, 
+                               size = length(bad_trials$pt_target), 
                                replace = FALSE)
 for (row in 1:nrow(bad_trials)){
     bad_trials$pt_br_cosine[row] <- cosine(as.matrix(t(pt_br_model[
-    c(bad_trials$pt_br_cue[row], bad_trials$pt_br_target[row]) , ])))[2]
+    c(bad_trials$pt_cue[row], bad_trials$pt_target[row]) , ])))[2]
 }
 
 good_trials <- bind_rows(good_trials,
@@ -3618,47 +3840,47 @@ nrow(bad_trials)
 # ran section I ran multiple times 
 
 whats_left <- cosine(as.matrix(t(pt_br_model[c(
-  bad_trials$pt_br_target,
-  unique(good_trials$pt_br_cue[good_trials$type == "unrelated"])) , ])))
+  bad_trials$pt_target,
+  unique(good_trials$pt_cue[good_trials$type == "unrelated"])) , ])))
 whats_left <- as.data.frame(whats_left)
 
 switch_todo <- matrix(NA, nrow = nrow(bad_trials),
                       ncol = 4)
 # find suggestions that the switch is ok 
-for (i in 1:length(bad_trials$pt_br_target)){
+for (i in 1:length(bad_trials$pt_target)){
   
-  # find all words that could be paired with bad pt_br_target
-  # as updated pt_br_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$pt_br_target[i]] < .15] 
+  # find all words that could be paired with bad pt_target
+  # as updated pt_cue
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$pt_target[i]] < .15] 
   
-  # find all pairs of good pt_br_target that could
-  # be paired with bad pt_br_cue
-  potrutial_switch <- good_trials %>% filter(pt_br_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  # find all pairs of good pt_target that could
+  # be paired with bad pt_cue
+  potential_switch <- good_trials %>% filter(pt_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(pt_br_model[c(
-    bad_trials$pt_br_cue[i],
-    potrutial_switch$pt_br_target), 
+    bad_trials$pt_cue[i],
+    potential_switch$pt_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
-  switch_todo[i , ] <- c(bad_trials$pt_br_cue[i], bad_trials$pt_br_target[i],
-    potrutial_switch$pt_br_cue[potrutial_switch$pt_br_target == new_target],
+  switch_todo[i , ] <- c(bad_trials$pt_cue[i], bad_trials$pt_target[i],
+    potential_switch$pt_cue[potential_switch$pt_target == new_target],
     new_target)
 
 }
 
 switch_todo <- as.data.frame(switch_todo)
-colnames(switch_todo) <- c("bad_pt_br_cue", "bad_pt_br_target", 
-                           "good_pt_br_cue", "good_pt_br_target")
+colnames(switch_todo) <- c("bad_pt_cue", "bad_pt_target", 
+                           "good_pt_cue", "good_pt_target")
 
 good_trials_small <- good_trials %>% 
-  filter(!(pt_br_cue %in% switch_todo$good_pt_br_cue & type == "unrelated"))
+  filter(!(pt_cue %in% switch_todo$good_pt_cue & type == "unrelated"))
 
 new_good_trials <- data.frame(
-  pt_br_cue = c(switch_todo$bad_pt_br_cue, switch_todo$good_pt_br_cue),
-  pt_br_target = c(switch_todo$good_pt_br_target, switch_todo$bad_pt_br_target),
+  pt_cue = c(switch_todo$bad_pt_cue, switch_todo$good_pt_cue),
+  pt_target = c(switch_todo$good_pt_target, switch_todo$bad_pt_target),
   type = rep("unrelated", nrow(switch_todo)*2),
   cue_type = rep("word", nrow(switch_todo)*2),
   target_type = rep("word", nrow(switch_todo)*2),
@@ -3668,11 +3890,11 @@ new_good_trials <- data.frame(
 
 for (row in 1:nrow(new_good_trials)){
     new_good_trials$pt_br_cosine[row] <- cosine(as.matrix(t(pt_br_model[
-    c(new_good_trials$pt_br_cue[row], new_good_trials$pt_br_target[row]) , ])))[2]
+    c(new_good_trials$pt_cue[row], new_good_trials$pt_target[row]) , ])))[2]
 }
 
 pt_br_final <- bind_rows(good_trials_small, new_good_trials)
-sum(duplicated(pt_br_final[ , c("pt_br_cue", "pt_br_target")]))
+sum(duplicated(pt_br_final[ , c("pt_cue", "pt_target")]))
 
 # check cosines
 tapply(pt_br_final$pt_br_cosine, pt_br_final$type, mean, na.rm = T)
@@ -3683,19 +3905,19 @@ tapply(pt_br_final$pt_br_cosine, pt_br_final$type, max, na.rm = T)
 target_table <- pt_br_final %>% 
   filter(target_type == "word") %>% 
   filter(type != "nonword") %>% 
-  count(pt_br_target) %>% 
+  count(pt_target) %>% 
   filter(n != 2)
 
 weird_trials <- pt_br_final %>% 
   filter(target_type == "word") %>% 
   filter(type != "nonword") %>% 
-  filter(pt_br_target %in% target_table$pt_br_target)
+  filter(pt_target %in% target_table$pt_target)
 
 # check for NA
-sum(is.na(pt_br_final$pt_br_cue))
-sum(is.na(pt_br_final$pt_br_target))
-sum(grepl("^NA", pt_br_final$pt_br_cue))
-sum(grepl("^NA", pt_br_final$pt_br_target))
+sum(is.na(pt_br_final$pt_cue))
+sum(is.na(pt_br_final$pt_target))
+sum(grepl("^NA", pt_br_final$pt_cue))
+sum(grepl("^NA", pt_br_final$pt_target))
 
 # check rows
 nrow(pt_br_final)
@@ -3703,7 +3925,7 @@ table(pt_br_final$type, pt_br_final$cue_type, pt_br_final$target_type)
 
 pt_br_final$ok <- NULL
 
-export(pt_br_final, "pt_br_br/pt_br_trials_final.csv")
+export(pt_br_final, "pt/pt_br/pt_br_trials_final.csv")
 ```
 
 ### pt Portuguese Match
@@ -3852,22 +4074,22 @@ nrow(bad_trials)
 #   
 #   # find all words that could be paired with bad sr_target
 #   # as updated sr_cue
-#   potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$sr_target[i]] < .15] 
+#   potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$sr_target[i]] < .15] 
 #   
 #   # find all pairs of good sr_target that could
 #   # be paired with bad sr_cue
-#   potrutial_switch <- good_trials %>% filter(sr_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+#   potential_switch <- good_trials %>% filter(sr_cue %in% potential_cues) %>% filter(type == "unrelated")
 #   
 #   # find switchables 
 #   switches <- cosine(as.matrix(t(sr_model[c(
 #     bad_trials$sr_cue[i],
-#     potrutial_switch$sr_target), 
+#     potential_switch$sr_target), 
 #   ])))
 #   
 #   new_target <- names(which.min(switches[1, ]))
 #   
 #   switch_todo[i , ] <- c(bad_trials$sr_cue[i], bad_trials$sr_target[i],
-#     potrutial_switch$sr_cue[potrutial_switch$sr_target == new_target],
+#     potential_switch$sr_cue[potential_switch$sr_target == new_target],
 #     new_target)
 # 
 # }
@@ -3932,13 +4154,433 @@ sr_final$ok <- NULL
 export(sr_final, "sr/sr_trials_final.csv")
 ```
 
-## es Spanish GET NEW FILE
+## es Spanish
 
-## bu Bulgarian GET NEW FILE 
+```{r eval = F}
+# original words
+es <- import("es/es_translate_wordpairs_checked.xlsx")
+es$en_cue <- gsub("digusting", "disgusting", es$en_cue)
+es <- es %>% 
+  select(-Comments) %>% 
+  rename(es_fake_target = es_fake_target_trans, 
+         es_fake_cue = es_fake_cue_trans)
 
-## no Norweigan GET NEW FILE
+sum(duplicated(es$es_cue))
+sum(duplicated(es$es_target))
+sum(duplicated(es$es_fake_cue))
+sum(duplicated(es$es_fake_target))
 
-## it Italian CHECK WITH TEAM 
+nrow(es %>% filter(es_cue == es_target))
+
+export(es, "../matched_stimuli/es_matched.csv", row.names = F)
+
+# create possible trials ----
+es_trials <- es[ , c("es_cue", "es_target")]
+es_trials$type <- "related"
+es_trials$cue_type <- "word"
+es_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+es$en_cue <- tolower(es$en_cue)
+es$en_target <- tolower(es$en_target)
+# match unrelated pairs as a start 
+es_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(es_unrelated)){
+  es_unrelated$en_cue[i] <- es$es_cue[es$en_cue == es_unrelated$en_cue[i]]
+  es_unrelated$en_target[i] <- es$es_target[es$en_target == es_unrelated$en_target[i]]
+}
+
+es_trials <- rbind(es_trials,
+                   es_unrelated %>% select(-en_cosine) %>% 
+                     rename("es_cue" = "en_cue", 
+                            "es_target" = "en_target"), 
+                   data.frame(es_cue = es$es_fake_cue,
+                              es_target = es$es_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(es_cue = es$es_cue[sample(1:1000,
+                                                        1000)],
+                              es_target = es$es_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(es_cue = es$es_fake_cue[sample(1:1000,
+                                                        1000)],
+                              es_target = es$es_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(es_trials[ , c("es_cue", "es_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+es_model <- read.table("/Volumes/SPAML Backup/subs_vec/es/subs.es.1e6.txt", quote="\"")
+es_model <- na.omit(es_model)
+es_model$V1 <- tolower(es_model$V1)
+es_model <- es_model[!duplicated(es_model$V1), ]
+rownames(es_model) <- es_model$V1
+es_model <- es_model[ , -1]
+
+es_trials$es_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(es_trials)){
+  
+  if(es_trials$type[row] != "nonword") { 
+    
+    es_trials$es_cosine[row] <- cosine(as.matrix(t(es_model[
+    c(es_trials$es_cue[row], es_trials$es_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+es_trials$ok <- TRUE
+es_trials$ok[es_trials$type == "unrelated" & abs(es_trials$es_cosine) > .15] <- FALSE
+
+good_trials <- es_trials %>% filter(ok == TRUE)
+bad_trials <- es_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$es_target <- sample(bad_trials$es_target, 
+                               size = length(bad_trials$es_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$es_cosine[row] <- cosine(as.matrix(t(es_model[
+    c(bad_trials$es_cue[row], bad_trials$es_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(es_cosine < .15)))
+bad_trials <- bad_trials %>% filter(es_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(es_model[c(
+  bad_trials$es_target,
+  unique(good_trials$es_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$es_target)){
+  
+  # find all words that could be paired with bad es_target
+  # as updated es_cue
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$es_target[i]] < .15] 
+  
+  # find all pairs of good es_target that could
+  # be paired with bad es_cue
+  potential_switch <- good_trials %>% filter(es_cue %in% potential_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(es_model[c(
+    bad_trials$es_cue[i],
+    potential_switch$es_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$es_cue[i], bad_trials$es_target[i],
+    potential_switch$es_cue[potential_switch$es_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_es_cue", "bad_es_target", 
+                           "good_es_cue", "good_es_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(es_cue %in% switch_todo$good_es_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  es_cue = c(switch_todo$bad_es_cue, switch_todo$good_es_cue),
+  es_target = c(switch_todo$good_es_target, switch_todo$bad_es_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  es_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$es_cosine[row] <- cosine(as.matrix(t(es_model[
+    c(new_good_trials$es_cue[row], new_good_trials$es_target[row]) , ])))[2]
+}
+
+es_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(es_final[ , c("es_cue", "es_target")]))
+
+# check cosines
+tapply(es_final$es_cosine, es_final$type, mean, na.rm = T)
+tapply(es_final$es_cosine, es_final$type, min, na.rm = T)
+tapply(es_final$es_cosine, es_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- es_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(es_target) %>% 
+  filter(n != 2)
+
+weird_trials <- es_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(es_target %in% target_table$es_target)
+
+# check for NA
+sum(is.na(es_final$es_cue))
+sum(is.na(es_final$es_target))
+sum(grepl("^NA", es_final$es_cue))
+sum(grepl("^NA", es_final$es_target))
+
+# check rows
+nrow(es_final)
+table(es_final$type, es_final$cue_type, es_final$target_type)
+
+es_final$ok <- NULL
+
+export(es_final, "es/es_trials_final.csv")
+```
+
+## no Norweigan
+
+```{r eval = F}
+# original words
+no <- import("no/no_translate.csv")
+no$en_cue <- gsub("digusting", "disgusting", no$en_cue)
+
+# fix real words ----
+no_update <- import("no/no_translated_final.xlsx") %>% 
+  mutate(across(everything(), tolower))
+
+# fix cue words ----
+cues <- no_update %>% filter(no_cue_trans != "")
+for (i in 1:nrow(cues)){
+  no$no_cue[no$no_cue == cues$no_cue[i] #original cue match
+            & no$en_cue == cues$en_cue[i]] <- #english match
+    cues$no_cue_trans[i] #new cue
+}
+
+targets <- no_update %>% filter(no_target_trans != "")
+for (i in 1:nrow(targets)){
+  no$no_target[no$no_target == targets$no_target[i] #original target match
+            & no$en_target == targets$en_target[i]] <- #english match
+    targets$no_target_trans[i] #new target
+}
+
+# fix fake words ----
+cues <- no_update %>% filter(no_fake_cue_trans != "")
+for (i in 1:nrow(cues)){
+  no$no_fake_cue[no$no_fake_cue == cues$no_fake_cue[i] #original cue match
+            & no$en_cue == cues$en_cue[i]] <- #english match
+    cues$no_fake_cue_trans[i] #new cue
+}
+
+targets <- no_update %>% filter(no_fake_target_trans != "")
+for (i in 1:nrow(targets)){
+  no$no_fake_target[no$no_fake_target == targets$no_fake_target[i] #original target match
+            & no$en_target == targets$en_target[i]] <- #english match
+    targets$no_fake_target_trans[i] #new target
+}
+
+sum(duplicated(no$no_cue))
+sum(duplicated(no$no_target))
+sum(duplicated(no$no_fake_cue))
+sum(duplicated(no$no_fake_target))
+
+nrow(no %>% filter(no_cue == no_target))
+
+export(no, "../matched_stimuli/no_matched.csv", row.names = F)
+
+# create possible trials ----
+no_trials <- no[ , c("no_cue", "no_target")]
+no_trials$type <- "related"
+no_trials$cue_type <- "word"
+no_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+no$en_cue <- tolower(no$en_cue)
+no$en_target <- tolower(no$en_target)
+# match unrelated pairs as a start 
+no_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(no_unrelated)){
+  no_unrelated$en_cue[i] <- no$no_cue[no$en_cue == no_unrelated$en_cue[i]]
+  no_unrelated$en_target[i] <- no$no_target[no$en_target == no_unrelated$en_target[i]]
+}
+
+no_trials <- rbind(no_trials,
+                   no_unrelated %>% select(-en_cosine) %>% 
+                     rename("no_cue" = "en_cue", 
+                            "no_target" = "en_target"), 
+                   data.frame(no_cue = no$no_fake_cue,
+                              no_target = no$no_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(no_cue = no$no_cue[sample(1:1000,
+                                                        1000)],
+                              no_target = no$no_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(no_cue = no$no_fake_cue[sample(1:1000,
+                                                        1000)],
+                              no_target = no$no_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(no_trials[ , c("no_cue", "no_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+no_model <- read.table("/Volumes/SPAML Backup/subs_vec/no/subs.no.1e6.txt", quote="\"")
+no_model <- na.omit(no_model)
+no_model$V1 <- tolower(no_model$V1)
+no_model <- no_model[!duplicated(no_model$V1), ]
+rownames(no_model) <- no_model$V1
+no_model <- no_model[ , -1]
+
+no_trials$no_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(no_trials)){
+  
+  if(no_trials$type[row] != "nonword") { 
+    
+    no_trials$no_cosine[row] <- cosine(as.matrix(t(no_model[
+    c(no_trials$no_cue[row], no_trials$no_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+no_trials$ok <- TRUE
+no_trials$ok[no_trials$type == "unrelated" & abs(no_trials$no_cosine) > .15] <- FALSE
+
+good_trials <- no_trials %>% filter(ok == TRUE)
+bad_trials <- no_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$no_target <- sample(bad_trials$no_target, 
+                               size = length(bad_trials$no_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$no_cosine[row] <- cosine(as.matrix(t(no_model[
+    c(bad_trials$no_cue[row], bad_trials$no_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(no_cosine < .15)))
+bad_trials <- bad_trials %>% filter(no_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(no_model[c(
+  bad_trials$no_target,
+  unique(good_trials$no_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$no_target)){
+  
+  # find all words that could be paired with bad no_target
+  # as updated no_cue
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$no_target[i]] < .15] 
+  
+  # find all pairs of good no_target that could
+  # be paired with bad no_cue
+  potential_switch <- good_trials %>% filter(no_cue %in% potential_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(no_model[c(
+    bad_trials$no_cue[i],
+    potential_switch$no_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$no_cue[i], bad_trials$no_target[i],
+    potential_switch$no_cue[potential_switch$no_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_no_cue", "bad_no_target", 
+                           "good_no_cue", "good_no_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(no_cue %in% switch_todo$good_no_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  no_cue = c(switch_todo$bad_no_cue, switch_todo$good_no_cue),
+  no_target = c(switch_todo$good_no_target, switch_todo$bad_no_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  no_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$no_cosine[row] <- cosine(as.matrix(t(no_model[
+    c(new_good_trials$no_cue[row], new_good_trials$no_target[row]) , ])))[2]
+}
+
+no_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(no_final[ , c("no_cue", "no_target")]))
+
+# check cosines
+tapply(no_final$no_cosine, no_final$type, mean, na.rm = T)
+tapply(no_final$no_cosine, no_final$type, min, na.rm = T)
+tapply(no_final$no_cosine, no_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- no_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(no_target) %>% 
+  filter(n != 2)
+
+weird_trials <- no_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(no_target %in% target_table$no_target)
+
+# check for NA
+sum(is.na(no_final$no_cue))
+sum(is.na(no_final$no_target))
+sum(grepl("^NA", no_final$no_cue))
+sum(grepl("^NA", no_final$no_target))
+
+# check rows
+nrow(no_final)
+table(no_final$type, no_final$cue_type, no_final$target_type)
+
+no_final$ok <- NULL
+
+export(no_final, "no/no_trials_final.csv")
+```
+
+## it Italian NEED WORDS
 
 ## ur Urdu
 
@@ -4091,22 +4733,22 @@ for (i in 1:length(bad_trials$ur_target)){
   
   # find all words that could be paired with bad ur_target
   # as updated ur_cue
-  potrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$ur_target[i]] < .15] 
+  potential_cues <- rownames(whats_left)[whats_left[ , bad_trials$ur_target[i]] < .15] 
   
   # find all pairs of good ur_target that could
   # be paired with bad ur_cue
-  potrutial_switch <- good_trials %>% filter(ur_cue %in% potrutial_cues) %>% filter(type == "unrelated")
+  potential_switch <- good_trials %>% filter(ur_cue %in% potential_cues) %>% filter(type == "unrelated")
   
   # find switchables 
   switches <- cosine(as.matrix(t(ur_model[c(
     bad_trials$ur_cue[i],
-    potrutial_switch$ur_target), 
+    potential_switch$ur_target), 
   ])))
   
   new_target <- names(which.min(switches[1, ]))
   
   switch_todo[i , ] <- c(bad_trials$ur_cue[i], bad_trials$ur_target[i],
-    potrutial_switch$ur_cue[potrutial_switch$ur_target == new_target],
+    potential_switch$ur_cue[potential_switch$ur_target == new_target],
     new_target)
 
 }
@@ -4172,5 +4814,437 @@ ur_final$ok <- NULL
 export(ur_final, "ur/ur_trials_final.csv")
 ```
 
+## pl Polish
 
+```{r eval = F}
+# original words
+pl <- import("pl/pl_translate.csv")
+pl$en_cue <- gsub("digusting", "disgusting", pl$en_cue)
 
+# fix real words ----
+pl_update <- import("pl/pl_translated.xlsx") %>% 
+  mutate(across(everything(), tolower))
+
+# fix cue words ----
+cues <- pl_update %>% filter(pl_cue_trans != "")
+for (i in 1:nrow(cues)){
+  pl$pl_cue[pl$pl_cue == cues$pl_cue[i] #original cue match
+            & pl$en_cue == cues$en_cue[i]] <- #english match
+    cues$pl_cue_trans[i] #new cue
+}
+
+targets <- pl_update %>% filter(pl_target_trans != "")
+for (i in 1:nrow(targets)){
+  pl$pl_target[pl$pl_target == targets$pl_target[i] #original target match
+            & pl$en_target == targets$en_target[i]] <- #english match
+    targets$pl_target_trans[i] #new target
+}
+
+# fix fake words ----
+cues <- pl_update %>% filter(pl_fake_cue_trans != "")
+for (i in 1:nrow(cues)){
+  pl$pl_fake_cue[pl$pl_fake_cue == cues$pl_fake_cue[i] #original cue match
+            & pl$en_cue == cues$en_cue[i]] <- #english match
+    cues$pl_fake_cue_trans[i] #new cue
+}
+
+targets <- pl_update %>% filter(pl_fake_target_trans != "")
+for (i in 1:nrow(targets)){
+  pl$pl_fake_target[pl$pl_fake_target == targets$pl_fake_target[i] #original target match
+            & pl$en_target == targets$en_target[i]] <- #english match
+    targets$pl_fake_target_trans[i] #new target
+}
+
+sum(duplicated(pl$pl_cue))
+sum(duplicated(pl$pl_target))
+sum(duplicated(pl$pl_fake_cue))
+sum(duplicated(pl$pl_fake_target))
+
+nrow(pl %>% filter(pl_cue == pl_target))
+
+export(pl, "../matched_stimuli/pl_matched.csv", row.names = F)
+
+# create plssible trials ----
+pl_trials <- pl[ , c("pl_cue", "pl_target")]
+pl_trials$type <- "related"
+pl_trials$cue_type <- "word"
+pl_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+pl$en_cue <- tolower(pl$en_cue)
+pl$en_target <- tolower(pl$en_target)
+# match unrelated pairs as a start 
+pl_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(pl_unrelated)){
+  pl_unrelated$en_cue[i] <- pl$pl_cue[pl$en_cue == pl_unrelated$en_cue[i]]
+  pl_unrelated$en_target[i] <- pl$pl_target[pl$en_target == pl_unrelated$en_target[i]]
+}
+
+pl_trials <- rbind(pl_trials,
+                   pl_unrelated %>% select(-en_cosine) %>% 
+                     rename("pl_cue" = "en_cue", 
+                            "pl_target" = "en_target"), 
+                   data.frame(pl_cue = pl$pl_fake_cue,
+                              pl_target = pl$pl_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(pl_cue = pl$pl_cue[sample(1:1000,
+                                                        1000)],
+                              pl_target = pl$pl_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(pl_cue = pl$pl_fake_cue[sample(1:1000,
+                                                        1000)],
+                              pl_target = pl$pl_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(pl_trials[ , c("pl_cue", "pl_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+pl_model <- read.table("/Volumes/SPAML Backup/subs_vec/pl/subs.pl.1e6.txt", quote="\"")
+pl_model <- na.omit(pl_model)
+pl_model$V1 <- tolower(pl_model$V1)
+pl_model <- pl_model[!duplicated(pl_model$V1), ]
+rownames(pl_model) <- pl_model$V1
+pl_model <- pl_model[ , -1]
+
+pl_trials$pl_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(pl_trials)){
+  
+  if(pl_trials$type[row] != "nonword") { 
+    
+    pl_trials$pl_cosine[row] <- cosine(as.matrix(t(pl_model[
+    c(pl_trials$pl_cue[row], pl_trials$pl_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+pl_trials$ok <- TRUE
+pl_trials$ok[pl_trials$type == "unrelated" & abs(pl_trials$pl_cosine) > .15] <- FALSE
+
+good_trials <- pl_trials %>% filter(ok == TRUE)
+bad_trials <- pl_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$pl_target <- sample(bad_trials$pl_target, 
+                               size = length(bad_trials$pl_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$pl_cosine[row] <- cosine(as.matrix(t(pl_model[
+    c(bad_trials$pl_cue[row], bad_trials$pl_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(pl_cosine < .15)))
+bad_trials <- bad_trials %>% filter(pl_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(pl_model[c(
+  bad_trials$pl_target,
+  unique(good_trials$pl_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$pl_target)){
+  
+  # find all words that could be paired with bad pl_target
+  # as updated pl_cue
+  pltrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$pl_target[i]] < .15] 
+  
+  # find all pairs of good pl_target that could
+  # be paired with bad pl_cue
+  pltrutial_switch <- good_trials %>% filter(pl_cue %in% pltrutial_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(pl_model[c(
+    bad_trials$pl_cue[i],
+    pltrutial_switch$pl_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$pl_cue[i], bad_trials$pl_target[i],
+    pltrutial_switch$pl_cue[pltrutial_switch$pl_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_pl_cue", "bad_pl_target", 
+                           "good_pl_cue", "good_pl_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(pl_cue %in% switch_todo$good_pl_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  pl_cue = c(switch_todo$bad_pl_cue, switch_todo$good_pl_cue),
+  pl_target = c(switch_todo$good_pl_target, switch_todo$bad_pl_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  pl_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$pl_cosine[row] <- cosine(as.matrix(t(pl_model[
+    c(new_good_trials$pl_cue[row], new_good_trials$pl_target[row]) , ])))[2]
+}
+
+pl_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(pl_final[ , c("pl_cue", "pl_target")]))
+
+# check cosines
+tapply(pl_final$pl_cosine, pl_final$type, mean, na.rm = T)
+tapply(pl_final$pl_cosine, pl_final$type, min, na.rm = T)
+tapply(pl_final$pl_cosine, pl_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- pl_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(pl_target) %>% 
+  filter(n != 2)
+
+weird_trials <- pl_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(pl_target %in% target_table$pl_target)
+
+# check for NA
+sum(is.na(pl_final$pl_cue))
+sum(is.na(pl_final$pl_target))
+sum(grepl("^NA", pl_final$pl_cue))
+sum(grepl("^NA", pl_final$pl_target))
+
+# check rows
+nrow(pl_final)
+table(pl_final$type, pl_final$cue_type, pl_final$target_type)
+
+pl_final$ok <- NULL
+
+export(pl_final, "pl/pl_trials_final.csv")
+```
+
+## ro Romanian 
+
+```{r eval = F}
+# fix real words ----
+ro_update <- import("ro/ro_translate_updated nov 24 2022.xlsx") %>% 
+  mutate(across(everything(), tolower))
+
+ro <- ro_update %>% 
+  select(ro_cue_trans, ro_target_trans, 
+         ro_fake_cue_update2, ro_fake_target_update2, 
+         en_cue, en_target) %>% 
+  rename(ro_cue = ro_cue_trans, 
+         ro_target = ro_target_trans, 
+         ro_fake_cue = ro_fake_cue_update2, 
+         ro_fake_target = ro_fake_target_update2)
+
+sum(duplicated(ro$ro_cue))
+sum(duplicated(ro$ro_target))
+sum(duplicated(ro$ro_fake_cue))
+sum(duplicated(ro$ro_fake_target))
+
+nrow(ro %>% filter(ro_cue == ro_target))
+
+export(ro, "../matched_stimuli/ro_matched.csv", row.names = F)
+
+# create rossible trials ----
+ro_trials <- ro[ , c("ro_cue", "ro_target")]
+ro_trials$type <- "related"
+ro_trials$cue_type <- "word"
+ro_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+ro$en_cue <- tolower(ro$en_cue)
+ro$en_target <- tolower(ro$en_target)
+# match unrelated pairs as a start 
+ro_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(ro_unrelated)){
+  ro_unrelated$en_cue[i] <- ro$ro_cue[ro$en_cue == ro_unrelated$en_cue[i]]
+  ro_unrelated$en_target[i] <- ro$ro_target[ro$en_target == ro_unrelated$en_target[i]]
+}
+
+ro_trials <- rbind(ro_trials,
+                   ro_unrelated %>% select(-en_cosine) %>% 
+                     rename("ro_cue" = "en_cue", 
+                            "ro_target" = "en_target"), 
+                   data.frame(ro_cue = ro$ro_fake_cue,
+                              ro_target = ro$ro_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(ro_cue = ro$ro_cue[sample(1:1000,
+                                                        1000)],
+                              ro_target = ro$ro_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(ro_cue = ro$ro_fake_cue[sample(1:1000,
+                                                        1000)],
+                              ro_target = ro$ro_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(ro_trials[ , c("ro_cue", "ro_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+ro_model <- read.table("/Volumes/SPAML Backup/subs_vec/ro/subs.ro.1e6.txt", quote="\"")
+ro_model <- na.omit(ro_model)
+ro_model$V1 <- tolower(ro_model$V1)
+ro_model <- ro_model[!duplicated(ro_model$V1), ]
+rownames(ro_model) <- ro_model$V1
+ro_model <- ro_model[ , -1]
+
+ro_trials$ro_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(ro_trials)){
+  
+  if(ro_trials$type[row] != "nonword") { 
+    
+    ro_trials$ro_cosine[row] <- cosine(as.matrix(t(ro_model[
+    c(ro_trials$ro_cue[row], ro_trials$ro_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+ro_trials$ok <- TRUE
+ro_trials$ok[ro_trials$type == "unrelated" & abs(ro_trials$ro_cosine) > .15] <- FALSE
+
+good_trials <- ro_trials %>% filter(ok == TRUE)
+bad_trials <- ro_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$ro_target <- sample(bad_trials$ro_target, 
+                               size = length(bad_trials$ro_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$ro_cosine[row] <- cosine(as.matrix(t(ro_model[
+    c(bad_trials$ro_cue[row], bad_trials$ro_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(ro_cosine < .15)))
+bad_trials <- bad_trials %>% filter(ro_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(ro_model[c(
+  bad_trials$ro_target,
+  unique(good_trials$ro_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$ro_target)){
+  
+  # find all words that could be paired with bad ro_target
+  # as updated ro_cue
+  rotrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$ro_target[i]] < .15] 
+  
+  # find all pairs of good ro_target that could
+  # be paired with bad ro_cue
+  rotrutial_switch <- good_trials %>% filter(ro_cue %in% rotrutial_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(ro_model[c(
+    bad_trials$ro_cue[i],
+    rotrutial_switch$ro_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$ro_cue[i], bad_trials$ro_target[i],
+    rotrutial_switch$ro_cue[rotrutial_switch$ro_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_ro_cue", "bad_ro_target", 
+                           "good_ro_cue", "good_ro_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(ro_cue %in% switch_todo$good_ro_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  ro_cue = c(switch_todo$bad_ro_cue, switch_todo$good_ro_cue),
+  ro_target = c(switch_todo$good_ro_target, switch_todo$bad_ro_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  ro_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$ro_cosine[row] <- cosine(as.matrix(t(ro_model[
+    c(new_good_trials$ro_cue[row], new_good_trials$ro_target[row]) , ])))[2]
+}
+
+ro_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(ro_final[ , c("ro_cue", "ro_target")]))
+
+# check cosines
+tapply(ro_final$ro_cosine, ro_final$type, mean, na.rm = T)
+tapply(ro_final$ro_cosine, ro_final$type, min, na.rm = T)
+tapply(ro_final$ro_cosine, ro_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- ro_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(ro_target) %>% 
+  filter(n != 2)
+
+weird_trials <- ro_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(ro_target %in% target_table$ro_target)
+
+# add missing one
+ro_final <- rbind(ro_final, 
+                      c("permite", "roșie", "unrelated", "word", "word", NA, NA))
+
+# check for NA
+sum(is.na(ro_final$ro_cue))
+sum(is.na(ro_final$ro_target))
+sum(grepl("^NA", ro_final$ro_cue))
+sum(grepl("^NA", ro_final$ro_target))
+
+# check rows
+nrow(ro_final)
+table(ro_final$type, ro_final$cue_type, ro_final$target_type)
+
+ro_final$ok <- NULL
+
+export(ro_final, "ro/ro_trials_final.csv")
+```
