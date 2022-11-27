@@ -6,7 +6,7 @@ library(tidytext)
 library(stringdist)
 library(stringr)
 
-DF <- import("03_materials/finalize_stimuli/ja/ja_translate.xlsx")
+DF <- import("03_materials/finalize_stimuli/ja/ja_translated.xlsx")
 DF$ja_cue_final <- DF$ja_cue
 DF$ja_target_final <- DF$ja_target
 

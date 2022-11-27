@@ -40,7 +40,7 @@ For English, we need to correct:
 en <- import("en/en_translate.csv")
 
 # fix fake words ----
-en_update <- import("en/en_translate_checked.xlsx")
+en_update <- import("en/en_translated_final.xlsx")
 cue_fix <- 
   bind_rows(
     (en_update %>% 
@@ -245,7 +245,7 @@ export(en_final, "en/en_trials_final.csv")
 ru <- import("ru/ru_translate.csv")
 
 # fix real words ----
-ru_update <- import("ru/ru_translated_AK.xlsx")
+ru_update <- import("ru/ru_translated_final.xlsx")
 
 cues <- ru_update %>% filter(ru_cue_trans != "")
 for (i in 1:nrow(cues)){
@@ -450,8 +450,7 @@ export(ru_final, "ru/ru_trials_final.csv")
 tr <- import("tr/tr_translate.csv")
 
 # fix real words ----
-# tr_update <- import("tr/tr_translated_Aslan.xlsx") second person added to this file 
-tr_update <- import("tr/tr_translated_Elif.xlsx")
+tr_update <- import("tr/tr_translated_final.xlsx")
 
 cues <- tr_update %>% filter(tr_cue_update != "")
 for (i in 1:nrow(cues)){
@@ -655,12 +654,12 @@ export(tr_final, "tr/tr_trials_final.csv")
 # original words
 # don't use the original trials because there are lot of weird typos
 # that were clearly fixed in the translated sheet
-ko <- import("ko/ko_translated.xlsx")
+ko <- import("ko/ko_translated_final.xlsx")
 ko_temp <- import("ko/ko_translate.csv")
 ko <- ko %>% select(colnames(ko_temp))
 
 # fix real words ----
-ko_update <- import("ko/ko_translated.xlsx")
+ko_update <- import("ko/ko_translated_final.xlsx")
 
 cues <- ko_update %>% filter(ko_cue_trans != "")
 for (i in 1:nrow(cues)){
@@ -869,12 +868,12 @@ export(ko_final, "ko/ko_trials_final.csv")
 # original words
 # make sure to use the translated sheet so we don't have issues 
 # that were clearly fixed in the translated sheet
-cs <- import("cs/cs_update2.xlsx")
+cs <- import("cs/cs_translated_final.xlsx")
 cs_temp <- import("cs/cs_translate.csv")
 cs <- cs %>% select(colnames(cs_temp))
 
 # fix real words ----
-cs_update <- import("cs/cs_update2.xlsx")
+cs_update <- import("cs/cs_translated_final.xlsx")
 
 cues <- cs_update %>% filter(cs_cue_final != "")
 for (i in 1:nrow(cues)){
@@ -1235,7 +1234,7 @@ export(ja_final, "ja/ja_trials_final.csv")
 da <- import("da/da_translate.csv")
 
 # fix real words ----
-da_update <- import("da/da_translated-v4.xlsx")
+da_update <- import("da/da_translated_final.xlsx")
 
 cues <- da_update %>% filter(da_cue_trans != "")
 for (i in 1:nrow(cues)){
@@ -1463,7 +1462,7 @@ de <- import("de/de_translate.csv")
 de$en_cue <- gsub("digusting", "disgusting", de$en_cue)
 
 # fix real words ----
-de_update <- import("de/de_translate_final.xlsx") %>% 
+de_update <- import("de/de_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -1696,7 +1695,7 @@ ar <- import("ar/ar_translate.csv")
 ar$en_cue <- gsub("digusting", "disgusting", ar$en_cue)
 
 # fix real words ----
-ar_update <- import("ar/ar_translatecomplete.xlsx") %>% 
+ar_update <- import("ar/ar_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # # fix cue words ----
@@ -1928,7 +1927,7 @@ fa <- import("fa/fa_translate.csv")
 fa$en_cue <- gsub("digusting", "disgusting", fa$en_cue)
 
 # fix real words ----
-fa_update <- import("fa/fa_translated.xlsx") %>% 
+fa_update <- import("fa/fa_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -2177,7 +2176,7 @@ fi <- import("fi/fi_translate.csv")
 fi$en_cue <- gsub("digusting", "disgusting", fi$en_cue)
 
 # fix real words ----
-fi_update <- import("fi/fi_translate_TS2022_04_29.xlsx") %>% 
+fi_update <- import("fi/fi_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -2401,7 +2400,7 @@ export(fi_final, "fi/fi_trials_final.csv")
 
 ```{r eval = F}
 # they formatted it nicely  ----
-fr <- import("fr/fr_translate_final.csv") %>% 
+fr <- import("fr/fr_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 fr$en_cue <- gsub("digusting", "disgusting", fr$en_cue)
 
@@ -2600,7 +2599,7 @@ el <- import("el/el_translate.csv")
 el$en_cue <- gsub("digusting", "disgusting", el$en_cue)
 
 # fix real words ----
-el_update <- import("el/el_translate_final.xlsx") %>% 
+el_update <- import("el/el_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -2828,7 +2827,7 @@ he <- import("he/he_translate.csv")
 he$en_cue <- gsub("digusting", "disgusting", he$en_cue)
 
 # fix real words ----
-he_update <- import("he/he_translated.xlsx") %>% 
+he_update <- import("he/he_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -3047,7 +3046,7 @@ hu <- import("hu/hu_translate.csv")
 hu$en_cue <- gsub("digusting", "disgusting", hu$en_cue)
 
 # fix real words ----
-hu_update <- import("hu/hu_translate.xlsx") %>% 
+hu_update <- import("hu/hu_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -3480,7 +3479,7 @@ pt <- import("pt/pt_translate.csv")
 pt$en_cue <- gsub("digusting", "disgusting", pt$en_cue)
 
 # fix real words ----
-pt_update <- import("pt/pt_translate_Revised.xlsx") %>% 
+pt_update <- import("pt/pt_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -3708,7 +3707,7 @@ pt_br <- import("pt/pt_translate.csv")
 pt_br$en_cue <- gsub("digusting", "disgusting", pt_br$en_cue)
 
 # fix real words ----
-pt_br_update <- import("pt/pt_br/pt_stimuli_translated_Brazilian.xlsx") %>% 
+pt_br_update <- import("pt/pt_br/pt_br_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -3953,7 +3952,7 @@ sr <- import("sr/sr_translate.csv")
 sr$en_cue <- gsub("digusting", "disgusting", sr$en_cue)
 
 # fix real words ----
-sr_update <- import("sr/sr_translate.xlsx") %>% 
+sr_update <- import("sr/sr_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 sr$sr_cue <- sr_update$FINAL_sr_cue
@@ -4158,7 +4157,7 @@ export(sr_final, "sr/sr_trials_final.csv")
 
 ```{r eval = F}
 # original words
-es <- import("es/es_translate_wordpairs_checked.xlsx")
+es <- import("es/es_translated_final.xlsx")
 es$en_cue <- gsub("digusting", "disgusting", es$en_cue)
 es <- es %>% 
   select(-Comments) %>% 
@@ -4822,7 +4821,7 @@ pl <- import("pl/pl_translate.csv")
 pl$en_cue <- gsub("digusting", "disgusting", pl$en_cue)
 
 # fix real words ----
-pl_update <- import("pl/pl_translated.xlsx") %>% 
+pl_update <- import("pl/pl_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 # fix cue words ----
@@ -5046,7 +5045,7 @@ export(pl_final, "pl/pl_trials_final.csv")
 
 ```{r eval = F}
 # fix real words ----
-ro_update <- import("ro/ro_translate_updated nov 24 2022.xlsx") %>% 
+ro_update <- import("ro/ro_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
 ro <- ro_update %>% 

@@ -174,9 +174,9 @@ cs_patterns <- read.hyph.pat("03_materials/finalize_stimuli/hyphen/hyph-cs.tex",
 #             by = c("cs_target_final" = "original_word")) %>% 
 #   rename("cs_fake_target_update" = "replacement_word")
 # 
-# export(DF, "03_materials/finalize_stimuli/cs/cs_update.xlsx")
+# export(DF, "03_materials/finalize_stimuli/cs/cs_translated_updated.xlsx")
 
-DF <- import("03_materials/finalize_stimuli/cs/cs_update2.xlsx")
+DF <- import("03_materials/finalize_stimuli/cs/cs_translated_final.xlsx")
 
 cs_fake_cue_update2 <- get_fake(wordlist = c(DF$cs_cue_final, DF$cs_target_final), #possibles
                                 language_hyp = cs_patterns, #hyphen rules

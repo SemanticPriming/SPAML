@@ -6,8 +6,8 @@ library(tidytext)
 library(stringdist)
 library(stringr)
 
-#DF <- import("03_materials/finalize_stimuli/fr/fr_translate_wip.xlsx")
-DF <- import("03_materials/finalize_stimuli/fr/fr_translate_wip2.xlsx")
+#DF <- import("03_materials/finalize_stimuli/fr/fr_translated.xlsx")
+DF <- import("03_materials/finalize_stimuli/fr/fr_translated_updated.xlsx")
 
 #DF$fr_cue_final <- DF$fr_cue_NEW
 #DF$fr_target_final <- DF$fr_target_NEW
@@ -173,4 +173,4 @@ DF <- DF %>%
             by = c("fr_target_final" = "original_word")) %>% 
   rename("fr_fake_target_update2" = "replacement_word")
 
-export(DF, "03_materials/finalize_stimuli/fr/fr_update_2.xlsx")
+export(DF, "03_materials/finalize_stimuli/fr/fr_translated_update.xlsx")
