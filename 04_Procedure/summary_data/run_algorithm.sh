@@ -1,8 +1,23 @@
 #!/bin/bash
-Rscript /var/www/html/summary_data/ja_summarize_stim.R
+#Rscript /var/www/html/summary_data/ja_summarize_stim.R
 Rscript /var/www/html/summary_data/en_summarize_stim.R
 Rscript /var/www/html/summary_data/tr_summarize_stim.R
 Rscript /var/www/html/summary_data/ru_summarize_stim.R
 Rscript /var/www/html/summary_data/cs_summarize_stim.R
-Rscript /var/www/html/summary_data/ko_summarize_stim.R
+#Rscript /var/www/html/summary_data/ko_summarize_stim.R
 Rscript /var/www/html/summary_data/da_summarize_stim.R
+Rscript /var/www/html/summary_data/es_summarize_stim.R
+Rscript /var/www/html/summary_data/de_summarize_stim.R
+Rscript /var/www/html/summary_data/pt_summarize_stim.R
+Rscript /var/www/html/summary_data/zh_summarize_stim.R
+Rscript /var/www/html/summary_data/ar_summarize_stim.R
+Rscript /var/www/html/summary_data/fa_summarize_stim.R
+Rscript /var/www/html/summary_data/fi_summarize_stim.R
+Rscript /var/www/html/summary_data/fr_summarize_stim.R
+Rscript /var/www/html/summary_data/el_summarize_stim.R
+Rscript /var/www/html/summary_data/hu_summarize_stim.R
+Rscript /var/www/html/summary_data/no_summarize_stim.R
+Rscript /var/www/html/summary_data/br_pt_summarize_stim.R
+Rscript /var/www/html/summary_data/ro_summarize_stim.R
+Rscript /var/www/html/summary_data/sr_summarize_stim.R
+Rscript /var/www/html/summary_data/ur_summarize_stim.R

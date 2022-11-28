@@ -1,0 +1,11 @@
+[
+  {"word": "سنيي", "class": "nonword"},
+  {"word": "شفه", "class": "word"},
+  {"word": "قطران", "class": "word"},
+  {"word": "جاب", "class": "nonword"},
+  {"word": "نود", "class": "nonword"},
+  {"word": "هدية مجانية", "class": "word"},
+  {"word": "مخوط", "class": "nonword"},
+  {"word": "طلقة", "class": "word"},
+  {"word": "سنات", "class": "nonword"},
+  {"word": "حذاء طويل", "class": "word"}]

@@ -1,0 +1,11 @@
+[
+  {"word": "demoine", "class": "nonword"},
+  {"word": "lèvres", "class": "word"},
+  {"word": "goudron", "class": "word"},
+  {"word": "cou", "class": "nonword"},
+  {"word": "wattié", "class": "nonword"},
+  {"word": "cadeau", "class": "word"},
+  {"word": "borde", "class": "nonword"},
+  {"word": "tir", "class": "word"},
+  {"word": "hiver", "class": "nonword"},
+  {"word": "botte", "class": "word"}]

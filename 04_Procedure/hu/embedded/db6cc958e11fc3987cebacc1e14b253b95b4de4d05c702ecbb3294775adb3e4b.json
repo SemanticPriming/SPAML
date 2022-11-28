@@ -1,0 +1,11 @@
+[
+  {"word": "ograbol", "class": "nonword"},
+  {"word": "ajkak", "class": "word"},
+  {"word": "kátrány", "class": "word"},
+  {"word": "eldy", "class": "nonword"},
+  {"word": "elültr", "class": "nonword"},
+  {"word": "ajándék", "class": "word"},
+  {"word": "fontosság", "class": "nonword"},
+  {"word": "lövés", "class": "word"},
+  {"word": "szakember", "class": "nonword"},
+  {"word": "csomagtartó", "class": "word"}]

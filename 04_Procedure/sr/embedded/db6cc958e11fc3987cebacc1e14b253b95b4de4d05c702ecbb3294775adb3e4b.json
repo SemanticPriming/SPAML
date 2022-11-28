@@ -1,0 +1,11 @@
+[
+  {"word": "течно", "class": "nonword"},
+  {"word": "усне", "class": "word"},
+  {"word": "тар", "class": "word"},
+  {"word": "вући", "class": "nonword"},
+  {"word": "сок", "class": "nonword"},
+  {"word": "поклон", "class": "word"},
+  {"word": "спиг", "class": "nonword"},
+  {"word": "пуцањ", "class": "word"},
+  {"word": "притисак", "class": "nonword"},
+  {"word": "боот", "class": "word"}]

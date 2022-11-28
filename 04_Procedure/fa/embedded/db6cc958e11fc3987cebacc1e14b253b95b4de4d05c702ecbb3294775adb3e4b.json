@@ -1,0 +1,11 @@
+[
+  {"word": "بر", "class": "nonword"},
+  {"word": "لب", "class": "word"},
+  {"word": "تار", "class": "word"},
+  {"word": "جاب", "class": "nonword"},
+  {"word": "پاین", "class": "nonword"},
+  {"word": "هدیه", "class": "word"},
+  {"word": "کهی", "class": "nonword"},
+  {"word": "شلیک کرد", "class": "word"},
+  {"word": "سااتور", "class": "nonword"},
+  {"word": "چکمه", "class": "word"}]

@@ -1,0 +1,11 @@
+[
+  {"word": "قتل", "class": "nonword"},
+  {"word": "ہونٹ", "class": "word"},
+  {"word": "ٹار", "class": "word"},
+  {"word": "ح,ت", "class": "nonword"},
+  {"word": "خنس", "class": "nonword"},
+  {"word": "تحفہ", "class": "word"},
+  {"word": "پپائپ", "class": "nonword"},
+  {"word": "گولی مار دی", "class": "word"},
+  {"word": "و,", "class": "nonword"},
+  {"word": "بوٹ", "class": "word"}]
