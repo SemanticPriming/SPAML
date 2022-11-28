@@ -57,54 +57,54 @@ Rscript /var/www/html/summary_data/tr_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/tr/data/data.sqlite /var/www/html/tr/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr1/data/data.sqlite /var/www/html/tr1/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr2/data/data.sqlite /var/www/html/tr2/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr3/data/data.sqlite /var/www/html/tr3/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr4/data/data.sqlite /var/www/html/tr4/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr5/data/data.sqlite /var/www/html/tr5/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr6/data/data.sqlite /var/www/html/tr6/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr7/data/data.sqlite /var/www/html/tr7/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr8/data/data.sqlite /var/www/html/tr8/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr9/data/data.sqlite /var/www/html/tr9/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr10/data/data.sqlite /var/www/html/tr10/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr11/data/data.sqlite /var/www/html/tr11/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr12/data/data.sqlite /var/www/html/tr12/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/tr13/data/data.sqlite /var/www/html/tr13/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr1/data/data.sqlite /var/www/html/tr1/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr2/data/data.sqlite /var/www/html/tr2/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr3/data/data.sqlite /var/www/html/tr3/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr4/data/data.sqlite /var/www/html/tr4/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr5/data/data.sqlite /var/www/html/tr5/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr6/data/data.sqlite /var/www/html/tr6/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr7/data/data.sqlite /var/www/html/tr7/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr8/data/data.sqlite /var/www/html/tr8/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr9/data/data.sqlite /var/www/html/tr9/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr10/data/data.sqlite /var/www/html/tr10/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr11/data/data.sqlite /var/www/html/tr11/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr12/data/data.sqlite /var/www/html/tr12/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/tr13/data/data.sqlite /var/www/html/tr13/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/tr14/data/data.sqlite /var/www/html/tr14/data/data_$(date +"%FT%H%M").sqlite
 
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr1/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr2/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr3/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr4/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr5/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr6/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr7/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr8/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr9/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr10/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr11/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr12/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr13/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr1/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr2/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr3/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr4/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr5/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr6/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr7/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr8/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr9/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr10/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr11/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr12/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr13/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/tr14/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/tr/data/data.sqlite
-chmod 777 /var/www/html/tr1/data/data.sqlite
-chmod 777 /var/www/html/tr2/data/data.sqlite
-chmod 777 /var/www/html/tr3/data/data.sqlite
-chmod 777 /var/www/html/tr4/data/data.sqlite
-chmod 777 /var/www/html/tr5/data/data.sqlite
-chmod 777 /var/www/html/tr6/data/data.sqlite
-chmod 777 /var/www/html/tr7/data/data.sqlite
-chmod 777 /var/www/html/tr8/data/data.sqlite
-chmod 777 /var/www/html/tr9/data/data.sqlite
-chmod 777 /var/www/html/tr10/data/data.sqlite
-chmod 777 /var/www/html/tr11/data/data.sqlite
-chmod 777 /var/www/html/tr12/data/data.sqlite
-chmod 777 /var/www/html/tr13/data/data.sqlite
+#chmod 777 /var/www/html/tr1/data/data.sqlite
+#chmod 777 /var/www/html/tr2/data/data.sqlite
+#chmod 777 /var/www/html/tr3/data/data.sqlite
+#chmod 777 /var/www/html/tr4/data/data.sqlite
+#chmod 777 /var/www/html/tr5/data/data.sqlite
+#chmod 777 /var/www/html/tr6/data/data.sqlite
+#chmod 777 /var/www/html/tr7/data/data.sqlite
+#chmod 777 /var/www/html/tr8/data/data.sqlite
+#chmod 777 /var/www/html/tr9/data/data.sqlite
+#chmod 777 /var/www/html/tr10/data/data.sqlite
+#chmod 777 /var/www/html/tr11/data/data.sqlite
+#chmod 777 /var/www/html/tr12/data/data.sqlite
+#chmod 777 /var/www/html/tr13/data/data.sqlite
 chmod 777 /var/www/html/tr14/data/data.sqlite
 
 # ---- russian -----
@@ -113,51 +113,51 @@ Rscript /var/www/html/summary_data/ru_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/ru/data/data.sqlite /var/www/html/ru/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru1/data/data.sqlite /var/www/html/ru1/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru2/data/data.sqlite /var/www/html/ru2/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru3/data/data.sqlite /var/www/html/ru3/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru4/data/data.sqlite /var/www/html/ru4/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru5/data/data.sqlite /var/www/html/ru5/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru6/data/data.sqlite /var/www/html/ru6/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru7/data/data.sqlite /var/www/html/ru7/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru8/data/data.sqlite /var/www/html/ru8/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru9/data/data.sqlite /var/www/html/ru9/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru10/data/data.sqlite /var/www/html/ru10/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru11/data/data.sqlite /var/www/html/ru11/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru12/data/data.sqlite /var/www/html/ru12/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/ru13/data/data.sqlite /var/www/html/ru13/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru1/data/data.sqlite /var/www/html/ru1/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru2/data/data.sqlite /var/www/html/ru2/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru3/data/data.sqlite /var/www/html/ru3/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru4/data/data.sqlite /var/www/html/ru4/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru5/data/data.sqlite /var/www/html/ru5/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru6/data/data.sqlite /var/www/html/ru6/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru7/data/data.sqlite /var/www/html/ru7/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru8/data/data.sqlite /var/www/html/ru8/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru9/data/data.sqlite /var/www/html/ru9/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru10/data/data.sqlite /var/www/html/ru10/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru11/data/data.sqlite /var/www/html/ru11/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru12/data/data.sqlite /var/www/html/ru12/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/ru13/data/data.sqlite /var/www/html/ru13/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru1/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru2/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru3/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru4/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru5/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru6/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru7/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru8/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru9/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru10/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru11/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru12/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru13/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru1/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru2/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru3/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru4/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru5/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru6/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru7/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru8/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru9/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru10/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru11/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru12/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ru13/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/ru/data/data.sqlite
-chmod 777 /var/www/html/ru1/data/data.sqlite
-chmod 777 /var/www/html/ru2/data/data.sqlite
-chmod 777 /var/www/html/ru3/data/data.sqlite
-chmod 777 /var/www/html/ru4/data/data.sqlite
-chmod 777 /var/www/html/ru5/data/data.sqlite
-chmod 777 /var/www/html/ru6/data/data.sqlite
-chmod 777 /var/www/html/ru7/data/data.sqlite
-chmod 777 /var/www/html/ru8/data/data.sqlite
-chmod 777 /var/www/html/ru9/data/data.sqlite
-chmod 777 /var/www/html/ru10/data/data.sqlite
-chmod 777 /var/www/html/ru11/data/data.sqlite
-chmod 777 /var/www/html/ru12/data/data.sqlite
-chmod 777 /var/www/html/ru13/data/data.sqlite
+#chmod 777 /var/www/html/ru1/data/data.sqlite
+#chmod 777 /var/www/html/ru2/data/data.sqlite
+#chmod 777 /var/www/html/ru3/data/data.sqlite
+#chmod 777 /var/www/html/ru4/data/data.sqlite
+#chmod 777 /var/www/html/ru5/data/data.sqlite
+#chmod 777 /var/www/html/ru6/data/data.sqlite
+#chmod 777 /var/www/html/ru7/data/data.sqlite
+#chmod 777 /var/www/html/ru8/data/data.sqlite
+#chmod 777 /var/www/html/ru9/data/data.sqlite
+#chmod 777 /var/www/html/ru10/data/data.sqlite
+#chmod 777 /var/www/html/ru11/data/data.sqlite
+#chmod 777 /var/www/html/ru12/data/data.sqlite
+#chmod 777 /var/www/html/ru13/data/data.sqlite
 
 # ---- korean -----
 # summarize the data
@@ -269,10 +269,10 @@ Rscript /var/www/html/summary_data/en_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/en/data/data.sqlite /var/www/html/en/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/en1/data/data.sqlite /var/www/html/en1/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/en2/data/data.sqlite /var/www/html/en2/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/en3/data/data.sqlite /var/www/html/en3/data/data_$(date +"%FT%H%M").sqlite
-mv /var/www/html/en4/data/data.sqlite /var/www/html/en4/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/en1/data/data.sqlite /var/www/html/en1/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/en2/data/data.sqlite /var/www/html/en2/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/en3/data/data.sqlite /var/www/html/en3/data/data_$(date +"%FT%H%M").sqlite
+#mv /var/www/html/en4/data/data.sqlite /var/www/html/en4/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en5/data/data.sqlite /var/www/html/en5/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en6/data/data.sqlite /var/www/html/en6/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en7/data/data.sqlite /var/www/html/en7/data/data_$(date +"%FT%H%M").sqlite
@@ -282,10 +282,10 @@ mv /var/www/html/en10/data/data.sqlite /var/www/html/en10/data/data_$(date +"%FT
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en1/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en2/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en3/data/
-cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en4/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en1/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en2/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en3/data/
+#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en4/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en5/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en6/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en7/data/
@@ -295,10 +295,10 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en10/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/en/data/data.sqlite
-chmod 777 /var/www/html/en1/data/data.sqlite
-chmod 777 /var/www/html/en2/data/data.sqlite
-chmod 777 /var/www/html/en3/data/data.sqlite
-chmod 777 /var/www/html/en4/data/data.sqlite
+#chmod 777 /var/www/html/en1/data/data.sqlite
+#chmod 777 /var/www/html/en2/data/data.sqlite
+#chmod 777 /var/www/html/en3/data/data.sqlite
+#chmod 777 /var/www/html/en4/data/data.sqlite
 chmod 777 /var/www/html/en5/data/data.sqlite
 chmod 777 /var/www/html/en6/data/data.sqlite
 chmod 777 /var/www/html/en7/data/data.sqlite
