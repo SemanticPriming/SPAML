@@ -166,9 +166,9 @@ es_words <- import("/var/www/html/es/es_words.csv")
 
 # collected data
 es_data_all <-
-  bind_rows(processData("./04_Procedure_real/es/data/data.sqlite") %>%
+  bind_rows(processData("/var/www/html/es/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab)), 
-            processData("./04_Procedure_real/es1/data/data.sqlite") %>%
+            processData("/var/www/html/es1/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # # delete stuff before we started
