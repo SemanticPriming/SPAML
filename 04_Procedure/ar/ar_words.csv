@@ -223,7 +223,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 رومان,اليونانية,related,word,word,0.162544584617052
 أرملة,امرأة,related,word,word,0.347166999851639
 الحملة الانتخابية,انتخابات,related,word,word,
-النشوة,انتصاب,related,word,word,0.377752061565914
 التوازن,انسجام,related,word,word,0.399745477400361
 هزة أرضية,انفجار,related,word,word,
 يقع,ينهار,related,word,word,0.350760801558039
@@ -250,7 +249,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 الحمض النووي,بصمة,related,word,word,
 وزة,بطة,related,word,word,0.476532215685788
 منافسة,بطولة,related,word,word,0.422694113321584
-المؤخرة,العقب,related,word,word,0.375076603912324
 قرب,بعيد,related,word,word,0.344072648737064
 قطعا,بقوة,related,word,word,0.107680625795338
 إسمنت,بلاستيك,related,word,word,0.382847537839372
@@ -327,7 +325,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 قراءة,كتابة,related,word,word,0.633951899921864
 كون,مجرة,related,word,word,0.280516845959374
 كلية,جامعة,related,word,word,0.631152506175832
-سحاقية,مثلي الجنس,related,word,word,
 تل,جبل,related,word,word,0.422212265384848
 خبز,جبنه,related,word,word,0.5113580356755
 جسم,جثة,related,word,word,0.411878385340489
@@ -339,7 +336,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 مقال,جريدة,related,word,word,0.536210166165833
 خطيئة,جريمة,related,word,word,0.575222459593102
 عامل,عنصر,related,word,word,0.331875671398884
-جنسي,جسدي,related,word,word,0.425663021023596
 شيء,جُسيم,related,word,word,
 سحر,جمال,related,word,word,0.337874939425993
 عظم,جمجمة,related,word,word,0.456076071892501
@@ -470,7 +466,7 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 هواية,رياضة,related,word,word,0.462286860218128
 مرساة,شراع,related,word,word,0.486502813391633
 عسل,زبدة,related,word,word,0.305170302668974
-مراجع (لمستشفى),عميل (لمحل),related,word,word,
+مراجع ,عميل ,related,word,word,
 كوب,زجاجة,related,word,word,0.445994621731678
 عضو,زعيم,related,word,word,0.455068842116574
 خطوبة,زفاف,related,word,word,0.554443098974581
@@ -588,7 +584,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 ضعيف,عاجز,related,word,word,0.37389003101167
 صحي,عادي,related,word,word,0.413681955123489
 عار,عاري,related,word,word,0.436095111289148
-عشيقة,عاشق,related,word,word,0.281101196831165
 ريح,عاصفه,related,word,word,0.380784845941816
 عقلي,عاطفي,related,word,word,0.288999298535724
 العبقري,عالم,related,word,word,0.20773401161907
@@ -672,7 +667,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 بروتين,فيتامين,related,word,word,0.462959960679094
 دي في دي,فيديو,related,word,word,
 مرض الإيدز,فيروس نقص المناعة المكتسبة,related,word,word,
-إباحية,فيلم,related,word,word,0.356440092761407
 قائد,كابتن,related,word,word,0.522376068664893
 القاتل,قاتل,related,word,word,0.569389300002759
 مرتزق,قاتل,related,word,word,0.442688413512213
@@ -693,7 +687,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 افتح,قريب,related,word,word,0.139729664803109
 معسكر,قرية,related,word,word,0.293586720422966
 نص,قصيدة,related,word,word,0.260830879535421
-مهبل,قضيب,related,word,word,0.595730584043773
 وحدة,قطاع,related,word,word,0.325289477136164
 كلب,قطة,related,word,word,0.498524108320886
 شظية,قطعة,related,word,word,0.483301031086475
@@ -728,7 +721,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 كوكب المريخ,كوكب الزهرة,related,word,word,
 جنرال لواء,كولونيل,related,word,word,
 دراما,كوميديا,related,word,word,0.461214203926371
-رم,كونياك,related,word,word,0.321871767820495
 صندوق,كيس,related,word,word,0.487757484653382
 حلوى,كيك,related,word,word,0.557805117398853
 مدرب رياضي,لاعب,related,word,word,
@@ -739,7 +731,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 شعر,لحية,related,word,word,0.386796818178572
 طيب المذاق,لذيذ,related,word,word,
 لين,لطيف,related,word,word,0.231849041345003
-القمار,لعبة البوكر,related,word,word,
 لعب,لعبه,related,word,word,0.613182261626755
 مؤتمر,لقاء,related,word,word,0.347832978889627
 اسم الشهرة,لقب,related,word,word,
@@ -785,7 +776,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 بحرية,مجانا,related,word,word,0.204769492684516
 المجيد,مجد,related,word,word,0.317834156775757
 لص,مجرم,related,word,word,0.58101163091431
-بلاي بوي,مجلة,related,word,word,
 البرلمان,مجلس الشيوخ,related,word,word,
 عصابة,مجموعة,related,word,word,0.454150878753175
 المذعور,مجنون,related,word,word,0.360601839500475
@@ -1027,7 +1017,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 شعر,واتسون,unrelated,word,word,0.105730522737725
 سحر,الشمس,unrelated,word,word,0.106639013198568
 غرفة,صداقة,unrelated,word,word,0.0658569022035013
-يثق,عاشق,unrelated,word,word,0.144852350623505
 رشوة,بنات,unrelated,word,word,0.126796983711228
 غواصة,طبيب,unrelated,word,word,0.108365631052543
 فتاة,تحليل,unrelated,word,word,0.0985675013512128
@@ -1052,7 +1041,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 عقبة,زى موحد,unrelated,word,word,
 إتبع,سيرك,unrelated,word,word,0.102588301539072
 خبز,يفوز,unrelated,word,word,0.129474074315446
-معدة,لعبة البوكر,unrelated,word,word,
 السكر,أبدا,unrelated,word,word,0.143628514194099
 دخان,إمكانية,unrelated,word,word,0.145930066829902
 حديقة حيوان,موقف سلوك,unrelated,word,word,
@@ -1060,7 +1048,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 افتح,فريق,unrelated,word,word,0.0781822775074277
 مقفل,سلاح المدفعية,unrelated,word,word,
 فنجان,عديم القيمة,unrelated,word,word,
-رم,بعيد,unrelated,word,word,0.0872267702101877
 حار,إجراء,unrelated,word,word,0.0885569689628184
 هيئة,إمبراطورية,unrelated,word,word,0.136309745847922
 التنقل,مملكة,unrelated,word,word,0.13080940297541
@@ -1115,7 +1102,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 عين,الرد,unrelated,word,word,0.0706404222190707
 غرب,وجبة,unrelated,word,word,0.121428193464168
 الصحة,جبر,unrelated,word,word,0.052009605508444
-الحملة الانتخابية,كونياك,unrelated,word,word,
 مغناطيسي,ترتيب,unrelated,word,word,0.13318421565111
 أنيق,تسجيل,unrelated,word,word,0.111731195614917
 عامل,الأصغر,unrelated,word,word,0.0877797971764268
@@ -1135,7 +1121,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 مخلص,نووي,unrelated,word,word,0.118982289984158
 واقع,شجرة,unrelated,word,word,0.0920678651543485
 بطيء,حكومة,unrelated,word,word,-0.00650230167570999
-مستعمرة,مثلي الجنس,unrelated,word,word,
 انطباع,معدن,unrelated,word,word,0.114079026073514
 حائط,تلاعب,unrelated,word,word,0.112045779190261
 الكرنفال,ذو قيمة,unrelated,word,word,
@@ -1207,7 +1192,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 خبرة,يربط,unrelated,word,word,0.0655094224080036
 مالك,خصوصية,unrelated,word,word,0.103953386896321
 نهر,غبار,unrelated,word,word,0.14050886570776
-مستأجر,العقب,unrelated,word,word,0.0785936411133631
 أول,يهين,unrelated,word,word,0.128435415849737
 عضو,أقصى,unrelated,word,word,0.099050580023459
 ندوة,لحم,unrelated,word,word,0.102377211788406
@@ -1226,7 +1210,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 يكره,ينجح,unrelated,word,word,0.144591323762411
 وجبة خفيفة,النموذج المبدئي,unrelated,word,word,
 إنسان آلي,عادة,unrelated,word,word,
-بلاي بوي,منطقة,unrelated,word,word,
 مربية,أهمية,unrelated,word,word,0.0598095599543691
 الخدمات,يتحقق,unrelated,word,word,0.118747327061953
 طلاق,خطير,unrelated,word,word,0.139668474208839
@@ -1270,7 +1253,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 هواء,الأسرة,unrelated,word,word,0.0401158129041367
 معاناة,محرك,unrelated,word,word,0.0347163278180731
 فنان,يضرب,unrelated,word,word,0.138076799043325
-مهبل,قطاع,unrelated,word,word,0.118710955875939
 نصف القطر,يتوقع,unrelated,word,word,
 مرحلة,صغير,unrelated,word,word,0.148350320161822
 رسمة,هيدروجين,unrelated,word,word,0.116137675139853
@@ -1364,12 +1346,10 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 قيلولة,تخريب,unrelated,word,word,0.0947029095174203
 قطعا,عاطفي,unrelated,word,word,0.12157741654351
 جنون,مرفأ,unrelated,word,word,0.0841502107098786
-حل محل,قضيب,unrelated,word,word,
 اقترح,جرام,unrelated,word,word,0.142828683988062
 يوم السبت,منتج,unrelated,word,word,
 العمل,شارع,unrelated,word,word,0.0509639437451837
 يغرق,ساحر,unrelated,word,word,0.138985420784934
-طريقة,مجلة,unrelated,word,word,0.115430885945831
 حرارة,مؤسسة,unrelated,word,word,0.105865038863
 تاج,أسبوعي,unrelated,word,word,0.113954648866724
 برق,يزود,unrelated,word,word,0.113456104898108
@@ -1402,7 +1382,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 مرشح,ممتع,unrelated,word,word,-0.000248770284362482
 جيب,كائن فضائي,unrelated,word,word,
 جندي,نشاط,unrelated,word,word,0.0329569109790574
-ينظف,انتصاب,unrelated,word,word,0.121659926973111
 شيرلوك,معركة,unrelated,word,word,0.0942976355143644
 قوي,سطح - المظهر الخارجي,unrelated,word,word,
 كنز,القوات البحرية,unrelated,word,word,
@@ -1548,7 +1527,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 السفارة,انسجام,unrelated,word,word,0.13752445014271
 زائد,سلاح,unrelated,word,word,0.0985112596806716
 فقر,رسالة,unrelated,word,word,0.0683449141793384
-إباحية,صديق,unrelated,word,word,0.114924048269163
 مغني,الملازم,unrelated,word,word,0.104142314137421
 البحرية,قلم جاف,unrelated,word,word,
 خاتم,غطرسة,unrelated,word,word,0.0710204235037993
@@ -1638,7 +1616,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 مباشر,جوهرة,unrelated,word,word,0.128345193674691
 مقاطعة,قلادة,unrelated,word,word,0.0880309104869753
 عاجل,يتذكر,unrelated,word,word,0.0215176894441117
-النشوة,بارد,unrelated,word,word,0.125177621427159
 قط,يقبض على,unrelated,word,word,
 قنبلة,مشهور,unrelated,word,word,0.137498790885099
 مزورة,انفجار,unrelated,word,word,0.116786386144217
@@ -1664,7 +1641,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 خارق للعادة,محاضرة,unrelated,word,word,
 ورق,خطر,unrelated,word,word,0.101984386474217
 عدد السكان,سلب,unrelated,word,word,
-القمار,ديسمبر,unrelated,word,word,0.101036863855059
 كبسولة,واقعي,unrelated,word,word,-0.0171362324530951
 معالجة,سلحفاة,unrelated,word,word,0.130514640852655
 الماراثون,ثعبان,unrelated,word,word,0.0430134739612582
@@ -1700,7 +1676,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 زميل,معقول,unrelated,word,word,0.122943473473512
 كتف,جمال,unrelated,word,word,0.118408074050761
 الائتمان,مأتم,unrelated,word,word,0.0757169433284827
-عشيقة,جُسيم,unrelated,word,word,
 الفيزياء,يمشي,unrelated,word,word,0.124548330434403
 الفندق,جوليت,unrelated,word,word,0.0834582150985076
 ببطء,حالة,unrelated,word,word,0.056494515428264
@@ -1729,7 +1704,7 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 الملف الشخصي,محيط,unrelated,word,word,
 قمح,ساخر,unrelated,word,word,0.103972265180475
 متعَب,فعال,unrelated,word,word,
-فايروس,عميل (لمحل),unrelated,word,word,
+فايروس,عميل ,unrelated,word,word,
 لطيف,قاضي,unrelated,word,word,0.12809203033311
 مسابقة,يجذب,unrelated,word,word,0.146858920165958
 مقال,شبح,unrelated,word,word,0.0855896152965154
@@ -1744,8 +1719,7 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 زوج,ليبرالية,unrelated,word,word,0.119813817179648
 صوت بشري,موافقة,unrelated,word,word,
 وجبة عشاء,بؤس,unrelated,word,word,
-مراجع (لمستشفى),سمك,unrelated,word,word,
-سحاقية,موقعك,unrelated,word,word,0.13075949386576
+مراجع ,سمك,unrelated,word,word,
 تقني,كوكب الزهرة,unrelated,word,word,
 ولادة,ما يزال,unrelated,word,word,
 عصري,طاسة,unrelated,word,word,0.0868297778689953
@@ -1753,7 +1727,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 إيماءة,حول,unrelated,word,word,0.0826789322099899
 جيد,بالكامل,unrelated,word,word,0.0833499679662027
 شركة,مثير للانتباه,unrelated,word,word,
-غاز,جسدي,unrelated,word,word,0.125046744926753
 بعض الأحيان,حقنة,unrelated,word,word,
 شكل,شجاع,unrelated,word,word,0.107034214240947
 خطة,ودود,unrelated,word,word,0.0321667033736732
@@ -1793,7 +1766,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 الثالث,فعل,unrelated,word,word,0.101118581174469
 إنوساك,سيدة,nonword,nonword,word,
 ـي,قهوة,nonword,nonword,word,
-ياطفديق,جسدي,nonword,nonword,word,
 يعفت,قاتل,nonword,nonword,word,
 اساوة,دقيقة,nonword,nonword,word,
 جدن,ثلاثي,nonword,nonword,word,
@@ -1808,7 +1780,7 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 خروحة,إثبات,nonword,nonword,word,
 ارطلال,مهندس معماري,nonword,nonword,word,
 قايك,مقزز,nonword,nonword,word,
-لاينة,عميل (لمحل),nonword,nonword,word,
+لاينة,عميل ,nonword,nonword,word,
 رجلاق,غطرسة,nonword,nonword,word,
 ثوليا,تسجيل,nonword,nonword,word,
 أداس,حالة طوارئ,nonword,nonword,word,
@@ -1920,7 +1892,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 لسل,سلامة,nonword,nonword,word,
 الفاضتي,طويل,nonword,nonword,word,
 عياك,محتشم,nonword,nonword,word,
-تتجاعب,لعبة البوكر,nonword,nonword,word,
 اصع,مدير,nonword,nonword,word,
 يخوفر,سيئة,nonword,nonword,word,
 تشرجف,سجادة,nonword,nonword,word,
@@ -2002,7 +1973,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 مؤتل,محتمل,nonword,nonword,word,
 ماجية,حدث,nonword,nonword,word,
 ضلق,فوق,nonword,nonword,word,
-لأجراف,فيلم,nonword,nonword,word,
 مرلغ,جائع,nonword,nonword,word,
 أقامرة,تلاعب,nonword,nonword,word,
 شتصال,سلب,nonword,nonword,word,
@@ -2093,7 +2063,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 الثلاء,الرأسمالية,nonword,nonword,word,
 الونر,مهاجم,nonword,nonword,word,
 أساب,فشل,nonword,nonword,word,
-مفجيم,العقب,nonword,nonword,word,
 عجار,طماطم,nonword,nonword,word,
 بنرك,الشمس,nonword,nonword,word,
 نضص,ساحة المعركة,nonword,nonword,word,
@@ -2198,7 +2167,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 كساع,يجد,nonword,nonword,word,
 مزصه,صلب,nonword,nonword,word,
 خاراوقة,إبداع,nonword,nonword,word,
-واسب,انتصاب,nonword,nonword,word,
 مفاجبك,يراقب,nonword,nonword,word,
 طم,مريب,nonword,nonword,word,
 مجحاث,إستراتيجية,nonword,nonword,word,
@@ -2231,7 +2199,6 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 صوارة,قارب,nonword,nonword,word,
 الاكتشار,الطريق السريع,nonword,nonword,word,
 الشماق,عاري,nonword,nonword,word,
-ماميز,قضيب,nonword,nonword,word,
 اقيع,حقيبة سفر,nonword,nonword,word,
 الثاقر,فيتامين,nonword,nonword,word,
 راتبل,محارب,nonword,nonword,word,
@@ -2494,7 +2461,6 @@ beم,ملك,nonword,nonword,word,
 ادس,أقصى,nonword,nonword,word,
 كاور,شحنة,nonword,nonword,word,
 يذ,نادرا,nonword,nonword,word,
-ثوق,مجلة,nonword,nonword,word,
 يضتم,غابة,nonword,nonword,word,
 الرافق,علاج,nonword,nonword,word,
 موجان,مشرق,nonword,nonword,word,
@@ -2528,7 +2494,6 @@ beم,ملك,nonword,nonword,word,
 رونة,زهرة,nonword,nonword,word,
 خنيبر,بيضة,nonword,nonword,word,
 خبحص,يجتمع,nonword,nonword,word,
-ربار,مثلي الجنس,nonword,nonword,word,
 طحلاق,أمير,nonword,nonword,word,
 سنانق,سلاح,nonword,nonword,word,
 الزاريف,وكالة,nonword,nonword,word,
@@ -2642,7 +2607,6 @@ beم,ملك,nonword,nonword,word,
 لشفية,أرنب,nonword,nonword,word,
 إتيز,أب,nonword,nonword,word,
 حايا,عمدا,nonword,nonword,word,
-مراقين,كونياك,nonword,nonword,word,
 عاون,رقص,nonword,nonword,word,
 صاتفرض,اعمال صيانة,nonword,nonword,word,
 قوب,اذهب,nonword,nonword,word,
@@ -2728,7 +2692,6 @@ beم,ملك,nonword,nonword,word,
 طافين,مكتب,nonword,nonword,word,
 فوف,البضائع,nonword,nonword,word,
 عكاء,متزوج \ متزوجة,nonword,nonword,word,
-خطبة عشاء,عاشق,nonword,nonword,word,
 ركهم,محيط,nonword,nonword,word,
 وحقي,خدّ,nonword,nonword,word,
 بحلاث,داكن,nonword,nonword,word,
@@ -2865,7 +2828,6 @@ beم,ملك,nonword,nonword,word,
 واقع,احاحظ,nonword,word,nonword,
 متواضع,بيتبار,nonword,word,nonword,
 وجبة عشاء,بيتطف,nonword,word,nonword,
-جنسي,بيتفاء,nonword,word,nonword,
 نميمة,بيتيار,nonword,word,nonword,
 معدة,الصلار,nonword,word,nonword,
 حماس,نلهب,nonword,word,nonword,
@@ -3022,7 +2984,6 @@ beم,ملك,nonword,nonword,word,
 فنجان,غساز,nonword,word,nonword,
 دخان,اسبيز,nonword,word,nonword,
 أداة,مصبا,nonword,word,nonword,
-سحاقية,بالآق,nonword,word,nonword,
 يقاطع,باستيطار,nonword,word,nonword,
 التركيز,انع,nonword,word,nonword,
 عادي,بالفظف,nonword,word,nonword,
@@ -3227,12 +3188,10 @@ beم,ملك,nonword,nonword,word,
 تطوع,وزافعة,nonword,word,nonword,
 قوي,غذي,nonword,word,nonword,
 إيماءة,ذوتريمة,nonword,word,nonword,
-النشوة,واية,nonword,word,nonword,
 جندي,حكيس,nonword,word,nonword,
 تجاري,شكيس,nonword,word,nonword,
 مستشار,راحطة,nonword,word,nonword,
 أعلى,راظمة,nonword,word,nonword,
-بلاي بوي,رائتا,nonword,word,nonword,
 محكمة,راونا,nonword,word,nonword,
 راكب,راوش,nonword,word,nonword,
 مشكلة,راهد,nonword,word,nonword,
@@ -3335,7 +3294,6 @@ beم,ملك,nonword,nonword,word,
 تذكرة,آنيق,nonword,word,nonword,
 وضح,إفر,nonword,word,nonword,
 غزو,ثوال,nonword,word,nonword,
-عشيقة,عـوسي,nonword,word,nonword,
 مضاد سمي,ريعة,nonword,word,nonword,
 فجأة,برداة,nonword,word,nonword,
 يمكن,شيواط,nonword,word,nonword,
@@ -3357,7 +3315,6 @@ beم,ملك,nonword,nonword,word,
 عنكبوت,عاجيرة,nonword,word,nonword,
 اصبع اليد,بوايقة,nonword,word,nonword,
 خدش,ثوكب,nonword,word,nonword,
-المؤخرة,ساصلحا,nonword,word,nonword,
 حلو,فوتنسرافية,nonword,word,nonword,
 تفسير,حاح,nonword,word,nonword,
 موسيقى الجاز,حسمك,nonword,word,nonword,
@@ -3376,7 +3333,6 @@ beم,ملك,nonword,nonword,word,
 مذياع,طوادك,nonword,word,nonword,
 ميزانية,ذكيل,nonword,word,nonword,
 خطة,إضار,nonword,word,nonword,
-رم,ظفينة,nonword,word,nonword,
 محرم,عادئة,nonword,word,nonword,
 بائس,لصدي,nonword,word,nonword,
 بطانية,بيرياة,nonword,word,nonword,
@@ -3509,7 +3465,6 @@ beم,ملك,nonword,nonword,word,
 فتاة,ذومة,nonword,word,nonword,
 اهتمام,نياب,nonword,word,nonword,
 علامة مرض,كرتا,nonword,word,nonword,
-القمار,بقامة,nonword,word,nonword,
 كنز,كروذ,nonword,word,nonword,
 خاص,كراه,nonword,word,nonword,
 جولة,جويم,nonword,word,nonword,
@@ -3542,7 +3497,6 @@ beم,ملك,nonword,nonword,word,
 جيب,ليبرمض,nonword,word,nonword,
 وزة,ليلمزين,nonword,word,nonword,
 بيت,ليدو,nonword,word,nonword,
-إباحية,تمتم,nonword,word,nonword,
 عصير الليمون,أجساوي,nonword,word,nonword,
 توقيع,لذوى,nonword,word,nonword,
 غواصة,مؤاوق,nonword,word,nonword,
@@ -3579,13 +3533,12 @@ beم,ملك,nonword,nonword,word,
 يكره,مجيو,nonword,word,nonword,
 صوت بشري,صيلة,nonword,word,nonword,
 هنا,اتايوخ,nonword,word,nonword,
-مهبل,مجراعة,nonword,word,nonword,
 المستشعر,ابنون,nonword,word,nonword,
 يعاقب,مجارو,nonword,word,nonword,
 مزورة,مجصيل,nonword,word,nonword,
 الكوكايين,قرارب,nonword,word,nonword,
 فارغة,محاضعا,nonword,word,nonword,
-مراجع (لمستشفى),محاوقف,nonword,word,nonword,
+مراجع ,محاوقف,nonword,word,nonword,
 رويال,محشرب,nonword,word,nonword,
 بطل,محهضم,nonword,word,nonword,
 نقل,محاف,nonword,word,nonword,
@@ -4818,7 +4771,6 @@ beم,تسلاي,nonword,nonword,nonword,
 منتج,ندب,unrelated,word,word,0.0934244147682636
 قذر,الصعب,unrelated,word,word,0.128383913016641
 استقالة,مورفين,unrelated,word,word,0.0989728236944873
-رصين,فيلم,unrelated,word,word,0.0672288662116376
 مفيد,يدفن,unrelated,word,word,0.0883428413002804
 أخيرا,آلة,unrelated,word,word,0.140275826103758
 بريد,الخصم,unrelated,word,word,0.107517141055175
@@ -4828,7 +4780,6 @@ beم,تسلاي,nonword,nonword,nonword,
 بالغ,يحقق,unrelated,word,word,0.115233113106818
 حماس,بحيرة,unrelated,word,word,0.079129209324269
 توقيع,يقدر,unrelated,word,word,0.112619838934798
-جنسي,غباء,unrelated,word,word,0.149169369582136
 كبسولة,الثقة,unrelated,word,word,0.113625857223555
 ضعيف,فعل,unrelated,word,word,0.119817839606224
 ضحية,أسلوب,unrelated,word,word,0.144705432889688
@@ -4997,5 +4948,4 @@ beم,تسلاي,nonword,nonword,nonword,
 نحيف,مصيبة,unrelated,word,word,-0.0143204959851863
 عظم,الرسمية,unrelated,word,word,-0.0124839980988645
 شيء,الفائز,unrelated,word,word,0.0720731809035079
-المؤخرة,الوادي,unrelated,word,word,0.122315269857279
 لين,يعذر,unrelated,word,word,0.131245505106248

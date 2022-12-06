@@ -179,9 +179,6 @@
 "أولالأخير","أول","الأخير","related","word","word",0.325909773280355,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "أولجونه","أول","جونه","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "أوليهين","أول","يهين","unrelated","word","word",0.128435415849737,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"إباحيةتمتم","إباحية","تمتم","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"إباحيةصديق","إباحية","صديق","unrelated","word","word",0.114924048269163,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"إباحيةفيلم","إباحية","فيلم","related","word","word",0.356440092761407,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "إبرةإبداع","إبرة","إبداع","unrelated","word","word",0.0685957076237773,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "إبرةحقنة","إبرة","حقنة","related","word","word",0.533592796747223,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "إبرةخرصية","إبرة","خرصية","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -710,7 +707,6 @@
 "الحمض النوويبصمة","الحمض النووي","بصمة","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "الحمض النوويفضيحة","الحمض النووي","فضيحة","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "الحملة الانتخابيةانتخابات","الحملة الانتخابية","انتخابات","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"الحملة الانتخابيةكونياك","الحملة الانتخابية","كونياك","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "الحملة الانتخابيةماخن","الحملة الانتخابية","ماخن","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "الحمنالنويرغرباء","الحمنالنوي","رغرباء","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "الحمنالنويطفره","الحمنالنوي","طفره","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -924,9 +920,6 @@
 "القرقضفجانية","القرقض","فجانية","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "القسليةالأسيدك","القسلية","الأسيدك","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "القسليةتصويت","القسلية","تصويت","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"القماربقامة","القمار","بقامة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"القمارديسمبر","القمار","ديسمبر","unrelated","word","word",0.101036863855059,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"القمارلعبة البوكر","القمار","لعبة البوكر","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "القمرالشمس","القمر","الشمس","related","word","word",0.528413600632076,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "القمرمتدفج","القمر","متدفج","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "القمرموضوع","القمر","موضوع","unrelated","word","word",0.0639741052562954,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -976,9 +969,6 @@
 "اللهساخة","الله","ساخة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "اللورالمؤامات","اللور","المؤامات","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "اللورجبر","اللور","جبر","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"المؤخرةالعقب","المؤخرة","العقب","related","word","word",0.375076603912324,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"المؤخرةالوادي","المؤخرة","الوادي","unrelated","word","word",0.122315269857279,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"المؤخرةساصلحا","المؤخرة","ساصلحا","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "المؤلقبيرياة","المؤلق","بيرياة","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "المؤلقتاجر","المؤلق","تاجر","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "المارائـنالصلار","المارائـن","الصلار","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1076,9 +1066,6 @@
 "النزهةلقران","النزهة","لقران","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "النزوصفريق","النزوص","فريق","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "النزوصولآنعم","النزوص","ولآنعم","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"النشوةانتصاب","النشوة","انتصاب","related","word","word",0.377752061565914,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"النشوةبارد","النشوة","بارد","unrelated","word","word",0.125177621427159,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"النشوةواية","النشوة","واية","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "النصيحةبابرامل","النصيحة","بابرامل","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "النصيحةداكن","النصيحة","داكن","unrelated","word","word",0.133564940294167,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "النصيحةينصح","النصيحة","ينصح","related","word","word",0.267121561187027,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1312,9 +1299,6 @@
 "بكل سرورمرح","بكل سرور","مرح","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "بلافويعلهام","بلافوي","علهام","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "بلافوييأتي","بلافوي","يأتي","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"بلاي بويرائتا","بلاي بوي","رائتا","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"بلاي بويمجلة","بلاي بوي","مجلة","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"بلاي بويمنطقة","بلاي بوي","منطقة","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "بلدالأمة","بلد","الأمة","related","word","word",0.320647690424789,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "بلدوخعة","بلد","وخعة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "بلدوصف","بلد","وصف","unrelated","word","word",0.0956464500962434,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1391,7 +1375,6 @@
 "تبلوصيلة","تبلو","صيلة","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تبلوموقد","تبلو","موقد","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تتجاعبانع","تتجاعب","انع","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"تتجاعبلعبة البوكر","تتجاعب","لعبة البوكر","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تثافيلمالة","تثافي","لمالة","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تثافييتخلى","تثافي","يتخلى","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تجاريتاجر","تجاري","تاجر","related","word","word",0.30805924668181,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1637,7 +1620,6 @@
 "ثقيلبقوة","ثقيل","بقوة","related","word","word",0.205909192123374,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ثقيلطيحالنة","ثقيل","طيحالنة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ثقيلمصل","ثقيل","مصل","unrelated","word","word",0.100969678384112,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"ثوقمجلة","ثوق","مجلة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ثوقنتانا","ثوق","نتانا","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ثولياتسجيل","ثوليا","تسجيل","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ثولياصفايم","ثوليا","صفايم","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1710,9 +1692,6 @@
 "جنرال لواءأقصى","جنرال لواء","أقصى","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "جنرال لواءتأضور","جنرال لواء","تأضور","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "جنرال لواءكولونيل","جنرال لواء","كولونيل","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"جنسيبيتفاء","جنسي","بيتفاء","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"جنسيجسدي","جنسي","جسدي","related","word","word",0.425663021023596,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"جنسيغباء","جنسي","غباء","unrelated","word","word",0.149169369582136,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "جنقكائي","جنق","كائي","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "جنقمضحك","جنق","مضحك","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "جنوبتبش","جنوب","تبش","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1858,7 +1837,6 @@
 "حقيبةحقيبة سفر","حقيبة","حقيبة سفر","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "حقيبةقاتعني","حقيبة","قاتعني","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "حقيبةواسع","حقيبة","واسع","unrelated","word","word",0.12636180931896,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"حل محلقضيب","حل محل","قضيب","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "حل محللمز","حل محل","لمز","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "حل محليستبدل","حل محل","يستبدل","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "حلاتنبقوة","حلاتن","بقوة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1991,7 +1969,6 @@
 "خطاومإجازة","خطاوم","إجازة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "خطاوموصاطيف","خطاوم","وصاطيف","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "خطبة عشاءبلدكا","خطبة عشاء","بلدكا","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"خطبة عشاءعاشق","خطبة عشاء","عاشق","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "خطةإستراتيجية","خطة","إستراتيجية","related","word","word",0.613766505193252,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "خطةإضار","خطة","إضار","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "خطةودود","خطة","ودود","unrelated","word","word",0.0321667033736732,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2206,7 +2183,6 @@
 "رايكةحيلق","رايكة","حيلق","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رايكةيحب","رايكة","يحب","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ربارتغوف","ربار","تغوف","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"ربارمثلي الجنس","ربار","مثلي الجنس","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ربمابذيدة","ربما","بذيدة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ربماعاجز","ربما","عاجز","unrelated","word","word",0.128804809314123,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ربمامحتمل","ربما","محتمل","related","word","word",0.419152703527992,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2237,7 +2213,6 @@
 "رشوةبنات","رشوة","بنات","unrelated","word","word",0.126796983711228,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رشوةمسكس","رشوة","مسكس","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رصينسكران","رصين","سكران","related","word","word",0.29889309590868,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"رصينفيلم","رصين","فيلم","unrelated","word","word",0.0672288662116376,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رصينكوفينيل","رصين","كوفينيل","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رضيعإقب","رضيع","إقب","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رضيعطفل","رضيع","طفل","related","word","word",0.602131678860358,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2280,9 +2255,6 @@
 "رمادغبار","رماد","غبار","related","word","word",0.486120189330322,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رمادناقص","رماد","ناقص","unrelated","word","word",0.147855815488057,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رمادواصر","رماد","واصر","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"رمبعيد","رم","بعيد","unrelated","word","word",0.0872267702101877,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"رمظفينة","رم","ظفينة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"رمكونياك","رم","كونياك","related","word","word",0.321871767820495,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رهينةأسير","رهينة","أسير","related","word","word",0.208333497017899,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رهينةرور","رهينة","رور","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رهينةينتج","رهينة","ينتج","unrelated","word","word",0.052025920735499,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2384,9 +2356,6 @@
 "سحابضباب","سحاب","ضباب","related","word","word",0.386149007423526,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "سحابطونه","سحاب","طونه","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "سحابمال","سحاب","مال","unrelated","word","word",0.12257751732339,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"سحاقيةبالآق","سحاقية","بالآق","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"سحاقيةمثلي الجنس","سحاقية","مثلي الجنس","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"سحاقيةموقعك","سحاقية","موقعك","unrelated","word","word",0.13075949386576,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "سحرالشمس","سحر","الشمس","unrelated","word","word",0.106639013198568,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "سحرجمال","سحر","جمال","related","word","word",0.337874939425993,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "سحردهدة","سحر","دهدة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2830,7 +2799,6 @@
 "طريقالرأسمالية","طريق","الرأسمالية","unrelated","word","word",0.137777912138242,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "طريقالطريق السريع","طريق","الطريق السريع","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "طريقةأسلوب","طريقة","أسلوب","related","word","word",0.430096758625036,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"طريقةمجلة","طريقة","مجلة","unrelated","word","word",0.115430885945831,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "طريقةينضول","طريقة","ينضول","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "طريقرائع","طريق","رائع","unrelated","word","word",0.0557379859810521,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "طريقشارع","طريق","شارع","related","word","word",0.361306268118219,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2979,9 +2947,6 @@
 "عشلينغ","عش","لينغ","unrelated","word","word",0.132534610559491,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "عشيركلأريئة","عشيركل","أريئة","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "عشيركللهجة","عشيركل","لهجة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"عشيقةجُسيم","عشيقة","جُسيم","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"عشيقةعاشق","عشيقة","عاشق","related","word","word",0.281101196831165,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"عشيقةعـوسي","عشيقة","عـوسي","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "عصابةخيال","عصابة","خيال","unrelated","word","word",0.0312143019102168,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "عصابةسدس","عصابة","سدس","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "عصابةمجموعة","عصابة","مجموعة","related","word","word",0.454150878753175,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3078,7 +3043,6 @@
 "غادفصورة","غادف","صورة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "غادففجاري","غادف","فجاري","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "غازالوقود","غاز","الوقود","related","word","word",0.415343374074076,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"غازجسدي","غاز","جسدي","unrelated","word","word",0.125046744926753,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "غازيسجة","غاز","يسجة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "غالبيةادعة","غالبية","ادعة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "غالبيةتصويت","غالبية","تصويت","related","word","word",0.288670189574089,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3184,7 +3148,7 @@
 "فانبةمعرض","فانبة","معرض","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "فايروسالمحتمسف","فايروس","المحتمسف","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "فايروسعدوى","فايروس","عدوى","related","word","word",0.469673963310735,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"فايروسعميل (لمحل)","فايروس","عميل (لمحل)","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"فايروسعميل","فايروس","عميل","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "فتاةتحليل","فتاة","تحليل","unrelated","word","word",0.0985675013512128,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "فتاةذومة","فتاة","ذومة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "فتاةصبي","فتاة","صبي","related","word","word",0.457394699355737,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3626,7 +3590,6 @@
 "كيهيالأكسجين","كيهي","الأكسجين","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "كيهيبرداة","كيهي","برداة","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لأجرافالأهتمل","لأجراف","الأهتمل","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"لأجراففيلم","لأجراف","فيلم","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لأربألتزاز","لأرب","ألتزاز","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لأربرابعا","لأرب","رابعا","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لأورالتعسلم","لأور","التعسلم","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3651,7 +3614,7 @@
 "لاقرإغاب","لاقر","إغاب","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لاقرقبعة","لاقر","قبعة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لاينةحـث","لاينة","حـث","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"لاينةعميل (لمحل)","لاينة","عميل (لمحل)","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"لاينةعميل","لاينة","عميل","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لبوالمخدرات","لبو","المخدرات","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لبوغاقدر","لبو","غاقدر","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "لتحدساط","لتحد","ساط","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3770,7 +3733,6 @@
 "مالياتمويل","ماليا","تمويل","related","word","word",0.364760189518521,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ماليازجاجة","ماليا","زجاجة","unrelated","word","word",0.0323014737521008,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ماليامؤظية","ماليا","مؤظية","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"ماميزقضيب","ماميز","قضيب","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ماميزيفند","ماميز","يفند","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ماندساعماج","ماندس","اعماج","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ماندسلقب","ماندس","لقب","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3902,9 +3864,9 @@
 "مذياعالتلفاز","مذياع","التلفاز","related","word","word",0.407951891849104,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مذياعطوادك","مذياع","طوادك","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مذياعقلعة","مذياع","قلعة","unrelated","word","word",0.127631962054404,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مراجع (لمستشفى)سمك","مراجع (لمستشفى)","سمك","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مراجع (لمستشفى)عميل (لمحل)","مراجع (لمستشفى)","عميل (لمحل)","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مراجع (لمستشفى)محاوقف","مراجع (لمستشفى)","محاوقف","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"مراجعسمك","مراجع","سمك","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"مراجععميل","مراجع","عميل","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"مراجعمحاوقف","مراجع","محاوقف","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مرادةالراهمن","مرادة","الراهمن","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مرادةساحر","مرادة","ساحر","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مراسلالفاعش","مراسل","الفاعش","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3912,7 +3874,6 @@
 "مراسلمرض","مراسل","مرض","unrelated","word","word",0.132335656686863,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مرافنهبنتهاف","مرافنه","بنتهاف","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مرافنهمغلق","مرافنه","مغلق","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مراقينكونياك","مراقين","كونياك","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مراقينمتئى","مراقين","متئى","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مربيةأهمية","مربية","أهمية","unrelated","word","word",0.0598095599543691,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مربيةخادمة","مربية","خادمة","related","word","word",0.50349860492006,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4000,7 +3961,6 @@
 "مسامنمبالغة","مسامن","مبالغة","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مسبثتهوية","مسبث","تهوية","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مسبثيستي","مسبث","يستي","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مستأجرالعقب","مستأجر","العقب","unrelated","word","word",0.0785936411133631,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستأجرجادني","مستأجر","جادني","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستأجرمالك العقار","مستأجر","مالك العقار","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستديرحول","مستدير","حول","related","word","word",0.220083894172816,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4014,7 +3974,6 @@
 "مستشفىيهتن","مستشفى","يهتن","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستعمرةاتحاد","مستعمرة","اتحاد","related","word","word",0.148713260993751,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستعمرةالسدط","مستعمرة","السدط","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مستعمرةمثلي الجنس","مستعمرة","مثلي الجنس","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستقبلاكاش","مستقبل","اكاش","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستقبلماضي","مستقبل","ماضي","related","word","word",0.37540375410668,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مستقبليمضغ","مستقبل","يمضغ","unrelated","word","word",0.0283164458128392,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4108,7 +4067,6 @@
 "معداتيجهز","معدات","يجهز","related","word","word",0.224758435274563,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "معدةالصلار","معدة","الصلار","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "معدةصدر","معدة","صدر","related","word","word",0.308995433663478,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"معدةلعبة البوكر","معدة","لعبة البوكر","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "معسكربيرة","معسكر","بيرة","unrelated","word","word",0.113880288026731,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "معسكرزوعة","معسكر","زوعة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "معسكرقرية","معسكر","قرية","related","word","word",0.293586720422966,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4158,7 +4116,6 @@
 "مفجرجهاز ضبط الوقت","مفجر","جهاز ضبط الوقت","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مفجرروما","مفجر","روما","unrelated","word","word",0.121688045162413,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مفجرنشكة","مفجر","نشكة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مفجيمالعقب","مفجيم","العقب","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مفجيمنفجاب","مفجيم","نفجاب","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مفهومالخرصر","مفهوم","الخرصر","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مفهومتعريف","مفهوم","تعريف","related","word","word",0.311645024216666,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4306,9 +4263,6 @@
 "منوالالمفترس","منوال","المفترس","unrelated","word","word",0.0721281332011386,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "منوالقطعاع","منوال","قطعاع","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "منوالنمط","منوال","نمط","related","word","word",0.2281429069259,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مهبلقضيب","مهبل","قضيب","related","word","word",0.595730584043773,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مهبلقطاع","مهبل","قطاع","unrelated","word","word",0.118710955875939,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"مهبلمجراعة","مهبل","مجراعة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مهتركمالغة","مهتر","كمالغة","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مهترمحفظة نقود","مهتر","محفظة نقود","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "مهمةسيعتي","مهمة","سيعتي","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4565,7 +4519,6 @@
 "واحدتعفجار","واحد","تعفجار","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "واحدثلاثة","واحد","ثلاثة","related","word","word",0.472684942413899,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "واسبالفطاف","واسب","الفطاف","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"واسبانتصاب","واسب","انتصاب","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "واشنطنبوسطن","واشنطن","بوسطن","related","word","word",0.547132967523352,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "واشنطنبيولوجي","واشنطن","بيولوجي","unrelated","word","word",0.0667050325512374,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "واشنطندينورومى","واشنطن","دينورومى","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4672,7 +4625,6 @@
 "ويسكيقفز","ويسكي","قفز","unrelated","word","word",0.118749920396599,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يئيةالقسائ","يئية","القسائ","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يئيةيعطى","يئية","يعطى","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"ياطفديقجسدي","ياطفديق","جسدي","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ياطفديقذكوز","ياطفديق","ذكوز","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يافمجنش","ياف","مجنش","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يافميكانيكي","ياف","ميكانيكي","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4705,7 +4657,6 @@
 "يتمنمشجعر","يتمن","مشجعر","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يثانةأخورات","يثانة","أخورات","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يثانةشرف","يثانة","شرف","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"يثقعاشق","يثق","عاشق","unrelated","word","word",0.144852350623505,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يثقمفوقة","يثق","مفوقة","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يثقيصدق","يثق","يصدق","related","word","word",0.286855977577163,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يجاملإنجياع","يجامل","إنجياع","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4973,7 +4924,6 @@
 "ينظراسبادل","ينظر","اسبادل","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ينظرفاكهة","ينظر","فاكهة","unrelated","word","word",0.0812745004550611,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ينظريراقب","ينظر","يراقب","related","word","word",0.401431475835105,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"ينظفانتصاب","ينظف","انتصاب","unrelated","word","word",0.121659926973111,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ينظفتراج","ينظف","تراج","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ينظفيغسل","ينظف","يغسل","related","word","word",0.490952907300499,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "يهبطتسويق","يهبط","تسويق","unrelated","word","word",0.0779345110623217,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
