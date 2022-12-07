@@ -390,8 +390,8 @@ da_data_all <- da_data_all %>%
   da_merged$done <- da_merged$sampleN >= 50
 
 # use data ----
-  da_use <- subset(da_merged, is.na(done) | done == FALSE)
-  da_sample <- subset(da_merged, done == TRUE)
+  da_use <- subset(da_merged, is.na(done_totalN) | done_totalN == FALSE)
+  da_sample <- subset(da_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
