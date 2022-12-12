@@ -167,7 +167,7 @@ es_words <- import("/var/www/html/es/es_words.csv")
 # collected data
 es_data_all <-
   bind_rows(processData("/var/www/html/es/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)), 
+              mutate(url_lab = as.character(url_lab)),
             processData("/var/www/html/es1/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
@@ -447,6 +447,7 @@ list_es_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 list_es_data <- lapply(list_es_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
 list_es_data <- lapply(list_es_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+list_es_data <- list_es_data[lapply(list_es_data, nrow) > 0]
 
 if (nrow(p_lab) > 0){
   if (length(list_es_data) > 0){

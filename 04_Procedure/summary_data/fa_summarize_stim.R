@@ -445,6 +445,7 @@ list_fa_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 list_fa_data <- lapply(list_fa_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
 list_fa_data <- lapply(list_fa_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+list_fa_data <- list_fa_data[lapply(list_fa_data, nrow) > 0]
 
 if (nrow(p_lab) > 0){
   if (length(list_fa_data) > 0){
@@ -566,7 +567,7 @@ for (i in 1:number_folders){
   {"word": "شلیک کرد", "class": "word"},
   {"word": "سااتور", "class": "nonword"},
   {"word": "چکمه", "class": "word"}]'
-  
+
   writeLines(practice, con = paste0(
     "/var/www/html/fa", folder_num,
     "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))

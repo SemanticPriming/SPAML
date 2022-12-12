@@ -10,7 +10,7 @@
 # From this data, the R script:
   # Writes out 8 blocks of 100 words that are probabilistically selected
   # Writes out summary table
-  # Writes out participant summary 
+  # Writes out participant summary
 
 # Libraries ---------------------------------------------------------------
 
@@ -165,29 +165,31 @@ processData <- function(database) {
 # setwd("/Users/erinbuchanan/GitHub/Research/2_projects/SPAML/SPAML-PSA")
 
 # original word lists
-ur_words <- import("/var/www/html/ur/ur_words.csv")
+hi_words <- import("/var/www/html/hi/hi_words.csv")
 
 # collected data
-ur_data_all <-
-  bind_rows(processData("/var/www/html/ur/data/data.sqlite") %>%
+hi_data_all <-
+  bind_rows(processData("/var/www/html/hi/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
-# # delete stuff before we started
-ur_data_all <- ur_data_all %>%
-  filter(timestamp > as.POSIXct("2022-12-06")) 
+# delete stuff before we started
+hi_data_all <- hi_data_all %>%
+  filter(timestamp > as.POSIXct("2022-10-26")) %>%
+  # this was a tester on 10-26
+  filter(observation != "43143") # check no duplicates at the end
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
   # 13_0_99 == 15_0_1
   # figure out everyone who saw 15_100 and 15_101 which means extra
-  obs_extra <- ur_data_all %>%
+  obs_extra <- hi_data_all %>%
     filter(grepl("15_0_100", sender_id)) %>%
     pull(observation) %>%
     unique()
   # remove second instance of trials so 15_0_0* or 15_0_1*
   # be specific because regex coding
 
-  ur_data_all <- ur_data_all %>%
+  hi_data_all <- hi_data_all %>%
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
@@ -201,11 +203,11 @@ ur_data_all <- ur_data_all %>%
   number_folders <- 1
 
   ##create demographics only data
-  demos <- ur_data_all %>% #data frame
+  demos <- hi_data_all %>% #data frame
     filter(sender == "Demographics Form") #filter out only demographics lines
 
   ##create experiment information data
-  exp <- ur_data_all %>%
+  exp <- hi_data_all %>%
     filter(sender == "Consent Form")
 
   demo_cols <- c("observation", "duration",
@@ -231,7 +233,7 @@ ur_data_all <- ur_data_all %>%
   participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
 
   # at least 100 trials + 80%
-  number_trials <- ur_data_all %>% #data frame
+  number_trials <- hi_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
     group_by(observation) %>%
     summarize(n_trials = n(),
@@ -251,10 +253,10 @@ ur_data_all <- ur_data_all %>%
   participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 
 # grab only real trials ----
-  real_trials <- ur_data_all %>% #data frame
+  real_trials <- hi_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
     select(observation, sender_id, response, response_action, ended_on, duration,
-           colnames(ur_data_all)[grep("^time", colnames(ur_data_all))],
+           colnames(hi_data_all)[grep("^time", colnames(hi_data_all))],
            word, class, correct_response, correct)
 
 # z score participant data ----
@@ -313,20 +315,20 @@ ur_data_all <- ur_data_all %>%
   real_trials$unique_trial <- paste(real_trials$observation,
                                         real_trials$trial_code, sep = "_")
   # do it with merge because ugh pivot
-  ur_real_wide <- merge(
+  hi_real_wide <- merge(
     real_trials[real_trials$which == "cue" , ], #just cues
     real_trials[real_trials$which == "target" , ], #just targets
     by = "unique_trial",
     all = T
   )
   # take just what we need
-  ur_real_wide <- ur_real_wide[ , c("unique_trial", "observation.x", "word.x",
+  hi_real_wide <- hi_real_wide[ , c("unique_trial", "observation.x", "word.x",
                                     "class.x", "correct.x", "trial_code.x",
                                     "duration.y", "word.y", "class.y", "correct.y",
                                     "Z_RT.y", "keep.y", "keep_participant.y",
                                     "ended_on.x", "ended_on.y")]
   # good names
-  colnames(ur_real_wide) <- c("unique_trial", "observation", "cue_word",
+  colnames(hi_real_wide) <- c("unique_trial", "observation", "cue_word",
                               "cue_type", "cue_correct", "trial_order",
                               "target_duration", "target_word", "target_type",
                               "target_correct", "target_Z_RT",
@@ -334,20 +336,20 @@ ur_data_all <- ur_data_all %>%
                               "cue_end_of_trial", "target_end_of_trial")
 
   # only focus on related-unrelated
-  ur_focus <- subset(ur_real_wide, target_type == "word" & cue_type == "word")
-  ur_focus$word_combo <- paste0(ur_focus$cue_word, ur_focus$target_word)
+  hi_focus <- subset(hi_real_wide, target_type == "word" & cue_type == "word")
+  hi_focus$word_combo <- paste0(hi_focus$cue_word, hi_focus$target_word)
 
   # add if it's related or unrelated
-  ur_words$word_combo <- paste0(ur_words$ur_cue, ur_words$ur_target)
-  ur_focus <- merge(ur_focus, ur_words[ , c("type", "word_combo")],
+  hi_words$word_combo <- paste0(hi_words$hi_cue, hi_words$hi_target)
+  hi_focus <- merge(hi_focus, hi_words[ , c("type", "word_combo")],
                     by = "word_combo", all.x = T)
 
   ### HERE YOU WILL TURN ON ###
   # subset out NAs at some point they will be practice trials
-  ur_focus <- subset(ur_focus, !is.na(type))
+  hi_focus <- subset(hi_focus, !is.na(type))
 
   # calculate the total N versus timeout N
-  ur_num_trials <- ur_focus %>%
+  hi_num_trials <- hi_focus %>%
     group_by(word_combo) %>%
     summarize(target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == "response", na.rm = T),
@@ -359,16 +361,16 @@ ur_data_all <- ur_data_all %>%
               cue_prop_correct = cue_correct/cue_answeredN)
 
   ### HERE YOU WILL TURN ON ###
-  ur_focus <- subset(ur_focus, keep_participant == "keep")
+  hi_focus <- subset(hi_focus, keep_participant == "keep")
 
 # only correct answers for checking stimuli counts ----
-  ur_Z <- subset(ur_focus, target_correct == TRUE)
-  ur_Z <- subset(ur_Z, keep_trial == "keep")
+  hi_Z <- subset(hi_focus, target_correct == TRUE)
+  hi_Z <- subset(hi_Z, keep_trial == "keep")
 
 # Calculate Statistics ----------------------------------------------------
 
 # calculates word, sample size, SE, "done" with <= .09 SE ----
-  ur_Z_summary <- ur_Z %>%
+  hi_Z_summary <- hi_Z %>%
     group_by(word_combo) %>%
     summarize(M_Z = mean(target_Z_RT),
               SD_Z = sd(target_Z_RT),
@@ -376,38 +378,38 @@ ur_data_all <- ur_data_all %>%
               sampleN = length(target_Z_RT))
 
 # merge with complete stimuli list ----
-  ur_merged <- merge(ur_words, ur_Z_summary,
+  hi_merged <- merge(hi_words, hi_Z_summary,
                      by = "word_combo", all.x = T)
 
-  ur_merged <- merge(ur_merged, ur_num_trials,
+  hi_merged <- merge(hi_merged, hi_num_trials,
                      by = "word_combo", all.x = T)
 
 # are we done? ----
-  ur_merged$done_both <- (ur_merged$target_answeredN >= 50 & ur_merged$SE_Z <= .09) | ur_merged$target_answeredN >= 320
-  ur_merged$done_totalN <- ur_merged$target_answeredN >= 50
-  ur_merged$done <- ur_merged$sampleN >= 50
+  hi_merged$done_both <- (hi_merged$target_answeredN >= 50 & hi_merged$SE_Z <= .09) | hi_merged$target_answeredN >= 320
+  hi_merged$done_totalN <- hi_merged$target_answeredN >= 50
+  hi_merged$done <- hi_merged$sampleN >= 50
 
 # use data ----
-  ur_use <- subset(ur_merged, is.na(done) | done == FALSE)
-  ur_sample <- subset(ur_merged, done == TRUE)
+  hi_use <- subset(hi_merged, is.na(done) | done == FALSE)
+  hi_sample <- subset(hi_merged, done == TRUE)
 
 # Generate ----------------------------------------------------------------
 
   # generate summary chart for shiny ----
-  write.csv(ur_merged,
-            paste("/var/www/html/summary_data/ur_summary_",
+  write.csv(hi_merged,
+            paste("/var/www/html/summary_data/hi_summary_",
                   Sys.time(), ".csv", sep = ""),
             row.names = F)
 
 # generate participant report for shiny ----
-  p_end <- ur_data_all %>%
+  p_end <- hi_data_all %>%
     filter(sender == "Stimulus Real") %>%
     group_by(observation) %>%
     summarize(n = n()) %>%
     filter(n >= 100) %>%
     pull(observation)
 
-  p_lab <- ur_data_all[ur_data_all$observation %in% p_end, ]
+  p_lab <- hi_data_all[hi_data_all$observation %in% p_end, ]
   p_lab <- p_lab[!is.na(p_lab$url_lab), ]
   p_lab <- p_lab %>%
     left_join(participant_DF %>%
@@ -419,6 +421,6 @@ ur_data_all <- ur_data_all %>%
                       "start", "end", "study_length")]
 
   write.csv(p_lab,
-            paste("/var/www/html/summary_data/ur_participants_",
+            paste("/var/www/html/summary_data/hi_participants_",
                   Sys.time(), ".csv", sep = ""),
             row.names = F)

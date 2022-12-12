@@ -445,6 +445,7 @@ list_hu_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 list_hu_data <- lapply(list_hu_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
 list_hu_data <- lapply(list_hu_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+list_hu_data <- list_hu_data[lapply(list_hu_data, nrow) > 0]
 
 if (nrow(p_lab) > 0){
   if (length(list_hu_data) > 0){

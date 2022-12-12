@@ -162,31 +162,31 @@ processData <- function(database) {
 # Data --------------------------------------------------------------------
 
 # original word lists
-sr_words <- import("/var/www/html/sr/sr_words.csv")
+nl_words <- import("/var/www/html/nl/nl_words.csv")
 
 # collected data
-sr_data_all <-
-  bind_rows(processData("/var/www/html/sr/data/data.sqlite") %>%
+nl_data_all <-
+  bind_rows(processData("/var/www/html/nl/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
-# # delete stuff before we started
-# sr_data_all <- sr_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+# delete stuff before we started
+nl_data_all <- nl_data_all %>%
+  filter(timestamp > as.POSIXct("2022-10-26")) %>%
+  # this was a tester on 10-26
+  filter(observation != "43143") # check no duplicates at the end
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
 # 13_0_99 == 15_0_1
 # figure out everyone who saw 15_100 and 15_101 which means extra
-obs_extra <- sr_data_all %>%
+obs_extra <- nl_data_all %>%
   filter(grepl("15_0_100", sender_id)) %>%
   pull(observation) %>%
   unique()
 # remove second instance of trials so 15_0_0* or 15_0_1*
 # be specific because regex coding
 
-sr_data_all <- sr_data_all %>%
+nl_data_all <- nl_data_all %>%
   filter(!(observation %in% obs_extra &
              grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
   ))
@@ -200,11 +200,11 @@ current_year <- 2022
 number_folders <- 1
 
 ##create demographics only data
-demos <- sr_data_all %>% #data frame
+demos <- nl_data_all %>% #data frame
   filter(sender == "Demographics Form") #filter out only demographics lines
 
 ##create experiment information data
-exp <- sr_data_all %>%
+exp <- nl_data_all %>%
   filter(sender == "Consent Form")
 
 demo_cols <- c("observation", "duration",
@@ -230,7 +230,7 @@ if (nrow(participant_DF) > 0){participant_DF$keep <- "keep"}
 participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
 
 # at least 100 trials + 80%
-number_trials <- sr_data_all %>% #data frame
+number_trials <- nl_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>%
   summarize(n_trials = n(),
@@ -250,10 +250,10 @@ participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
 participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 
 # grab only real trials ----
-real_trials <- sr_data_all %>% #data frame
+real_trials <- nl_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   select(observation, sender_id, response, response_action, ended_on, duration,
-         colnames(sr_data_all)[grep("^time", colnames(sr_data_all))],
+         colnames(nl_data_all)[grep("^time", colnames(nl_data_all))],
          word, class, correct_response, correct)
 
 # z score participant data ----
@@ -312,20 +312,20 @@ for (person in unique(real_trials$observation)){
 real_trials$unique_trial <- paste(real_trials$observation,
                                   real_trials$trial_code, sep = "_")
 # do it with merge because ugh pivot
-sr_real_wide <- merge(
+nl_real_wide <- merge(
   real_trials[real_trials$which == "cue" , ], #just cues
   real_trials[real_trials$which == "target" , ], #just targets
   by = "unique_trial",
   all = T
 )
 # take just what we need
-sr_real_wide <- sr_real_wide[ , c("unique_trial", "observation.x", "word.x",
+nl_real_wide <- nl_real_wide[ , c("unique_trial", "observation.x", "word.x",
                                   "class.x", "correct.x", "trial_code.x",
                                   "duration.y", "word.y", "class.y", "correct.y",
                                   "Z_RT.y", "keep.y", "keep_participant.y",
                                   "ended_on.x", "ended_on.y")]
 # good names
-colnames(sr_real_wide) <- c("unique_trial", "observation", "cue_word",
+colnames(nl_real_wide) <- c("unique_trial", "observation", "cue_word",
                             "cue_type", "cue_correct", "trial_order",
                             "target_duration", "target_word", "target_type",
                             "target_correct", "target_Z_RT",
@@ -333,20 +333,20 @@ colnames(sr_real_wide) <- c("unique_trial", "observation", "cue_word",
                             "cue_end_of_trial", "target_end_of_trial")
 
 # only focus on related-unrelated
-sr_focus <- subset(sr_real_wide, target_type == "word" & cue_type == "word")
-sr_focus$word_combo <- paste0(sr_focus$cue_word, sr_focus$target_word)
+nl_focus <- subset(nl_real_wide, target_type == "word" & cue_type == "word")
+nl_focus$word_combo <- paste0(nl_focus$cue_word, nl_focus$target_word)
 
 # add if it's related or unrelated
-sr_words$word_combo <- paste0(sr_words$sr_cue, sr_words$sr_target)
-sr_focus <- merge(sr_focus, sr_words[ , c("type", "word_combo")],
+nl_words$word_combo <- paste0(nl_words$nl_cue, nl_words$nl_target)
+nl_focus <- merge(nl_focus, nl_words[ , c("type", "word_combo")],
                   by = "word_combo", all.x = T)
 
 ### HERE YOU WILL TURN ON ###
 # subset out NAs at some point they will be practice trials
-sr_focus <- subset(sr_focus, !is.na(type))
+nl_focus <- subset(nl_focus, !is.na(type))
 
 # calculate the total N versus timeout N
-sr_num_trials <- sr_focus %>%
+nl_num_trials <- nl_focus %>%
   group_by(word_combo) %>%
   summarize(target_correct = sum(target_correct, na.rm = T),
             target_answeredN = sum(target_end_of_trial == "response", na.rm = T),
@@ -358,42 +358,42 @@ sr_num_trials <- sr_focus %>%
             cue_prop_correct = cue_correct/cue_answeredN)
 
 ### HERE YOU WILL TURN ON ###
-sr_focus <- subset(sr_focus, keep_participant == "keep")
+nl_focus <- subset(nl_focus, keep_participant == "keep")
 
 # only correct answers for checking stimuli counts ----
-sr_Z <- subset(sr_focus, target_correct == TRUE)
-sr_Z <- subset(sr_Z, keep_trial == "keep")
+nl_Z <- subset(nl_focus, target_correct == TRUE)
+nl_Z <- subset(nl_Z, keep_trial == "keep")
 
 # Calculate Statistics ----------------------------------------------------
 
 # calculates word, sample size, SE, "done" with <= .09 SE ----
-sr_Z_summary <- sr_Z %>%
+nl_Z_summary <- nl_Z %>%
   group_by(word_combo) %>%
   summarize(M_Z = mean(target_Z_RT),
             SD_Z = sd(target_Z_RT),
-            sr_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
+            SE_Z = sd(target_Z_RT) / sqrt(length(target_Z_RT)),
             sampleN = length(target_Z_RT))
 
 # merge with complete stimuli list ----
-sr_merged <- merge(sr_words, sr_Z_summary,
+nl_merged <- merge(nl_words, nl_Z_summary,
                    by = "word_combo", all.x = T)
 
-sr_merged <- merge(sr_merged, sr_num_trials,
+nl_merged <- merge(nl_merged, nl_num_trials,
                    by = "word_combo", all.x = T)
 
 # merge with old data ----
 # pull in other information from previous weeks
-list_sr_data <- lapply(list.files(path = "/var/www/html/summary_data",
-                                  pattern = "sr_summary_[0-9].*.csv", full.names = T),
+list_nl_data <- lapply(list.files(path = "/var/www/html/summary_data",
+                                  pattern = "nl_summary_[0-9].*.csv", full.names = T),
                        import)
-sr_summaries <- bind_rows(list_sr_data, sr_merged)
-sr_merged <- sr_summaries %>%
+nl_summaries <- bind_rows(list_nl_data, nl_merged)
+nl_merged <- nl_summaries %>%
   select(-any_of(c("done_both", "done_totalN", "done"))) %>%
-  group_by(word_combo, sr_cue, sr_target, type, cue_type,
-           target_type, sr_cosine) %>%
+  group_by(word_combo, nl_cue, nl_target, type, cue_type,
+           target_type, nl_cosine) %>%
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),
             SD_Z = weighted.mean(SD_Z, sampleN, na.rm = T),
-            sr_Z = weighted.mean(sr_Z, sampleN, na.rm = T),
+            SE_Z = weighted.mean(SE_Z, sampleN, na.rm = T),
             sampleN = sum(sampleN, na.rm = T),
             target_correct = sum(target_correct, na.rm = T),
             target_answeredN = sum(target_answeredN, na.rm = T),
@@ -406,28 +406,28 @@ sr_merged <- sr_summaries %>%
             across(), .groups  = "keep")
 
 # are we done? ----
-sr_merged$done_both <- (sr_merged$target_answeredN >= 50 & sr_merged$sr_Z <= .09) | sr_merged$target_answeredN >= 320
-sr_merged$done_totalN <- sr_merged$target_answeredN >= 50
-sr_merged$done <- sr_merged$sampleN >= 50
+nl_merged$done_both <- (nl_merged$target_answeredN >= 50 & nl_merged$SE_Z <= .09) | nl_merged$target_answeredN >= 320
+nl_merged$done_totalN <- nl_merged$target_answeredN >= 50
+nl_merged$done <- nl_merged$sampleN >= 50
 
 # use data ----
-sr_use <- subset(sr_merged, is.na(done) | done == FALSE)
-sr_sample <- subset(sr_merged, done == TRUE)
+nl_use <- subset(nl_merged, is.na(done) | done == FALSE)
+nl_sample <- subset(nl_merged, done == TRUE)
 
 # Generate ----------------------------------------------------------------
 
 # generate summary chart for shiny ----
-write.csv(sr_merged, "/var/www/html/summary_data/sr_summary.csv", row.names = F)
+write.csv(nl_merged, "/var/www/html/summary_data/nl_summary.csv", row.names = F)
 
 # generate participant report for shiny ----
-p_end <- sr_data_all %>%
+p_end <- nl_data_all %>%
   filter(sender == "Stimulus Real") %>%
   group_by(observation) %>%
   summarize(n = n()) %>%
   filter(n >= 100) %>%
   pull(observation)
 
-p_lab <- sr_data_all[sr_data_all$observation %in% p_end, ]
+p_lab <- nl_data_all[nl_data_all$observation %in% p_end, ]
 p_lab <- p_lab[!is.na(p_lab$url_lab), ]
 p_lab <- p_lab %>%
   left_join(participant_DF %>%
@@ -440,16 +440,16 @@ p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
 
 # merge with old data ----
 # pull in other information from previous weeks
-list_sr_data <- lapply(list.files(path = "/var/www/html/summary_data",
-                                  pattern = "sr_participants_[0-9].*.csv", full.names = T),
+list_nl_data <- lapply(list.files(path = "/var/www/html/summary_data",
+                                  pattern = "nl_participants_[0-9].*.csv", full.names = T),
                        import)
-list_sr_data <- lapply(list_sr_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
-list_sr_data <- lapply(list_sr_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
-list_sr_data <- list_sr_data[lapply(list_sr_data, nrow) > 0]
+list_nl_data <- lapply(list_nl_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
+list_nl_data <- lapply(list_nl_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+list_nl_data <- list_nl_data[lapply(list_nl_data, nrow) > 0]
 
 if (nrow(p_lab) > 0){
-  if (length(list_sr_data) > 0){
-    p_lab <- unique(bind_rows(bind_rows(list_sr_data) %>%
+  if (length(list_nl_data) > 0){
+    p_lab <- unique(bind_rows(bind_rows(list_nl_data) %>%
                                 mutate(url_lab = as.character(url_lab),
                                        url_special_code = as.character(url_special_code)),
                               p_lab %>%
@@ -457,10 +457,10 @@ if (nrow(p_lab) > 0){
                                        study_length = as.numeric(study_length))))
   }
 } else {
-  p_lab <- unique(bind_rows(list_sr_data))
+  p_lab <- unique(bind_rows(list_nl_data))
 }
 
-write.csv(p_lab, "/var/www/html/summary_data/sr_participants.csv", row.names = F)
+write.csv(p_lab, "/var/www/html/summary_data/nl_participants.csv", row.names = F)
 
 # generate new stimuli ----
 
@@ -471,21 +471,21 @@ for (i in 1:number_folders){
 
   # eight blocks of 100 trials = 800 trials = 400 pairs or 8 blocks of 50
   # 150 non word non word = 300 trials
-  if (nrow(sr_use[sr_use$cue_type == "nonword" &
-                  sr_use$target_type == "nonword", ]) >= 150){
+  if (nrow(nl_use[nl_use$cue_type == "nonword" &
+                  nl_use$target_type == "nonword", ]) >= 150){
 
-    temp <- subset(sr_use,
-                   sr_use$cue_type == "nonword" &
-                     sr_use$target_type == "nonword")
+    temp <- subset(nl_use,
+                   nl_use$cue_type == "nonword" &
+                     nl_use$target_type == "nonword")
     nonwords <- temp[sample(1:nrow(temp), 150, replace = F), ]
 
   }else{
 
-    nonwords <- sr_use[sr_use$cue_type == "nonword" &
-                         sr_use$target_type == "nonword", ]
-    temp <- subset(sr_sample,
-                   sr_use$cue_type == "nonword" &
-                     sr_use$target_type == "nonword")
+    nonwords <- nl_use[nl_use$cue_type == "nonword" &
+                         nl_use$target_type == "nonword", ]
+    temp <- subset(nl_sample,
+                   nl_use$cue_type == "nonword" &
+                     nl_use$target_type == "nonword")
     nonwords <- rbind(nonwords,
                       temp[sample(1:nrow(temp),
                                   150-nrow(nonwords),
@@ -493,29 +493,29 @@ for (i in 1:number_folders){
   }
 
   # 100 non word non word = 200 trials
-  if (nrow(sr_use[(sr_use$cue_type == "nonword" &
-                   sr_use$target_type == "word") |
-                  (sr_use$cue_type == "word" &
-                   sr_use$target_type == "nonword"), ]) >= 100){
+  if (nrow(nl_use[(nl_use$cue_type == "nonword" &
+                   nl_use$target_type == "word") |
+                  (nl_use$cue_type == "word" &
+                   nl_use$target_type == "nonword"), ]) >= 100){
 
-    temp <- subset(sr_use,
-                   (sr_use$cue_type == "nonword" &
-                      sr_use$target_type == "word") |
-                     (sr_use$cue_type == "word" &
-                        sr_use$target_type == "nonword"))
+    temp <- subset(nl_use,
+                   (nl_use$cue_type == "nonword" &
+                      nl_use$target_type == "word") |
+                     (nl_use$cue_type == "word" &
+                        nl_use$target_type == "nonword"))
     nonwords_mix <- temp[sample(1:nrow(temp), 100, replace = F), ]
 
   }else{
 
-    nonwords_mix <- sr_use[(sr_use$cue_type == "nonword" &
-                              sr_use$target_type == "word") |
-                             (sr_use$cue_type == "word" &
-                                sr_use$target_type == "nonword"), ]
-    temp <- subset(sr_sample,
-                   (sr_use$cue_type == "nonword" &
-                      sr_use$target_type == "word") |
-                     (sr_use$cue_type == "word" &
-                        sr_use$target_type == "nonword"))
+    nonwords_mix <- nl_use[(nl_use$cue_type == "nonword" &
+                              nl_use$target_type == "word") |
+                             (nl_use$cue_type == "word" &
+                                nl_use$target_type == "nonword"), ]
+    temp <- subset(nl_sample,
+                   (nl_use$cue_type == "nonword" &
+                      nl_use$target_type == "word") |
+                     (nl_use$cue_type == "word" &
+                        nl_use$target_type == "nonword"))
     nonwords_mix <- rbind(nonwords_mix,
                           temp[sample(1:nrow(temp),
                                       100-nrow(nonwords_mix),
@@ -523,15 +523,15 @@ for (i in 1:number_folders){
   }
 
   # 75 related pairs = 150 trials
-  if (nrow(sr_use[sr_use$type == "related" , ]) >= 75){
+  if (nrow(nl_use[nl_use$type == "related" , ]) >= 75){
 
-    temp <- subset(sr_use, type == "related")
+    temp <- subset(nl_use, type == "related")
     related <- temp[sample(1:nrow(temp), 75, replace = F), ]
 
   }else{
 
-    related <- sr_use[sr_use$type == "related", ]
-    temp <- subset(sr_sample, type == "related")
+    related <- nl_use[nl_use$type == "related", ]
+    temp <- subset(nl_sample, type == "related")
     related <- rbind(related,
                      temp[sample(1:nrow(temp),
                                  75-nrow(related),
@@ -539,15 +539,15 @@ for (i in 1:number_folders){
   }
 
   # 75 unrelated pairs = 150 trials
-  if (nrow(sr_use[sr_use$type == "unrelated" , ]) >= 75){
+  if (nrow(nl_use[nl_use$type == "unrelated" , ]) >= 75){
 
-    temp <- subset(sr_use, type == "unrelated")
+    temp <- subset(nl_use, type == "unrelated")
     unrelated <- temp[sample(1:nrow(temp), 75, replace = F), ]
 
   }else{
 
-    unrelated <- sr_use[sr_use$type == "unrelated", ]
-    temp <- subset(sr_sample, type == "unrelated")
+    unrelated <- nl_use[nl_use$type == "unrelated", ]
+    temp <- subset(nl_sample, type == "unrelated")
     unrelated <- rbind(unrelated,
                        temp[sample(1:nrow(temp),
                                    75-nrow(unrelated),
@@ -557,30 +557,30 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "течно", "class": "nonword"},
-  {"word": "усне", "class": "word"},
-  {"word": "тар", "class": "word"},
-  {"word": "вући", "class": "nonword"},
-  {"word": "сок", "class": "nonword"},
-  {"word": "поклон", "class": "word"},
-  {"word": "спиг", "class": "nonword"},
-  {"word": "пуцањ", "class": "word"},
-  {"word": "притисак", "class": "nonword"},
-  {"word": "боот", "class": "word"}]'
+  {"word": "sneife", "class": "nonword"},
+  {"word": "læber", "class": "word"},
+  {"word": "tjære", "class": "word"},
+  {"word": "sødo", "class": "nonword"},
+  {"word": "nwede", "class": "nonword"},
+  {"word": "gave", "class": "word"},
+  {"word": "kegthe", "class": "nonword"},
+  {"word": "skud", "class": "word"},
+  {"word": "ethorår", "class": "nonword"},
+  {"word": "støvle", "class": "word"}]'
 
   writeLines(practice, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
 
   all_trials <- rbind(nonwords, related, unrelated, nonwords_mix)
   all_trials <- all_trials[sample(1:nrow(all_trials), nrow(all_trials), replace = F), ]
   all_trials$together <- paste('{"word": "',
-                               all_trials$sr_cue,
+                               all_trials$nl_cue,
                                '", "class": "',
                                all_trials$cue_type,
                                '"}, ', #cue
                                '{"word": "',
-                               all_trials$sr_target,
+                               all_trials$nl_target,
                                '", "class": "',
                                all_trials$target_type,
                                '"}', sep = "")
@@ -593,7 +593,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[1:50], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"))
 
   # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
@@ -602,7 +602,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[51:100], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"))
 
   # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
@@ -611,7 +611,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[101:150], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"))
 
   # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
@@ -620,7 +620,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[151:200], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"))
 
   # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
@@ -629,7 +629,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[201:250], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"))
 
   # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
@@ -637,7 +637,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[251:300], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"))
 
   # c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json is real7
@@ -645,7 +645,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[301:350], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"))
 
   # 0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json is real8
@@ -653,7 +653,7 @@ for (i in 1:number_folders){
                 paste(all_trials$together[351:400], collapse = ",", sep = ""),
                 ']', collapse = "", sep = "")
   writeLines(real, con = paste0(
-    "/var/www/html/sr", folder_num,
+    "/var/www/html/nl", folder_num,
     "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
 }

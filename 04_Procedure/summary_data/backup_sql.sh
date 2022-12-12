@@ -341,12 +341,24 @@ Rscript /var/www/html/summary_data/de_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/de/data/data.sqlite /var/www/html/de/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de1/data/data.sqlite /var/www/html/de1/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de2/data/data.sqlite /var/www/html/de2/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de3/data/data.sqlite /var/www/html/de3/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de4/data/data.sqlite /var/www/html/de4/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de1/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de2/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de3/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de4/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/de/data/data.sqlite
+chmod 777 /var/www/html/de1/data/data.sqlite
+chmod 777 /var/www/html/de2/data/data.sqlite
+chmod 777 /var/www/html/de3/data/data.sqlite
+chmod 777 /var/www/html/de4/data/data.sqlite
 
 # ---- portuguese -----
 # summarize the data

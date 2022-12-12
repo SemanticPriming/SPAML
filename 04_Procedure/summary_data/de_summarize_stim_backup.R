@@ -169,14 +169,25 @@ de_words <- import("/var/www/html/de/de_words.csv")
 
 # collected data
 de_data_all <-
-  bind_rows(processData("/var/www/html/de/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+  bind_rows(processData("/var/www/html/de/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/de1/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)), 
+            processData("/var/www/html/de2/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)), 
+            processData("/var/www/html/de3/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)), 
+            processData("/var/www/html/de4/data/data.sqlite") %>% 
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code))) %>% unique()
 
 # # delete stuff before we started
-# de_data_all <- de_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+de_data_all <- de_data_all %>%
+  filter(timestamp > as.POSIXct("2022-11-28"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -200,7 +211,7 @@ de_data_all <-
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
   current_year <- 2022
-  number_folders <- 1
+  number_folders <- 5
 
   ##create demographics only data
   demos <- de_data_all %>% #data frame

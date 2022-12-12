@@ -4,7 +4,7 @@
 # removes incorrect trials since they don't count
 # removes participants who could not get 80% correct on 100 minimum trials
 # z scores each participants data
-# calculates word, sample size, SE, "done" with <= .09 SE 
+# calculates word, sample size, SE, "done" with <= .09 SE
 # creates participant ID list by lab
 
 # From this data, the R script:
@@ -445,6 +445,7 @@ list_el_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 list_el_data <- lapply(list_el_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
 list_el_data <- lapply(list_el_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+list_el_data <- list_el_data[lapply(list_el_data, nrow) > 0]
 
 if (nrow(p_lab) > 0){
   if (length(list_el_data) > 0){
