@@ -557,15 +557,15 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "croză", "class": "nonword"},
+  {"word": "comcă", "class": "nonword"},
   {"word": "buze", "class": "word"},
   {"word": "gudron", "class": "word"},
-  {"word": "închide", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
+  {"word": "rubdu", "class": "nonword"},
+  {"word": "plumna", "class": "nonword"},
   {"word": "cadou", "class": "word"},
-  {"word": "clăr", "class": "nonword"},
+  {"word": "menţidiţional", "class": "nonword"},
   {"word": "lovitură", "class": "word"},
-  {"word": "ventilare", "class": "nonword"},
+  {"word": "jecăt", "class": "nonword"},
   {"word": "cizme", "class": "word"}]'
 
   writeLines(practice, con = paste0(
