@@ -231,7 +231,7 @@ this.parameters.feedback = this.state.ended_on !== 'response'
   ? 'Merci de répondre plus vite!'
   : (
     this.state.correct
-      ? 'Corriger!'
+      ? 'Correct!'
       : 'Incorrect!'
   )
 }
@@ -392,7 +392,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
@@ -528,7 +528,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
@@ -664,7 +664,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
@@ -800,7 +800,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
@@ -936,7 +936,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
@@ -1072,7 +1072,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
@@ -1208,7 +1208,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003ECasser\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPause\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EVeuillez prendre une courte pause.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EN'oubliez pas que vous devez utiliser la touche \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E pour les vrais mots et la touche \u003Ckbd\u003E${ window.nonword_key } \u003C\u002Fkbd\u003E pour les faux mots.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Veuillez appuyer sur la \u003Ckbd\u003EESPACE\u003C\u002Fkbd\u003E pour continuer ou attendre que cette page disparaisse.\n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },

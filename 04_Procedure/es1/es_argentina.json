@@ -517,7 +517,7 @@
         }
       ],
       "title": "Real Task Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instrucciones</h2>\n    \n    <p class=\"text-left\">¡Buen trabajo! Recorrdá que debés pulsar la tecla <kbd>${ window.word_key }</kbd> cuando veas una palabra y la tecla <kbd>${ window.nonword_key } </kbd> cuando veas una no-palabra.  </p>\n\n    <p class=\"text-left\">Ahora va a iniciar la tarea real. Recorrdá que debés decidir lo más rápido posible procurando no cometer errores. Ahora no se te indicará si tu respuesta es correcta o no. Habrá varios descansos a lo largo de la tarea para que puedas descansar la vista. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Por favor, pulsá la <kbd>BARRA ESPACIADORA</kbd> para continuar.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instrucciones</h2>\n    \n    <p class=\"text-left\">¡Buen trabajo! Recordá que debés pulsar la tecla <kbd>${ window.word_key }</kbd> cuando veas una palabra y la tecla <kbd>${ window.nonword_key } </kbd> cuando veas una no-palabra.  </p>\n\n    <p class=\"text-left\">Ahora va a iniciar la tarea real. Recordá que debés decidir lo más rápido posible procurando no cometer errores. Ahora no se te indicará si tu respuesta es correcta o no. Habrá varios descansos a lo largo de la tarea para que puedas descansar la vista. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Por favor, pulsá la <kbd>BARRA ESPACIADORA</kbd> para continuar.\n</footer>",
       "_tab": "Content",
       "tardy": true
     },
