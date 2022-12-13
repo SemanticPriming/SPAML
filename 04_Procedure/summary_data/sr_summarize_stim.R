@@ -557,16 +557,16 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "течно", "class": "nonword"},
+  {"word": "течно", "class": "word"},
   {"word": "усне", "class": "word"},
   {"word": "тар", "class": "word"},
-  {"word": "вући", "class": "nonword"},
-  {"word": "сок", "class": "nonword"},
+  {"word": "одли", "class": "nonword"},
+  {"word": "дрењи", "class": "nonword"},
   {"word": "поклон", "class": "word"},
-  {"word": "спиг", "class": "nonword"},
+  {"word": "икада", "class": "nonword"},
   {"word": "пуцањ", "class": "word"},
-  {"word": "притисак", "class": "nonword"},
-  {"word": "боот", "class": "word"}]'
+  {"word": "радга", "class": "nonword"},
+  {"word": "боот", "class": "nonword"}]'
 
   writeLines(practice, con = paste0(
     "/var/www/html/sr", folder_num,
