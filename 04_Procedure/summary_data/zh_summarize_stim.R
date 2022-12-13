@@ -560,12 +560,12 @@ for (i in 1:number_folders){
   {"word": "不子", "class": "nonword"},
   {"word": "嘴唇", "class": "word"},
   {"word": "柏油", "class": "word"},
-  {"word": "附加", "class": "nonword"},
+  {"word": "男赶", "class": "nonword"},
   {"word": "念美", "class": "nonword"},
   {"word": "礼物", "class": "word"},
   {"word": "通实", "class": "nonword"},
   {"word": "射击", "class": "word"},
-  {"word": "聋子", "class": "nonword"},
+  {"word": "放鳔兲", "class": "nonword"},
   {"word": "开机", "class": "word"}]'
 
   writeLines(practice, con = paste0(
