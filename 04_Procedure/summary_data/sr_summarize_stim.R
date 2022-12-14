@@ -563,7 +563,7 @@ for (i in 1:number_folders){
   {"word": "одли", "class": "nonword"},
   {"word": "дрењи", "class": "nonword"},
   {"word": "поклон", "class": "word"},
-  {"word": "икада", "class": "nonword"},
+  {"word": "остатжи", "class": "nonword"},
   {"word": "пуцањ", "class": "word"},
   {"word": "радга", "class": "nonword"},
   {"word": "боот", "class": "nonword"}]'
