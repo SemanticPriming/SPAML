@@ -37,7 +37,9 @@ ui <- dashboardPage(skin = 'purple',
                             menuItem(tags$b("Brazilian Portuguese"), tabName = "b_portuguese_tab"),
                             menuItem(tags$b("Romanian"), tabName = "romanian_tab"),
                             menuItem(tags$b("Serbian"), tabName = "serbian_tab"),
-                            menuItem(tags$b("Urdu"), tabName = "urdu_tab")
+                            menuItem(tags$b("Urdu"), tabName = "urdu_tab"),
+                            menuItem(tags$b("Polish"), tabName = "polish_tab"),
+                            menuItem(tags$b("Italian"), tabName = "italian_tab"),
                             )
                         ),
                     dashboardBody(
@@ -83,7 +85,9 @@ ui <- dashboardPage(skin = 'purple',
                           b_portuguese_tab,
                           romanian_tab,
                           serbian_tab,
-                          urdu_tab
+                          urdu_tab,
+                          polish_tab,
+                          italian_tab
                         ) # end tabItems
                     ) # end dashboardBody
                 ) # end dashboardPage
@@ -990,6 +994,88 @@ server <- function(input, output) {
                         round(sum(ur_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(ur_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
+        icon = icon("list"), color = "navy")
+    })
+    
+    # Polish ----
+    output$pl_participant_data <- renderDT({
+      
+      colnames(pl_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(pl_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$pl_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(pl_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$pl_summary_table <- renderDT({
+      
+      datatable(pl_summary[pl_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$PolishN_total <- renderInfoBox({
+      infoBox(
+        "Polish", sum(grepl("keep", pl_participants$keep)), 
+        icon = icon("list"), color = "navy")
+    })
+    
+    output$PolishWORD_total <- renderInfoBox({
+      infoBox(
+        "Polish", paste(round(sum(pl_summary$done_both, na.rm = T)/2000*100,1), 
+                      round(sum(pl_summary$done, na.rm = T)/2000*100,1), 
+                      round(sum(pl_summary$done_totalN, na.rm = T)/2000*100,1), 
+                      sep = " - "), 
+        icon = icon("list"), color = "navy")
+    })
+    
+    # Italian ----
+    output$it_participant_data <- renderDT({
+      
+      colnames(it_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(it_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$it_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(it_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$it_summary_table <- renderDT({
+      
+      datatable(it_summary[it_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$ItalianN_total <- renderInfoBox({
+      infoBox(
+        "Italian", sum(grepl("keep", it_participants$keep)), 
+        icon = icon("list"), color = "navy")
+    })
+    
+    output$ItalianWORD_total <- renderInfoBox({
+      infoBox(
+        "Italian", paste(round(sum(it_summary$done_both, na.rm = T)/2000*100,1), 
+                      round(sum(it_summary$done, na.rm = T)/2000*100,1), 
+                      round(sum(it_summary$done_totalN, na.rm = T)/2000*100,1), 
+                      sep = " - "), 
         icon = icon("list"), color = "navy")
     })
     

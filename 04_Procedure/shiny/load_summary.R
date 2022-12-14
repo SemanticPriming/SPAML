@@ -107,3 +107,13 @@ sr_summary <- import("/var/www/html/summary_data/sr_summary.csv")
 
 ur_participants <- import("/var/www/html/summary_data/ur_participants.csv")
 ur_summary <- import("/var/www/html/summary_data/ur_summary.csv")
+
+# Polish -----------------------------------------------------------------
+
+pl_participants <- import("/var/www/html/summary_data/pl_participants.csv")
+pl_summary <- import("/var/www/html/summary_data/pl_summary.csv")
+
+# Italian -----------------------------------------------------------------
+
+it_participants <- import("/var/www/html/summary_data/it_participants.csv")
+it_summary <- import("/var/www/html/summary_data/it_summary.csv")

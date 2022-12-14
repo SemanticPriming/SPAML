@@ -36,7 +36,9 @@ overall_tab <-
               infoBoxOutput("Brazilian_PortugueseN_total"),
               infoBoxOutput("RomanianN_total"),
               infoBoxOutput("SerbianN_total"),
-              infoBoxOutput("UrduN_total")
+              infoBoxOutput("UrduN_total"),
+              infoBoxOutput("PolishN_total"),
+              infoBoxOutput("ItalianN_total")
             ),  # close box
             
             # words ----
@@ -82,7 +84,8 @@ overall_tab <-
               infoBoxOutput("Brazilian_PortugueseWORD_total"), 
               infoBoxOutput("RomanianWORD_total"), 
               infoBoxOutput("SerbianWORD_total"), 
-              infoBoxOutput("UrduWORD_total")
+              infoBoxOutput("PolishWORD_total"),
+              infoBoxOutput("ItalianWORD_total")
               
             )  # close box
           ) #close row
@@ -991,4 +994,87 @@ urdu_tab <-
             ) # close box
           ) #close row
   ) #close tab
+
+# italian ------------------------------------------------------------------
+italian_tab <- 
+  tabItem(tabName = "italian_tab",
+          fluidRow(
+            # Overall --------
+            box(
+              title = tags$b("Participant Counts"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("You can use this information to determine when your 
+                participants were completing the study based on your 
+                individual lab link. Participant codes will be 
+                shown below with time completed."), 
+              DTOutput("it_participant_data"),  
+              p(" "),
+              p("You can view the summary of total lab participants in 
+                this section."),
+              DTOutput("it_participant_table")
+            ),  # close box
+            
+            # words ----
+            box(
+              title = tags$b("Stimuli Counts + Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table shows you the status of each item's data collection. 
+                We are mainly tracking 
+                the related and unrelated conditions to reach 50 participants and a 
+                SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
+                points, they will be sampled less often than the words that still 
+                need participants. "), 
+              DTOutput("it_summary_table")  
+              
+            ) # close box
+          ) #close row
+  ) #close tab
+
+# polish ------------------------------------------------------------------
+polish_tab <- 
+  tabItem(tabName = "polish_tab",
+          fluidRow(
+            # Overall --------
+            box(
+              title = tags$b("Participant Counts"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("You can use this information to determine when your 
+                participants were completing the study based on your 
+                individual lab link. Participant codes will be 
+                shown below with time completed."), 
+              DTOutput("pl_participant_data"),  
+              p(" "),
+              p("You can view the summary of total lab participants in 
+                this section."),
+              DTOutput("pl_participant_table")
+            ),  # close box
+            
+            # words ----
+            box(
+              title = tags$b("Stimuli Counts + Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table shows you the status of each item's data collection. 
+                We are mainly tracking 
+                the related and unrelated conditions to reach 50 participants and a 
+                SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
+                points, they will be sampled less often than the words that still 
+                need participants. "), 
+              DTOutput("pl_summary_table")  
+              
+            ) # close box
+          ) #close row
+  ) #close tab
+
 
