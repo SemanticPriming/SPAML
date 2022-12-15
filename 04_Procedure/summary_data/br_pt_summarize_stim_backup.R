@@ -172,11 +172,9 @@ br_pt_data_all <-
   bind_rows(processData("/var/www/html/br_pt/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
-# # delete stuff before we started
+# delete stuff before we started
 # br_pt_data_all <- br_pt_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-12-06")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -193,6 +191,11 @@ br_pt_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
+  
+  # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+  br_pt_data_all <- br_pt_data_all %>% 
+    left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -255,7 +258,7 @@ br_pt_data_all <-
 # grab only real trials ----
   real_trials <- br_pt_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(br_pt_data_all)[grep("^time", colnames(br_pt_data_all))],
            word, class, correct_response, correct)
 
@@ -293,7 +296,7 @@ br_pt_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
