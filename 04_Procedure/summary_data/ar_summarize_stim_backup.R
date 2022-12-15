@@ -174,9 +174,7 @@ ar_data_all <-
 
 # delete stuff before we started
 # ar_data_all <- ar_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-12-06"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -193,6 +191,11 @@ ar_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
+  
+  # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+  ar_data_all <- ar_data_all %>% 
+    left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
