@@ -444,7 +444,7 @@ pt_data_all <- pt_data_all %>%
   # merge with old data ----
   # pull in other information from previous weeks
   list_pt_data <- lapply(list.files(path = "./04_Procedure/summary_data",
-                                    pattern = "pt_participants_[0-9].*.csv", full.names = T),
+                                    pattern = "^pt_participants_[0-9].*.csv", full.names = T),
                          import)
   list_pt_data <- lapply(list_pt_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_pt_data <- lapply(list_pt_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))

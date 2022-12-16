@@ -382,7 +382,7 @@ pt_merged <- merge(pt_merged, pt_num_trials,
 # merge with old data ----
 # pull in other information from previous weeks
 list_pt_data <- lapply(list.files(path = "/var/www/html/summary_data",
-                                  pattern = "pt_summary_[0-9].*.csv", full.names = T),
+                                  pattern = "^pt_summary_[0-9].*.csv", full.names = T),
                        import)
 pt_summaries <- bind_rows(list_pt_data, pt_merged)
 pt_merged <- pt_summaries %>%
