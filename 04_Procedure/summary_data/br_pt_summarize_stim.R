@@ -414,8 +414,8 @@ br_pt_merged$done_totalN <- br_pt_merged$target_answeredN >= 50
 br_pt_merged$done <- br_pt_merged$sampleN >= 50
 
 # use data ----
-br_pt_use <- subset(br_pt_merged, is.na(done) | done == FALSE)
-br_pt_sample <- subset(br_pt_merged, done == TRUE)
+br_pt_use <- subset(br_pt_merged, is.na(done_totalN) | done_totalN == FALSE)
+br_pt_sample <- subset(br_pt_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

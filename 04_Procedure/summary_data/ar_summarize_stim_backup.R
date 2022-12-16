@@ -392,9 +392,9 @@ ar_data_all <-
   ar_merged$done_totalN <- ar_merged$target_answeredN >= 50
   ar_merged$done <- ar_merged$sampleN >= 50
 
-# use data ----
-  ar_use <- subset(ar_merged, is.na(done) | done == FALSE)
-  ar_sample <- subset(ar_merged, done == TRUE)
+  # use data ----
+  ar_use <- subset(ar_merged, is.na(done_totalN) | done_totalN == FALSE)
+  ar_sample <- subset(ar_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
