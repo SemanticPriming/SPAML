@@ -189,6 +189,11 @@ de_data_all <-
 de_data_all <- de_data_all %>%
   filter(timestamp > as.POSIXct("2022-11-28"))
 
+# timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+de_data_all <- de_data_all %>% 
+  left_join(sender_ids, by = "sender_id")
+
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
   # 13_0_99 == 15_0_1
@@ -266,7 +271,7 @@ de_data_all <- de_data_all %>%
 # grab only real trials ----
   real_trials <- de_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(de_data_all)[grep("^time", colnames(de_data_all))],
            word, class, correct_response, correct)
 
@@ -304,7 +309,7 @@ de_data_all <- de_data_all %>%
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -401,8 +406,8 @@ de_data_all <- de_data_all %>%
   de_merged$done <- de_merged$sampleN >= 50
 
 # use data ----
-  de_use <- subset(de_merged, is.na(done) | done == FALSE)
-  de_sample <- subset(de_merged, done == TRUE)
+  de_use <- subset(de_merged, is.na(done_totalN) | done_totalN == FALSE)
+  de_sample <- subset(de_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
