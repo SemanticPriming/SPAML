@@ -73,14 +73,14 @@ if(this.state.dominanthand == "left") {
 }
       },
       "title": "Overall Instructions",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n \n  \u003Cdiv style=\"width: 90%;\"\u003E\n      \n    \u003Ch2\u003EInstrukcje\u003C\u002Fh2\u003E\n    \u003Cp class=\"text-left\"\u003ETo badanie dotyczy sposobu, w jaki ludzie przetwarzają słowa. Zostaniesz poproszona\u002Fy o przeczytanie słów i ich ocenę. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EKażde słowo będzie prezentowane na środku ekranu. Należy zastanowić się, czy słowo wyświetlone na ekranie jest prawdziwe, czy zmyślone. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003E   Jeśli rozpoznasz słowo na ekranie, takie jak \u003Cb\u003EZIMNO\u003C\u002Fb\u003E, naciśnij  \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, aby potwierdzić, że jest to prawdziwe słowo. Jeśli słowo jest zmyślone, jak \u003Cb\u003ECIEPTO\u003C\u002Fb\u003E, naciśnij \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, aby potwierdzić, że jest to zmyślone słowo (nie-słowo). Podczas treningu będziemy udzielać Ci informacji zwrotnych, czy dobrze wykonałaś\u002Feś zadanie. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EProsimy Cię o jak najszybsze reakcje przy jednoczesnym zachowaniu ich poprawności. Masz trzy sekundy na reakcję na każde wyświetlone na ekranie słowo.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n   Naciśnij \u003Ckbd\u003ESPACJĘ\u003C\u002Fkbd\u003E, aby wyświetlić kilka słów w ramach treningu. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n \n  \u003Cdiv style=\"width: 90%;\"\u003E\n      \n    \u003Ch2\u003EInstrukcje\u003C\u002Fh2\u003E\n    \u003Cp class=\"text-left\"\u003ETo badanie dotyczy sposobu, w jaki ludzie przetwarzają słowa. Zostaniesz poproszona\u002Fy o przeczytanie słów i ich ocenę. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EKażde słowo będzie prezentowane na środku ekranu. Należy zastanowić się, czy słowo wyświetlone na ekranie jest prawdziwe, czy zmyślone. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003E   Jeśli rozpoznasz słowo na ekranie, takie jak \u003Cb\u003EZIMNO\u003C\u002Fb\u003E, naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, aby potwierdzić, że jest to prawdziwe słowo. Jeśli słowo jest zmyślone, jak \u003Cb\u003ECIEPTO\u003C\u002Fb\u003E, naciśnij klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, aby potwierdzić, że jest to zmyślone słowo (nie-słowo). Podczas treningu będziemy udzielać Ci informacji zwrotnych, czy dobrze wykonałaś\u002Feś zadanie. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EProsimy Cię o jak najszybsze reakcje przy jednoczesnym zachowaniu ich poprawności. Masz trzy sekundy na reakcję na każde wyświetlone na ekranie słowo.\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n   Naciśnij \u003Ckbd\u003ESPACJĘ\u003C\u002Fkbd\u003E, aby wyświetlić kilka słów w ramach treningu. \n\u003C\u002Ffooter\u003E",
       "plugins": [],
       "scrollTop": true,
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E\n\n",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -262,7 +262,7 @@ this.parameters.feedback = this.state.ended_on !== 'response'
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -392,13 +392,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -528,13 +528,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -664,13 +664,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -800,13 +800,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -936,13 +936,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -1072,13 +1072,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -1208,13 +1208,13 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "Break",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003EPrzerwa\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-left\"\u003EZrób sobie krótką przerwę.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003ENaciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Aby kontynuować, naciśnij klawisz \u003Ckbd\u003ESPACJI\u003Ckbd\u003E. \n\u003C\u002Ffooter\u003E",
       "timeout": "60000",
       "tardy": true
     },
     {
       "type": "lab.canvas.Frame",
-      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciskaj \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E klawisz, jeśli pojawi się słowo lub drugi \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n\u003C\u002Ffooter\u003E",
+      "context": "\u003Cmain\u003E\n\u003C!-- Nested components use this canvas --\u003E\n  \u003Ccanvas \u002F\u003E\n\u003C\u002Fmain\u003E\n\u003Cfooter\u003E\n  Naciśnij klawisz \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E, jeśli pojawi się prawdziwe słowo lub klawisz \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E, gdy pojawi się słowo zmyślone (nie-słowo).\n\u003C\u002Ffooter\u003E",
       "contextSelector": "canvas",
       "files": {},
       "parameters": {},
@@ -1344,7 +1344,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "End of Experiment",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EDziękuję Ci!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EZakończyłeś eksperyment.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003ETwój losowy identyfikator uczestnika to:\n       ${window.uuid}. Możesz użyć tego numeru, aby dać swojemu eksperymentatorowi, aby pokazać, że ukończyłeś eksperyment.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Możesz teraz zamknąć okno.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EDziękuję Ci!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EZakończyłeś eksperyment.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003ETwój losowy identyfikator uczestnika to:\n       ${window.uuid}. Możesz użyć tego numeru, aby dać swojemu eksperymentatorowi, aby pokazać, że ukończyłeś\u002Fukończyłaś eksperyment.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Możesz teraz zamknąć okno.\n\u003C\u002Ffooter\u003E",
       "plugins": [],
       "tardy": true
     }

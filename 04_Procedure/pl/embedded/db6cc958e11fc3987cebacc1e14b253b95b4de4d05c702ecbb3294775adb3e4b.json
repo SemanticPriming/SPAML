@@ -1,1 +1,11 @@
-[{"word":"DOCTOR","class":"word"},{"word":"NURSE","class":"word"},{"word":"HICE","class":"nonword"},{"word":"BOSSIL","class":"nonword"}]
+[
+  {"word": "spurzw", "class": "nonword"},
+  {"word": "usta", "class": "word"},
+  {"word": "smoła", "class": "word"},
+  {"word": "badajesz", "class": "nonword"},
+  {"word": "stroczony", "class": "nonword"},
+  {"word": "dał", "class": "word"},
+  {"word": "polter", "class": "nonword"},
+  {"word": "strzał", "class": "word"},
+  {"word": "swostatnie", "class": "nonword"},
+  {"word": "uruchomić", "class": "word"}]

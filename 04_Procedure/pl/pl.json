@@ -27,8 +27,8 @@
         }
       ],
       "title": "Overall Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instrukcje</h2>\n    <p class=\"text-left\">To badanie dotyczy sposobu, w jaki ludzie przetwarzają słowa. Zostaniesz poproszona/y o przeczytanie słów i ich ocenę. </p>\n\n    <p class=\"text-left\">Każde słowo będzie prezentowane na środku ekranu. Należy zastanowić się, czy słowo wyświetlone na ekranie jest prawdziwe, czy zmyślone. </p>\n\n    <p class=\"text-left\">   Jeśli rozpoznasz słowo na ekranie, takie jak <b>ZIMNO</b>, naciśnij  <kbd>${ window.word_key }</kbd> klawisz, aby potwierdzić, że jest to prawdziwe słowo. Jeśli słowo jest zmyślone, jak <b>CIEPTO</b>, naciśnij <kbd>${ window.nonword_key }</kbd> klawisz, aby potwierdzić, że jest to zmyślone słowo (nie-słowo). Podczas treningu będziemy udzielać Ci informacji zwrotnych, czy dobrze wykonałaś/eś zadanie. </p>\n\n    <p class=\"text-left\">Prosimy Cię o jak najszybsze reakcje przy jednoczesnym zachowaniu ich poprawności. Masz trzy sekundy na reakcję na każde wyświetlone na ekranie słowo.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n   Naciśnij <kbd>SPACJĘ</kbd>, aby wyświetlić kilka słów w ramach treningu. \n</footer>",
-      "_tab": "Scripts",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n \n  <div style=\"width: 90%;\">\n      \n    <h2>Instrukcje</h2>\n    <p class=\"text-left\">To badanie dotyczy sposobu, w jaki ludzie przetwarzają słowa. Zostaniesz poproszona/y o przeczytanie słów i ich ocenę. </p>\n\n    <p class=\"text-left\">Każde słowo będzie prezentowane na środku ekranu. Należy zastanowić się, czy słowo wyświetlone na ekranie jest prawdziwe, czy zmyślone. </p>\n\n    <p class=\"text-left\">   Jeśli rozpoznasz słowo na ekranie, takie jak <b>ZIMNO</b>, naciśnij klawisz <kbd>${ window.word_key }</kbd>, aby potwierdzić, że jest to prawdziwe słowo. Jeśli słowo jest zmyślone, jak <b>CIEPTO</b>, naciśnij klawisz <kbd>${ window.nonword_key }</kbd>, aby potwierdzić, że jest to zmyślone słowo (nie-słowo). Podczas treningu będziemy udzielać Ci informacji zwrotnych, czy dobrze wykonałaś/eś zadanie. </p>\n\n    <p class=\"text-left\">Prosimy Cię o jak najszybsze reakcje przy jednoczesnym zachowaniu ich poprawności. Masz trzy sekundy na reakcję na każde wyświetlone na ekranie słowo.</p>\n  \n  </div>\n\n</main>\n\n<footer>\n   Naciśnij <kbd>SPACJĘ</kbd>, aby wyświetlić kilka słów w ramach treningu. \n</footer>",
+      "_tab": "Content",
       "plugins": [],
       "scrollTop": true,
       "tardy": true
@@ -91,7 +91,7 @@
     "3": {
       "id": "3",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>\n\n",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -337,7 +337,7 @@
     "7": {
       "id": "7",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Dziękuję Ci!</h2>\n    \n    <p class=\"text-left\">Zakończyłeś eksperyment.</p>\n\n    <p class=\"text-left\">Twój losowy identyfikator uczestnika to:\n       ${window.uuid}. Możesz użyć tego numeru, aby dać swojemu eksperymentatorowi, aby pokazać, że ukończyłeś eksperyment.</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Możesz teraz zamknąć okno.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Dziękuję Ci!</h2>\n    \n    <p class=\"text-left\">Zakończyłeś eksperyment.</p>\n\n    <p class=\"text-left\">Twój losowy identyfikator uczestnika to:\n       ${window.uuid}. Możesz użyć tego numeru, aby dać swojemu eksperymentatorowi, aby pokazać, że ukończyłeś/ukończyłaś eksperyment.</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Możesz teraz zamknąć okno.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
@@ -700,7 +700,7 @@
     "14": {
       "id": "14",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -1024,7 +1024,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1114,7 +1114,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1146,7 +1146,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1263,7 +1263,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1295,7 +1295,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1327,7 +1327,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1359,7 +1359,7 @@
         }
       ],
       "title": "Break",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Przerwa</h2>\n\n    <p class=\"text-left\">Zrób sobie krótką przerwę.</p>\n    \n    <p class=\"text-left\">Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).</p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
       "_tab": "Content",
       "timeout": "60000",
       "tardy": true
@@ -1367,7 +1367,7 @@
     "53": {
       "id": "53",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -1667,7 +1667,7 @@
     "59": {
       "id": "59",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -1967,7 +1967,7 @@
     "64": {
       "id": "64",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2267,7 +2267,7 @@
     "69": {
       "id": "69",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2567,7 +2567,7 @@
     "74": {
       "id": "74",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
@@ -2867,7 +2867,7 @@
     "79": {
       "id": "79",
       "type": "lab.canvas.Frame",
-      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciskaj <kbd>${ window.word_key }</kbd> klawisz, jeśli pojawi się słowo lub drugi <kbd>${ window.nonword_key }</kbd> klawisz, gdy pojawi się słowo zmyślone (nie-słowo). \n</footer>",
+      "context": "<main>\n<!-- Nested components use this canvas -->\n  <canvas />\n</main>\n<footer>\n  Naciśnij klawisz <kbd>${ window.word_key }</kbd>, jeśli pojawi się prawdziwe słowo lub klawisz <kbd>${ window.nonword_key }</kbd>, gdy pojawi się słowo zmyślone (nie-słowo).\n</footer>",
       "contextSelector": "canvas",
       "files": [],
       "parameters": [
