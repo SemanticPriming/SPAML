@@ -279,6 +279,7 @@ mv /var/www/html/en7/data/data.sqlite /var/www/html/en7/data/data_$(date +"%FT%H
 mv /var/www/html/en8/data/data.sqlite /var/www/html/en8/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en9/data/data.sqlite /var/www/html/en9/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en10/data/data.sqlite /var/www/html/en10/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/en11/data/data.sqlite /var/www/html/en11/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en/data/
@@ -292,6 +293,7 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en7/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en8/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en9/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en10/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en11/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/en/data/data.sqlite
@@ -305,6 +307,7 @@ chmod 777 /var/www/html/en7/data/data.sqlite
 chmod 777 /var/www/html/en8/data/data.sqlite
 chmod 777 /var/www/html/en9/data/data.sqlite
 chmod 777 /var/www/html/en10/data/data.sqlite
+chmod 777 /var/www/html/en11/data/data.sqlite
 
 # ---- danish -----
 # summarize the data
