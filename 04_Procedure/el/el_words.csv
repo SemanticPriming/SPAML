@@ -6,7 +6,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 άγγελος,διάβολος,related,word,word,0.541874850878424
 αγγλικά,γαλλικά,related,word,word,0.769928039087861
 αγελάδα,γουρούνι,related,word,word,0.526262336031553
-αγια γραφη,βιβλίο,related,word,word,
+αγία γραφή,βιβλίο,related,word,word,
 άγκυρα,σαλπάρω,related,word,word,0.40414379172297
 άγνοια,αλαζονεία,related,word,word,0.499084635277235
 αγόρια,κορίτσια,related,word,word,0.874396657875291
@@ -29,13 +29,13 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 αισιόδοξος,ρεαλιστικός,related,word,word,0.564224977770211
 αιώνας,δεκαετία,related,word,word,0.245983989109595
 αιώνιος,για πάντα,related,word,word,
-ακολουθηστε,κυνηγητό,related,word,word,0.174511997074704
+ακολουθήστε,κυνηγητό,related,word,word,0.174511997074704
 αφουγκράζομαι,ακούω,related,word,word,0.498343452010976
 ακριβός,φτηνός,related,word,word,0.518997915557185
 ακρόαση,δοκιμή,related,word,word,0.269485847604438
 ακτίνα κύκλου,περίμετρος,related,word,word,
 αλεπού,κουνέλι,related,word,word,0.478046335138402
-αληθησ,αληθινός,related,word,word,
+αληθής,αληθινός,related,word,word,
 αλκοόλ,φάρμακο,related,word,word,0.392564036848617
 αλλαγή,βελτίωση,related,word,word,0.487492687829943
 αλλού-κάπου αλλού,κάπου,related,word,word,
@@ -44,7 +44,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 αμαρτία,έγκλημα,related,word,word,0.463843781464733
 αμφιβολία,ύποπτος,related,word,word,0.147674609188524
 αναγνωρίζω,γνώριζα,related,word,word,0.430073093120217
-αναγνωση,γραφή,related,word,word,0.345359071861352
+ανάγνωση,γραφή,related,word,word,0.345359071861352
 διαβάζω,γράφω,related,word,word,0.710671556031128
 αναζήτηση,βρίσκω,related,word,word,0.187478292228612
 αναλυτής,ερευνητής,related,word,word,0.528406925905462
@@ -78,7 +78,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 απαγωγή,απαγάγω,related,word,word,0.286014901647623
 απάντηση,απαντώ,related,word,word,0.463215996013246
 απαραίτητη,χρειάζομαι,related,word,word,0.33687498719559
-απεναντι απο,αντίθετος,related,word,word,
+"απέναντι από,αντίθετος,related,word,word,
 απευθείας,κατευθείαν,related,word,word,0.767507434650495
 απλά,απλός,related,word,word,0.486860556799886
 απόβλητα,ξοδεύω,related,word,word,0.209205440933825
@@ -86,7 +86,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 αποικία,ομοσπονδία,related,word,word,0.415997861821827
 αποκάλυψη,όραμα,related,word,word,0.263556253453604
 απολύτως,εντελώς,related,word,word,0.590510302131387
-απομίμηση,ψευδησ,related,word,word,
+απομίμηση,ψευδής,related,word,word,
 απόσταση,ταχύτητα,related,word,word,0.480152777187063
 εξαγόμενο,αποτέλεσμα,related,word,word,0.279588346300346
 αποτρέψει,σταμάτα,related,word,word,0.180052967945091
@@ -94,7 +94,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 αργά,νωρίς,related,word,word,0.570554412057622
 αργά,γρήγορα,related,word,word,0.520763223125328
 αργός,γρήγορα,related,word,word,0.282311986013958
-πλαιημπόυ,περιοδικό,related,word,word,
+πλεϊμπόι,περιοδικό,related,word,word,
 αρένα,πεδίο μάχης,related,word,word,
 άρης,αφροδίτη,related,word,word,0.517901491376048
 άρθρο,εφημερίδα,related,word,word,0.561561334972827
@@ -137,7 +137,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 βαρώνος,κόμισσα,related,word,word,0.295524101843459
 βασανιστήριο,βασανίζω,related,word,word,0.493490570804959
 βάση,κεντρικά γραφεία,related,word,word,
-oυάσιγκτoν,bοστώνη,related,word,word,
+oυάσιγκτoν,βοστώνη,related,word,word,
 βασιλικός,βασίλειο,related,word,word,0.373590988245936
 βασίλισσα,βασιλιάς,related,word,word,0.658591718731243
 βάτραχος,σαύρα,related,word,word,0.328939603527778
@@ -205,7 +205,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 διαμαρτυρία,διαδήλωση,related,word,word,0.658344934297146
 διαμέτρημα,σφαίρα,related,word,word,0.445527047837239
 διαμονή,παραμένει,related,word,word,0.216017690390738
-διανοητικός,συναισθηματικός,related,word,word,0.653684000087894
+διανοητικός,συναίσθηματικός,related,word,word,0.653684000087894
 διάρροια,ναυτία,related,word,word,0.564789011378726
 διασημότητα,αστέρι,related,word,word,0.324611363912221
 διάσκεψη,συνάντηση,related,word,word,0.631143916451164
@@ -255,7 +255,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 ειρηνικός,ατλαντικός,related,word,word,0.424388231788791
 ειρωνεία,ειρωνικός,related,word,word,0.46336392788183
 εισάγετε,βάζω,related,word,word,0.218119087098375
-εισαγω,πηγαίνω,related,word,word,0.246537577335766
+εισάγω,πηγαίνω,related,word,word,0.246537577335766
 εισβολή,επίθεση,related,word,word,0.619317687422947
 εισιτήριο,διαβατήριο,related,word,word,0.569379148522133
 εκατομμύριο,δισεκατομμύριο,related,word,word,0.850385409327966
@@ -296,8 +296,8 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 ένστικτο,διαίσθηση,related,word,word,0.56207569822862
 εντάξει,ναι,related,word,word,0.353400207215194
 εντολή,σειρά,related,word,word,0.198748806899818
-εντύπωση,συναισθημα,related,word,word,0.172479927972262
-εντυπωσιακο,φοβερο,related,word,word,0.611557622161872
+εντύπωση,συναίσθημα,related,word,word,0.172479927972262
+εντυπωσιακό,φοβερό,related,word,word,0.611557622161872
 εντυπωσιακός,θεαματικός,related,word,word,0.640047484248716
 εξαιρετικός,αξιοσημείωτος,related,word,word,0.58078589632608
 εξαλείφω,αφαιρώ,related,word,word,0.382535620081769
@@ -336,7 +336,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 λειτουργικός,πρακτικός ,related,word,word,
 ερασιτέχνης,επαγγελματίας,related,word,word,0.62750798212138
 εργαλείο,όργανο,related,word,word,0.492588521754265
-εργαστηρι,γκαράζ,related,word,word,0.230639538479564
+εργαστήρι,γκαράζ,related,word,word,0.230639538479564
 έργο,αποστολή,related,word,word,0.378030946447494
 "εργασία, μελέτη",πρόγραμμα,related,word,word,
 εργοστάσιο,παραγωγή,related,word,word,0.33674187621524
@@ -365,17 +365,17 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 ζούγκλα,δάσος,related,word,word,0.514119493251394
 ζω,επιζώ,related,word,word,0.337641683372894
 ζωντανός,νεκρός,related,word,word,0.658372543613387
-ζωολογικος κηπος,τσίρκο,related,word,word,
-η δυση του ηλιου,αυγή,related,word,word,
+ζωολογικός κήπος,τσίρκο,related,word,word,
+η δύση του ηλίου,αυγή,related,word,word,
 πλειοψηφία,ψήφος,related,word,word,0.490543785517839
-η φυσικη,μαθηματικά,related,word,word,
+η φυσική,μαθηματικά,related,word,word,
 ήδη,ακόμη,related,word,word,0.440059855904331
 ημερολόγιο,πρόγραμμα,related,word,word,0.326852713369843
 ήρωας,σωτήρας,related,word,word,0.534233419662105
-ησυχια,ηρεμία,related,word,word,0.459662852878426
+ησυχία,ηρεμία,related,word,word,0.459662852878426
 ηττημένος,νικητής,related,word,word,0.586857649466495
 θάλασσα,ωκεανός,related,word,word,0.521174564756089
-θαλάσσια,πολεμικο ναυτικο,related,word,word,
+θαλάσσια,πολεμικό ναυτικό,related,word,word,
 θάμνος,δέντρο,related,word,word,0.501431399758599
 θανάσιμα,μοιραίος,related,word,word,0.290436662777935
 θάνατος,εξαφάνιση,related,word,word,0.305371014223362
@@ -408,7 +408,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 εφαρμόζω,χρήση,related,word,word,0.29263326359931
 ισχυρός,αδύναμος,related,word,word,0.567412029207006
 καγκελάριος,πρόεδρος,related,word,word,0.552725446642417
-καθαρη,πλύση,related,word,word,0.300350408361907
+καθαρή,πλύση,related,word,word,0.300350408361907
 καθημερινά,εβδομαδιαίος,related,word,word,0.316745917862826
 καθολικός,χριστιανός,related,word,word,0.610212829614195
 καίσαρας,ρώμη,related,word,word,0.450911470558293
@@ -427,7 +427,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 κανόνας,πρωτόκολλο,related,word,word,0.418459731668702
 κανονίζω,οργανώνω,related,word,word,0.550934009769291
 κανονικά,συνήθως,related,word,word,0.29493677036057
-κανω αναφορα,πληροφορώ,related,word,word,
+κάνω αναφορά,πληροφορώ,related,word,word,
 καπηλειό,εστιατόριο,related,word,word,0.423367648027475
 καπνός,πούρο,related,word,word,0.322233361296656
 καπνός,τσιγάρο,related,word,word,0.366479512880757
@@ -686,7 +686,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 πλατφόρμα,σταθμός,related,word,word,0.329544733963167
 πληγή,βλάβη,related,word,word,0.334271140600672
 πλήθος,κοινό,related,word,word,0.412850272401445
-πληθυσμός,ανθρωποι,related,word,word,0.259079013327486
+πληθυσμός,άνθρωποι,related,word,word,0.259079013327486
 πλήρωμα,πλοίο,related,word,word,0.568705193983862
 πλοήγηση,επικοινωνία,related,word,word,0.418390962455623
 πνευματώδης,αστείος,related,word,word,0.521757994847487
@@ -872,14 +872,14 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 τελικός,ύστατος,related,word,word,0.426009551585146
 τέλος,φινίρισμα,related,word,word,0.132891581782556
 τέρας,πλάσμα,related,word,word,0.662079136193484
-τερματικό,αεροδρομιο,related,word,word,0.293237350748136
+τερματικό,αεροδρόμιο,related,word,word,0.293237350748136
 τέχνασμα,αστείο,related,word,word,0.343652370577562
 τέχνη,βιβλιογραφία,related,word,word,0.33683385319539
 τεχνικός,μηχανικός,related,word,word,0.670052981214294
 τεχνολογία,επιστήμη,related,word,word,0.527710377923076
 τεχνούργημα,μενταγιόν,related,word,word,0.432044320892187
-τζαζ,μουσικη,related,word,word,0.531850716130963
-τζίπ,φορτηγό,related,word,word,0.495522338580676
+τζαζ,μουσική,related,word,word,0.531850716130963
+τζιπ,φορτηγό,related,word,word,0.495522338580676
 λιώνω,παγώνω,related,word,word,0.547371283566599
 τηλεγράφημα,γράμμα,related,word,word,0.653839963144986
 τηλεσκόπιο,μικροσκόπιο,related,word,word,0.548987040416622
@@ -914,7 +914,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 υγιής,κανονικός,related,word,word,0.403259302781023
 υγρό,ρευστό,related,word,word,0.313793274107987
 ύλη,σωματίδιο,related,word,word,0.526528379197266
-ϋνα,δακτυλικό αποτύπωμα,related,word,word,
+ίνα,δακτυλικό αποτύπωμα,related,word,word,
 υπεράνθρωπος,μπάτμαν,related,word,word,0.356045405126454
 υπερηφάνεια,αξιοπρέπεια,related,word,word,0.559293220104537
 υπερήφανος,ενθουσιασμένος,related,word,word,0.603238688243282
@@ -923,7 +923,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 υπνάκο,βόλτα,related,word,word,0.337593114450837
 υποβρύχιο,σκάφος,related,word,word,0.595936138906965
 υπόλοιπο,ύπνος,related,word,word,0.0790350665487076
-υπομονετικος,πελάτης,related,word,word,0.215794451494378
+υπομονετικός,πελάτης,related,word,word,0.215794451494378
 υπομονή,συμπόνια,related,word,word,0.447761058367403
 υποστήριξη,βοήθεια,related,word,word,0.621613552531306
 υποτιμώ,υπερβάλλω,related,word,word,0.444815628514698
@@ -965,7 +965,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 φωλιά,αυγό,related,word,word,0.399389808120148
 φωνή,προφορά,related,word,word,0.510528648735452
 φωτιά,φλόγα,related,word,word,0.609610042676725
-φωτογραφικη μηχανη,μικρόφωνο,related,word,word,
+φωτογραφική μηχανή,μικρόφωνο,related,word,word,
 χαίρετε,αντίο,related,word,word,0.478119310124674
 χαμηλός,υψηλός,related,word,word,0.719935877594407
 χαμόγελο,γέλιο,related,word,word,0.588028838986743
@@ -1060,7 +1060,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 στομάχι,πόκερ,unrelated,word,word,0.0987294286074918
 καθολικός,υπαινίσομαι,unrelated,word,word,
 καπνός,δυνατότητα,unrelated,word,word,0.123953218501099
-ζωολογικος κηπος,στάση,unrelated,word,word,
+ζωολογικός κήπος,στάση,unrelated,word,word,
 κεφάλαιο,ρομαντικός,unrelated,word,word,0.102216888800995
 κουλτούρα,νευρικός,unrelated,word,word,0.133768475405873
 νοσοκομείο,ανάπτυξη,unrelated,word,word,0.0824938745920865
@@ -1079,7 +1079,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 νόμος,παιδική ηλικία,unrelated,word,word,
 περιέχω,πρόεδρος,unrelated,word,word,0.131430228379792
 προχωρώ,μαγιονέζα,unrelated,word,word,0.124211599377132
-απεναντι απο,νόστιμο,unrelated,word,word,
+"απέναντι από,νόστιμο,unrelated,word,word,
 ορφανοτροφείο,αιτία,unrelated,word,word,0.086277612887656
 πρωτότυπο,υπόσχεση,unrelated,word,word,0.093684832093672
 λανθασμένος,εκδήλωση,unrelated,word,word,0.0620955010015139
@@ -1138,7 +1138,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 πρωταθλητής,τέσσερις,unrelated,word,word,0.106084910080057
 δυσάρεστος,βροντή,unrelated,word,word,0.142628620241776
 αναζήτηση,βούτυρο,unrelated,word,word,0.0825895108533372
-ϋνα,σκάνδαλο,unrelated,word,word,
+ίνα,σκάνδαλο,unrelated,word,word,
 καρχαρίας,κωδικός πρόσβασης,unrelated,word,word,
 κυνήγι,κατάρρευση,unrelated,word,word,0.114603710528678
 φυτό,συμφωνία,unrelated,word,word,0.0407953018632225
@@ -1149,7 +1149,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 συλλέγω,σιωπή,unrelated,word,word,0.065992624154879
 αγόρια,οθόνη,unrelated,word,word,0.0977770687578381
 εθνικός,αντίγραφο,unrelated,word,word,0.0803217604940133
-εισαγω,λαιμός,unrelated,word,word,0.127932706207689
+εισάγω,λαιμός,unrelated,word,word,0.127932706207689
 κιλό,οικείος,unrelated,word,word,0.0322705573879185
 αθώος,εκφράζω,unrelated,word,word,0.132714739404478
 σάντουιτς,χρήση,unrelated,word,word,0.0657568070249418
@@ -1203,7 +1203,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 μικρός,μασάζ,unrelated,word,word,0.0851098265781768
 κολατσιό,πρωτότυπο,unrelated,word,word,0.089921900142192
 ρομπότ,συνήθως,unrelated,word,word,0.135986277244204
-πλαιημπόυ,ζώνη,unrelated,word,word,
+πλεϊμπόι,ζώνη,unrelated,word,word,
 νταντά,σημασια,unrelated,word,word,0.0438091548937463
 υπηρεσία,επαληθεύω,unrelated,word,word,0.148178654746499
 πυξίδα,εγκυμοσύνη,unrelated,word,word,0.138206120094074
@@ -1331,7 +1331,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 μπανάνα,οργή,unrelated,word,word,0.118362772588722
 λεωφόρος,καπιταλισμός,unrelated,word,word,0.136791826476673
 υπνάκο,σαμποτάζ,unrelated,word,word,-0.00859590467358058
-σταθερά,συναισθηματικός,unrelated,word,word,0.127377066812088
+σταθερά,συναίσθηματικός,unrelated,word,word,0.127377066812088
 αντικαθιστώ,πέος,unrelated,word,word,0.119280816911066
 αρκετά,έθνος,unrelated,word,word,0.0886989415826026
 προτείνω,γραμμάριο,unrelated,word,word,0.0780750385527035
@@ -1351,12 +1351,12 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 ακρόαση,χαλί,unrelated,word,word,0.0775909869992612
 κύκλος,υπέροχο,unrelated,word,word,0.107103253167731
 διπλό,μοναδικός,unrelated,word,word,0.0376458770269817
-δευτέρα,ψευδησ,unrelated,word,word,
+δευτέρα,ψευδής,unrelated,word,word,
 κοτόπουλο,συμβουλεύω,unrelated,word,word,0.0636645115012504
 σαλιγκάρι,επίθεση,unrelated,word,word,0.0559731273289654
 διαγράμματος,πίεση,unrelated,word,word,0.129630192385791
 τελικός,ταλέντο,unrelated,word,word,0.11488808152148
-ξαφνικά,bοστώνη,unrelated,word,word,0.046194096063197
+ξαφνικά,βοστώνη,unrelated,word,word,0.046194096063197
 σήμα,γνώριζα,unrelated,word,word,0.0943625585368874
 ανώνυμος,καρκίνος,unrelated,word,word,0.130332235949523
 άβολος,αγόρι,unrelated,word,word,0.0743307916012923
@@ -1372,7 +1372,7 @@ oυάσιγκτoν,bοστώνη,related,word,word,
 στρατιώτης,δραστηριότητα,unrelated,word,word,0.0639751430540097
 σέρλοκ,μάχη,unrelated,word,word,0.106296835576579
 ισχυρός,επιφάνεια,unrelated,word,word,0.0799089105498396
-θησαυρός,πολεμικο ναυτικο,unrelated,word,word,
+θησαυρός,πολεμικό ναυτικό,unrelated,word,word,
 πιστόλι,παγκόσμια,unrelated,word,word,-0.00163627996207807
 νότιος,νυφη,unrelated,word,word,0.100525229638047
 στενός,για πάντα,unrelated,word,word,
@@ -1399,15 +1399,15 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 γνώμη,πτώμα,unrelated,word,word,0.0764500148465027
 δικαιοδοσία,κρεμμύδι,unrelated,word,word,0.122518644173693
 άνοιξη,πιρούνι,unrelated,word,word,0.0158496761167473
-παγίδα,ανθρωποι,unrelated,word,word,0.0809301502880104
+παγίδα,άνθρωποι,unrelated,word,word,0.0809301502880104
 χαριτωμένη,μικροσκόπιο,unrelated,word,word,0.131388048654731
 χημικό,κοιλιακός,unrelated,word,word,0.122801438922112
 επέτειος,εκρηκτικός,unrelated,word,word,0.0734513577215712
-αγια γραφη,αστακός,unrelated,word,word,
+αγία γραφή,αστακός,unrelated,word,word,
 ποτήρι,χαζός,unrelated,word,word,0.141664791978121
 πύργος,αποδέχομαι,unrelated,word,word,0.136585069929504
-ησυχια,αλεύρι,unrelated,word,word,0.0161104589525953
-πικνίκ,συναισθημα,unrelated,word,word,0.139829561274742
+ησυχία,αλεύρι,unrelated,word,word,0.0161104589525953
+πικνίκ,συναίσθημα,unrelated,word,word,0.139829561274742
 αναρχία,ντουλάπα,unrelated,word,word,0.117465257586176
 παλάτι,βίντεο,unrelated,word,word,0.102115544165081
 αρπάζω,επιστήμη,unrelated,word,word,0.107909822304423
@@ -1426,7 +1426,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 κλέφτης,αφοσίωση,unrelated,word,word,0.0820727732753548
 γλυκός,εισόδημα,unrelated,word,word,0.102602623954384
 θείος,παρακολουθώ,unrelated,word,word,0.0646507170050049
-η δυση του ηλιου,ευχαριστώ,unrelated,word,word,
+η δύση του ηλίου,ευχαριστώ,unrelated,word,word,
 γευστικός,δακτυλικό αποτύπωμα,unrelated,word,word,
 στρες,γάτα,unrelated,word,word,0.0891217356641655
 δημιουργία,υπερασπίζω,unrelated,word,word,0.131469464630225
@@ -1438,7 +1438,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 νύχτα,σύμβολο,unrelated,word,word,0.1169517163895
 έκρηξη,μυστήριο,unrelated,word,word,0.0990572221880148
 επιτυχία,σταθμός,unrelated,word,word,0.0888143682358318
-εκπληκτικός,αεροδρομιο,unrelated,word,word,0.0981925841806148
+εκπληκτικός,αεροδρόμιο,unrelated,word,word,0.0981925841806148
 θανάσιμα,θρησκεία,unrelated,word,word,0.0856983589074708
 βήχας,πληροφορίες,unrelated,word,word,0.0557591559118401
 τέλος,εξαφάνιση,unrelated,word,word,0.130209797698957
@@ -1449,7 +1449,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 σχέση,λάδι,unrelated,word,word,0.112493012517937
 αδειάζω,τένις,unrelated,word,word,0.1254146154708
 προϋπολογισμός,φράση,unrelated,word,word,0.136773676948511
-εργαστηρι,μάγουλο,unrelated,word,word,0.0964832176498802
+εργαστήρι,μάγουλο,unrelated,word,word,0.0964832176498802
 πύλη,οικειοθελώς,unrelated,word,word,0.113606907524887
 φιλοφρόνηση,αυλόπορτα,unrelated,word,word,0.129768276691421
 προσφορά,ατύχημα,unrelated,word,word,0.0221270509235394
@@ -1469,7 +1469,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 ανόητος,κατάστημα,unrelated,word,word,0.144963639232532
 πολύτιμος,ατμόσφαιρα,unrelated,word,word,0.0981577710460421
 ποινή,ανατολή,unrelated,word,word,0.100055782299949
-κανω αναφορα,καπάκι,unrelated,word,word,
+κάνω αναφορά,καπάκι,unrelated,word,word,
 πληγή,τραγικός,unrelated,word,word,0.079763650445871
 έξω,εξοπλίζω,unrelated,word,word,0.0757553522322929
 κατά λάθος,επιστροφη,unrelated,word,word,
@@ -1555,7 +1555,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 κοίτα,πιθανός,unrelated,word,word,0.0534893986316997
 αρραβώνες,φανταστικός,unrelated,word,word,0.10062425268621
 έγνοια,μετάλλαξη,unrelated,word,word,0.116294850800856
-αναγνωση,θεαματικός,unrelated,word,word,0.0227866861657348
+ανάγνωση,θεαματικός,unrelated,word,word,0.0227866861657348
 παλαιός,πεδίο μάχης,unrelated,word,word,
 περιοχή,παιδί,unrelated,word,word,0.116681879668114
 δώσει το έναυσμα για,επιλογή,unrelated,word,word,
@@ -1593,7 +1593,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 ειρωνεία,συνεχώς,unrelated,word,word,0.0981938837796256
 τέχνη,βάζω,unrelated,word,word,0.124535570230883
 προειδοποίηση,κοινό,unrelated,word,word,0.0714288150846921
-φωτογραφικη μηχανη,χτίζω,unrelated,word,word,
+φωτογραφική μηχανή,χτίζω,unrelated,word,word,
 δευτερόλεπτο,παραδοσιακός,unrelated,word,word,0.0479560725394802
 αυτοκτονία,σήμα,unrelated,word,word,0.00900512051436084
 προσβολή,μέσα,unrelated,word,word,0.0851937000932752
@@ -1607,8 +1607,8 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 αποδεικνύω,πόρτα,unrelated,word,word,0.0750394001628343
 μαραθώνας,φίδι,unrelated,word,word,0.0616932204288013
 απαγωγέας,χιόνι,unrelated,word,word,0.0718966053873572
-αληθησ,διεύθυνση,unrelated,word,word,
-αντίσταση,φοβερο,unrelated,word,word,0.140395941906776
+αληθής,διεύθυνση,unrelated,word,word,
+αντίσταση,φοβερό,unrelated,word,word,0.140395941906776
 πίσω,υπουργός,unrelated,word,word,0.0622913509558886
 κουτσομπολιό,φυλακισμένος,unrelated,word,word,0.0711701943490272
 πεισματάρης,ρώμη,unrelated,word,word,0.148210721324111
@@ -1635,7 +1635,7 @@ oυάσιγκτoν,βιολογικός,unrelated,word,word,
 ξύπνιος,ατυχία,unrelated,word,word,0.0539116547655492
 ώμος,ομορφιά,unrelated,word,word,0.0784401037021746
 ερωμένη,σωματίδιο,unrelated,word,word,0.129549058891154
-η φυσικη,περπατώ,unrelated,word,word,
+η φυσική,περπατώ,unrelated,word,word,
 ανατομία,ερευνώ,unrelated,word,word,0.139199944173134
 αργά,κράτος,unrelated,word,word,0.0722854170098645
 κρέμα,απόγευμα,unrelated,word,word,0.0941020413448547
@@ -1646,7 +1646,7 @@ oυάσιγκτoν,βιολογικός,unrelated,word,word,
 κινηματογράφος,εύκολο,unrelated,word,word,0.125130139506121
 σκεφτείτε,φως,unrelated,word,word,0.0974280926262415
 λυπημένος,πομπός,unrelated,word,word,0.147549600240883
-τζίπ,γνώση,unrelated,word,word,0.0836130395478069
+τζιπ,γνώση,unrelated,word,word,0.0836130395478069
 αδικία,μυρωδιά,unrelated,word,word,0.126336215317919
 καλοκαίρι,θεϊκός,unrelated,word,word,0.0704576822168018
 έξω,δώρο,unrelated,word,word,0.0979724697913655
@@ -1819,7 +1819,7 @@ dvd,ότι,unrelated,word,word,0.131083366580897
 αρχεκη,ομάδα,nonword,nonword,word,
 άρντντας,ερευνητής,nonword,nonword,word,
 ασέλνοφόρο,εκραγεί,nonword,nonword,word,
-αστεδα,μουσικη,nonword,nonword,word,
+αστεδα,μουσική,nonword,nonword,word,
 ασπιρίζα,θέση,nonword,nonword,word,
 αστρυδή,άσκηση,nonword,nonword,word,
 αστρονόητης,λιμάνι,nonword,nonword,word,
@@ -1896,7 +1896,7 @@ reχτυλο,επιστήμη,nonword,nonword,word,
 γγνω,θέατρο,nonword,nonword,word,
 δεξαμερλ,χυμός,nonword,nonword,word,
 δέυλα,ατύχημα,nonword,nonword,word,
-δευταλα,συναισθημα,nonword,nonword,word,
+δευταλα,συναίσθημα,nonword,nonword,word,
 δευτερψεων,απαγορεύω,nonword,nonword,word,
 δελφερος,πάτος ,nonword,nonword,word,
 κιλητήριο,μυστήριο,nonword,nonword,word,
@@ -1974,9 +1974,9 @@ saνικός,πλατύς,nonword,nonword,word,
 ηφθεση,μαχητής,nonword,nonword,word,
 εκθενήακός χώρος,σφυρί,nonword,nonword,word,
 εκκλτεία,δωρεά,nonword,nonword,word,
-εκπλδυτικός,συναισθηματικός,nonword,nonword,word,
+εκπλδυτικός,συναίσθηματικός,nonword,nonword,word,
 έκπλάλη,διαμέρισμα,nonword,nonword,word,
-ουρηξη,ψευδησ,nonword,nonword,word,
+ουρηξη,ψευδής,nonword,nonword,word,
 εληθιστο,αποτελεσματικός,nonword,nonword,word,
 μυεγχος,φωτογράφος,nonword,nonword,word,
 μυεγχος,καταιγίδα,nonword,nonword,word,
@@ -2052,7 +2052,7 @@ anοχος,πρωτάθλημα,nonword,nonword,word,
 ερδώστάσιο,δημοκρατία,nonword,nonword,word,
 έρσένα,εξουσία,nonword,nonword,word,
 έρθεος,κυβέρνηση,nonword,nonword,word,
-ερβάένη,αεροδρομιο,nonword,nonword,word,
+ερβάένη,αεροδρόμιο,nonword,nonword,word,
 ερφρηση,πρόθεση,nonword,nonword,word,
 ανωτερικός,υψηλός,nonword,nonword,word,
 μόαιρεία,στήθος,nonword,nonword,word,
@@ -2181,7 +2181,7 @@ chτρικός,κοιλάδα,nonword,nonword,word,
 σιοπή,επικοινωνία,nonword,nonword,word,
 κοινλλούλιο,μαντήλι,nonword,nonword,word,
 κοιννεία,μασάζ,nonword,nonword,word,
-κοπαα,πολεμικο ναυτικο,nonword,nonword,word,
+κοπαα,πολεμικό ναυτικό,nonword,nonword,word,
 κοκασηη,άγαλμα,nonword,nonword,word,
 κολακενς,κωμωδία,nonword,nonword,word,
 κολλεζιο,ανίσχυρος,nonword,nonword,word,
@@ -2416,7 +2416,7 @@ zeόνη,ξοδεύω,nonword,nonword,word,
 ιπτό,προφορά,nonword,nonword,word,
 πουκύτισο,δόντι,nonword,nonword,word,
 αγάγματι,τυρί,nonword,nonword,word,
-προχματικότητα,ανθρωποι,nonword,nonword,word,
+προχματικότητα,άνθρωποι,nonword,nonword,word,
 προωτική,φως,nonword,nonword,word,
 πρμεινος,όραμα,nonword,nonword,word,
 πρεσινία,μπέικον,nonword,nonword,word,
@@ -2461,7 +2461,7 @@ kαλητής,παπάς,nonword,nonword,word,
 ραρτιστής,νικητής,nonword,nonword,word,
 υακόρ,δραστηριότητα,nonword,nonword,word,
 ρεύτψιόν,χρήση,nonword,nonword,word,
-ρεωτα,bοστώνη,nonword,nonword,word,
+ρεωτα,βοστώνη,nonword,nonword,word,
 ρομπευ,δίνω,nonword,nonword,word,
 ροντωθ,εκτέλεση,nonword,nonword,word,
 ροπίέτα,μηχανή,nonword,nonword,word,
@@ -2620,7 +2620,7 @@ fiμα,γυναίκα,nonword,nonword,word,
 τυούνας,ανίκανος,nonword,nonword,word,
 παιγόιδια,πρόταση,nonword,nonword,word,
 θίαρα,έγκλημα,nonword,nonword,word,
-εχεία,φοβερο,nonword,nonword,word,
+εχεία,φοβερό,nonword,nonword,word,
 άφιής,μενταγιόν,nonword,nonword,word,
 πραρό,αποθηκεύσετε,nonword,nonword,word,
 σθη,επεισόδιο,nonword,nonword,word,
@@ -2714,9 +2714,9 @@ aνμα,ελεύθερος,nonword,nonword,word,
 παρατσούκλι,εξωγκόνο,nonword,word,nonword,
 νότιος,δυσάτέστος,nonword,word,nonword,
 υπεράνθρωπος,διάβολαμ,nonword,word,nonword,
-ζωολογικος κηπος,γήαλικ,nonword,word,nonword,
+ζωολογικός κήπος,γήαλικ,nonword,word,nonword,
 ελάχιστο,χοφλος,nonword,word,nonword,
-η δυση του ηλιου,βιυρίο,nonword,word,nonword,
+η δύση του ηλίου,βιυρίο,nonword,word,nonword,
 γελοίος,πανιχίλοιου,nonword,word,nonword,
 κόλπος,ιραζονεία,nonword,word,nonword,
 εφηβική,κορίατσ,nonword,word,nonword,
@@ -2746,7 +2746,7 @@ aνμα,ελεύθερος,nonword,nonword,word,
 νότος,περίνγτρος,nonword,word,nonword,
 δεδομένα,κουνάςι,nonword,word,nonword,
 άλμπουμ,προχματικός,nonword,word,nonword,
-εισαγω,φάυλακο,nonword,word,nonword,
+εισάγω,φάυλακο,nonword,word,nonword,
 διεθνές,βεγείωση,nonword,word,nonword,
 δευτερόλεπτο,τσπου,nonword,word,nonword,
 χρηματοδότηση,τραγούσο,nonword,word,nonword,
@@ -2807,7 +2807,7 @@ aνμα,ελεύθερος,nonword,nonword,word,
 τώρα,περιάσικό,nonword,word,nonword,
 μοντέρνο,πεδίο μάιος,nonword,word,nonword,
 δυτικά,αφρολατη,nonword,word,nonword,
-ϋνα,εφημερωσα,nonword,word,nonword,
+ίνα,εφημερωσα,nonword,word,nonword,
 καμπίνα,διάτθυνση,nonword,word,nonword,
 βάση,επαρτύς,nonword,word,nonword,
 μοίρα,πανεμοάλη,nonword,word,nonword,
@@ -2819,7 +2819,7 @@ aνμα,ελεύθερος,nonword,nonword,word,
 λάρυγγας,έγιvαφο,nonword,word,nonword,
 επείγων,κυτια,nonword,word,nonword,
 αναρρίχηση,ινικόπτερο,nonword,word,nonword,
-αναγνωση,πανοπλάι,nonword,word,nonword,
+ανάγνωση,πανοπλάι,nonword,word,nonword,
 σύνταξη,μοοξίνη,nonword,word,nonword,
 τέχνασμα,βριητή,nonword,word,nonword,
 ασθενοφόρο,πιαρτος,nonword,word,nonword,
@@ -2917,9 +2917,9 @@ dvd,τιτίότητα,nonword,word,nonword,
 διάρροια,πατακανει,nonword,word,nonword,
 πριγκίπισσα,συναμπθηματική,nonword,word,nonword,
 άγγελος,ναυτοτ,nonword,word,nonword,
-αληθησ,αστέντ,nonword,word,nonword,
+αληθής,αστέντ,nonword,word,nonword,
 τυπικός,συνάάφηση,nonword,word,nonword,
-απεναντι απο,αποθοχεύσετε,nonword,word,nonword,
+"απέναντι από,αποθοχεύσετε,nonword,word,nonword,
 πρεσβευτής,διατπιούν,nonword,word,nonword,
 πόλεμος,εμπούσα,nonword,word,nonword,
 πρώτα,πετυχαμέω,nonword,word,nonword,
@@ -2976,7 +2976,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 κοινωνία,παρεκκωτσι,nonword,word,nonword,
 ποινή,βονταστικός,nonword,word,nonword,
 ειρηνικός,απογνότευση,nonword,word,nonword,
-υπομονετικος,εκφυγμετί,nonword,word,nonword,
+υπομονετικός,εκφυγμετί,nonword,word,nonword,
 κομητεία,τοβίολύ,nonword,word,nonword,
 διορισμός,κκαληθεύω,nonword,word,nonword,
 διαφήμιση,χειραγοπώ,nonword,word,nonword,
@@ -2985,7 +2985,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 προκύπτω,ινητευτικός,nonword,word,nonword,
 ποτήρι,οπστη,nonword,word,nonword,
 δύο,οςγνώση,nonword,word,nonword,
-αγια γραφη,τοδικός,nonword,word,nonword,
+αγία γραφή,τοδικός,nonword,word,nonword,
 ρεσεψιόν,πιστατω,nonword,word,nonword,
 αγελάδα,έμβοευση,nonword,word,nonword,
 αρένα,πρόκληθε,nonword,word,nonword,
@@ -3095,7 +3095,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 εμπνέω,μπαμνις,nonword,word,nonword,
 καφέ,θεότός,nonword,word,nonword,
 φοιτητής,θεραπευτικίραγωγή,nonword,word,nonword,
-πλαιημπόυ,θερμοκατσία,nonword,word,nonword,
+πλεϊμπόι,θερμοκατσία,nonword,word,nonword,
 αναλυτής,τοποθεαμα,nonword,word,nonword,
 περιοδεία,αρρατικός,nonword,word,nonword,
 έξω,εοο,nonword,word,nonword,
@@ -3185,9 +3185,9 @@ dvd,τιτίότητα,nonword,word,nonword,
 σφάλμα,ηρζώνη,nonword,word,nonword,
 μητέρα,εντυπωιράζω,nonword,word,nonword,
 γάιδαρος,πανεπιστέκιο,nonword,word,nonword,
-η φυσικη,ηβος,nonword,word,nonword,
+η φυσική,ηβος,nonword,word,nonword,
 σεισμός,περισοή,nonword,word,nonword,
-καθαρη,μακροψ,nonword,word,nonword,
+καθαρή,μακροψ,nonword,word,nonword,
 αιώνιος,σήός,nonword,word,nonword,
 πιστόλι,αγινι,nonword,word,nonword,
 σφραγίδα,τίάκος,nonword,word,nonword,
@@ -3265,7 +3265,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 αναρρώνω,μεορμέρι,nonword,word,nonword,
 διοικητής,ντεντεκτpa,nonword,word,nonword,
 καταπιεί,βαισάκι,nonword,word,nonword,
-ακολουθηστε,υχήματα,nonword,word,nonword,
+ακολουθήστε,υχήματα,nonword,word,nonword,
 μαγαζί,υπολαλίζω,nonword,word,nonword,
 προσωπικός,καοφός,nonword,word,nonword,
 φτώχεια,εβδοποδα,nonword,word,nonword,
@@ -3373,7 +3373,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 ορχήστρα,εγιστικύ,nonword,word,nonword,
 βάτραχος,ατμόρναιρα,nonword,word,nonword,
 κόρη,εξεγές,nonword,word,nonword,
-εργαστηρι,περιθεόμενο,nonword,word,nonword,
+εργαστήρι,περιθεόμενο,nonword,word,nonword,
 χώρα,αναμύψω,nonword,word,nonword,
 συγγραφέας,συναρωία,nonword,word,nonword,
 τσέπη,όγνη,nonword,word,nonword,
@@ -3418,7 +3418,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 φθάνω,πραγματιιο,nonword,word,nonword,
 υποφέρω,φαντασαν,nonword,word,nonword,
 σκοπός,άσριση,nonword,word,nonword,
-ησυχια,πορτοκροι,nonword,word,nonword,
+ησυχία,πορτοκροι,nonword,word,nonword,
 πύλη,ρίουργείο,nonword,word,nonword,
 εξαλείφω,υπουακός,nonword,word,nonword,
 ικανοποιημένοι,πρίγκιτρς,nonword,word,nonword,
@@ -3430,7 +3430,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 έννοια,προσβάρθω,nonword,word,nonword,
 βαρώνος,πτίλη,nonword,word,nonword,
 γέφυρα,προσλάκύω,nonword,word,nonword,
-εντυπωσιακο,απόπτορα,nonword,word,nonword,
+εντυπωσιακό,απόπτορα,nonword,word,nonword,
 πύργος,υπερασιάζω,nonword,word,nonword,
 διαμάντι,εώνω,nonword,word,nonword,
 δωροδοκία,φυΐας,nonword,word,nonword,
@@ -3557,7 +3557,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 χαρακτήρας,μιλάός,nonword,word,nonword,
 χόμπι,φιλελειμερος,nonword,word,nonword,
 αέριο,απνεη,nonword,word,nonword,
-φωτογραφικη μηχανη,χόμπα,nonword,word,nonword,
+φωτογραφική μηχανή,χόμπα,nonword,word,nonword,
 υπομονή,υπογραχα,nonword,word,nonword,
 τείχος,οπεση,nonword,word,nonword,
 ποτέ,στρατηρεκή,nonword,word,nonword,
@@ -3577,7 +3577,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 σπίτι,νεκρέπαφείο,nonword,word,nonword,
 ευγνώμων,τέξ,nonword,word,nonword,
 επίσημα,ελάκτης,nonword,word,nonword,
-κανω αναφορα,τεκητή,nonword,word,nonword,
+κάνω αναφορά,τεκητή,nonword,word,nonword,
 σεληνιακός,τείνκά,nonword,word,nonword,
 σκάβω,φάχλιπός,nonword,word,nonword,
 ενοικιαστής,φινίκεσμα,nonword,word,nonword,
@@ -3673,7 +3673,7 @@ ufo,δολοφότες,nonword,word,nonword,
 ζήτηση,τεηθητός,nonword,word,nonword,
 θύμα,λουλροδι,nonword,word,nonword,
 χάος,αυέν,nonword,word,nonword,
-τζίπ,προφαλά,nonword,word,nonword,
+τζιπ,προφαλά,nonword,word,nonword,
 κανέλα,φλααα,nonword,word,nonword,
 έννοια,μικροοωνο,nonword,word,nonword,
 καθημερινά,ανίλο,nonword,word,nonword,
@@ -4710,14 +4710,14 @@ chτρικός,λιγότάρι,nonword,nonword,nonword,
 μειωοντικός,καιvκι,nonword,nonword,nonword,
 λεωφρεος,πυμονικός,nonword,nonword,nonword,
 συναγερμός,πάντα,unrelated,word,word,0.0835504135671803
-άθροισμα,μουσικη,unrelated,word,word,0.13181717053509
+άθροισμα,μουσική,unrelated,word,word,0.13181717053509
 λέσχη,ήλιος,unrelated,word,word,0.144060068425827
 γοητεία,ιστός,unrelated,word,word,0.0982195533891759
 σπάσιμο,δημοσιογράφος,unrelated,word,word,0.0746349514735514
 γαμπρός,δοκιμή,unrelated,word,word,0.103109826528995
 μέλι,αποφοιτώ,unrelated,word,word,0.103760091562016
 επίσκοπος,λουλούδι,unrelated,word,word,0.117119251682802
-ακολουθηστε,πυρηνικός,unrelated,word,word,0.122571888136489
+ακολουθήστε,πυρηνικός,unrelated,word,word,0.122571888136489
 χείλος,εκτίμηση,unrelated,word,word,0.0615276772538114
 ψωμί,όμορφος,unrelated,word,word,0.131639690017194
 πλοήγηση,υπολογίζω,unrelated,word,word,0.133636178410036
@@ -4780,7 +4780,7 @@ chτρικός,λιγότάρι,nonword,nonword,nonword,
 κούκλα,αγώνας,unrelated,word,word,0.0464850127914925
 αίμα,φιλελεύθερος,unrelated,word,word,0.115464490253341
 έρημος,παραδέχομαι,unrelated,word,word,0.130307404249101
-καθαρη,κακό,unrelated,word,word,0.114311777252458
+καθαρή,κακό,unrelated,word,word,0.114311777252458
 μήνας,πνεύμα,unrelated,word,word,0.0906701718587403
 καθημερινά,αρπακτικός,unrelated,word,word,0.0565743869122128
 κέρατο,μάρκετινγκ,unrelated,word,word,0.133131623771176
@@ -4788,7 +4788,7 @@ chτρικός,λιγότάρι,nonword,nonword,nonword,
 αρκούδα,απλός,unrelated,word,word,0.137109345673878
 διαβάζω,σκοινί,unrelated,word,word,0.0341812335832377
 κίνητρο,γράμμα,unrelated,word,word,0.141273684130632
-εντυπωσιακο,ψηφοφόρος,unrelated,word,word,0.113106277460686
+εντυπωσιακό,ψηφοφόρος,unrelated,word,word,0.113106277460686
 μηχανικός,τραγούδι,unrelated,word,word,0.134869497197571
 οπλοστάσιο,χρηματοδότηση,unrelated,word,word,0.13983298656966
 ακριβός,θέμα,unrelated,word,word,0.14720543390307
@@ -4945,7 +4945,7 @@ chτρικός,λιγότάρι,nonword,nonword,nonword,
 καπνός,ανίσχυρος,unrelated,word,word,0.147766442937622
 εντυπωσιακός,μάνικα,unrelated,word,word,0.0560074391347227
 βραδινό,ατσάλι,unrelated,word,word,0.136075313411588
-υπομονετικος,δουλειά,unrelated,word,word,0.121766977544349
+υπομονετικός,δουλειά,unrelated,word,word,0.121766977544349
 διακοπή,έξυπνος,unrelated,word,word,0.0693742633924028
 αισθητήρας,τσίρκο,unrelated,word,word,0.0669016450682354
 στάδιο,ακόμη,unrelated,word,word,0.133605282223946
