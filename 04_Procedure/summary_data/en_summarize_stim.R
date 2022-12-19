@@ -166,39 +166,48 @@ en_words <- import("/var/www/html/en/en_words.csv")
 
 # collected data
 en_data_all <-
-  bind_rows(processData("/var/www/html/en/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+  list(processData("/var/www/html/en/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en2/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en3/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en4/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en5/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en6/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en7/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en8/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en9/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/en10/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code))) %>% unique()
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/en11/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(en_data_all)){
+    en_data_all[[i]] <- en_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  en_data_all <- bind_rows(en_data_all) %>% unique()
 
 # delete stuff before we started
 en_data_all <- en_data_all %>%
@@ -219,6 +228,11 @@ en_data_all <- en_data_all %>%
   filter(!(observation %in% obs_extra &
              grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
   ))
+
+# timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+en_data_all <- en_data_all %>%
+  left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -290,7 +304,7 @@ participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 # grab only real trials ----
 real_trials <- en_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-  select(observation, sender_id, response, response_action, ended_on, duration,
+  select(observation, fix_sender, response, response_action, ended_on, duration,
          colnames(en_data_all)[grep("^time", colnames(en_data_all))],
          word, class, correct_response, correct)
 
@@ -328,7 +342,7 @@ real_trials <- real_trials %>%
                rename(keep_participant = keep)),
             by = c("observation" = "observation")) %>%
   # sort this so the trial type is right
-  arrange(observation, timestamp)
+  arrange(observation, fix_sender)
 
 # figure out trial type ----
 
