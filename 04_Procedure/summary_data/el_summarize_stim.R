@@ -174,7 +174,7 @@ el_data_all <-
 #   filter(timestamp > as.POSIXct("2022-12-13")) 
 
 # timestamp is somewhat unreliable fix up sender_id
-sender_ids <- import("./04_Procedure_real/summary_data/sender_id.csv")
+sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
 el_data_all <- el_data_all %>% 
   left_join(sender_ids, by = "sender_id")
 
