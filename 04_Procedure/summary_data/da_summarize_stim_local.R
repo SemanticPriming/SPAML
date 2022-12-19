@@ -162,11 +162,11 @@ processData <- function(database) {
 # Data --------------------------------------------------------------------
 
 # original word lists
-da_words <- import("./04_Procedure_real/da/da_words.csv")
+da_words <- import("./04_Procedure/da/da_words.csv")
 
 # collected data
 da_data_all <-
-  bind_rows(processData("./04_Procedure_real/da/data/data.sqlite") %>%
+  bind_rows(processData("./04_Procedure/da/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # fix sender id
@@ -175,10 +175,10 @@ da_data_all <- da_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # delete stuff before we started
-da_data_all <- da_data_all %>%
-  filter(timestamp > as.POSIXct("2022-10-26")) %>%
-  # this was a tester on 10-26
-  filter(observation != "43143") # check no duplicates at the end
+# da_data_all <- da_data_all %>%
+#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
+#   # this was a tester on 10-26
+#   filter(observation != "43143") # check no duplicates at the end
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -388,7 +388,7 @@ da_data_all <- da_data_all %>%
 
 # merge with old data ----
   # pull in other information from previous weeks
-  list_da_data <- lapply(list.files(path = "./04_Procedure_real/summary_data",
+  list_da_data <- lapply(list.files(path = "./04_Procedure/summary_data",
                                     pattern = "da_summary_[0-9].*.csv", full.names = T),
                          import)
   da_summaries <- bind_rows(list_da_data, da_merged)
@@ -422,7 +422,7 @@ da_data_all <- da_data_all %>%
 # Generate ----------------------------------------------------------------
 
 # generate summary chart for shiny ----
-  write.csv(da_merged, "./04_Procedure_real/summary_data/da_summary.csv", row.names = F)
+  write.csv(da_merged, "./04_Procedure/summary_data/da_summary.csv", row.names = F)
 
 # generate participant report for shiny ----
   p_end <- da_data_all %>%
@@ -445,7 +445,7 @@ da_data_all <- da_data_all %>%
 
   # merge with old data ----
   # pull in other information from previous weeks
-  list_da_data <- lapply(list.files(path = "./04_Procedure_real/summary_data",
+  list_da_data <- lapply(list.files(path = "./04_Procedure/summary_data",
                                     pattern = "da_participants_[0-9].*.csv", full.names = T),
                          import)
   list_da_data <- lapply(list_da_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
@@ -465,7 +465,7 @@ da_data_all <- da_data_all %>%
     p_lab <- unique(bind_rows(list_da_data))
   }
 
-  write.csv(p_lab, "./04_Procedure_real/summary_data/da_participants.csv", row.names = F)
+  write.csv(p_lab, "./04_Procedure/summary_data/da_participants.csv", row.names = F)
 
 # generate new stimuli ----
 
@@ -574,7 +574,7 @@ da_data_all <- da_data_all %>%
   {"word": "støvle", "class": "word"}]'
 
     writeLines(practice, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
 
     all_trials <- rbind(nonwords, related, unrelated, nonwords_mix)
@@ -598,7 +598,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[1:50], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/3cee33bcfe0a7bdac59ec1374ca41a4ea7fe6e772c9b0ab0770f0d1f5cb09e41.json"))
 
     # ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json is real2
@@ -607,7 +607,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[51:100], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/ae2c5987efa101760004c66c0da975c7dd75605ada53cabf75ec439ce68a5871.json"))
 
     # 3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json is real3
@@ -616,7 +616,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[101:150], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/3a95e1234833448efe1e098102f00e2f4bb85d6edd8b6a093f62a93d4dcf4f4e.json"))
 
     # 994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json is real4
@@ -625,7 +625,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[151:200], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/994ac7a5038c8713adb715e04d6639acda5d02a40abdb81d59c0d39dfea6cf06.json"))
 
     # 9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json is real5
@@ -634,7 +634,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[201:250], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/9febe5343449a1c79d42f597f494397c595dd944600a7908e38167bbb18234ee.json"))
 
     # cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json is real6
@@ -642,7 +642,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[251:300], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/cd99c6e5b4b714268551fce4fc08729821a7bdb4a6f2294152b2e0d5e4ddfb99.json"))
 
     # c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json is real7
@@ -650,7 +650,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[301:350], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/c378cfb94011283fa98a84e5e2d34272f4a3134cda08298ed211f9c6c2331757.json"))
 
     # 0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json is real8
@@ -658,7 +658,7 @@ da_data_all <- da_data_all %>%
                   paste(all_trials$together[351:400], collapse = ",", sep = ""),
                   ']', collapse = "", sep = "")
     writeLines(real, con = paste0(
-      "./04_Procedure_real/da", folder_num,
+      "./04_Procedure/da", folder_num,
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }

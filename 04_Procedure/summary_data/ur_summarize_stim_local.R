@@ -171,9 +171,7 @@ ur_data_all <-
 
 # # delete stuff before we started
 # ur_data_all <- ur_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-12-06")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -445,6 +443,7 @@ ur_data_all <-
                          import)
   list_ur_data <- lapply(list_ur_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_ur_data <- lapply(list_ur_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+  list_ur_data <- list_ur_data[lapply(list_ur_data, nrow) > 0]
 
   if (nrow(p_lab) > 0){
     if (length(list_ur_data) > 0){

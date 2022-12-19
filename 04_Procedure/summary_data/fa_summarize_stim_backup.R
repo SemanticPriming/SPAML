@@ -3,7 +3,7 @@
 # This R script reads in the data from the SPAML experiment and then:
   # removes incorrect trials since they don't count
   # removes participants who could not get 80% correct on 100 minimum trials
-  # z scores each participants data 
+  # z scores each participants data
   # calculates word, sample size, SE, "done" with <= .09 SE
   # creates participant ID list by lab
 

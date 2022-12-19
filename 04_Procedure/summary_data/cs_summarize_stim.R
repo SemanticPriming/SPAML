@@ -166,34 +166,54 @@ cs_words <- import("/var/www/html/cs/cs_words.csv")
 
 # collected data
 cs_data_all <-
-  bind_rows(processData("/var/www/html/cs/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+        list(processData("/var/www/html/cs/data/data.sqlite") %>%
+          mutate_at(vars(one_of("url_lab")), as.character,
+                    vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs2/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs3/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs4/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs5/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs6/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs7/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs8/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs9/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs10/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs11/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs12/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/cs13/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(cs_data_all)){
+    cs_data_all[[i]] <- cs_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  cs_data_all <- bind_rows(cs_data_all) %>% unique()
 
 # delete stuff before we started ----
 cs_data_all <- cs_data_all %>%
@@ -217,7 +237,7 @@ cs_data_all <- cs_data_all %>%
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-cs_data_all <- cs_data_all %>% 
+cs_data_all <- cs_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------

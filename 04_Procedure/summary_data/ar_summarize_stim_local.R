@@ -171,7 +171,7 @@ ar_data_all <-
 
 # delete stuff before we started
 # ar_data_all <- ar_data_all %>%
-#  filter(timestamp > as.POSIXct("2022-12-04"))
+#   filter(timestamp > as.POSIXct("2022-12-04"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -188,10 +188,10 @@ ar_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-
+  
   # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-  ar_data_all <- ar_data_all %>%
+  ar_data_all <- ar_data_all %>% 
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -384,6 +384,30 @@ ar_data_all <-
   ar_merged <- merge(ar_merged, ar_num_trials,
                      by = "word_combo", all.x = T)
 
+# merge with old data ----
+  # pull in other information from previous weeks
+  list_ar_data <- lapply(list.files(path = "./04_Procedure/summary_data",
+                                    pattern = "ar_summary_[0-9].*.csv", full.names = T),
+                         import)
+  ar_summaries <- bind_rows(list_ar_data, ar_merged)
+  ar_merged <- ar_summaries %>%
+    select(-any_of(c("done_both", "done_totalN", "done"))) %>%
+    group_by(word_combo, ar_cue, ar_target, type, cue_type,
+             target_type, ar_cosine) %>%
+    summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),
+              SD_Z = weighted.mean(SD_Z, sampleN, na.rm = T),
+              SE_Z = weighted.mean(SE_Z, sampleN, na.rm = T),
+              sampleN = sum(sampleN, na.rm = T),
+              target_correct = sum(target_correct, na.rm = T),
+              target_answeredN = sum(target_answeredN, na.rm = T),
+              target_timeoutN = sum(target_timeoutN, na.rm = T),
+              target_prop_correct = target_correct/target_answeredN * 100,
+              cue_correct = sum(cue_correct, na.rm = T),
+              cue_answeredN = sum(cue_answeredN, na.rm = T),
+              cue_timeoutN = sum(cue_timeoutN, na.rm = T),
+              cue_prop_correct = cue_correct/cue_answeredN * 100,
+              across(), .groups  = "keep")
+
   # are we done? ----
   ar_merged$done_both <- (ar_merged$target_answeredN >= 50 & ar_merged$SE_Z <= .09) | ar_merged$target_answeredN >= 320
   ar_merged$done_totalN <- ar_merged$target_answeredN >= 50
@@ -416,6 +440,28 @@ ar_data_all <-
   p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
                       "keep", "n_trials", "correct.y", "n_answered",
                       "start", "end", "study_length")]
+
+  # merge with old data ----
+  # pull in other information from previous weeks
+  list_ar_data <- lapply(list.files(path = "./04_Procedure/summary_data",
+                                    pattern = "ar_participants_[0-9].*.csv", full.names = T),
+                         import)
+  list_ar_data <- lapply(list_ar_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
+  list_ar_data <- lapply(list_ar_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+  list_ar_data <- list_ar_data[lapply(list_ar_data, nrow) > 0]
+  
+  if (nrow(p_lab) > 0){
+    if (length(list_ar_data) > 0){
+      p_lab <- unique(bind_rows(bind_rows(list_ar_data) %>%
+                        mutate(url_lab = as.character(url_lab),
+                               url_special_code = as.character(url_special_code)),
+                        p_lab %>%
+                          mutate(url_special_code = as.character(url_special_code),
+                                 study_length = as.numeric(study_length))))
+    }
+  } else {
+    p_lab <- unique(bind_rows(list_ar_data))
+  }
 
   write.csv(p_lab, "./04_Procedure/summary_data/ar_participants.csv", row.names = F)
 
@@ -614,3 +660,5 @@ ar_data_all <-
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
+
+  

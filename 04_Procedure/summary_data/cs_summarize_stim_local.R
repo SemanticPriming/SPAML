@@ -166,12 +166,19 @@ cs_words <- import("./04_Procedure/cs/cs_words.csv")
 
 # collected data
 cs_data_all <-
-        bind_rows(processData("./04_Procedure/cs/data/data.sqlite") %>%
-               mutate(url_lab = as.character(url_lab))) %>% unique()
+        list(processData("./04_Procedure/cs/data/data.sqlite") %>%
+          mutate_at(vars(one_of("url_lab")), as.character,
+                    vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(cs_data_all)){
+    cs_data_all[[i]] <- cs_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  cs_data_all <- bind_rows(cs_data_all) %>% unique()
 
 # delete stuff before we started ----
-cs_data_all <- cs_data_all %>%
- filter(timestamp > as.POSIXct("2022-08-25"))
+# cs_data_all <- cs_data_all %>%
+#  filter(timestamp > as.POSIXct("2022-08-25"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -200,7 +207,7 @@ cs_data_all <- cs_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2022
-number_folders <- 1 #14 normally
+number_folders <- 1 # 14
 static <- FALSE
 adaptive <- TRUE
 
@@ -387,6 +394,30 @@ cs_merged <- merge(cs_words, cs_Z_summary,
 cs_merged <- merge(cs_merged, cs_num_trials,
                    by = "word_combo", all.x = T)
 
+# merge with old data ----
+# pull in other information from previous weeks
+list_cs_data <- lapply(list.files(path = "./04_Procedure/summary_data",
+                                  pattern = "cs_summary_[0-9].*.csv", full.names = T),
+                       import)
+cs_summaries <- bind_rows(list_cs_data, cs_merged)
+cs_merged <- cs_summaries %>%
+  select(-any_of(c("done_both", "done_totalN", "done"))) %>%
+  group_by(word_combo, cs_cue, cs_target, type, cue_type,
+           target_type, cs_cosine) %>%
+  summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),
+            SD_Z = weighted.mean(SD_Z, sampleN, na.rm = T),
+            SE_Z = weighted.mean(SE_Z, sampleN, na.rm = T),
+            sampleN = sum(sampleN, na.rm = T),
+            target_correct = sum(target_correct, na.rm = T),
+            target_answeredN = sum(target_answeredN, na.rm = T),
+            target_timeoutN = sum(target_timeoutN, na.rm = T),
+            target_prop_correct = target_correct/target_answeredN * 100,
+            cue_correct = sum(cue_correct, na.rm = T),
+            cue_answeredN = sum(cue_answeredN, na.rm = T),
+            cue_timeoutN = sum(cue_timeoutN, na.rm = T),
+            cue_prop_correct = cue_correct/cue_answeredN * 100,
+            across(), .groups  = "keep")
+
 # are we done? ----
 cs_merged$done_both <- (cs_merged$target_answeredN >= 50 & cs_merged$SE_Z <= .09) | cs_merged$target_answeredN >= 320
 cs_merged$done_totalN <- cs_merged$target_answeredN >= 50
@@ -419,6 +450,29 @@ p_lab <- p_lab %>%
 p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
                     "keep", "n_trials", "correct.y", "n_answered",
                     "start", "end", "study_length")]
+
+# merge with old data ----
+# pull in other information from previous weeks
+list_cs_data <- lapply(list.files(path = "./04_Procedure/summary_data",
+                                  pattern = "cs_participants_[0-9].*.csv", full.names = T),
+                       import)
+
+list_cs_data <- lapply(list_cs_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
+list_cs_data <- lapply(list_cs_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+list_cs_data <- list_cs_data[lapply(list_cs_data, nrow) > 0]
+
+if (nrow(p_lab) > 0){
+  if (length(list_cs_data) > 0){
+    p_lab <- unique(bind_rows(bind_rows(list_cs_data) %>%
+                                mutate(url_lab = as.character(url_lab),
+                                       url_special_code = as.character(url_special_code)),
+                              p_lab %>%
+                                mutate(url_special_code = as.character(url_special_code),
+                                       study_length = as.numeric(study_length))))
+       }
+} else {
+  p_lab <- unique(bind_rows(list_cs_data))
+}
 
 write.csv(p_lab, "./04_Procedure/summary_data/cs_participants.csv", row.names = F)
 

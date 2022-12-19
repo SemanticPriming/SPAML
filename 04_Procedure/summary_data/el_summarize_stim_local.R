@@ -171,9 +171,12 @@ el_data_all <-
 
 # # delete stuff before we started
 # el_data_all <- el_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-12-13")) 
+
+# timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+el_data_all <- el_data_all %>% 
+  left_join(sender_ids, by = "sender_id")
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -252,7 +255,7 @@ el_data_all <-
 # grab only real trials ----
   real_trials <- el_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(el_data_all)[grep("^time", colnames(el_data_all))],
            word, class, correct_response, correct)
 
@@ -290,7 +293,7 @@ el_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -411,8 +414,8 @@ el_data_all <-
   el_merged$done <- el_merged$sampleN >= 50
 
 # use data ----
-  el_use <- subset(el_merged, is.na(done) | done == FALSE)
-  el_sample <- subset(el_merged, done == TRUE)
+  el_use <- subset(el_merged, is.na(done_totalN) | done_totalN == FALSE)
+  el_sample <- subset(el_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -445,7 +448,8 @@ el_data_all <-
                          import)
   list_el_data <- lapply(list_el_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_el_data <- lapply(list_el_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
-
+  list_el_data <- list_el_data[lapply(list_el_data, nrow) > 0]
+  
   if (nrow(p_lab) > 0){
     if (length(list_el_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_el_data) %>%
@@ -656,5 +660,3 @@ el_data_all <-
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
-
-  

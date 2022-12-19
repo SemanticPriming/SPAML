@@ -166,34 +166,54 @@ ja_words <- import("/var/www/html/ja/ja_words.csv")
 
 # collected data
 ja_data_all <-
-  bind_rows(processData("/var/www/html/ja/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+        list(processData("/var/www/html/ja/data/data.sqlite") %>%
+          mutate_at(vars(one_of("url_lab")), as.character,
+                    vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja2/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja3/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja4/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja5/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja6/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja7/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja8/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja9/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja10/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja11/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja12/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ja13/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(ja_data_all)){
+    ja_data_all[[i]] <- ja_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  ja_data_all <- bind_rows(ja_data_all) %>% unique()
 
 # delete stuff before we started ----
 ja_data_all <- ja_data_all %>%

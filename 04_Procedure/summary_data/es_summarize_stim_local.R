@@ -166,16 +166,19 @@ es_words <- import("./04_Procedure/es/es_words.csv")
 
 # collected data
 es_data_all <-
-  bind_rows(processData("./04_Procedure/es/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)), 
-            processData("./04_Procedure/es1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+  list(processData("./04_Procedure/es/data/data.sqlite") %>%
+            mutate_at(vars(one_of("url_lab")), as.character,
+              vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(es_data_all)){
+    es_data_all[[i]] <- es_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  es_data_all <- bind_rows(es_data_all) %>% unique()
 
 # # delete stuff before we started
 # es_data_all <- es_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-10-26")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -199,7 +202,7 @@ es_data_all <-
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
   current_year <- 2022
-  number_folders <- 2
+  number_folders <- 1 # 2
 
   ##create demographics only data
   demos <- es_data_all %>% #data frame
@@ -447,6 +450,7 @@ es_data_all <-
                          import)
   list_es_data <- lapply(list_es_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_es_data <- lapply(list_es_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
+  list_es_data <- list_es_data[lapply(list_es_data, nrow) > 0]
 
   if (nrow(p_lab) > 0){
     if (length(list_es_data) > 0){

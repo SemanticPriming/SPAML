@@ -1,10 +1,4 @@
 "word_combo","ur_cue","ur_target","type","cue_type","target_type","ur_cosine","M_Z","SD_Z","SE_Z","sampleN","target_correct","target_answeredN","target_timeoutN","target_prop_correct","cue_correct","cue_answeredN","cue_timeoutN","cue_prop_correct","done_both","done_totalN","done"
-"isریرایڈریس","isریر","ایڈریس","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"isریرنتینے","isریر","نتینے","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"syتہپابغورڈ","syتہ","پابغورڈ","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"syتہکارکن","syتہ","کارکن","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"vaویرترتیب دینا","vaویر","ترتیب دینا","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"vaویروداحیت","vaویر","وداحیت","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "آ ششتہ آششتہپریتوکول","آ ششتہ آششتہ","پریتوکول","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "آ ششتہ آششتہطیش","آ ششتہ آششتہ","طیش","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "آآزاد","آ","آزاد","related","word","word",0.109556082667678,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1178,6 +1172,8 @@
 "تھکا ہوامؤثر","تھکا ہوا","مؤثر","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تھکاآلواڈطم","تھکاآلوا","ڈطم","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "تھکاآلواسالگرہ","تھکاآلوا","سالگرہ","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"تہپابغورڈ","تہ","پابغورڈ","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"تہکارکن","تہ","کارکن","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "توازنسوداگر","توازن","سوداگر","unrelated","word","word",0.141539346090987,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "توازنصنظام","توازن","صنظام","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "توازنہم آہنگی","توازن","ہم آہنگی","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2299,6 +2295,8 @@
 "رڈاردوپہر کا کھانا","رڈار","دوپہر کا کھانا","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رڈارسیٹلائٹ","رڈار","سیٹلائٹ","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رڈارمبزیہ","رڈار","مبزیہ","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"رریرایڈریس","رریر","ایڈریس","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"رریرنتینے","رریر","نتینے","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رسالہتلفظ","رسالہ","تلفظ","unrelated","word","word",0.0796046894872787,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رسالہتوپ خانے","رسالہ","توپ خانے","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "رسالہذوص","رسالہ","ذوص","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4945,6 +4943,8 @@
 "ویٹراغدہ","ویٹر","اغدہ","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ویٹرجذبہ","ویٹر","جذبہ","unrelated","word","word",0.137808585464402,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ویٹرویٹریس","ویٹر","ویٹریس","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"ویرترتیب دینا","ویر","ترتیب دینا","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"ویروداحیت","ویر","وداحیت","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ویوارانکسارپسند","ویوار","انکسارپسند","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ویوارکفف","ویوار","کفف","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "یئمقسط","یئم","قسط","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE

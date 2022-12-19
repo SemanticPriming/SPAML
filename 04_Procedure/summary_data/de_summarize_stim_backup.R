@@ -10,7 +10,7 @@
 # From this data, the R script:
   # Writes out 8 blocks of 100 words that are probabilistically selected
   # Writes out summary table
-  # Writes out participant summary 
+  # Writes out participant summary
 
 # Libraries ---------------------------------------------------------------
 
@@ -169,21 +169,27 @@ de_words <- import("/var/www/html/de/de_words.csv")
 
 # collected data
 de_data_all <-
-  bind_rows(processData("/var/www/html/de/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
-            processData("/var/www/html/de1/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)), 
-            processData("/var/www/html/de2/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)), 
-            processData("/var/www/html/de3/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)), 
-            processData("/var/www/html/de4/data/data.sqlite") %>% 
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code))) %>% unique()
+  list(processData("/var/www/html/de/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+              vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/de1/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/de2/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/de3/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/de4/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(de_data_all)){
+    de_data_all[[i]] <- de_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  de_data_all <- bind_rows(de_data_all) %>% unique()
 
 # # delete stuff before we started
 de_data_all <- de_data_all %>%
@@ -191,7 +197,7 @@ de_data_all <- de_data_all %>%
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-de_data_all <- de_data_all %>% 
+de_data_all <- de_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # fix the issue of double displays that happened before 2022-09-01

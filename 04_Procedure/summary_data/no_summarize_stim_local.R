@@ -171,9 +171,7 @@ no_data_all <-
 
 # # delete stuff before we started
 # no_data_all <- no_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-10-26"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -445,7 +443,8 @@ no_data_all <-
                          import)
   list_no_data <- lapply(list_no_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_no_data <- lapply(list_no_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
-
+  list_no_data <- list_no_data[lapply(list_no_data, nrow) > 0]
+  
   if (nrow(p_lab) > 0){
     if (length(list_no_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_no_data) %>%
@@ -656,3 +655,5 @@ no_data_all <-
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
+
+  

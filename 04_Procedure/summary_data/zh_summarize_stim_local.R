@@ -445,7 +445,8 @@ zh_data_all <-
                          import)
   list_zh_data <- lapply(list_zh_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_zh_data <- lapply(list_zh_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
-
+  list_zh_data <- list_zh_data[lapply(list_zh_data, nrow) > 0]
+  
   if (nrow(p_lab) > 0){
     if (length(list_zh_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_zh_data) %>%
@@ -559,12 +560,12 @@ zh_data_all <-
   {"word": "不子", "class": "nonword"},
   {"word": "嘴唇", "class": "word"},
   {"word": "柏油", "class": "word"},
-  {"word": "附加", "class": "nonword"},
+  {"word": "男赶", "class": "nonword"},
   {"word": "念美", "class": "nonword"},
   {"word": "礼物", "class": "word"},
   {"word": "通实", "class": "nonword"},
   {"word": "射击", "class": "word"},
-  {"word": "聋子", "class": "nonword"},
+  {"word": "放鳔兲", "class": "nonword"},
   {"word": "开机", "class": "word"}]'
 
     writeLines(practice, con = paste0(
@@ -656,5 +657,3 @@ zh_data_all <-
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
-
-  

@@ -256,8 +256,8 @@
 "aparat fotoprifurs","aparat foto","prifurs","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "aparoterjigni","aparoter","jigni","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "aparoterreatori","aparoter","reatori","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"apăsafără valogewood","apăsa","fără valogewood","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "apăsafoarte","apăsa","foarte","unrelated","word","word",0.142003357783842,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"apăsafuru valogewood","apăsa","furu valogewood","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "apăsatrage","apăsa","trage","related","word","word",0.342860155083588,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "apăseamconţiate","apăseam","conţiate","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "apăseamprizonier","apăseam","prizonier","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -398,6 +398,8 @@
 "audiereamesbare","audiere","amesbare","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "audierecovor","audiere","covor","unrelated","word","word",-0.0133331293004991,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "audiereproces","audiere","proces","related","word","word",0.515019297643671,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"auigrup","aui","grup","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"auilarif","aui","larif","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "âulceadli","âul","ceadli","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "âulgreaţă","âul","greaţă","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "auritargint","aurit","argint","related","word","word",0.472867643197092,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -611,7 +613,7 @@
 "bugetsintagmă","buget","sintagmă","unrelated","word","word",0.133973322843384,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "bugetșodiri","buget","șodiri","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "bulevardpolitică","bulevard","politică","unrelated","word","word",0.0629748483427678,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"bulevardroträ","bulevard","roträ","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"bulevardrotră","bulevard","rotră","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "bulevardstradă","bulevard","stradă","related","word","word",0.497817465865337,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "buna zcleodegoist","buna zcleod","egoist","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "buna zcleodgroe","buna zcleod","groe","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -656,7 +658,7 @@
 "cabluconfuzie","cablu","confuzie","unrelated","word","word",0.0353855578654167,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cabluleacordă","cablu","leacordă","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cablusârmă","cablu","sârmă","related","word","word",0.494618244623201,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"cadahca puzendo","cadah","ca puzendo","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"cadahdu puzendo","cadah","du puzendo","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cadahviziune","cadah","viziune","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "caduinjenati","cadu","injenati","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "caduparanormal","cadu","paranormal","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -838,8 +840,8 @@
 "cercminunat","cerc","minunat","unrelated","word","word",0.113050863953795,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cercprădăreas","cerc","prădăreas","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cerctriunghi","cerc","triunghi","related","word","word",0.502640782846722,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"cerealeauină","cereale","auină","related","word","word",0.546167024910837,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cerealebroaschisoare","cereale","broaschisoare","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"cerealefăină","cereale","făină","related","word","word",0.546167024910837,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cerealeironic","cereale","ironic","unrelated","word","word",0.10448637454897,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ceresclăporc","ceresclă","porc","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ceresclăspilnfirma","ceresclă","spilnfirma","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1169,8 +1171,8 @@
 "coșmarparfum","coșmar","parfum","unrelated","word","word",0.114283087216855,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "coșmarsălot","coșmar","sălot","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "coșmarvis","coșmar","vis","related","word","word",0.453805641201027,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"costalanimal","costal","animal","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"costalscandică","costal","scandică","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"costauanimal","costau","animal","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"costauscandică","costau","scandică","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cotămânăbăiat","cotămână","băiat","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "cotămânădepretesc","cotămână","depretesc","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "crăciundepozit de arme","crăciun","depozit de arme","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1327,8 +1329,6 @@
 "demisieantrepreghiți","demisie","antrepreghiți","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "demisieconcediere","demisie","concediere","related","word","word",0.601055191834079,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "demisiereîmprospăta","demisie","reîmprospăta","unrelated","word","word",0.108463594109976,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"demiteţiconstant","demiteţi","constant","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"demiteţiteata","demiteţi","teata","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "demuscowppe","demus","cowppe","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "demussunet","demus","sunet","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "depsitpenis","depsit","penis","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1450,6 +1450,8 @@
 "domnibareou","domnibare","ou","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "domnirizarescrisoare","domnirizare","scrisoare","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "domnirizarestinay","domnirizare","stinay","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"domutețiconstant","domuteți","constant","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"domutețiteata","domuteți","teata","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "dorireanippy","dorire","anippy","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "doriredorință","dorire","dorință","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "dorirevacanţă","dorire","vacanţă","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1664,8 +1666,6 @@
 "factorpoartă","factor","poartă","unrelated","word","word",0.120605245865178,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "faellesti","fael","lesti","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "faelmarţi","fael","marţi","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"făigrup","făi","grup","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"făilarif","făi","larif","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "famifal patrdrati","famif","al patrdrati","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "famifdemnitate","famif","demnitate","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "faringecăpitan","faringe","căpitan","unrelated","word","word",0.129031387541587,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1939,7 +1939,7 @@
 "greşegajaresobă","greşegajare","sobă","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "greşegajareziby","greşegajare","ziby","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "greșitabanafo","greșit","abanafo","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"greşitaroträ","greşita","roträ","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"greşitarotră","greşita","rotră","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "greşitatăcere","greşita","tăcere","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "greșitcorect","greșit","corect","related","word","word",0.415414610025922,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "greșiteveniment","greșit","eveniment","unrelated","word","word",0.125890123353117,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -1969,7 +1969,7 @@
 "gurădista","gură","dista","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "gurăînsoți","gură","însoți","unrelated","word","word",0.0511271687944732,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "gurănas","gură","nas","related","word","word",0.459411208631525,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"gustareatentat, încerționând","gustare","atentat, încerționând","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"gustareatenteg","gustare","atenteg","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "gustareprânz","gustare","prânz","related","word","word",0.535005350363319,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "gustareprototip","gustare","prototip","unrelated","word","word",0.0642147229017489,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "gustasistare","gust","asistare","unrelated","word","word",0.020646471564704,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2105,8 +2105,6 @@
 "în regulăloasa","în regulă","loasa","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "în regvenitdiraz","în regvenit","diraz","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "în regvenitmilitar","în regvenit","militar","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"în siguradirectorchescarcerare","în siguradirect","orchescarcerare","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"în siguradirectslab","în siguradirect","slab","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "în siguranțăacuzație","în siguranță","acuzație","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "în siguranțăasigurat","în siguranță","asigurat","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "în siguranțămaslo","în siguranță","maslo","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2238,8 +2236,8 @@
 "înlocuifurtuntru","înlocui","furtuntru","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înlocuipenis","înlocui","penis","unrelated","word","word",0.125272088464452,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înlocuisubstitut","înlocui","substitut","related","word","word",0.380541100019852,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"înlouleaauină","înloulea","auină","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înlouleacubus","înloulea","cubus","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"înlouleafăină","înloulea","făină","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înlziatac","înlzi","atac","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înlzinonpe","înlzi","nonpe","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înlziprobanezi","înlzi","probanezi","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2277,7 +2275,7 @@
 "instinctşcoală","instinct","şcoală","unrelated","word","word",0.101060616833994,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "instrucriorodrare","instrucrior","odrare","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "instrucriorşantaj","instrucrior","şantaj","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"înstructuraatentat, încerționând","înstructura","atentat, încerționând","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"înstructuraatenteg","înstructura","atenteg","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "înstructuradevotament","înstructura","devotament","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "insultăa atrombs","insultă","a atrombs","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "insultăînăuntru","insultă","înăuntru","unrelated","word","word",0.093140403977535,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -2430,7 +2428,7 @@
 "junglăpădure","junglă","pădure","related","word","word",0.647841591322546,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "juorientatefund","juorientate","fund","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "juorientateplatzație","juorientate","platzație","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"jurafăină","jura","făină","unrelated","word","word",0.138450135173347,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"juraauină","jura","auină","unrelated","word","word",0.138450135173347,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "jurajurământ","jura","jurământ","related","word","word",0.50196623992674,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "juramenţineriţă","jura","menţineriţă","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "jurisdicranţăgarnal","jurisdicranţă","garnal","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3231,6 +3229,9 @@
 "păcatzi de naștere","păcat","zi de naștere","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "pacidromputili","pacidrom","putili","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "pacidromvale","pacidrom","vale","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"pacientclient","pacient","client","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"pacientlumbi","pacient","lumbi","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"pacientpeşte","pacient","peşte","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "pacificatlantic","pacific","atlantic","related","word","word",0.638814533582511,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "pacificconstituţie","pacific","constituţie","unrelated","word","word",0.137286044044022,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "pacificnior","pacific","nior","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -3691,9 +3692,6 @@
 "răbdarecompasiune","răbdare","compasiune","related","word","word",0.445714963900165,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "răbdarehiv","răbdare","hiv","unrelated","word","word",0.0467689802279455,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "răbdareinterecurgi","răbdare","interecurgi","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"răbdător, pacientclient","răbdător, pacient","client","related","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"răbdător, pacientlumbi","răbdător, pacient","lumbi","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"răbdător, pacientpeşte","răbdător, pacient","peşte","unrelated","word","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "rabilităchelodi","rabilită","chelodi","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "rabilităiubit","rabilită","iubit","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "racantaugi","racant","augi","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4036,7 +4034,7 @@
 "săpafotbal","săpa","fotbal","unrelated","word","word",0.128511020616114,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "săpaînganţă","săpa","înganţă","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "săpaîngropa","săpa","îngropa","related","word","word",0.537305329001006,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"șapjafără valogewood","șapja","fără valogewood","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"șapjafuru valogewood","șapja","furu valogewood","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "șapjazonă","șapja","zonă","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "săpmeministru","săpme","ministru","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "săpmeparsic","săpme","parsic","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4723,7 +4721,7 @@
 "tusefebră","tuse","febră","related","word","word",0.5080971140572,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "tusemenţivocare","tuse","menţivocare","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "tusestudiu","tuse","studiu","unrelated","word","word",0.112022266981824,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
-"tutunca puzendo","tutun","ca puzendo","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"tutundu puzendo","tutun","du puzendo","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "tutunposibilitate","tutun","posibilitate","unrelated","word","word",0.0737634130073455,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "tutunţigară","tutun","ţigară","related","word","word",0.455106879214338,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "ucigaşcriminal","ucigaş","criminal","related","word","word",0.757882549355421,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
@@ -4779,6 +4777,8 @@
 "uorprietenos","uor","prietenos","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "uptafacere","upt","afacere","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "upteviteam","upt","eviteam","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"ur siguradureftorchescarcerare","ur siguradureft","orchescarcerare","nonword","nonword","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
+"ur siguradureftslab","ur siguradureft","slab","nonword","nonword","word",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "urăconlear","ură","conlear","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "urădragoste","ură","dragoste","related","word","word",0.402514836099746,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE
 "uraganfersodă","uragan","fersodă","nonword","word","nonword",NA,NA,NA,NA,0,0,0,0,NA,0,0,0,NA,FALSE,FALSE,FALSE

@@ -169,10 +169,18 @@ es_words <- import("/var/www/html/es/es_words.csv")
 
 # collected data
 es_data_all <-
-  bind_rows(processData("/var/www/html/es/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+  list(processData("/var/www/html/es/data/data.sqlite") %>%
+            mutate_at(vars(one_of("url_lab")), as.character,
+              vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/es1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(es_data_all)){
+    es_data_all[[i]] <- es_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  es_data_all <- bind_rows(es_data_all) %>% unique()
 
 # # delete stuff before we started
 # es_data_all <- es_data_all %>%

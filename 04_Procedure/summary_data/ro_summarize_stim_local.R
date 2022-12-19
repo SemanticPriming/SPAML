@@ -171,9 +171,7 @@ ro_data_all <-
 
 # # delete stuff before we started
 # ro_data_all <- ro_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-10-26")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -445,7 +443,8 @@ ro_data_all <-
                          import)
   list_ro_data <- lapply(list_ro_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_ro_data <- lapply(list_ro_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
-
+  list_ro_data <- list_ro_data[lapply(list_ro_data, nrow) > 0]
+  
   if (nrow(p_lab) > 0){
     if (length(list_ro_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_ro_data) %>%
@@ -556,15 +555,15 @@ ro_data_all <-
     # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
     practice <- '[
-  {"word": "croză", "class": "nonword"},
+  {"word": "comcă", "class": "nonword"},
   {"word": "buze", "class": "word"},
   {"word": "gudron", "class": "word"},
-  {"word": "închide", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
+  {"word": "rubdu", "class": "nonword"},
+  {"word": "plumna", "class": "nonword"},
   {"word": "cadou", "class": "word"},
-  {"word": "clăr", "class": "nonword"},
+  {"word": "menţidiţional", "class": "nonword"},
   {"word": "lovitură", "class": "word"},
-  {"word": "ventilare", "class": "nonword"},
+  {"word": "jecăt", "class": "nonword"},
   {"word": "cizme", "class": "word"}]'
 
     writeLines(practice, con = paste0(

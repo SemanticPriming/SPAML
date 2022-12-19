@@ -166,34 +166,54 @@ ru_words <- import("/var/www/html/ru/ru_words.csv")
 
 # collected data
 ru_data_all <-
-  bind_rows(processData("/var/www/html/ru/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+  list(processData("/var/www/html/ru/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru2/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru3/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru4/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru5/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru6/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru7/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru8/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru9/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru10/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru11/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru12/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru13/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate_at(vars(one_of("url_lab")), as.character,
+                          vars(one_of("url_special_code")), as.character))
+
+  for (i in 1:length(ru_data_all)){
+    ru_data_all[[i]] <- ru_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  }
+
+  ru_data_all <- bind_rows(ru_data_all) %>% unique()
 
 # delete stuff before we started ----
 ru_data_all <- ru_data_all %>%

@@ -171,9 +171,7 @@ fr_data_all <-
 
 # # delete stuff before we started
 # fr_data_all <- fr_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+#   filter(timestamp > as.POSIXct("2022-10-26")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -445,7 +443,8 @@ fr_data_all <-
                          import)
   list_fr_data <- lapply(list_fr_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_fr_data <- lapply(list_fr_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
-
+  list_fr_data <- list_fr_data[lapply(list_fr_data, nrow) > 0]
+  
   if (nrow(p_lab) > 0){
     if (length(list_fr_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_fr_data) %>%
@@ -556,17 +555,17 @@ fr_data_all <-
     # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
     practice <- '[
-  {"word": "demoine", "class": "nonword"},
+  {"word": "pafiait", "class": "nonword"},
   {"word": "lèvres", "class": "word"},
   {"word": "goudron", "class": "word"},
-  {"word": "cou", "class": "nonword"},
-  {"word": "wattié", "class": "nonword"},
+  {"word": "urverse", "class": "nonword"},
+  {"word": "agte", "class": "nonword"},
   {"word": "cadeau", "class": "word"},
-  {"word": "borde", "class": "nonword"},
+  {"word": "deller", "class": "nonword"},
   {"word": "tir", "class": "word"},
-  {"word": "hiver", "class": "nonword"},
+  {"word": "ihe", "class": "nonword"},
   {"word": "botte", "class": "word"}]'
-    
+
     writeLines(practice, con = paste0(
       "./04_Procedure/fr", folder_num,
       "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
