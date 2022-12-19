@@ -237,7 +237,7 @@ ru_data_all <- ru_data_all %>%
 
   # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-ru_data_all <- ur_data_all %>%
+ru_data_all <- ru_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
