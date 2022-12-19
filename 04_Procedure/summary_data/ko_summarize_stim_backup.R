@@ -212,11 +212,11 @@ cs_data_all <-
               mutate_at(vars(one_of("url_lab")), as.character,
                           vars(one_of("url_special_code")), as.character))
 
-  for (i in 1:length(cs_data_all)){
-    cs_data_all[[i]] <- cs_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+  for (i in 1:length(ko_data_all)){
+    ko_data_all[[i]] <- ko_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
   }
 
-  cs_data_all <- bind_rows(cs_data_all) %>% unique()
+  ko_data_all <- bind_rows(ko_data_all) %>% unique()
 
 # delete stuff before we started ----
  ko_data_all <- ko_data_all %>%
