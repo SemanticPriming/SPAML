@@ -6,6 +6,9 @@
 /03_Materials/frequency/*/
 /03_Materials/Translation/
 
+# don't refresh embedded tests
+*/embedded/
+
 # this folder just helped me work
 12_temp
 
