@@ -10,7 +10,7 @@
 # From this data, the R script:
   # Writes out 8 blocks of 100 words that are probabilistically selected
   # Writes out summary table
-  # Writes out participant summary 
+  # Writes out participant summary
 
 # Libraries ---------------------------------------------------------------
 
@@ -174,7 +174,7 @@ ur_data_all <-
 
 # # delete stuff before we started
 ur_data_all <- ur_data_all %>%
-  filter(timestamp > as.POSIXct("2022-12-06")) 
+  filter(timestamp > as.POSIXct("2022-12-06"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -191,6 +191,11 @@ ur_data_all <- ur_data_all %>%
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
+
+    # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+  ur_data_all <- ur_data_all %>%
+    left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -253,7 +258,7 @@ ur_data_all <- ur_data_all %>%
 # grab only real trials ----
   real_trials <- ur_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(ur_data_all)[grep("^time", colnames(ur_data_all))],
            word, class, correct_response, correct)
 
@@ -291,7 +296,7 @@ ur_data_all <- ur_data_all %>%
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -388,8 +393,8 @@ ur_data_all <- ur_data_all %>%
   ur_merged$done <- ur_merged$sampleN >= 50
 
 # use data ----
-  ur_use <- subset(ur_merged, is.na(done) | done == FALSE)
-  ur_sample <- subset(ur_merged, done == TRUE)
+  ur_use <- subset(ur_merged, is.na(done_totalN) | done_totalN == FALSE)
+  ur_sample <- subset(ur_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

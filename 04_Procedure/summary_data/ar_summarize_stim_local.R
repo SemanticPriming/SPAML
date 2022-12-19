@@ -188,10 +188,10 @@ ar_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
   # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-  ar_data_all <- ar_data_all %>% 
+  ar_data_all <- ar_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -449,7 +449,7 @@ ar_data_all <-
   list_ar_data <- lapply(list_ar_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_ar_data <- lapply(list_ar_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_ar_data <- list_ar_data[lapply(list_ar_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_ar_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_ar_data) %>%
@@ -660,5 +660,3 @@ ar_data_all <-
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
-
-  

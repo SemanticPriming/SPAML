@@ -196,6 +196,11 @@ ko_data_all <-
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
 
+    # timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+ko_data_all <- ko_data_all %>%
+  left_join(sender_ids, by = "sender_id")
+
 # Clean Up ----------------------------------------------------------------
 
 # Participant did not indicate at least 18 years of age.
@@ -260,7 +265,7 @@ participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 # grab only real trials ----
 real_trials <- ko_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-  select(observation, sender_id, response, response_action, ended_on, duration,
+  select(observation, fix_sender, response, response_action, ended_on, duration,
          colnames(ko_data_all)[grep("^time", colnames(ko_data_all))],
          word, class, correct_response, correct)
 
@@ -298,7 +303,7 @@ real_trials <- real_trials %>%
                rename(keep_participant = keep)),
             by = c("observation" = "observation")) %>%
   # sort this so the trial type is right
-  arrange(observation, timestamp)
+  arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -420,8 +425,8 @@ ko_merged$done_totalN <- ko_merged$target_answeredN >= 50
 ko_merged$done <- ko_merged$sampleN >= 50
 
 # use data ----
-ko_use <- subset(ko_merged, is.na(done) | done == FALSE)
-ko_sample <- subset(ko_merged, done == TRUE)
+ko_use <- subset(ko_merged, is.na(done_totalN) | done_totalN == FALSE)
+ko_sample <- subset(ko_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -873,4 +878,3 @@ if (adaptive == TRUE){
   }
 
 }
-

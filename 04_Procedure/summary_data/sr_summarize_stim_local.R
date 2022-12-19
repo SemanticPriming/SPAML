@@ -171,7 +171,7 @@ sr_data_all <-
 
 # # delete stuff before we started
 # sr_data_all <- sr_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) 
+#   filter(timestamp > as.POSIXct("2022-10-26"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -188,6 +188,11 @@ sr_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
+
+    # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+  sr_data_all <- sr_data_all %>%
+    left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -250,7 +255,7 @@ sr_data_all <-
 # grab only real trials ----
   real_trials <- sr_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(sr_data_all)[grep("^time", colnames(sr_data_all))],
            word, class, correct_response, correct)
 
@@ -288,7 +293,7 @@ sr_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -409,8 +414,8 @@ sr_data_all <-
   sr_merged$done <- sr_merged$sampleN >= 50
 
 # use data ----
-  sr_use <- subset(sr_merged, is.na(done) | done == FALSE)
-  sr_sample <- subset(sr_merged, done == TRUE)
+  sr_use <- subset(sr_merged, is.na(done_totalN) | done_totalN == FALSE)
+  sr_sample <- subset(sr_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

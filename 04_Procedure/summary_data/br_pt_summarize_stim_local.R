@@ -171,7 +171,7 @@ br_pt_data_all <-
 
 # delete stuff before we started
 # br_pt_data_all <- br_pt_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-12-06")) 
+#   filter(timestamp > as.POSIXct("2022-12-06"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -188,10 +188,10 @@ br_pt_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
   # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-  br_pt_data_all <- br_pt_data_all %>% 
+  br_pt_data_all <- br_pt_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -449,7 +449,7 @@ br_pt_data_all <-
   list_br_pt_data <- lapply(list_br_pt_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_br_pt_data <- lapply(list_br_pt_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_br_pt_data <- list_br_pt_data[lapply(list_br_pt_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_br_pt_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_br_pt_data) %>%

@@ -191,6 +191,11 @@ zh_data_all <-
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
 
+    # timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+zh_data_all <- zh_data_all %>%
+  left_join(sender_ids, by = "sender_id")
+
 # Clean Up ----------------------------------------------------------------
 
   # Participant did not indicate at least 18 years of age.
@@ -252,7 +257,7 @@ zh_data_all <-
 # grab only real trials ----
   real_trials <- zh_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(zh_data_all)[grep("^time", colnames(zh_data_all))],
            word, class, correct_response, correct)
 
@@ -290,7 +295,7 @@ zh_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -411,8 +416,8 @@ zh_data_all <-
   zh_merged$done <- zh_merged$sampleN >= 50
 
 # use data ----
-  zh_use <- subset(zh_merged, is.na(done) | done == FALSE)
-  zh_sample <- subset(zh_merged, done == TRUE)
+  zh_use <- subset(zh_merged, is.na(done_totalN) | done_totalN == FALSE)
+  zh_sample <- subset(zh_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -446,7 +451,7 @@ zh_data_all <-
   list_zh_data <- lapply(list_zh_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_zh_data <- lapply(list_zh_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_zh_data <- list_zh_data[lapply(list_zh_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_zh_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_zh_data) %>%

@@ -171,11 +171,11 @@ el_data_all <-
 
 # # delete stuff before we started
 # el_data_all <- el_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-12-13")) 
+#   filter(timestamp > as.POSIXct("2022-12-13"))
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-el_data_all <- el_data_all %>% 
+el_data_all <- el_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # fix the issue of double displays that happened before 2022-09-01
@@ -449,7 +449,7 @@ el_data_all <- el_data_all %>%
   list_el_data <- lapply(list_el_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_el_data <- lapply(list_el_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_el_data <- list_el_data[lapply(list_el_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_el_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_el_data) %>%

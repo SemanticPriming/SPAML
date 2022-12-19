@@ -189,6 +189,11 @@ no_data_all <-
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
 
+    # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+  no_data_all <- no_data_all %>%
+    left_join(sender_ids, by = "sender_id")
+
 # Clean Up ----------------------------------------------------------------
 
   # Participant did not indicate at least 18 years of age.
@@ -250,7 +255,7 @@ no_data_all <-
 # grab only real trials ----
   real_trials <- no_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(no_data_all)[grep("^time", colnames(no_data_all))],
            word, class, correct_response, correct)
 
@@ -288,7 +293,7 @@ no_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -409,8 +414,8 @@ no_data_all <-
   no_merged$done <- no_merged$sampleN >= 50
 
 # use data ----
-  no_use <- subset(no_merged, is.na(done) | done == FALSE)
-  no_sample <- subset(no_merged, done == TRUE)
+  no_use <- subset(no_merged, is.na(done_totalN) | done_totalN == FALSE)
+  no_sample <- subset(no_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -444,7 +449,7 @@ no_data_all <-
   list_no_data <- lapply(list_no_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_no_data <- lapply(list_no_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_no_data <- list_no_data[lapply(list_no_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_no_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_no_data) %>%
@@ -655,5 +660,3 @@ no_data_all <-
       "/embedded/0d00e4cacc8fbd59aa34a45be41f535ccade17517701d1b3fa6ef139ca8746a3.json"))
 
   }
-
-  

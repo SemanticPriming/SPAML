@@ -403,8 +403,8 @@ es_data_all <- es_data_all %>%
   es_merged$done <- es_merged$sampleN >= 50
 
 # use data ----
-  es_use <- subset(es_merged, is.na(done) | done == FALSE)
-  es_sample <- subset(es_merged, done == TRUE)
+  es_use <- subset(es_merged, is.na(done_totalN) | done_totalN == FALSE)
+  es_sample <- subset(es_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

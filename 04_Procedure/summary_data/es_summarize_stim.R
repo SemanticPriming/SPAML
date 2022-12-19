@@ -181,7 +181,6 @@ es_data_all <-
 
   # delete stuff before we started
   es_data_all <- es_data_all %>%
-    filter(timestamp > as.POSIXct("2022-12-12"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0

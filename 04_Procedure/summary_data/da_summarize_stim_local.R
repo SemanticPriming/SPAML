@@ -171,7 +171,7 @@ da_data_all <-
 
 # fix sender id
 sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-da_data_all <- da_data_all %>% 
+da_data_all <- da_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # delete stuff before we started
@@ -451,7 +451,7 @@ da_data_all <- da_data_all %>%
   list_da_data <- lapply(list_da_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_da_data <- lapply(list_da_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_da_data <- list_da_data[lapply(list_da_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_da_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_da_data) %>%

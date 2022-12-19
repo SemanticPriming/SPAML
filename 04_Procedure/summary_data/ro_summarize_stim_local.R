@@ -171,7 +171,7 @@ ro_data_all <-
 
 # # delete stuff before we started
 # ro_data_all <- ro_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) 
+#   filter(timestamp > as.POSIXct("2022-10-26"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -188,6 +188,11 @@ ro_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
+
+    # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+  ro_data_all <- ro_data_all %>%
+    left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -250,7 +255,7 @@ ro_data_all <-
 # grab only real trials ----
   real_trials <- ro_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(ro_data_all)[grep("^time", colnames(ro_data_all))],
            word, class, correct_response, correct)
 
@@ -288,7 +293,7 @@ ro_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -409,8 +414,8 @@ ro_data_all <-
   ro_merged$done <- ro_merged$sampleN >= 50
 
 # use data ----
-  ro_use <- subset(ro_merged, is.na(done) | done == FALSE)
-  ro_sample <- subset(ro_merged, done == TRUE)
+  ro_use <- subset(ro_merged, is.na(done_totalN) | done_totalN == FALSE)
+  ro_sample <- subset(ro_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -444,7 +449,7 @@ ro_data_all <-
   list_ro_data <- lapply(list_ro_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_ro_data <- lapply(list_ro_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_ro_data <- list_ro_data[lapply(list_ro_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_ro_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_ro_data) %>%

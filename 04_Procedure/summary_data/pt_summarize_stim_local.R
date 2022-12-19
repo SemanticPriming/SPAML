@@ -188,10 +188,10 @@ pt_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
   # fix sender id
   sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-  pt_data_all <- pt_data_all %>% 
+  pt_data_all <- pt_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -414,8 +414,8 @@ pt_data_all <-
   pt_merged$done <- pt_merged$sampleN >= 50
 
 # use data ----
-  pt_use <- subset(pt_merged, is.na(done) | done == FALSE)
-  pt_sample <- subset(pt_merged, done == TRUE)
+  pt_use <- subset(pt_merged, is.na(done_totalN) | done_totalN == FALSE)
+  pt_sample <- subset(pt_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -449,7 +449,7 @@ pt_data_all <-
   list_pt_data <- lapply(list_pt_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_pt_data <- lapply(list_pt_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_pt_data <- list_pt_data[lapply(list_pt_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_pt_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_pt_data) %>%

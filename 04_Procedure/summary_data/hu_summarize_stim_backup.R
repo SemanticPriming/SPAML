@@ -194,6 +194,11 @@ hu_data_all <-
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
 
+    # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+  hu_data_all <- hu_data_all %>%
+    left_join(sender_ids, by = "sender_id")
+
 # Clean Up ----------------------------------------------------------------
 
   # Participant did not indicate at least 18 years of age.
@@ -255,7 +260,7 @@ hu_data_all <-
 # grab only real trials ----
   real_trials <- hu_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(hu_data_all)[grep("^time", colnames(hu_data_all))],
            word, class, correct_response, correct)
 
@@ -293,7 +298,7 @@ hu_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -391,7 +396,7 @@ hu_data_all <-
 
 # use data ----
   hu_use <- subset(hu_merged, is.na(done) | done == FALSE)
-  hu_sample <- subset(hu_merged, done == TRUE)
+  hu_sample <- subset(hu_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

@@ -189,6 +189,11 @@ it_data_all <-
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
 
+    # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+  it_data_all <- it_data_all %>%
+    left_join(sender_ids, by = "sender_id")
+
 # Clean Up ----------------------------------------------------------------
 
   # Participant did not indicate at least 18 years of age.
@@ -250,7 +255,7 @@ it_data_all <-
 # grab only real trials ----
   real_trials <- it_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(it_data_all)[grep("^time", colnames(it_data_all))],
            word, class, correct_response, correct)
 
@@ -288,7 +293,7 @@ it_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -409,8 +414,8 @@ it_data_all <-
   it_merged$done <- it_merged$sampleN >= 50
 
 # use data ----
-  it_use <- subset(it_merged, is.na(done) | done == FALSE)
-  it_sample <- subset(it_merged, done == TRUE)
+  it_use <- subset(it_merged, is.na(done_totalN) | done_totalN == FALSE)
+  it_sample <- subset(it_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
@@ -444,7 +449,7 @@ it_data_all <-
   list_it_data <- lapply(list_it_data, function(df) dplyr::mutate_at(df, vars(matches("url_lab")), as.character))
   list_it_data <- lapply(list_it_data, function(df) dplyr::mutate_at(df, vars(matches("url_special_code")), as.character))
   list_it_data <- list_it_data[lapply(list_it_data, nrow) > 0]
-  
+
   if (nrow(p_lab) > 0){
     if (length(list_it_data) > 0){
       p_lab <- unique(bind_rows(bind_rows(list_it_data) %>%

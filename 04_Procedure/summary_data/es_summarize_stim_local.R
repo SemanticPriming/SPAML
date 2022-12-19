@@ -178,7 +178,7 @@ es_data_all <-
 
 # # delete stuff before we started
 # es_data_all <- es_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) 
+#   filter(timestamp > as.POSIXct("2022-10-26"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -195,10 +195,10 @@ es_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
   # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
-  es_data_all <- es_data_all %>% 
+  es_data_all <- es_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -421,8 +421,8 @@ es_data_all <-
   es_merged$done <- es_merged$sampleN >= 50
 
 # use data ----
-  es_use <- subset(es_merged, is.na(done) | done == FALSE)
-  es_sample <- subset(es_merged, done == TRUE)
+  es_use <- subset(es_merged, is.na(done_totalN) | done_totalN == FALSE)
+  es_sample <- subset(es_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

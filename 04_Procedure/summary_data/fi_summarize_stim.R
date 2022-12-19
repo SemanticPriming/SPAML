@@ -191,6 +191,11 @@ fi_data_all <- fi_data_all %>%
              grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
   ))
 
+  # timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+fi_data_all <- fi_data_all %>%
+  left_join(sender_ids, by = "sender_id")
+
 # Clean Up ----------------------------------------------------------------
 
 # Participant did not indicate at least 18 years of age.
@@ -252,7 +257,7 @@ participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 # grab only real trials ----
 real_trials <- fi_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-  select(observation, sender_id, response, response_action, ended_on, duration,
+  select(observation, fix_sender, response, response_action, ended_on, duration,
          colnames(fi_data_all)[grep("^time", colnames(fi_data_all))],
          word, class, correct_response, correct)
 
@@ -290,7 +295,7 @@ real_trials <- real_trials %>%
                rename(keep_participant = keep)),
             by = c("observation" = "observation")) %>%
   # sort this so the trial type is right
-  arrange(observation, timestamp)
+  arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -411,8 +416,8 @@ fi_merged$done_totalN <- fi_merged$target_answeredN >= 50
 fi_merged$done <- fi_merged$sampleN >= 50
 
 # use data ----
-fi_use <- subset(fi_merged, is.na(done) | done == FALSE)
-fi_sample <- subset(fi_merged, done == TRUE)
+fi_use <- subset(fi_merged, is.na(done_totalN) | done_totalN == FALSE)
+fi_sample <- subset(fi_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 
