@@ -179,11 +179,9 @@ es_data_all <-
 
   es_data_all <- bind_rows(es_data_all) %>% unique()
 
-# # delete stuff before we started
-# es_data_all <- es_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+  # delete stuff before we started
+  es_data_all <- es_data_all %>%
+    filter(timestamp > as.POSIXct("2022-12-12"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
@@ -200,6 +198,11 @@ es_data_all <- es_data_all %>%
   filter(!(observation %in% obs_extra &
              grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
   ))
+
+# timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
+es_data_all <- es_data_all %>% 
+  left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -262,7 +265,7 @@ participant_DF$keep[participant_DF$correct < .80] <- "exclude"
 # grab only real trials ----
 real_trials <- es_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-  select(observation, sender_id, response, response_action, ended_on, duration,
+  select(observation, fix_sender, response, response_action, ended_on, duration,
          colnames(es_data_all)[grep("^time", colnames(es_data_all))],
          word, class, correct_response, correct)
 
@@ -300,7 +303,7 @@ real_trials <- real_trials %>%
                rename(keep_participant = keep)),
             by = c("observation" = "observation")) %>%
   # sort this so the trial type is right
-  arrange(observation, timestamp)
+  arrange(observation, fix_sender)
 
 # figure out trial type ----
 
@@ -421,8 +424,8 @@ es_merged$done_totalN <- es_merged$target_answeredN >= 50
 es_merged$done <- es_merged$sampleN >= 50
 
 # use data ----
-es_use <- subset(es_merged, is.na(done) | done == FALSE)
-es_sample <- subset(es_merged, done == TRUE)
+es_use <- subset(es_merged, is.na(done_totalN) | done_totalN == FALSE)
+es_sample <- subset(es_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
 

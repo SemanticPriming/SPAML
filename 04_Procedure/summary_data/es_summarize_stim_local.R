@@ -195,6 +195,11 @@ es_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
+  
+  # timestamp is somewhat unreliable fix up sender_id
+  sender_ids <- import("./04_Procedure/summary_data/sender_id.csv")
+  es_data_all <- es_data_all %>% 
+    left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
 
@@ -257,7 +262,7 @@ es_data_all <-
 # grab only real trials ----
   real_trials <- es_data_all %>% #data frame
     filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
-    select(observation, sender_id, response, response_action, ended_on, duration,
+    select(observation, fix_sender, response, response_action, ended_on, duration,
            colnames(es_data_all)[grep("^time", colnames(es_data_all))],
            word, class, correct_response, correct)
 
@@ -295,7 +300,7 @@ es_data_all <-
                  rename(keep_participant = keep)),
               by = c("observation" = "observation")) %>%
     # sort this so the trial type is right
-    arrange(observation, timestamp)
+    arrange(observation, fix_sender)
 
 # figure out trial type ----
 
