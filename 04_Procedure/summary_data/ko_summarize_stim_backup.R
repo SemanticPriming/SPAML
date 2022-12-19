@@ -168,7 +168,7 @@ processData <- function(database) {
 ko_words <- import("/var/www/html/ko/ko_words.csv")
 
 # collected data
-cs_data_all <-
+ko_data_all <-
         list(processData("/var/www/html/ko/data/data.sqlite") %>%
           mutate_at(vars(one_of("url_lab")), as.character,
                     vars(one_of("url_special_code")), as.character),

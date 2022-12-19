@@ -194,7 +194,7 @@ pl_data_all <-
 
     # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-  pt_data_all <- pt_data_all %>%
+  pl_data_all <- pl_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
