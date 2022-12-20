@@ -2,7 +2,7 @@ pt_cue,pt_target,type,cue_type,target_type,pt_cosine
 suave,gentil,related,word,word,0.455271159821994
 sair,abandono,related,word,word,0.181585262711095
 espinal,abdominal,related,word,word,0.608998896386838
-seqüestrar,raptar,related,word,word,0.547419718763271
+sequestrar,raptar,related,word,word,0.547419718763271
 beijo,abraço,related,word,word,0.722312712229985
 refúgio,abrigo,related,word,word,0.685878963920576
 ridículo,absurdo,related,word,word,0.744015186755055
@@ -410,7 +410,7 @@ trancado,fechado,related,word,word,0.682846649335891
 abrir,fechar,related,word,word,0.737872121803846
 abertura,fecho,related,word,word,0.385173719994541
 colónia,federação,related,word,word,0.38737771652911
-digusting,feio,related,word,word,
+repulsivo,feio,related,word,word,
 satisfeito,feliz,related,word,word,0.607718841886636
 masculino,feminino,related,word,word,0.779190219522151
 natal,feriado,related,word,word,0.59482955593394
@@ -1390,7 +1390,7 @@ círculo,adorável,unrelated,word,word,0.132313386738902
 segunda-feira,falso,unrelated,word,word,
 frango,aconselhar,unrelated,word,word,0.01713253625035
 caracol,ataque,unrelated,word,word,0.0529307798480191
-digusting,pressão,unrelated,word,word,
+repulsivo,pressão,unrelated,word,word,
 repentino,boston,unrelated,word,word,0.0883762605054423
 anónimo,cancro,unrelated,word,word,0.0694557136688128
 desconfortável,rapaz,unrelated,word,word,0.114252274432117
@@ -1420,7 +1420,7 @@ poeta,buraco,unrelated,word,word,0.095282555852907
 ok,muitas vezes,unrelated,word,word,
 vermelho,diretor,unrelated,word,word,0.0310126442311651
 espinal,impressionar,unrelated,word,word,0.0681609570448149
-seqüestrar,erro,unrelated,word,word,0.113671589962856
+sequestrar,erro,unrelated,word,word,0.113671589962856
 presença,esparguete,unrelated,word,word,0.0447880743783347
 autor,dólar,unrelated,word,word,0.0822539691021535
 terminal,dar,unrelated,word,word,0.101391320389132
@@ -2951,7 +2951,7 @@ campeão,mesamento,nonword,word,nonword,
 escalar,aprotelo,nonword,word,nonword,
 terapia,exisa,nonword,word,nonword,
 açúcar,cavações,nonword,word,nonword,
-digusting,cecharla,nonword,word,nonword,
+repulsivo,cecharla,nonword,word,nonword,
 engolir,dindo,nonword,word,nonword,
 muro,ceatractial,nonword,word,nonword,
 artigo,cemitélhões,nonword,word,nonword,
@@ -2986,7 +2986,7 @@ nojento,lovente,nonword,word,nonword,
 lanche,avernica,nonword,word,nonword,
 alho,cosei,nonword,word,nonword,
 passatempo,coepera,nonword,word,nonword,
-seqüestrar,coemisso,nonword,word,nonword,
+sequestrar,coemisso,nonword,word,nonword,
 coragem,cotes,nonword,word,nonword,
 nada,famani,nonword,word,nonword,
 lâmpada,descloper,nonword,word,nonword,
