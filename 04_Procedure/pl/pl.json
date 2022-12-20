@@ -517,7 +517,7 @@
         }
       ],
       "title": "Real Task Instructions",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instrukcje</h2>\n    \n    <p class=\"text-left\">Świetna robota! Pamiętaj, że w przypadku prawdziwych słów powinnaś/powinieneś używać klawisza <kbd>${ window.word_key }</kbd>  dla słowa, a dla zmyślonych - klawisza <kbd>${ window.nonword_key }</kbd> dla nie-słowa. Przejdziemy do właściwej części eksperymentu.\n\n    <p class=\"text-left\"> Pamiętaj, aby wykonywać to zadanie jak najszybciej, udzielając jednocześnie prawidłowych odpowiedzi. W tej części nie zobaczysz już żadnej informacji zwrotnej. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI<kbd>. \n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>Instrukcje</h2>\n    \n    <p class=\"text-left\">Świetna robota! Pamiętaj, że w przypadku prawdziwych słów powinnaś/powinieneś używać klawisza <kbd>${ window.word_key }</kbd>  dla słowa, a dla zmyślonych - klawisza <kbd>${ window.nonword_key }</kbd> dla nie-słowa. Przejdziemy do właściwej części eksperymentu.\n\n    <p class=\"text-left\"> Pamiętaj, aby wykonywać to zadanie jak najszybciej, udzielając jednocześnie prawidłowych odpowiedzi. W tej części nie zobaczysz już żadnej informacji zwrotnej. </p>\n  \n  </div>\n\n</main>\n\n<footer>\n  Aby kontynuować, naciśnij klawisz <kbd>SPACJI</kbd>. \n</footer>",
       "_tab": "Content",
       "tardy": true
     },
