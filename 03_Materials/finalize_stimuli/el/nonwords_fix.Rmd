@@ -118,7 +118,7 @@ DF2$accents <- as.numeric(DF2$accents)
 
 DF <- bind_rows(DF, DF2)
 
-DF$words <- paste("\\b", DF$words, "\\b")
+DF$words <- paste0("\\b", DF$words, "\\b")
 ```
 
 ## Update
