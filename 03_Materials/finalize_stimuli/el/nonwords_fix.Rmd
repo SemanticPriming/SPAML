@@ -1,0 +1,181 @@
+---
+title: "Greek Nonwords"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(rio)
+library(stringr)
+library(stringi)
+```
+
+## Data
+
+```{r}
+trials <- import("el_trials_final.csv")
+words_DF <- import("../../../04_Procedure/el/el_words.csv")
+matching <- import("../../matched_stimuli/el_matched.csv")
+
+vowels <- c("ί", "ό", "ά", "ύ", "έ", "ή", "ώ" )
+replace <- c("ι", "ο", "α", "ν", "ε", "η", "ω")
+```
+
+## Fix
+
+```{r}
+# find all the nonword trials
+words <- c(
+  trials %>% 
+    filter(cue_type == "nonword") %>%
+    pull(el_cue), 
+  trials %>% 
+    filter(target_type == "nonword") %>% 
+    pull(el_target)
+) %>% unique()
+
+DF <- data.frame("words" = words)
+
+# count the number of accented chars
+DF$accents <- str_count(DF$words, paste0(vowels, collapse = "|"))
+
+# ignore everything that has one already
+DF <- DF %>% 
+  filter(accents != 1)
+
+DF$fix <- NA
+
+for (i in 1:nrow(DF)){
+  
+  if (DF$accents[i] == 0){
+    what <- str_extract(DF$words[i], paste0("[", paste0(replace, collapse = ""), "]"))
+    DF$fix[i] <- DF$words[i]
+    DF$fix[i] <- str_replace(
+      DF$fix[i],
+      what, 
+      vowels[str_locate(paste(replace, collapse = ""), what)[1]]
+    )
+  }
+  
+  if (DF$accents[i] == 2){
+    what <- str_extract(DF$words[i], paste0("[", paste0(vowels, collapse = ""), "]"))
+    DF$fix[i] <- DF$words[i]
+    DF$fix[i] <- str_replace(
+      DF$fix[i],
+      what, 
+      replace[str_locate(paste(vowels, collapse = ""), what)[1]]
+    )
+  }
+  
+  if (DF$accents[i] == 3){
+    what <- str_extract(DF$words[i], paste0("[", paste0(vowels, collapse = ""), "]"))
+    DF$fix[i] <- DF$words[i]
+    DF$fix[i] <- str_replace(
+      DF$fix[i],
+      what, 
+      replace[str_locate(paste(vowels, collapse = ""), what)[1]]
+    )
+    
+    # do it again 
+    what <- str_extract(DF$fix[i], paste0("[", paste0(vowels, collapse = ""), "]"))
+    DF$fix[i] <- str_replace(
+      DF$fix[i],
+      what, 
+      replace[str_locate(paste(vowels, collapse = ""), what)[1]]
+    )
+  }
+  
+}
+
+DF$fix[DF$words == "very close to real word"] <- "υπολοχαγιέ"
+DF$fix[DF$words == "wacken"] <- "φθσηέ"
+
+sum(is.na(DF$fix))
+
+DF$fix[is.na(DF$fix)] <- DF$words[is.na(DF$fix)]
+```
+
+## Fix the Doubles
+
+```{r}
+DF2 <- rbind.data.frame(c("απέναντι από",0, "απέναντι"),
+c("δώσει το έναυσμα για",0, "έναυσμα") ,
+c("σχετικά με",0, "σχετικά" ),
+c("η δύση του ηλίου",0, "δύση του ήλιου"),
+c("η φυσική",  0,"φυσική"),
+c("εδώδιμος ιχθύς του βορρά",0, "εδώδιμος"))
+colnames(DF2) <- colnames(DF)
+names(DF2) <- names(DF)
+DF2$accents <- as.numeric(DF2$accents)
+
+DF <- bind_rows(DF, DF2)
+```
+
+## Update
+
+```{r}
+trials$el_cue <- stri_replace_all_fixed(
+  str = trials$el_cue, 
+  pattern = DF$words, 
+  replacement = DF$fix,
+  vectorize_all = FALSE
+)
+
+trials$el_target <- stri_replace_all_fixed(
+  str = trials$el_target, 
+  pattern = DF$words, 
+  replacement = DF$fix,
+  vectorize_all = FALSE
+)
+
+words_DF$el_cue <- stri_replace_all_fixed(
+  str = words_DF$el_cue, 
+  pattern = DF$words, 
+  replacement = DF$fix,
+  vectorize_all = FALSE
+)
+
+words_DF$el_target <- stri_replace_all_fixed(
+  str = words_DF$el_target, 
+  pattern = DF$words, 
+  replacement = DF$fix,
+  vectorize_all = FALSE
+)
+
+matching$el_fake_cue <- stri_replace_all_fixed(
+  str = matching$el_fake_cue, 
+  pattern = DF$words, 
+  replacement = DF$fix,
+  vectorize_all = FALSE
+)
+
+matching$el_fake_target <- stri_replace_all_fixed(
+  str = matching$el_fake_target, 
+  pattern = DF$words, 
+  replacement = DF$fix,
+  vectorize_all = FALSE
+)
+
+apply(trials, 2, function (x) sum(is.na(x)))
+apply(words_DF, 2, function (x) sum(is.na(x)))
+apply(matching, 2, function (x) sum(is.na(x)))
+```
+
+
+## Write Out
+
+```{r}
+export(trials, "el_trials_final.csv", row.names = F)
+export(words_DF, "../../../04_Procedure/el/el_words.csv", row.names = F)
+export(matching, "../../matched_stimuli/el_matched.csv", row.names = F)
+```
+
+

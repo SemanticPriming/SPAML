@@ -78,7 +78,7 @@ ufo,εξωγήινο,related,word,word,0.432122856644264
 απαγωγή,απαγάγω,related,word,word,0.286014901647623
 απάντηση,απαντώ,related,word,word,0.463215996013246
 απαραίτητη,χρειάζομαι,related,word,word,0.33687498719559
-"απέναντι από,αντίθετος,related,word,word,
+εργασίααπέναντι από,αντίθετος,related,word,word,
 απευθείας,κατευθείαν,related,word,word,0.767507434650495
 απλά,απλός,related,word,word,0.486860556799886
 απόβλητα,ξοδεύω,related,word,word,0.209205440933825
@@ -314,7 +314,7 @@ oυάσιγκτoν,βοστώνη,related,word,word,
 έξω,μέσα,related,word,word,0.556798872498041
 εξαιρετικά,πολύ,related,word,word,0.56854439779454
 επείγων,επείγον,related,word,word,0.687896014628284
-"επεξεργάζομαι, διαδικασία",διαδικασία,related,word,word,
+επεξεργάζομαι,διαδικασία,related,word,word,
 επέτειος,γενέθλια,related,word,word,0.531786162773495
 επιβάτης,οδηγός,related,word,word,0.543867329919366
 επιβεβαίωση,επιβεβαιώνω,related,word,word,0.54950088122074
@@ -338,7 +338,7 @@ oυάσιγκτoν,βοστώνη,related,word,word,
 εργαλείο,όργανο,related,word,word,0.492588521754265
 εργαστήρι,γκαράζ,related,word,word,0.230639538479564
 έργο,αποστολή,related,word,word,0.378030946447494
-"εργασία, μελέτη",πρόγραμμα,related,word,word,
+εργασία,πρόγραμμα,related,word,word,
 εργοστάσιο,παραγωγή,related,word,word,0.33674187621524
 έρευνα,μελέτη,related,word,word,0.573385637059692
 έρημος,κοιλάδα,related,word,word,0.386150981399434
@@ -1079,7 +1079,7 @@ oυάσιγκτoν,βοστώνη,related,word,word,
 νόμος,παιδική ηλικία,unrelated,word,word,
 περιέχω,πρόεδρος,unrelated,word,word,0.131430228379792
 προχωρώ,μαγιονέζα,unrelated,word,word,0.124211599377132
-"απέναντι από,νόστιμο,unrelated,word,word,
+επεξεργάζομαιαπέναντι από,νόστιμο,unrelated,word,word,
 ορφανοτροφείο,αιτία,unrelated,word,word,0.086277612887656
 πρωτότυπο,υπόσχεση,unrelated,word,word,0.093684832093672
 λανθασμένος,εκδήλωση,unrelated,word,word,0.0620955010015139
@@ -1603,7 +1603,7 @@ ufo,νεροχύτης,unrelated,word,word,-0.000485815461544304
 προβολή,ναύτης,unrelated,word,word,0.0808643518120289
 κείμενο,βλακεία,unrelated,word,word,0.0561242696976113
 κάψουλα,ρεαλιστικός,unrelated,word,word,0.0373856028130124
-"επεξεργάζομαι, διαδικασία",χελώνα,unrelated,word,word,
+επεξεργάζομαι,χελώνα,unrelated,word,word,
 αποδεικνύω,πόρτα,unrelated,word,word,0.0750394001628343
 μαραθώνας,φίδι,unrelated,word,word,0.0616932204288013
 απαγωγέας,χιόνι,unrelated,word,word,0.0718966053873572
@@ -1702,7 +1702,7 @@ oυάσιγκτoν,βιολογικός,unrelated,word,word,
 ένας,βασανίζω,unrelated,word,word,0.135610811912911
 συνειδητοποιώ,υπουργείο,unrelated,word,word,0.0884040853429466
 παρατσούκλι,πουλώ,unrelated,word,word,0.129832126797099
-"εργασία, μελέτη",φόβος,unrelated,word,word,
+εργασία,φόβος,unrelated,word,word,
 αυτοκρατορικός,γέλιο,unrelated,word,word,0.0348570546024205
 κορυφή,γυναίκα,unrelated,word,word,0.111451567871256
 λοχίας,προφανώς,unrelated,word,word,0.0920690183935812
@@ -2919,7 +2919,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 άγγελος,ναυτοτ,nonword,word,nonword,
 αληθής,αστέντ,nonword,word,nonword,
 τυπικός,συνάάφηση,nonword,word,nonword,
-"απέναντι από,αποθοχεύσετε,nonword,word,nonword,
+εργασίααπέναντι από,αποθοχεύσετε,nonword,word,nonword,
 πρεσβευτής,διατπιούν,nonword,word,nonword,
 πόλεμος,εμπούσα,nonword,word,nonword,
 πρώτα,πετυχαμέω,nonword,word,nonword,
@@ -3139,7 +3139,7 @@ dvd,τιτίότητα,nonword,word,nonword,
 αποτρέψει,συνήετς,nonword,word,nonword,
 ξύπνιος,πληρεμορώ,nonword,word,nonword,
 φούρνος,εσορατόριο,nonword,word,nonword,
-"επεξεργάζομαι, διαδικασία",ποόγο,nonword,word,nonword,
+επεξεργάζομαι,ποόγο,nonword,word,nonword,
 παράλογος,τσιγελο,nonword,word,nonword,
 εκατομμύριο,λάκω,nonword,word,nonword,
 φιλοξενία,hyμη,nonword,word,nonword,
@@ -3706,7 +3706,7 @@ ufo,δολοφότες,nonword,word,nonword,
 καλοκαίρι,ινύτης,nonword,word,nonword,
 αγοράζω,παρασφθηση,nonword,word,nonword,
 συμπέρασμα,πνδήμα,nonword,word,nonword,
-"εργασία, μελέτη",τυλι,nonword,word,nonword,
+εργασία,τυλι,nonword,word,nonword,
 πλοήγηση,χυνατο,nonword,word,nonword,
 νηφάλιος,συπιά,nonword,word,nonword,
 γαβη,επιστρχνη,nonword,nonword,nonword,
