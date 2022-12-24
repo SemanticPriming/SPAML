@@ -117,47 +117,49 @@ names(DF2) <- names(DF)
 DF2$accents <- as.numeric(DF2$accents)
 
 DF <- bind_rows(DF, DF2)
+
+DF$words <- paste("\\b", DF$words, "\\b")
 ```
 
 ## Update
 
 ```{r}
-trials$el_cue <- stri_replace_all_fixed(
+trials$el_cue <- stri_replace_all_regex(
   str = trials$el_cue, 
   pattern = DF$words, 
   replacement = DF$fix,
   vectorize_all = FALSE
 )
 
-trials$el_target <- stri_replace_all_fixed(
+trials$el_target <- stri_replace_all_regex(
   str = trials$el_target, 
   pattern = DF$words, 
   replacement = DF$fix,
   vectorize_all = FALSE
 )
 
-words_DF$el_cue <- stri_replace_all_fixed(
+words_DF$el_cue <- stri_replace_all_regex(
   str = words_DF$el_cue, 
   pattern = DF$words, 
   replacement = DF$fix,
   vectorize_all = FALSE
 )
 
-words_DF$el_target <- stri_replace_all_fixed(
+words_DF$el_target <- stri_replace_all_regex(
   str = words_DF$el_target, 
   pattern = DF$words, 
   replacement = DF$fix,
   vectorize_all = FALSE
 )
 
-matching$el_fake_cue <- stri_replace_all_fixed(
+matching$el_fake_cue <- stri_replace_all_regex(
   str = matching$el_fake_cue, 
   pattern = DF$words, 
   replacement = DF$fix,
   vectorize_all = FALSE
 )
 
-matching$el_fake_target <- stri_replace_all_fixed(
+matching$el_fake_target <- stri_replace_all_regex(
   str = matching$el_fake_target, 
   pattern = DF$words, 
   replacement = DF$fix,
