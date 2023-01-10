@@ -170,10 +170,8 @@ fr_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # # delete stuff before we started
-# fr_data_all <- fr_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+fr_data_all <- fr_data_all %>%
+  filter(timestamp > as.POSIXct("2022-12-13"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
