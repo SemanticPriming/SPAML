@@ -193,7 +193,7 @@ da_data_all <- da_data_all %>%
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-da_data_all <- da_data_all %>% 
+da_data_all <- da_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -201,7 +201,7 @@ da_data_all <- da_data_all %>%
 # Participant did not indicate at least 18 years of age.
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
-current_year <- 2022
+current_year <- 2023
 number_folders <- 1
 
 ##create demographics only data

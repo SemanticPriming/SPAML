@@ -1,4 +1,4 @@
-# Information -------------------------------------------------------------
+e# Information -------------------------------------------------------------
 
 # This R script reads in the data from the SPAML experiment and then:
 # removes incorrect trials since they don't count
@@ -199,7 +199,7 @@ ur_data_all <- ur_data_all %>%
 # Participant did not indicate at least 18 years of age.
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
-current_year <- 2022
+current_year <- 2023
 number_folders <- 1
 
 ##create demographics only data

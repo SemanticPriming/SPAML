@@ -201,10 +201,10 @@ es_data_all <- es_data_all %>%
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
   # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-  es_data_all <- es_data_all %>% 
+  es_data_all <- es_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -212,7 +212,7 @@ es_data_all <- es_data_all %>%
   # Participant did not indicate at least 18 years of age.
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
-  current_year <- 2022
+  current_year <- 2023
   number_folders <- 1
 
   ##create demographics only data

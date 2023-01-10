@@ -174,7 +174,7 @@ br_pt_data_all <-
 
 # delete stuff before we started
 # br_pt_data_all <- br_pt_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-12-06")) 
+#   filter(timestamp > as.POSIXct("2022-12-06"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -191,10 +191,10 @@ br_pt_data_all <-
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
-  
+
   # timestamp is somewhat unreliable fix up sender_id
   sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-  br_pt_data_all <- br_pt_data_all %>% 
+  br_pt_data_all <- br_pt_data_all %>%
     left_join(sender_ids, by = "sender_id")
 
 # Clean Up ----------------------------------------------------------------
@@ -202,7 +202,7 @@ br_pt_data_all <-
   # Participant did not indicate at least 18 years of age.
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
-  current_year <- 2022
+  current_year <- 2023
   number_folders <- 1
 
   ##create demographics only data

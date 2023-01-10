@@ -171,11 +171,11 @@ el_data_all <-
 
 # delete stuff before we started
 # el_data_all <- el_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-12-13")) 
+#   filter(timestamp > as.POSIXct("2022-12-13"))
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("/var/www/html/summary_data/sender_id.csv")
-el_data_all <- el_data_all %>% 
+el_data_all <- el_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
 # fix the issue of double displays that happened before 2022-09-01
@@ -199,7 +199,7 @@ el_data_all <- el_data_all %>%
 # Participant did not indicate at least 18 years of age.
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
-current_year <- 2022
+current_year <- 2023
 number_folders <- 1
 
 ##create demographics only data

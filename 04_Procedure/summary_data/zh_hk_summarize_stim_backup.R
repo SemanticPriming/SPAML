@@ -204,7 +204,7 @@ zh_hk_data_all <- zh_hk_data_all %>%
   # Participant did not indicate at least 18 years of age.
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
-  current_year <- 2022
+  current_year <- 2023
   number_folders <- 1
 
   ##create demographics only data
