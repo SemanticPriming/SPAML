@@ -53,7 +53,7 @@ argentato,dorato,doneto,armintato,golden,silver
 soggetto,oggetto,oggilto,blagetto,object,subject
 arma,pistola,pignarla,clama,pistol,weapon
 armatura,scudo,deodo,arvetura,shield,armor
-armeria.,arsenale,glissenale,armenga,arsenal,armory
+armeria,arsenale,glissenale,armenga,arsenal,armory
 armonia,equilibrio,sforlibrio,armoste,balance,harmony
 arrabbiato,geloso,crialoso,arrabblento,jealous,angry
 arrestare,punire,puscorre,arrengire,punish,arrest
@@ -115,7 +115,7 @@ boston,washington,walminton,borian,washington,boston
 bottiglia,bicchiere,biciarre,botticre,glass,bottle
 garage,officina,duficina,gavege,workshop,garage
 braccio,mano,scono,quancio,hand,arm
-brutto,digusting.,digustruii,traito,disgusting,ugly
+brutto,ripugnante,ripusente,traito,disgusting,ugly
 buco,crepa,stapa,linco,crack,hole
 divertente,spiritoso,glaritoso,blavertente,witty,funny
 bugiardo,bugia,viegia,busido,lie,liar
@@ -291,7 +291,7 @@ divisione,unità,rietà,divigiune,unit,division
 documento,file,relle,docubeto,file,document
 dollaro,sterlina,sterfona,stenlaro,pound,dollar
 dolore,sofferenza,soffeschizza,glielore,suffering,pain
-domenica,il sabato,il sabhound,domestruaca,Saturday,Sunday
+domenica,sabato,satuto,domestruaca,Saturday,Sunday
 domestica,bambinaia,scherbinaia,dogonica,nanny,maid
 donazione,beneficenza,benescricenza,donadenne,charity,donation
 donna,vedova,vequiva,riena,widow,woman
@@ -926,7 +926,7 @@ temperatura,calore,cascire,tembaratura,heat,temperature
 tempesta,vento,freto,sopesta,wind,storm
 tenente,sergente,burgente,testrate,sergeant,lieutenant
 monitor,schermo,sciammo,monisco,screen,monitor
-tennis,golf,0.0,tentri,golf,tennis
+tennis,golf,gozi,tentri,golf,tennis
 tentare,provare,frivare,scotare,try,attempt
 teoria,idea,ivoa,zarria,idea,theory
 test,esperimento,espefiumento,tero,experiment,test
@@ -997,5 +997,5 @@ volo,atterraggio,usterraggio,zarlo,landing,flight
 volontariamente,volontario,vospettario,grulontariamente,volunteer,voluntarily
 elettore,candidato,soditato,ebratore,candidate,voter
 votazione,maggioranza,sporgioranza,votablune,majority,vote
-watson,sherlock,scrulock.,wapions,sherlock,watson
+watson,sherlock,scrulock,wapions,sherlock,watson
 zona,area,abiu,fisna,area,zone
