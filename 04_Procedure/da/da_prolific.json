@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mange tak!</h2>\n    \n    <p class=\"text-left\">Du har nu gennemført eksperimentet.</p>\n\n    <p class=\"text-left\">Dit tilfældigt generede ID er: \n      ${ window.uuid }. Du kan give benytte dette nummer til at vise, at du har gennemført eksperimentet. Brug venligst dette nummer på Prolific.</p>\n    </p>\n\n    <p class=\"text-left\">Denne undersøgelse handlede om, hvordan man processerer ord og deres betydning. Specifikt testede undersøgelsen, om man er hurtigere til at reagere på et ord (f.eks. temperatur), hvis man lige har set et ord, der har en beslægtet betydning (f.eks. kulde).</p>\n\n  </div>\n</main>\n\n<footer>\n  Du må nu lukke denne side.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mange tak!</h2>\n    \n    <p class=\"text-left\">Du har nu gennemført eksperimentet.</p>\n\n    <p class=\"text-left\">Dit produktive fuldførelses-id er:\n        CIGY04L4. Du kan give brug denne kode til at vise, at du har gennemført eksperimentet. Brug venligst denne kode på Prolific.</p>\n\n    <p class=\"text-left\">Denne undersøgelse handlede om, hvordan man processerer ord og deres betydning. Specifikt testede undersøgelsen, om man er hurtigere til at reagere på et ord (f.eks. temperatur), hvis man lige har set et ord, der har en beslægtet betydning (f.eks. kulde).</p>\n\n  </div>\n</main>\n\n<footer>\n  Du må nu lukke denne side.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
