@@ -23,3 +23,5 @@ Rscript /var/www/html/summary_data/sr_summarize_stim.R
 Rscript /var/www/html/summary_data/ur_summarize_stim.R
 Rscript /var/www/html/summary_data/pl_summarize_stim.R
 Rscript /var/www/html/summary_data/it_summarize_stim.R
+Rscript /var/www/html/summary_data/nl_summarize_stim.R
+Rscript /var/www/html/summary_data/zh_hk_summarize_stim.R

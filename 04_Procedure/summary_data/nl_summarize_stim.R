@@ -170,10 +170,8 @@ nl_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
-nl_data_all <- nl_data_all %>%
-  filter(timestamp > as.POSIXct("2022-10-26")) %>%
-  # this was a tester on 10-26
-  filter(observation != "43143") # check no duplicates at the end
+# nl_data_all <- nl_data_all %>%
+#   filter(timestamp > as.POSIXct("2022-10-26")) 
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
@@ -562,16 +560,16 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "sneife", "class": "nonword"},
-  {"word": "læber", "class": "word"},
-  {"word": "tjære", "class": "word"},
-  {"word": "sødo", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
-  {"word": "gave", "class": "word"},
-  {"word": "kegthe", "class": "nonword"},
-  {"word": "skud", "class": "word"},
-  {"word": "ethorår", "class": "nonword"},
-  {"word": "støvle", "class": "word"}]'
+  {"word": "gean", "class": "nonword"},
+  {"word": "lippen", "class": "word"},
+  {"word": "teer", "class": "word"},
+  {"word": "algenarel", "class": "nonword"},
+  {"word": "dut", "class": "nonword"},
+  {"word": "geschenk", "class": "word"},
+  {"word": "ambuteursce", "class": "nonword"},
+  {"word": "schot", "class": "word"},
+  {"word": "conder", "class": "nonword"},
+  {"word": "bagageruimte", "class": "word"}]'
 
   writeLines(practice, con = paste0(
     "/var/www/html/nl", folder_num,

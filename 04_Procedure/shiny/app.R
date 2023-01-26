@@ -32,7 +32,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Italian"), tabName = "italian_tab"),
                           menuItem(tags$b("Japanese"), tabName = "japanese_tab"),
                           menuItem(tags$b("Korean"), tabName = "korean_tab"),
-                          #dutch
+                          menuItem(tags$b("Dutch"), tabName = "dutch_tab"),
                           menuItem(tags$b("Norwegian"), tabName = "norwegian_tab"),
                           menuItem(tags$b("Polish"), tabName = "polish_tab"),
                           menuItem(tags$b("Portuguese"), tabName = "portuguese_tab"),
@@ -42,8 +42,8 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Serbian"), tabName = "serbian_tab"),
                           menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
                           menuItem(tags$b("Urdu"), tabName = "urdu_tab"),
-                          menuItem(tags$b("Simplified Chinese"), tabName = "s_chinese_tab")
-                          #traditional chinese
+                          menuItem(tags$b("Simplified Chinese"), tabName = "s_chinese_tab"),
+                          menuItem(tags$b("Traditional Chinese"), tabName = "t_chinese_tab")
                           )
                         ),
                     dashboardBody(
@@ -83,7 +83,7 @@ ui <- dashboardPage(skin = 'purple',
                           italian_tab, 
                           japanese_tab, 
                           korean_tab, 
-                          #dutch
+                          dutch_tab,
                           norwegian_tab, 
                           polish_tab, 
                           portuguese_tab, 
@@ -93,8 +93,8 @@ ui <- dashboardPage(skin = 'purple',
                           serbian_tab, 
                           turkish_tab,
                           urdu_tab, 
-                          s_chinese_tab
-                          #traditional chinese
+                          s_chinese_tab,
+                          t_chinese_tab
                         ) # end tabItems
                     ) # end dashboardBody
                 ) # end dashboardPage
@@ -131,7 +131,7 @@ server <- function(input, output) {
     output$englishN_total <- renderInfoBox({
       infoBox(
         "English", sum(grepl("keep", en_participants$keep)), 
-        icon = icon("list"), color = "purple")
+        icon = icon("list"), color = "red")
     })
     
     output$englishWORD_total <- renderInfoBox({
@@ -140,7 +140,7 @@ server <- function(input, output) {
                          round(sum(en_summary$done, na.rm = T)/2000*100,1), 
                          round(sum(en_summary$done_totalN, na.rm = T)/2000*100,1), 
                          sep = " - "), 
-        icon = icon("list"), color = "purple")
+        icon = icon("list"), color = "red")
     })
     
     # russian ----
@@ -172,7 +172,7 @@ server <- function(input, output) {
     output$russianN_total <- renderInfoBox({
       infoBox(
         "Russian", sum(grepl("keep", ru_participants$keep)), 
-        icon = icon("list"), color = "aqua")
+        icon = icon("list"), color = "yellow")
     })
     
     output$russianWORD_total <- renderInfoBox({
@@ -181,7 +181,7 @@ server <- function(input, output) {
                          round(sum(ru_summary$done, na.rm = T)/2000*100,1), 
                          round(sum(ru_summary$done_totalN, na.rm = T)/2000*100,1), 
                          sep = " - "), 
-        icon = icon("list"), color = "aqua")
+        icon = icon("list"), color = "yellow")
     })
     
     # turkish ----
@@ -213,7 +213,7 @@ server <- function(input, output) {
     output$turkishN_total <- renderInfoBox({
       infoBox(
         "Turkish", sum(grepl("keep", tr_participants$keep)), 
-        icon = icon("list"), color = "red")
+        icon = icon("list"), color = "aqua")
     })
     
     output$turkishWORD_total <- renderInfoBox({
@@ -222,7 +222,7 @@ server <- function(input, output) {
                          round(sum(tr_summary$done, na.rm = T)/2000*100,1), 
                          round(sum(tr_summary$done_totalN, na.rm = T)/2000*100,1), 
                          sep = " - "), 
-        icon = icon("list"), color = "red")
+        icon = icon("list"), color = "aqua")
     })
  
     # korean ----
@@ -254,7 +254,7 @@ server <- function(input, output) {
     output$koreanN_total <- renderInfoBox({
       infoBox(
         "Korean", sum(grepl("keep", ko_participants$keep)), 
-        icon = icon("list"), color = "teal")
+        icon = icon("list"), color = "blue")
     })
     
     output$koreanWORD_total <- renderInfoBox({
@@ -263,7 +263,7 @@ server <- function(input, output) {
                         round(sum(ko_summary$done, na.rm = T)/2033*100,1), 
                         round(sum(ko_summary$done_totalN, na.rm = T)/2033*100,1), 
                         sep = " - "),
-        icon = icon("list"), color = "teal")
+        icon = icon("list"), color = "blue")
     })
        
     # Japanese ----
@@ -336,7 +336,7 @@ server <- function(input, output) {
     output$czechN_total <- renderInfoBox({
       infoBox(
         "Czech", sum(grepl("keep", cs_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "green")
     })
     
     output$czechWORD_total <- renderInfoBox({
@@ -345,7 +345,7 @@ server <- function(input, output) {
                        round(sum(cs_summary$done, na.rm = T)/2000*100,1), 
                        round(sum(cs_summary$done_totalN, na.rm = T)/2000*100,1), 
                        sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "green")
     })
     
     # danish ----
@@ -418,7 +418,7 @@ server <- function(input, output) {
     output$SpanishN_total <- renderInfoBox({
       infoBox(
         "Spanish", sum(grepl("keep", es_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "teal")
     })
     
     output$SpanishWORD_total <- renderInfoBox({
@@ -427,7 +427,7 @@ server <- function(input, output) {
                         round(sum(es_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(es_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "teal")
     })
     
     # German ----
@@ -459,7 +459,7 @@ server <- function(input, output) {
     output$GermanN_total <- renderInfoBox({
       infoBox(
         "German", sum(grepl("keep", de_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "olive")
     })
     
     output$GermanWORD_total <- renderInfoBox({
@@ -468,7 +468,7 @@ server <- function(input, output) {
                         round(sum(de_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(de_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "olive")
     })
     
     # Portuguese ----
@@ -500,7 +500,7 @@ server <- function(input, output) {
     output$PortugueseN_total <- renderInfoBox({
       infoBox(
         "Portuguese", sum(grepl("keep", pt_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "lime")
     })
     
     output$PortugueseWORD_total <- renderInfoBox({
@@ -509,7 +509,7 @@ server <- function(input, output) {
                         round(sum(pt_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(pt_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "lime")
     })
     
     # Simplified Chinese ----
@@ -541,7 +541,7 @@ server <- function(input, output) {
     output$Simplified_ChineseN_total <- renderInfoBox({
       infoBox(
         "Simplified Chinese", sum(grepl("keep", zh_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "orange")
     })
     
     output$Simplified_ChineseWORD_total <- renderInfoBox({
@@ -550,7 +550,7 @@ server <- function(input, output) {
                         round(sum(zh_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(zh_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "orange")
     })
     
     # Arabic ----
@@ -582,7 +582,7 @@ server <- function(input, output) {
     output$ArabicN_total <- renderInfoBox({
       infoBox(
         "Arabic", sum(grepl("keep", ar_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "fuchsia")
     })
     
     output$ArabicWORD_total <- renderInfoBox({
@@ -591,7 +591,7 @@ server <- function(input, output) {
                         round(sum(ar_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(ar_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "fuchsia")
     })
     
     # Farsi ----
@@ -623,7 +623,7 @@ server <- function(input, output) {
     output$FarsiN_total <- renderInfoBox({
       infoBox(
         "Farsi", sum(grepl("keep", fa_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "purple")
     })
     
     output$FarsiWORD_total <- renderInfoBox({
@@ -632,7 +632,7 @@ server <- function(input, output) {
                         round(sum(fa_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(fa_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "purple")
     })
     
     # Finnish ----
@@ -664,7 +664,7 @@ server <- function(input, output) {
     output$FinnishN_total <- renderInfoBox({
       infoBox(
         "Finnish", sum(grepl("keep", fi_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "maroon")
     })
     
     output$FinnishWORD_total <- renderInfoBox({
@@ -673,7 +673,7 @@ server <- function(input, output) {
                         round(sum(fi_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(fi_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "maroon")
     })
     
     # French ----
@@ -705,7 +705,7 @@ server <- function(input, output) {
     output$FrenchN_total <- renderInfoBox({
       infoBox(
         "French", sum(grepl("keep", fr_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "black")
     })
     
     output$FrenchWORD_total <- renderInfoBox({
@@ -714,7 +714,7 @@ server <- function(input, output) {
                         round(sum(fr_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(fr_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "black")
     })
     
     # Greek ----
@@ -746,7 +746,7 @@ server <- function(input, output) {
     output$GreekN_total <- renderInfoBox({
       infoBox(
         "Greek", sum(grepl("keep", el_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "red")
     })
     
     output$GreekWORD_total <- renderInfoBox({
@@ -755,7 +755,7 @@ server <- function(input, output) {
                         round(sum(el_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(el_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "red")
     })
     
     # Hungarian ----
@@ -787,7 +787,7 @@ server <- function(input, output) {
     output$HungarianN_total <- renderInfoBox({
       infoBox(
         "Hungarian", sum(grepl("keep", hu_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "yellow")
     })
     
     output$HungarianWORD_total <- renderInfoBox({
@@ -796,7 +796,7 @@ server <- function(input, output) {
                         round(sum(hu_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(hu_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "yellow")
     })
     
     # Norwegian ----
@@ -828,7 +828,7 @@ server <- function(input, output) {
     output$NorwegianN_total <- renderInfoBox({
       infoBox(
         "Norwegian", sum(grepl("keep", no_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "aqua")
     })
     
     output$NorwegianWORD_total <- renderInfoBox({
@@ -837,7 +837,7 @@ server <- function(input, output) {
                         round(sum(no_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(no_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "aqua")
     })
     
     # Brazilian Portuguese ----
@@ -869,7 +869,7 @@ server <- function(input, output) {
     output$Brazilian_PortugueseN_total <- renderInfoBox({
       infoBox(
         "Brazilian Portuguese", sum(grepl("keep", br_pt_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "blue")
     })
     
     output$Brazilian_PortugueseWORD_total <- renderInfoBox({
@@ -878,7 +878,7 @@ server <- function(input, output) {
                         round(sum(br_pt_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(br_pt_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "blue")
     })
     
     # Romanian ----
@@ -910,7 +910,7 @@ server <- function(input, output) {
     output$RomanianN_total <- renderInfoBox({
       infoBox(
         "Romanian", sum(grepl("keep", ro_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "light-blue")
     })
     
     output$RomanianWORD_total <- renderInfoBox({
@@ -919,7 +919,7 @@ server <- function(input, output) {
                         round(sum(ro_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(ro_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "light-blue")
     })
     
     # Serbian ----
@@ -951,7 +951,7 @@ server <- function(input, output) {
     output$SerbianN_total <- renderInfoBox({
       infoBox(
         "Serbian", sum(grepl("keep", sr_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "green")
     })
     
     output$SerbianWORD_total <- renderInfoBox({
@@ -960,7 +960,7 @@ server <- function(input, output) {
                         round(sum(sr_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(sr_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "green")
     })
     
     # Urdu ----
@@ -1033,7 +1033,7 @@ server <- function(input, output) {
     output$PolishN_total <- renderInfoBox({
       infoBox(
         "Polish", sum(grepl("keep", pl_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "teal")
     })
     
     output$PolishWORD_total <- renderInfoBox({
@@ -1042,7 +1042,7 @@ server <- function(input, output) {
                       round(sum(pl_summary$done, na.rm = T)/2000*100,1), 
                       round(sum(pl_summary$done_totalN, na.rm = T)/2000*100,1), 
                       sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "teal")
     })
     
     # Italian ----
@@ -1074,7 +1074,7 @@ server <- function(input, output) {
     output$ItalianN_total <- renderInfoBox({
       infoBox(
         "Italian", sum(grepl("keep", it_participants$keep)), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "olive")
     })
     
     output$ItalianWORD_total <- renderInfoBox({
@@ -1083,8 +1083,92 @@ server <- function(input, output) {
                       round(sum(it_summary$done, na.rm = T)/2000*100,1), 
                       round(sum(it_summary$done_totalN, na.rm = T)/2000*100,1), 
                       sep = " - "), 
-        icon = icon("list"), color = "navy")
+        icon = icon("list"), color = "olive")
     })
+    
+    # Dutch ----
+    output$nl_participant_data <- renderDT({
+      
+      colnames(nl_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(nl_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$nl_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(nl_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$nl_summary_table <- renderDT({
+      
+      datatable(nl_summary[nl_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$DutchN_total <- renderInfoBox({
+      infoBox(
+        "Dutch", sum(grenl("keep", nl_participants$keep)), 
+        icon = icon("list"), color = "lime")
+    })
+    
+    output$DutchWORD_total <- renderInfoBox({
+      infoBox(
+        "Dutch", paste(round(sum(nl_summary$done_both, na.rm = T)/2000*100,1), 
+                        round(sum(nl_summary$done, na.rm = T)/2000*100,1), 
+                        round(sum(nl_summary$done_totalN, na.rm = T)/2000*100,1), 
+                        sep = " - "), 
+        icon = icon("list"), color = "lime")
+    })
+    
+    # Traditional Chinese ----
+    output$zh_hk_participant_data <- renderDT({
+      
+      colnames(zh_hk_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(zh_hk_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$zh_hk_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(zh_hk_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$zh_hk_summary_table <- renderDT({
+      
+      datatable(zh_hk_summary[zh_hk_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$t_chineseN_total <- renderInfoBox({
+      infoBox(
+        "Traditional Chinese", sum(grezh_hk("keep", zh_hk_participants$keep)), 
+        icon = icon("list"), color = "orange")
+    })
+    
+    output$t_chineseWORD_total <- renderInfoBox({
+      infoBox(
+        "Traditional Chinese", paste(round(sum(zh_hk_summary$done_both, na.rm = T)/2000*100,1), 
+                        round(sum(zh_hk_summary$done, na.rm = T)/2000*100,1), 
+                        round(sum(zh_hk_summary$done_totalN, na.rm = T)/2000*100,1), 
+                        sep = " - "), 
+        icon = icon("list"), color = "orange")
+    })
+    
+    
     
 }
 

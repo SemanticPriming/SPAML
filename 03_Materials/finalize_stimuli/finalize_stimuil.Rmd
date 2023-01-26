@@ -3036,8 +3036,6 @@ he_final$ok <- NULL
 export(he_final, "he/he_trials_final.csv")
 ```
 
-## hi Hindi NEED WORDS  
-
 ## hu Hungarian
 
 ```{r eval = F}
@@ -5614,4 +5612,232 @@ table(ro_final$type, ro_final$cue_type, ro_final$target_type)
 ro_final$ok <- NULL
 
 export(ro_final, "ro/ro_trials_final.csv")
+```
+
+## nl Dutch
+
+```{r eval = F}
+# original words
+nl <- import("nl/nl_translate.csv")
+nl$en_cue <- gsub("digusting", "disgusting", nl$en_cue)
+
+# fix real words ----
+nl_update <- import("nl/nl_translated_final.xlsx") %>% 
+  mutate(across(everything(), tolower))
+
+# fix cue words ----
+cues <- nl_update %>% filter(nl_cue_trans != "")
+for (i in 1:nrow(cues)){
+  nl$nl_cue[nl$nl_cue == cues$nl_cue[i] #original cue match
+            & nl$en_cue == cues$en_cue[i]] <- #english match
+    cues$nl_cue_trans[i] #new cue
+}
+
+targets <- nl_update %>% filter(nl_target_trans != "")
+for (i in 1:nrow(targets)){
+  nl$nl_target[nl$nl_target == targets$nl_target[i] #original target match
+            & nl$en_target == targets$en_target[i]] <- #english match
+    targets$nl_target_trans[i] #new target
+}
+
+# fix fake words ----
+cues <- nl_update %>% filter(nl_fake_cue_trans != "")
+for (i in 1:nrow(cues)){
+  nl$nl_fake_cue[nl$nl_fake_cue == cues$nl_fake_cue[i] #original cue match
+            & nl$en_cue == cues$en_cue[i]] <- #english match
+    cues$nl_fake_cue_trans[i] #new cue
+}
+
+targets <- nl_update %>% filter(nl_fake_target_trans != "")
+for (i in 1:nrow(targets)){
+  nl$nl_fake_target[nl$nl_fake_target == targets$nl_fake_target[i] #original target match
+            & nl$en_target == targets$en_target[i]] <- #english match
+    targets$nl_fake_target_trans[i] #new target
+}
+
+sum(duplicated(nl$nl_cue))
+sum(duplicated(nl$nl_target))
+sum(duplicated(nl$nl_fake_cue))
+sum(duplicated(nl$nl_fake_target))
+
+nrow(nl %>% filter(nl_cue == nl_target))
+
+export(nl, "../matched_stimuli/nl_matched.csv", row.names = F)
+
+# create rossible trials ----
+nl_trials <- nl[ , c("nl_cue", "nl_target")]
+nl_trials$type <- "related"
+nl_trials$cue_type <- "word"
+nl_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+nl$en_cue <- tolower(nl$en_cue)
+nl$en_target <- tolower(nl$en_target)
+# match unrelated pairs as a start 
+nl_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(nl_unrelated)){
+  nl_unrelated$en_cue[i] <- nl$nl_cue[nl$en_cue == nl_unrelated$en_cue[i]]
+  nl_unrelated$en_target[i] <- nl$nl_target[nl$en_target == nl_unrelated$en_target[i]]
+}
+
+nl_trials <- rbind(nl_trials,
+                   nl_unrelated %>% select(-en_cosine) %>% 
+                     rename("nl_cue" = "en_cue", 
+                            "nl_target" = "en_target"), 
+                   data.frame(nl_cue = nl$nl_fake_cue,
+                              nl_target = nl$nl_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(nl_cue = nl$nl_cue[sample(1:1000,
+                                                        1000)],
+                              nl_target = nl$nl_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(nl_cue = nl$nl_fake_cue[sample(1:1000,
+                                                        1000)],
+                              nl_target = nl$nl_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(nl_trials[ , c("nl_cue", "nl_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+nl_model <- read.table("/Volumes/SPAML Backup/subs_vec/nl/subs.nl.1e6.txt", quote="\"")
+nl_model <- na.omit(nl_model)
+nl_model$V1 <- tolower(nl_model$V1)
+nl_model <- nl_model[!duplicated(nl_model$V1), ]
+rownames(nl_model) <- nl_model$V1
+nl_model <- nl_model[ , -1]
+
+nl_trials$nl_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(nl_trials)){
+  
+  if(nl_trials$type[row] != "nonword") { 
+    
+    nl_trials$nl_cosine[row] <- cosine(as.matrix(t(nl_model[
+    c(nl_trials$nl_cue[row], nl_trials$nl_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+nl_trials$ok <- TRUE
+nl_trials$ok[nl_trials$type == "unrelated" & abs(nl_trials$nl_cosine) > .15] <- FALSE
+
+good_trials <- nl_trials %>% filter(ok == TRUE)
+bad_trials <- nl_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$nl_target <- sample(bad_trials$nl_target, 
+                               size = length(bad_trials$nl_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$nl_cosine[row] <- cosine(as.matrix(t(nl_model[
+    c(bad_trials$nl_cue[row], bad_trials$nl_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(nl_cosine < .15)))
+bad_trials <- bad_trials %>% filter(nl_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(nl_model[c(
+  bad_trials$nl_target,
+  unique(good_trials$nl_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$nl_target)){
+  
+  # find all words that could be paired with bad nl_target
+  # as updated nl_cue
+  rotrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$nl_target[i]] < .15] 
+  
+  # find all pairs of good nl_target that could
+  # be paired with bad nl_cue
+  rotrutial_switch <- good_trials %>% filter(nl_cue %in% rotrutial_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(nl_model[c(
+    bad_trials$nl_cue[i],
+    rotrutial_switch$nl_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$nl_cue[i], bad_trials$nl_target[i],
+    rotrutial_switch$nl_cue[rotrutial_switch$nl_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_nl_cue", "bad_nl_target", 
+                           "good_nl_cue", "good_nl_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(nl_cue %in% switch_todo$good_nl_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  nl_cue = c(switch_todo$bad_nl_cue, switch_todo$good_nl_cue),
+  nl_target = c(switch_todo$good_nl_target, switch_todo$bad_nl_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  nl_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$nl_cosine[row] <- cosine(as.matrix(t(nl_model[
+    c(new_good_trials$nl_cue[row], new_good_trials$nl_target[row]) , ])))[2]
+}
+
+nl_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(nl_final[ , c("nl_cue", "nl_target")]))
+
+# check cosines
+tapply(nl_final$nl_cosine, nl_final$type, mean, na.rm = T)
+tapply(nl_final$nl_cosine, nl_final$type, min, na.rm = T)
+tapply(nl_final$nl_cosine, nl_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- nl_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(nl_target) %>% 
+  filter(n != 2)
+
+weird_trials <- nl_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(nl_target %in% target_table$nl_target)
+
+# check for NA
+sum(is.na(nl_final$nl_cue))
+sum(is.na(nl_final$nl_target))
+sum(grepl("^NA", nl_final$nl_cue))
+sum(grepl("^NA", nl_final$nl_target))
+
+# check rows
+nrow(nl_final)
+table(nl_final$type, nl_final$cue_type, nl_final$target_type)
+
+nl_final$ok <- NULL
+
+export(nl_final, "nl/nl_trials_final.csv")
 ```

@@ -117,3 +117,13 @@ pl_summary <- import("/var/www/html/summary_data/pl_summary.csv")
 
 it_participants <- import("/var/www/html/summary_data/it_participants.csv")
 it_summary <- import("/var/www/html/summary_data/it_summary.csv")
+
+# dutch -----------------------------------------------------------------
+
+nl_participants <- import("/var/www/html/summary_data/nl_participants.csv")
+nl_summary <- import("/var/www/html/summary_data/nl_summary.csv")
+
+# Traditional Chinese -----------------------------------------------------------------
+
+zh_hk_participants <- import("/var/www/html/summary_data/zh_hk_participants.csv")
+zh_hk_summary <- import("/var/www/html/summary_data/zh_hk_summary.csv")

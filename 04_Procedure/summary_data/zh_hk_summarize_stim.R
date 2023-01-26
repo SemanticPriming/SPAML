@@ -170,10 +170,8 @@ zh_hk_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
-zh_hk_data_all <- zh_hk_data_all %>%
-  filter(timestamp > as.POSIXct("2022-10-26")) %>%
-  # this was a tester on 10-26
-  filter(observation != "43143") # check no duplicates at the end
+# zh_hk_data_all <- zh_hk_data_all %>%
+#   filter(timestamp > as.POSIXct("2022-10-26")) 
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
@@ -562,16 +560,16 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "sneife", "class": "nonword"},
-  {"word": "læber", "class": "word"},
-  {"word": "tjære", "class": "word"},
-  {"word": "sødo", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
-  {"word": "gave", "class": "word"},
-  {"word": "kegthe", "class": "nonword"},
-  {"word": "skud", "class": "word"},
-  {"word": "ethorår", "class": "nonword"},
-  {"word": "støvle", "class": "word"}]'
+  {"word": "頒眾", "class": "nonword"},
+  {"word": "嘴唇", "class": "word"},
+  {"word": "柏油", "class": "word"},
+  {"word": "提藝", "class": "nonword"},
+  {"word": "單沮", "class": "nonword"},
+  {"word": "給了", "class": "word"},
+  {"word": "來衣", "class": "nonword"},
+  {"word": "射擊", "class": "word"},
+  {"word": "往庇", "class": "nonword"},
+  {"word": "開機", "class": "word"}]'
 
   writeLines(practice, con = paste0(
     "/var/www/html/zh_hk", folder_num,

@@ -557,3 +557,29 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/it/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/it/data/data.sqlite
+
+# ---- dutch -----
+# summarize the data
+Rscript /var/www/html/summary_data/nl_summarize_stim_backup.R
+
+# move the data file
+mv /var/www/html/nl/data/data.sqlite /var/www/html/nl/data/data_$(date +"%FT%H%M").sqlite
+
+# copy over temp data
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/nl/data/
+
+# give the data the right permissions
+chmod 777 /var/www/html/nl/data/data.sqlite
+
+# ---- traditional chinese -----
+# summarize the data
+Rscript /var/www/html/summary_data/zh_hk_summarize_stim_backup.R
+
+# move the data file
+mv /var/www/html/zh_hk/data/data.sqlite /var/www/html/zh_hk/data/data_$(date +"%FT%H%M").sqlite
+
+# copy over temp data
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh_hk/data/
+
+# give the data the right permissions
+chmod 777 /var/www/html/zh_hk/data/data.sqlite

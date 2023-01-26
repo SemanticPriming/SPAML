@@ -560,16 +560,16 @@ nl_data_all <-
     # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
     practice <- '[
-  {"word": "sneife", "class": "nonword"},
-  {"word": "læber", "class": "word"},
-  {"word": "tjære", "class": "word"},
-  {"word": "sødo", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
-  {"word": "gave", "class": "word"},
-  {"word": "kegthe", "class": "nonword"},
-  {"word": "skud", "class": "word"},
-  {"word": "ethorår", "class": "nonword"},
-  {"word": "støvle", "class": "word"}]'
+  {"word": "gean", "class": "nonword"},
+  {"word": "lippen", "class": "word"},
+  {"word": "teer", "class": "word"},
+  {"word": "algenarel", "class": "nonword"},
+  {"word": "dut", "class": "nonword"},
+  {"word": "geschenk", "class": "word"},
+  {"word": "ambuteursce", "class": "nonword"},
+  {"word": "schot", "class": "word"},
+  {"word": "conder", "class": "nonword"},
+  {"word": "bagageruimte", "class": "word"}]'
 
     writeLines(practice, con = paste0(
       "./04_Procedure/nl", folder_num,
