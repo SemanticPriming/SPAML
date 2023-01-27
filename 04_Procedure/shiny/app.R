@@ -1155,7 +1155,7 @@ server <- function(input, output) {
     
     output$Traditional_ChineseN_total <- renderInfoBox({
       infoBox(
-        "Traditional Chinese", sum(grezh_hk("keep", zh_hk_participants$keep)), 
+        "Traditional Chinese", sum(grepl("keep", zh_hk_participants$keep)), 
         icon = icon("list"), color = "orange")
     })
     
