@@ -69,6 +69,7 @@ overall_tab <-
               infoBoxOutput("ArabicWORD_total"),
               infoBoxOutput("czechWORD_total"), 
               infoBoxOutput("danishWORD_total"),
+              infoBoxOutput("DutchWORD_total"),
               infoBoxOutput("GermanWORD_total"),
               infoBoxOutput("GreekWORD_total"),
               infoBoxOutput("englishWORD_total"),
@@ -89,7 +90,8 @@ overall_tab <-
               infoBoxOutput("SerbianWORD_total"),
               infoBoxOutput("turkishWORD_total"), 
               infoBoxOutput("UrduWORD_total"),
-              infoBoxOutput("Simplified_ChineseWORD_total")
+              infoBoxOutput("Simplified_ChineseWORD_total"),
+              infoBoxOutput("Traditional_ChineseWORD_total"),
               
             )  # close box
           ) #close row

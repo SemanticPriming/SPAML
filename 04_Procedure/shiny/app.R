@@ -1153,13 +1153,13 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$t_chineseN_total <- renderInfoBox({
+    output$Traditional_ChineseN_total <- renderInfoBox({
       infoBox(
         "Traditional Chinese", sum(grezh_hk("keep", zh_hk_participants$keep)), 
         icon = icon("list"), color = "orange")
     })
     
-    output$t_chineseWORD_total <- renderInfoBox({
+    output$Traditional_ChineseWORD_total <- renderInfoBox({
       infoBox(
         "Traditional Chinese", paste(round(sum(zh_hk_summary$done_both, na.rm = T)/2000*100,1), 
                         round(sum(zh_hk_summary$done, na.rm = T)/2000*100,1), 
