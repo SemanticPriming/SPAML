@@ -1,1 +1,11 @@
-[{"word":"DOCTOR","class":"word"},{"word":"NURSE","class":"word"},{"word":"HICE","class":"nonword"},{"word":"BOSSIL","class":"nonword"}]
+[
+  {"word": "頒眾", "class": "nonword"},
+  {"word": "嘴唇", "class": "word"},
+  {"word": "柏油", "class": "word"},
+  {"word": "提藝", "class": "nonword"},
+  {"word": "單沮", "class": "nonword"},
+  {"word": "給了", "class": "word"},
+  {"word": "來衣", "class": "nonword"},
+  {"word": "射擊", "class": "word"},
+  {"word": "往庇", "class": "nonword"},
+  {"word": "開機", "class": "word"}]
