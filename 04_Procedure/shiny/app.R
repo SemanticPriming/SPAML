@@ -1114,7 +1114,7 @@ server <- function(input, output) {
     
     output$DutchN_total <- renderInfoBox({
       infoBox(
-        "Dutch", sum(grenl("keep", nl_participants$keep)), 
+        "Dutch", sum(grepl("keep", nl_participants$keep)), 
         icon = icon("list"), color = "lime")
     })
     
