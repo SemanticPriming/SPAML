@@ -1,0 +1,624 @@
+---
+title: 'Big Team Science Means Big Method Opportunities'
+author: "Erin M. Buchanan"
+institute: "Harrisburg University"
+format: 
+  revealjs:
+    theme: night
+editor: source
+incremental: true 
+scrollable: true 
+preview-links: true
+code-copy: true 
+highlight-style: github 
+---
+
+## Outline{.smaller}
+
+```{css}
+h1.title {
+font-size: 1.5em;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(rio)
+library(dplyr)
+library(ggplot2)
+library(GGally)
+library(ggrepel)
+library(psych)
+```
+
+```{r data}
+cs_prime <- read.csv("../../05_Data_real/output_data/cs_prime_data.csv")
+en_prime <- read.csv("../../05_Data_real/output_data/en_prime_data.csv")
+ja_prime <- read.csv("../../05_Data_real/output_data/ja_prime_data.csv")
+ko_prime <- read.csv("../../05_Data_real/output_data/ko_prime_data.csv")
+ru_prime <- read.csv("../../05_Data_real/output_data/ru_prime_data.csv")
+tr_prime <- read.csv("../../05_Data_real/output_data/tr_prime_data.csv")
+
+overall <- bind_rows(
+  cs_prime %>% mutate(lang = "Czech", 
+                      target_word_unique = tolower(target_word_unique)),
+  en_prime %>% mutate(lang = "English", 
+                      target_word_unique = tolower(target_word_unique)),
+  ja_prime %>% mutate(lang = "Japanese", 
+                      target_word_unique = tolower(target_word_unique)),
+  ko_prime %>% mutate(lang = "Korean", 
+                      target_word_unique = tolower(target_word_unique)),
+  ru_prime %>% mutate(lang = "Russian", 
+                      target_word_unique = tolower(target_word_unique)),
+  tr_prime %>% mutate(lang = "Turkish", 
+                      target_word_unique = tolower(target_word_unique))
+)
+
+matched <- read.csv("../../03_Materials/matched_stimuli/matched_stimuli.csv")
+
+matched2 <- matched %>% 
+  left_join(overall %>% filter(lang == "English") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(en_avgZ_prime = avgZ_prime), 
+            by = c("en_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Japanese") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ja_avgZ_prime = avgZ_prime), 
+            by = c("ja_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Korean") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ko_avgZ_prime = avgZ_prime), 
+            by = c("ko_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Russian") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ru_avgZ_prime = avgZ_prime), 
+            by = c("ru_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Czech") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(cs_avgZ_prime = avgZ_prime), 
+            by = c("cs_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Turkish") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(tr_avgZ_prime = avgZ_prime), 
+            by = c("tr_target_word_unique" = "target_word_unique")) 
+```
+
+- Big Team Science
+- The Semantic Priming Across Many Languages (SPAML) Case Study
+  - Semantic Priming
+  - Stimuli
+  - Power
+  - Adaptive Sampling 
+  - Procedure and Results
+
+## Big Team Science{.smaller}
+
+- Collaboration = 2+ people working together
+- Big team science = BIG collaborations
+- 10 plus authors at 10 plus institutions*
+  - *we made this up
+
+## Big Team Science{.smaller}
+
+- Two types:
+  - Individual projects: Open Science Collaboration, many others
+  - Organizations: Psychological Science Accelerator, Many Xs, NutNet, DRAGNet 
+
+## Big Team Science{.smaller}
+
+- Why BTS?
+  - The internet! 
+  - Credibility revolution ("replication crisis" or "psychology’s renaissance")
+  - WEIRD Science
+
+## BTS is Successful{.smaller}
+
+- Entire subsections of journals devoted to replication reports (which often have big teams; AMPPS)
+- PSA has five experimental/data publications, five+ registered reports ongoing 
+- Increasing interest and investment into these projects
+- If you care about metrics, these are very much wow
+
+## BTS: What's Next?{.smaller}
+
+- BTS requires rethinking global methodology
+  - de-WEIRDing *specific to this study*
+  - Power (and correspondingly, analyses)
+  - Sampling 
+  
+## The PSA and SPAML{.smaller}
+
+:::: {.columns}
+::: {.column width="70%"}
+- The PSA is a CERN for psychological science
+- Globally distributed network of researchers with more than 1000 members in 82 countries 
+- Open science principles and practices 
+- PSA007: Semantic Priming Across Many Languages 
+:::
+::: {.column width="30%"}
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("cropped-cropped-psa.png")
+```
+:::
+::::
+
+## Semantic Priming{.smaller}
+
+- Semantic priming has a rich history in cognitive psychology
+- Semantic priming occurs when response latencies are facilitated (faster) for related word-pairs than unrelated word-pairs
+- Usually measured with the lexical decision or naming task 
+- The Semantic Priming Project (Hutchison et al., 2013) provided priming values for 1661 English word-pairs
+
+## Semantic Priming{.smaller}
+
+- **Semantic** priming replicates pretty well
+- WEIRD words 
+- Single language focus or multilingual individuals 
+- A lack of data sets that are matched on language within one study 
+- How can we leverage the computational skills found in natural language processing with the open data publications to improve this research? 
+- Goals of of the SPAML:
+  - Assess semantic priming across (at least) 10 languages using matched stimuli
+  - Provide a large-scale data set for reuse in linguistics 
+- Registered Report at *Nature Human Behaviour*
+
+## Linguistics is WEIRD{.smaller} 
+
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("weird_ling.png")
+```
+
+## The Stimuli{.smaller}
+
+- How do you create stimuli for a priming study? 
+- Similarity: shared meaning between concepts
+  - Defined by face value DOG-CAT versus DOG-SPOON
+  - Number of shared features using feature production norms
+  - Association strength using free association norms
+  - *Co-occurrence using computational models and text corpora*
+
+## Text Corpora{.smaller}
+
+- Where do you get large, open text corpora that are comparable for calculating similarity?
+- [The Open Subtitles Corpus](http://opus.nlpl.eu/OpenSubtitles-v2018.php) provides linguistic data for 50+ languages 
+- Subtitles have shown to be critically useful datasets for word frequency calculation (New et al., 2007; Brysbaert & New, 2009; Keuleers et al., 2010; Cuetos et al., 2012; Van Heuven et al., 2014; Mandera et al., 2015; and more)
+- The corpora are freely available to download for use in linguistic projects
+- Approximately 43 languages contain enough data to be usable for these projects
+
+## Selection Procedure{.smaller}
+
+- First, we decided to select nouns, verbs, adjectives, and adverbs for potential inclusion in the study
+- Therefore, we needed to be able to use part of speech tagging on our potential languages 
+- `udpipe` is a language package in *R* that provides part of speech tagging in many languages 
+
+```{r echo = T}
+library(udpipe)
+udpipe("This package is great!", object = "english")[ , c("token", "upos")]
+```
+
+## Selection Procedure{.smaller}
+
+- Each language corpus with an available `udpipe` model was examined for corpus size and the Wikipedia corpus for that language was added to small corpus languages (Afrikaans, Hindi, Armenian, Tamil, Urdu)
+- All stop words and numbers were removed
+- All words with less than three characters were removed
+- The words were filtered for nouns, verbs, adjectives, and adverbs
+- Using word frequency, the top 10,000 words in each language were selected 
+
+## Similarity Calculation{.smaller}
+
+- Similarity was calculated by using a FastText model based on the language subtitles and/or Wikipedia combination 
+- The *subs2vec* project was used for initial calculations (van Paridon & Thompson, 2021)
+- Cosine is a distance measure of vector similarity, similar to correlation
+- Top five cosine values for each word were calculated from the FastText model 
+
+## Cross Referencing{.smaller}
+
+- We then used translation to convert each language's stimuli back to English
+- These data were merged together to create a dataset of possible stimuli across all languages 
+- 1208416 number of pairs were found across languages with an average overlap of 3.23% (2.70 to 70.27)
+- The pairs were sorted by language overlap to final selection
+  
+## Cross Referencing{.smaller}
+
+- The overlap between languages is still difficult: 
+  - Mean overlap: 28%
+  - Average words for translation: 710
+
+```{r}
+words <- import("../../03_Materials/stimuli_creation/final_selected_words.csv")
+ggplot(words, aes(total)) + 
+  geom_histogram(fill = "white", color = "black", binwidth = 2) + 
+  theme_classic() + 
+  xlab("Total Overlap of Stimuli")
+```
+
+## Final Related Pairs{.smaller}
+
+- 1000 pairs were selected:
+  - Each word was only used once
+  - Words were not different forms of the same word (RUNNING - RUN)
+  - Limit use of proper names
+- Important: driven by the language, not English translation
+- Unrelated pairs are created by scrambling the related pairs
+
+## Nonwords and Translators{.smaller}
+
+- Nonwords are generated with a Wuggy-like algorithm (Keuleers & Brysbaert, 2010)
+- Translators check all pairs for proper translation, form, and meaning
+- They suggest the appropriate words for retaining meaning between cue-target
+- They fix nonwords to ensure they are pronounceable, not too fake
+- Dialects are considered and separated when appropriate 
+
+## Powering the Study{.smaller}
+
+- Now that we have the stimuli, how do we power this? 
+- Decisions on sample size planning usually driven by:
+  
+  - Research design
+  - Choice of hypothesis test
+  - Effect size estimation
+
+- What can you do when you do not have these? 
+
+## Moving Beyond *N* = 30{.smaller}
+
+- Long standing traditional to use controlled stimuli in the cognitive sciences
+- Recent increase in publication of linguistic norms has lead to the availability of these norms for many variables
+- Issues of power and sample size have been largely ignored for norming data collection
+- Power can be difficult for complex cognitive designs with many items
+
+## AIPE{.smaller} 
+
+- AIPE: Accuracy in Parameter Estimation
+- Focus shifts from *p*-values to confidence intervals that are "sufficiently narrow"
+- Multistep procedure:
+  
+  - Define a minimum acceptable sample size
+  - Define a stopping rule
+  - Define a maximum sample size
+
+- Kelley, 2007; Kelley, Darku, & Chattopadhyay, 2018; Maxwell, Kelley, & Rausch, 2008
+
+## Example: Response Latencies{.smaller} 
+
+- The English Lexicon Project: lexical decision and naming response latencies for over 40,000 words
+- Data provides a good metric for base response latencies for words 
+- Control for participant variability in base response latency by first standardizing participant responses within data collection sessions (Faust, Balota, Spieler, Ferraro, 1999)
+
+```{r read_data, echo = F}
+#read in the ELP data
+ELPmaster <- import("../../02_Power/ELPDecisionData.zip")
+
+#use the ave function to create a z-score of each participant
+#they only did one session 
+ELPmaster$ZScore <- ave(ELPmaster$RT, #dependent variable
+                        ELPmaster$Participant, #group variable
+                        FUN = scale) #function, scale is z-scoring
+
+#exclude 0 accuracy for incorrect
+#exclude 0 type, which is non-words
+#subset is like filter in tidyverse
+ELPcorrect <- subset(ELPmaster, #data frame
+                     Accuracy > 0 & Type > 0) #logical rules to subset by
+
+#view the data 
+head(ELPcorrect)
+```
+
+## Example: Response Latencies{.smaller}
+
+- Define a stopping rule
+  
+  - What should a sufficiently narrow confidence interval be? 
+  - Accurately estimate which parameter? (effect size, response latency)
+
+## Example: Response Latencies{.smaller}
+
+- What is the average standard error for our standardized response latencies?
+
+```{r summary_stats, warning = F, message = F, echo = F}
+##summarize the dataframe to see what the average SE is
+summary_stats <- ELPcorrect %>% #data frame
+  select(ZScore, Stimulus) %>% #pick the columns
+  group_by(Stimulus) %>% #put together the stimuli
+  summarize(SES = sd(ZScore)/sqrt(length(ZScore)), samplesize = length(ZScore)) #create SE and the sample size for below 
+
+##give descriptives of the SEs
+descriptives <- describe(summary_stats$SES)
+
+ggplot(summary_stats, aes(SES)) +
+  geom_histogram(binwidth = .01) +
+  theme_classic() +
+  xlab("Standard Error") +
+  ylab("Frequency") + 
+  annotate("text", x = 2, y = 2500, 
+           label = paste("Mean =", format(descriptives$mean, digits = 2))) +
+  annotate("text", x = 2, y = 2300, 
+           label = paste("SD =", format(round(descriptives$sd, digits = 2), nsmall = 2))) +
+  annotate("text", x = 2, y = 2100, 
+           label = paste("Median =", format(descriptives$median, digits = 2)))
+```
+
+## Example: Response Latencies{.smaller}
+
+- If I assume these data to be representative, what actual sample size might approximate *SE* = 0.16?
+- Simulation of 100 randomly sampled words with sample sizes ranging from 5 to 200. 
+
+```{r sim_elp, warning = F, messages = F, echo = F}
+# ##pick 100 random words with sample sizes above 30
+# targets <- summary_stats %>% #data frame
+#   filter(samplesize >=30) %>%  #filter out sample sizes
+#   select(Stimulus) %>% #select only stimuli
+#   sample_n(100) %>% #get 100
+#   pull(Stimulus) #return a vector
+# targets <- as.character(targets)
+# 
+# ##this section creates a sequence of sample sizes to estimate at
+# #5, 10, 15, etc. 
+# samplesize_values <- seq(5, 200, 5) 
+# #create a blank table for us to save the values in 
+# sim_table <- matrix(NA, nrow = length(samplesize_values), ncol = length(targets))
+# #create column names based on the current targets
+# colnames(sim_table) <- targets
+# #make it a data frame
+# sim_table <- as.data.frame(sim_table)
+# #add those sample size values 
+# sim_table$sample_size <- samplesize_values
+# 
+# ##loop over all the target words randomly selected
+# for (i in 1:length(targets)){
+#   
+#   ##loop over sample sizes
+#   for (q in 1:length(samplesize_values)){
+#     
+#     ##temporarily save a data frame of Zscores 
+#     temp <- ELPcorrect %>% #data frame
+#       filter(Stimulus == targets[i])  %>% #pick rows that are the current target word
+#       sample_n(samplesize_values[q], replace = T) %>% #select sample size number of rows 
+#       pull(ZScore)
+#     
+#     #put that in the table
+#     #find the sample size row and column we are working with
+#     #calculate SE sd/sqrt(n)
+#     sim_table[sim_table$sample_size == samplesize_values[q], targets[i]] <- sd(temp)/sqrt(length(temp))
+#   
+#     }
+#   
+# }
+# 
+# write.csv(sim_table, file = "sim_table.csv", row.names = F)
+
+sim_table <- read.csv("sim_table.csv")
+
+##melt down the data into long format for ggplot2
+sim_table_long <- reshape::melt(sim_table, 
+                      id = "sample_size")
+
+##create a graph of the sample size by SE value
+ggplot(sim_table_long, aes(sample_size, value)) + 
+  theme_classic() +
+  xlab("Sample Size") +
+  ylab("Standard Error") + 
+  geom_point() + 
+  geom_hline(yintercept = .16) #mark here .16 occurs
+```
+
+## Example: Response Latencies{.smaller}
+
+- What sample sizes should we use?
+
+  - 80% below SE: *N* = 25
+  - 90% below SE: *N* = 35
+  - 95% below SE: *N* = 50
+
+- Define a minimum acceptable sample size: *N* = 50
+- In our study, we used the Semantic Priming Project data to define a maximum sample size based on priming scores (*N* = 320)
+
+## How to Run the Study{.smaller}
+
+- Pre-register your plans! 
+- Collect data for minimum sample size
+- Estimate the confidence interval for the items presented
+- If confidence interval meets criteria, stop data collection
+- If confidence interval does not meet criteria, continue collection
+- Continue to repeat until criteria or maximum sample size reached
+
+## Adaptive Algorithms for Sampling{.smaller}
+
+- We want to create a large dataset
+- But participant attention is a finite resource
+- So, we can create a large set of stimuli and sample 
+- But should all stimuli have the same sample size?
+
+## Item Variability{.smaller}
+
+- Items are considerably variable ... and current sample sizes may not tell us true population scores  
+- This data is only in English
+
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("ldt_item.jpg")
+```
+
+## Stimulus Sampling{.smaller} 
+
+- We have selected 1000 stimuli, only show each participant a smaller portion of stimuli 
+- At the start of the study, all stimuli have equal probability of being selected
+- After each participant, sample size for each stimulus is calculated
+- Once the stimulus has achieved the minimum sample size, calculate standard error
+- Continue sampling until the item either achieves the goal standard error or maximum sample size 
+- Set the probability of selection for that stimulus to floor 
+- Continue sampling until complete with all stimuli
+
+## Study Flow{.smaller} 
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("spaml_experiment_flow.jpg")
+```
+
+## Procedure{.smaller}
+
+- View a simple version: https://psa007.psysciacc.org/
+- Overall task: 
+  - A single stream lexical decision task 
+  - All words cue-target are judged, cue-target linked by order 
+- Trials are formatted as:
+  - A fixation cross (+) for 500 ms
+  - CUE or TARGET in Serif font
+  - Lexical decision response (word, nonsense word)
+  - Keyboards are WILD
+  - 400 pairs = 800 trials
+
+## Data Provided{.smaller}
+
+- The data will be provided in several forms: 
+  - Subject/trial level: for every participant 
+  - Item level: for each individual item, rather than just cue or just concept
+  - Priming level: for each related pair compared to the unrelated pair
+
+## Current Data Collection{.smaller}
+
+https://psa007shiny.psysciacc.org/tracker/
+
+```{r shiny, out.width="80%"}
+knitr::include_graphics("shiny.jpg")
+```
+
+*Big thanks to [ZPID](https://leibniz-psychology.org/en/) and Harrisburg U
+
+## Priming Distribution Results{.smaller}
+
+<center>
+
+```{r graph1, out.height="100%", out.width="100%"}
+prime_dist <- overall %>%
+  select(avgZ_prime, lang) %>%
+  ggplot(aes(x = lang, y = avgZ_prime, fill = lang)) +
+    geom_violin() +
+    geom_hline(yintercept = 0) +
+    stat_summary(fun = "mean",
+                 geom = "crossbar",
+                 width = 0.5) +
+    xlab("Language") +
+    ylab("Priming Z-Score") +
+    theme_classic() + 
+    theme(legend.position = "none") + 
+  theme(text = element_text(size = 15))
+
+prime_dist
+```
+
+</center>
+
+## Priming Comparison
+
+<center>
+
+```{r graph2, out.height="100%", out.width="100%", message=FALSE, warning=FALSE}
+ggplot(overall, aes(lang, avgZ_prime, color = lang)) + 
+  theme_classic() + 
+  xlab("Language") + 
+  ylab("Average Z-Priming") + 
+  stat_summary(fun = mean, 
+               geom = "point") + 
+  stat_summary(fun.data = mean_cl_normal, ##adds the error bars
+               geom = "errorbar", 
+               width = .2) + 
+  theme(legend.position = "none") + 
+  theme(text = element_text(size = 15)) + 
+  coord_cartesian(ylim = c(.07, .17)) + 
+  coord_flip()
+```
+
+</center>
+
+## Item Priming Results
+
+<center> 
+
+```{r graph3, out.height="100%", out.width="100%"}
+overall_plot <- overall %>% 
+  group_by(lang) %>% 
+  arrange(avgZ_prime) %>% 
+  mutate(count = 1:1000)
+
+ggplot(overall_plot, aes(count, avgZ_prime, color = lang)) + 
+  geom_point() +
+  theme_classic() + 
+  ylab("Average Z-Priming Score") + 
+  xlab("Pair Estimate") + 
+  geom_hline(yintercept = 0) + 
+  scale_color_discrete(name = "Language") +
+  theme(text = element_text(size = 15))
+```
+
+</center> 
+
+## Cross Cultural Comparison
+
+<center>
+
+```{r graph4, out.height="100%", out.width="100%"}
+matched2$prop_work <- apply(matched2 %>% select(en_avgZ_prime:tr_avgZ_prime), 1, function(x) sum(x > 0))
+
+props <- 
+  matched2 %>% 
+  group_by(prop_work) %>% 
+  count() %>% 
+  mutate(hsize = 3,
+         prop_work = as.factor(prop_work)) %>% 
+  ungroup() %>% 
+  arrange(desc(prop_work)) %>% 
+  mutate(csum = cumsum(n), 
+         pos = n/2 + lag(csum, 1),
+         pos = if_else(is.na(pos), n/2, pos))
+
+ggplot(props, aes(x = hsize, y = n, fill = prop_work)) +
+  geom_col() +
+  coord_polar(theta = "y") +
+  xlim(c(0.2, 3 + 0.5)) +
+  theme_void() + 
+  geom_text(aes(label = round((n/1000*100))),
+            position = position_stack(vjust = 0.5)) + 
+  scale_fill_brewer(palette = "Paired") + 
+  geom_label_repel(data = props,
+                   aes(y = pos, label = paste0(prop_work)),
+                   size = 4.5, nudge_x = 1, show.legend = FALSE,
+                   segment.colour = NA) + 
+  theme(legend.position = "none")
+```
+
+</center>
+
+## Cross Cultural Comparison
+
+<center>
+
+```{r graph5, out.height="100%", out.width="100%", message = FALSE}
+ggpairs(matched2[ , 47:52], 
+        columnLabels = c("English", "Japanese", "Korean", "Russian", "Czech", "Turkish")) + 
+  theme_bw()
+```
+
+</center>
+
+## Final Thoughts{.smaller}
+
+- This work to diversify participants, languages, and researchers represented is aided by big team science approaches and methodology
+- Priming effects are found across different writing systems 
+- Variability between languages appears to be approximately .02
+- More languages currently underway 
+
+## Recruitment and any Questions?{.smaller}
+
+:::: {.columns}
+::: {.column width="70%"}
+- Thank you for listening!
+- We want you - join our team for data collection by contacting me
+  - All levels of researchers welcome
+  - Authorship is provided for those who meet the collaboration agreement 
+- All PSA collaborators are listed with their author information online
+:::
+::: {.column width="30%"}
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("QR_links.png")
+```
+:::
+::::

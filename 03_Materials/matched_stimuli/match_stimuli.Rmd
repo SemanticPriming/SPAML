@@ -68,7 +68,10 @@ uniqueDF <- bind_rows(import("cs_trial_unique.csv") %>%
                                lang = "Turkish"),
                       import("ru_trial_unique.csv") %>% 
                         mutate(across(everything(), tolower),
-                               lang = "Russian"))
+                               lang = "Russian"), 
+                      import("da_trial_unique.csv") %>% 
+                        mutate(across(everything(), tolower),
+                               lang = "Danish")) 
 
 matchDF2 <- matchDF %>% 
   mutate(en_word_combo = paste0(en_cue,en_target)) %>% 
@@ -105,7 +108,13 @@ matchDF2 <- matchDF %>%
   left_join(uniqueDF %>% filter(lang == "Russian") %>% 
               select(-lang), 
             by = c("ru_word_combo" = "word_combo")) %>% 
-  rename(ru_target_word_unique = target_word_unique) 
+  rename(ru_target_word_unique = target_word_unique) %>% 
+  # da
+  mutate(da_word_combo = paste0(da_cue,da_target)) %>%
+  left_join(uniqueDF %>% filter(lang == "Danish") %>% 
+              select(-lang), 
+            by = c("da_word_combo" = "word_combo")) %>% 
+  rename(da_target_word_unique = target_word_unique) 
 
 export(matchDF2, "matched_stimuli.csv", row.names = F)
 ```
