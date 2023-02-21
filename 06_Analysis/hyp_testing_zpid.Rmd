@@ -1,0 +1,117 @@
+---
+title: "Confirmatory Hypothesis Testing - ZPID Data"
+author: "Erin M. Buchanan"
+date: "Last Update `r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+This demonstration is for the three languages provided in the ZPID funded data. Please see the full manuscript for all langauges. https://osf.io/q4fjy/
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(psych)
+library(tidyr)
+library(ggplot2)
+library(rio)
+library(faux)
+set.seed(58902)
+library(nlme)
+library(MuMIn)
+library(performance)
+library(parameters)
+
+```
+
+## Import the Files
+
+We will import these files from our data folder for the final analyses. This example analysis examines the Semantic Priming Project data to simulate how to answer questions. The descriptive statistics file has examples of the processing and cleaning data  
+
+```{r}
+targets_only <- 
+  bind_rows(
+    import("../05_Data_real/output_data/ru_prime_data.csv") %>% 
+      mutate(Language = "Russian"), 
+     import("../05_Data_real/output_data/tr_prime_data.csv") %>% 
+      mutate(Language = "Turkish"),
+     import("../05_Data_real/output_data/ko_prime_data.csv") %>% 
+      mutate(Language = "Korean")
+  )
+```
+
+## Hypothesis 1 
+
+Is semantic priming a non-zero effect? 
+
+### Model Results
+
+```{r}
+# run the analysis
+hyp1 <- lm(avgZ_prime ~ 1, data = targets_only)
+
+# print the results
+summary(hyp1)
+parameters(hyp1)
+model_performance(hyp1)
+```
+
+## Hypothesis 2
+
+Is semantic priming consistent by language? 
+
+### Model Reesults
+
+```{r}
+# run the model
+hyp2 <- lme(avgZ_prime ~ 1, 
+            data = targets_only, 
+            method = "REML", 
+            random = ~1|Language)
+
+# print the results
+summary(hyp2)
+parameters(hyp2)
+model_performance(hyp2)
+intervals(hyp2)
+
+# compare models
+AIC(hyp1)
+AIC(hyp2)
+
+# effect size
+r.squaredGLMM(hyp2)
+```
+
+### Graph Results
+
+```{r}
+# example plot
+ggplot(targets_only, aes(Language, avgZ_prime)) +
+  stat_summary(fun.data = mean_cl_normal, 
+               geom = "errorbar", 
+               width = .2, 
+               position = position_dodge(width = .2)) + 
+  stat_summary(fun = mean,
+               geom = "point", 
+               position = position_dodge()) + 
+  xlab("Language") + 
+  ylab("Z Score Priming") +
+  theme_classic() + 
+  coord_flip() + 
+  geom_hline(yintercept = 0)
+```

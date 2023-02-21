@@ -564,7 +564,7 @@ nl_data_all <-
   {"word": "lippen", "class": "word"},
   {"word": "teer", "class": "word"},
   {"word": "algenarel", "class": "nonword"},
-  {"word": "dut", "class": "nonword"},
+  {"word": "tat", "class": "nonword"},
   {"word": "geschenk", "class": "word"},
   {"word": "ambuteursce", "class": "nonword"},
   {"word": "schot", "class": "word"},
