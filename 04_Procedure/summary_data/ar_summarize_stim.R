@@ -413,6 +413,9 @@ ar_merged$done_both <- (ar_merged$target_answeredN >= 50 & ar_merged$SE_Z <= .09
 ar_merged$done_totalN <- ar_merged$target_answeredN >= 50
 ar_merged$done <- ar_merged$sampleN >= 50
 
+ar_merged <- ar_merged %>% 
+  filter(ar_cue != "تزق")
+
 # use data ----
 ar_use <- subset(ar_merged, is.na(done_totalN) | done_totalN == FALSE)
 ar_sample <- subset(ar_merged, done_totalN == TRUE)

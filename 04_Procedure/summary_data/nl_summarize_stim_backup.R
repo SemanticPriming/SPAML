@@ -391,6 +391,9 @@ nl_data_all <-
   nl_merged$done_both <- (nl_merged$target_answeredN >= 50 & nl_merged$SE_Z <= .09) | nl_merged$target_answeredN >= 320
   nl_merged$done_totalN <- nl_merged$target_answeredN >= 50
   nl_merged$done <- nl_merged$sampleN >= 50
+  
+  nl_merged <- nl_merged %>% 
+    filter(nl_target != "dut")
 
 # use data ----
   nl_use <- subset(nl_merged, is.na(done_totalN) | done_totalN == FALSE)

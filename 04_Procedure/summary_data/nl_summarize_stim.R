@@ -171,7 +171,7 @@ nl_data_all <-
 
 # delete stuff before we started
 # nl_data_all <- nl_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) 
+#   filter(timestamp > as.POSIXct("2022-10-26"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
@@ -412,6 +412,9 @@ nl_merged <- nl_summaries %>%
 nl_merged$done_both <- (nl_merged$target_answeredN >= 50 & nl_merged$SE_Z <= .09) | nl_merged$target_answeredN >= 320
 nl_merged$done_totalN <- nl_merged$target_answeredN >= 50
 nl_merged$done <- nl_merged$sampleN >= 50
+
+nl_merged <- nl_merged %>% 
+  filter(nl_target != "dut")
 
 # use data ----
 nl_use <- subset(nl_merged, is.na(done_totalN) | done_totalN == FALSE)
