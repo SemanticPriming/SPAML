@@ -170,11 +170,13 @@ zh_hk_words <- import("/var/www/html/zh_hk/zh_hk_words.csv")
 # collected data
 zh_hk_data_all <-
   bind_rows(processData("/var/www/html/zh_hk/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate(url_lab = as.character(url_lab)),
+            processData("./04_Procedure_real/zh_hk1/data/data.sqlite") %>%
+               mutate(url_lab = as.character(url_lab))) %>% unique()
 
-# # delete stuff before we started
+# delete stuff before we started
 # zh_hk_data_all <- zh_hk_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26"))
+#   filter(timestamp > as.POSIXct("2022-10-26")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -203,7 +205,7 @@ zh_hk_data_all <- zh_hk_data_all %>%
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
   current_year <- 2023
-  number_folders <- 1
+  number_folders <- 2
 
   ##create demographics only data
   demos <- zh_hk_data_all %>% #data frame

@@ -269,10 +269,10 @@ Rscript /var/www/html/summary_data/en_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/en/data/data.sqlite /var/www/html/en/data/data_$(date +"%FT%H%M").sqlite
-#mv /var/www/html/en1/data/data.sqlite /var/www/html/en1/data/data_$(date +"%FT%H%M").sqlite
-#mv /var/www/html/en2/data/data.sqlite /var/www/html/en2/data/data_$(date +"%FT%H%M").sqlite
-#mv /var/www/html/en3/data/data.sqlite /var/www/html/en3/data/data_$(date +"%FT%H%M").sqlite
-#mv /var/www/html/en4/data/data.sqlite /var/www/html/en4/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/en1/data/data.sqlite /var/www/html/en1/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/en2/data/data.sqlite /var/www/html/en2/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/en3/data/data.sqlite /var/www/html/en3/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/en4/data/data.sqlite /var/www/html/en4/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en5/data/data.sqlite /var/www/html/en5/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en6/data/data.sqlite /var/www/html/en6/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en7/data/data.sqlite /var/www/html/en7/data/data_$(date +"%FT%H%M").sqlite
@@ -280,13 +280,14 @@ mv /var/www/html/en8/data/data.sqlite /var/www/html/en8/data/data_$(date +"%FT%H
 mv /var/www/html/en9/data/data.sqlite /var/www/html/en9/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en10/data/data.sqlite /var/www/html/en10/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/en11/data/data.sqlite /var/www/html/en11/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/en12/data/data.sqlite /var/www/html/en12/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en/data/
-#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en1/data/
-#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en2/data/
-#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en3/data/
-#cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en4/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en1/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en2/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en3/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en4/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en5/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en6/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en7/data/
@@ -294,13 +295,14 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en8/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en9/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en10/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en11/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/en12/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/en/data/data.sqlite
-#chmod 777 /var/www/html/en1/data/data.sqlite
-#chmod 777 /var/www/html/en2/data/data.sqlite
-#chmod 777 /var/www/html/en3/data/data.sqlite
-#chmod 777 /var/www/html/en4/data/data.sqlite
+chmod 777 /var/www/html/en1/data/data.sqlite
+chmod 777 /var/www/html/en2/data/data.sqlite
+chmod 777 /var/www/html/en3/data/data.sqlite
+chmod 777 /var/www/html/en4/data/data.sqlite
 chmod 777 /var/www/html/en5/data/data.sqlite
 chmod 777 /var/www/html/en6/data/data.sqlite
 chmod 777 /var/www/html/en7/data/data.sqlite
@@ -308,6 +310,7 @@ chmod 777 /var/www/html/en8/data/data.sqlite
 chmod 777 /var/www/html/en9/data/data.sqlite
 chmod 777 /var/www/html/en10/data/data.sqlite
 chmod 777 /var/www/html/en11/data/data.sqlite
+chmod 777 /var/www/html/en12/data/data.sqlite
 
 # ---- danish -----
 # summarize the data
@@ -382,12 +385,15 @@ Rscript /var/www/html/summary_data/zh_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/zh/data/data.sqlite /var/www/html/zh/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/zh1/data/data.sqlite /var/www/html/zh1/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh1/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/zh/data/data.sqlite
+chmod 777 /var/www/html/zh1/data/data.sqlite
 
 # ---- arabic -----
 # summarize the data
@@ -577,9 +583,12 @@ Rscript /var/www/html/summary_data/zh_hk_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/zh_hk/data/data.sqlite /var/www/html/zh_hk/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/zh_hk1/data/data.sqlite /var/www/html/zh_hk1/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh_hk/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh_hk1/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/zh_hk/data/data.sqlite
+chmod 777 /var/www/html/zh_hk1/data/data.sqlite
