@@ -175,8 +175,8 @@ zh_hk_data_all <-
                mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
-# zh_hk_data_all <- zh_hk_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) 
+zh_hk_data_all <- zh_hk_data_all %>%
+  filter(timestamp > as.POSIXct("2023-02-25"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0

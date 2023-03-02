@@ -172,11 +172,9 @@ no_data_all <-
   bind_rows(processData("/var/www/html/no/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
-# # delete stuff before we started
-# no_data_all <- no_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26")) %>%
-#   # this was a tester on 10-26
-#   filter(observation != "43143") # check no duplicates at the end
+# delete stuff before we started
+no_data_all <- no_data_all %>%
+  filter(timestamp > as.POSIXct("2023-01-20"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0

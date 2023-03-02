@@ -174,9 +174,7 @@ it_data_all <-
 
 # delete stuff before we started
 it_data_all <- it_data_all %>%
-  filter(timestamp > as.POSIXct("2022-10-26")) %>%
-  # this was a tester on 10-26
-  filter(observation != "43143") # check no duplicates at the end
+  filter(timestamp > as.POSIXct("2022-12-19")) 
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0

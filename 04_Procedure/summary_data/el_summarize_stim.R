@@ -170,8 +170,8 @@ el_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
-# el_data_all <- el_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-12-13"))
+el_data_all <- el_data_all %>%
+  filter(timestamp > as.POSIXct("2022-12-13"))
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("/var/www/html/summary_data/sender_id.csv")

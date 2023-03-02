@@ -169,9 +169,14 @@ br_pt_data_all <-
   bind_rows(processData("/var/www/html/br_pt/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
-# delete stuff before we started
-# br_pt_data_all <- br_pt_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-12-06"))
+# deal with issues of two weird time stamps 
+br_pt_data_all$timestamp[ br_pt_data_all$observation == "ec83f"] <- gsub("2010-08-11 04", "2023-02-10 15", br_pt_data_all$timestamp[ br_pt_data_all$observation == "ec83f"])
+
+br_pt_data_all$timestamp[ br_pt_data_all$observation == "92b6a"] <- gsub("2010-08-11 04", "2023-02-09 15", br_pt_data_all$timestamp[ br_pt_data_all$observation == "92b6a"])
+
+# remove test data before official start 
+br_pt_data_all <- br_pt_data_all %>% 
+  filter(timestamp > as.POSIXct("2022-12-06"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0

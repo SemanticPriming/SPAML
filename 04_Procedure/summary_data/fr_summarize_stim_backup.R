@@ -176,6 +176,14 @@ fr_data_all <-
 fr_data_all <- fr_data_all %>%
   filter(timestamp > as.POSIXct("2022-12-13"))
 
+remove <- fr_data_all %>% 
+  filter(url_lab == "358") %>% 
+  filter(timestamp > as.POSIXct("2023-02-20")) %>% 
+  pull(observation)
+
+fr_data_all <- fr_data_all %>% 
+  filter(!(observation %in% remove))
+
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
   # 13_0_99 == 15_0_1
