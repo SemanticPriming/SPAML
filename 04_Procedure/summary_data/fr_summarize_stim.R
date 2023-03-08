@@ -175,7 +175,7 @@ fr_data_all <- fr_data_all %>%
 
 remove <- fr_data_all %>% 
   filter(url_lab == "358") %>% 
-  filter(timestamp > as.POSIXct("2023-02-20")) %>% 
+  filter(timestamp < as.POSIXct("2023-02-20")) %>% 
   pull(observation)
 
 fr_data_all <- fr_data_all %>% 
