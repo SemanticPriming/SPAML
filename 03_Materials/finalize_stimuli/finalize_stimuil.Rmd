@@ -5841,3 +5841,234 @@ nl_final$ok <- NULL
 
 export(nl_final, "nl/nl_trials_final.csv")
 ```
+
+## sk Slovak
+
+```{r eval = F}
+# original words
+sk <- import("sk/sk_translate.csv")
+sk$en_cue <- gsub("digusting", "disgusting", sk$en_cue)
+
+# fix real words ----
+sk_update <- import("sk/sk_translated_final.xlsx") %>% 
+  mutate(across(everything(), tolower))
+
+# fix cue words ----
+cues <- sk_update %>% filter(sk_cue_trans != "")
+for (i in 1:nrow(cues)){
+  sk$sk_cue[sk$sk_cue == cues$sk_cue[i] #original cue match
+            & sk$en_cue == cues$en_cue[i]] <- #english match
+    cues$sk_cue_trans[i] #new cue
+}
+
+targets <- sk_update %>% filter(sk_target_trans != "")
+for (i in 1:nrow(targets)){
+  sk$sk_target[sk$sk_target == targets$sk_target[i] #original target match
+            & sk$en_target == targets$en_target[i]] <- #english match
+    targets$sk_target_trans[i] #new target
+}
+
+# fix fake words ----
+cues <- sk_update %>% filter(sk_fake_cue_trans != "")
+for (i in 1:nrow(cues)){
+  sk$sk_fake_cue[sk$sk_fake_cue == cues$sk_fake_cue[i] #original cue match
+            & sk$en_cue == cues$en_cue[i]] <- #english match
+    cues$sk_fake_cue_trans[i] #new cue
+}
+
+targets <- sk_update %>% filter(sk_fake_target_trans != "")
+for (i in 1:nrow(targets)){
+  sk$sk_fake_target[sk$sk_fake_target == targets$sk_fake_target[i] #original target match
+            & sk$en_target == targets$en_target[i]] <- #english match
+    targets$sk_fake_target_trans[i] #new target
+}
+
+# this one is being dumb
+sk$sk_target[sk$en_target == "FALSE"] <- "nepravdivý"
+
+sum(duplicated(sk$sk_cue))
+sum(duplicated(sk$sk_target))
+sum(duplicated(sk$sk_fake_cue))
+sum(duplicated(sk$sk_fake_target))
+
+nrow(sk %>% filter(sk_cue == sk_target))
+
+export(sk, "../matched_stimuli/sk_matched.csv", row.names = F)
+
+# create possible trials ----
+sk_trials <- sk[ , c("sk_cue", "sk_target")]
+sk_trials$type <- "related"
+sk_trials$cue_type <- "word"
+sk_trials$target_type <- "word"
+
+en <- import("en/en_trials_final.csv")
+sk$en_cue <- tolower(sk$en_cue)
+sk$en_target <- tolower(sk$en_target)
+# match unrelated pairs as a start 
+sk_unrelated <- en %>% filter(type == "unrelated")
+for (i in 1:nrow(sk_unrelated)){
+  sk_unrelated$en_cue[i] <- sk$sk_cue[sk$en_cue == sk_unrelated$en_cue[i]]
+  sk_unrelated$en_target[i] <- sk$sk_target[sk$en_target == sk_unrelated$en_target[i]]
+}
+
+sk_trials <- rbind(sk_trials,
+                   sk_unrelated %>% select(-en_cosine) %>% 
+                     rename("sk_cue" = "en_cue", 
+                            "sk_target" = "en_target"), 
+                   data.frame(sk_cue = sk$sk_fake_cue,
+                              sk_target = sk$sk_target[sample(1:1000,
+                                                              1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "word"),
+                   data.frame(sk_cue = sk$sk_cue[sample(1:1000,
+                                                        1000)],
+                              sk_target = sk$sk_fake_target,
+                              type = "nonword",
+                              cue_type = "word",
+                              target_type = "nonword"),
+                   data.frame(sk_cue = sk$sk_fake_cue[sample(1:1000,
+                                                        1000)],
+                              sk_target = sk$sk_fake_target[sample(1:1000,
+                                                        1000)],
+                              type = "nonword",
+                              cue_type = "nonword",
+                              target_type = "nonword"))
+
+# check dups run until 0
+sum(duplicated(sk_trials[ , c("sk_cue", "sk_target")]))
+
+# update with low cosines from random shuffle ----
+# set up model
+sk_model <- read.table("/Volumes/SPAML Backup/subs_vec/sk/subs.sk.1e6.txt", quote="\"")
+sk_model <- na.omit(sk_model)
+sk_model$V1 <- tolower(sk_model$V1)
+sk_model <- sk_model[!duplicated(sk_model$V1), ]
+rownames(sk_model) <- sk_model$V1
+sk_model <- sk_model[ , -1]
+
+sk_trials$sk_cosine <- NA
+
+# get cosine
+for (row in 1:nrow(sk_trials)){
+  
+  if(sk_trials$type[row] != "nonword") { 
+    
+    sk_trials$sk_cosine[row] <- cosine(as.matrix(t(sk_model[
+    c(sk_trials$sk_cue[row], sk_trials$sk_target[row]) , ])))[2]
+
+  }
+  
+}
+
+# update trials that have cosines too big 
+sk_trials$ok <- TRUE
+sk_trials$ok[sk_trials$type == "unrelated" & abs(sk_trials$sk_cosine) > .15] <- FALSE
+
+good_trials <- sk_trials %>% filter(ok == TRUE)
+bad_trials <- sk_trials %>% filter(ok == FALSE)
+
+# iterate on those bad trials until all gone 
+# literally I ran this until I got this worked out 
+bad_trials$sk_target <- sample(bad_trials$sk_target, 
+                               size = length(bad_trials$sk_target), 
+                               replace = FALSE)
+for (row in 1:nrow(bad_trials)){
+    bad_trials$sk_cosine[row] <- cosine(as.matrix(t(sk_model[
+    c(bad_trials$sk_cue[row], bad_trials$sk_target[row]) , ])))[2]
+}
+
+good_trials <- bind_rows(good_trials,
+                         (bad_trials %>% filter(sk_cosine < .15)))
+bad_trials <- bad_trials %>% filter(sk_cosine >= .15)
+nrow(bad_trials)
+# this section I ran multiple times 
+
+whats_left <- cosine(as.matrix(t(sk_model[c(
+  bad_trials$sk_target,
+  unique(good_trials$sk_cue[good_trials$type == "unrelated"])) , ])))
+whats_left <- as.data.frame(whats_left)
+
+switch_todo <- matrix(NA, nrow = nrow(bad_trials),
+                      ncol = 4)
+# find suggestions that the switch is ok 
+for (i in 1:length(bad_trials$sk_target)){
+  
+  # find all words that could be paired with bad sk_target
+  # as updated sk_cue
+  rotrutial_cues <- rownames(whats_left)[whats_left[ , bad_trials$sk_target[i]] < .15] 
+  
+  # find all pairs of good sk_target that could
+  # be paired with bad sk_cue
+  rotrutial_switch <- good_trials %>% filter(sk_cue %in% rotrutial_cues) %>% filter(type == "unrelated")
+  
+  # find switchables 
+  switches <- cosine(as.matrix(t(sk_model[c(
+    bad_trials$sk_cue[i],
+    rotrutial_switch$sk_target), 
+  ])))
+  
+  new_target <- names(which.min(switches[1, ]))
+  
+  switch_todo[i , ] <- c(bad_trials$sk_cue[i], bad_trials$sk_target[i],
+    rotrutial_switch$sk_cue[rotrutial_switch$sk_target == new_target],
+    new_target)
+
+}
+
+switch_todo <- as.data.frame(switch_todo)
+colnames(switch_todo) <- c("bad_sk_cue", "bad_sk_target", 
+                           "good_sk_cue", "good_sk_target")
+
+good_trials_small <- good_trials %>% 
+  filter(!(sk_cue %in% switch_todo$good_sk_cue & type == "unrelated"))
+
+new_good_trials <- data.frame(
+  sk_cue = c(switch_todo$bad_sk_cue, switch_todo$good_sk_cue),
+  sk_target = c(switch_todo$good_sk_target, switch_todo$bad_sk_target),
+  type = rep("unrelated", nrow(switch_todo)*2),
+  cue_type = rep("word", nrow(switch_todo)*2),
+  target_type = rep("word", nrow(switch_todo)*2),
+  sk_cosine = rep(NA, nrow(switch_todo)*2),
+  ok = rep(FALSE, nrow(switch_todo)*2)
+)
+
+for (row in 1:nrow(new_good_trials)){
+    new_good_trials$sk_cosine[row] <- cosine(as.matrix(t(sk_model[
+    c(new_good_trials$sk_cue[row], new_good_trials$sk_target[row]) , ])))[2]
+}
+
+sk_final <- bind_rows(good_trials_small, new_good_trials)
+sum(duplicated(sk_final[ , c("sk_cue", "sk_target")]))
+
+# check cosines
+tapply(sk_final$sk_cosine, sk_final$type, mean, na.rm = T)
+tapply(sk_final$sk_cosine, sk_final$type, min, na.rm = T)
+tapply(sk_final$sk_cosine, sk_final$type, max, na.rm = T)
+
+# check that everyone has a mate
+target_table <- sk_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  count(sk_target) %>% 
+  filter(n != 2)
+
+weird_trials <- sk_final %>% 
+  filter(target_type == "word") %>% 
+  filter(type != "nonword") %>% 
+  filter(sk_target %in% target_table$sk_target)
+
+# check for NA
+sum(is.na(sk_final$sk_cue))
+sum(is.na(sk_final$sk_target))
+sum(grepl("^NA", sk_final$sk_cue))
+sum(grepl("^NA", sk_final$sk_target))
+
+# check rows
+nrow(sk_final)
+table(sk_final$type, sk_final$cue_type, sk_final$target_type)
+
+sk_final$ok <- NULL
+
+export(sk_final, "sk/sk_trials_final.csv")
+```
