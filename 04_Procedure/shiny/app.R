@@ -40,6 +40,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Romanian"), tabName = "romanian_tab"),
                           menuItem(tags$b("Russian"), tabName = "russian_tab"),
                           menuItem(tags$b("Serbian"), tabName = "serbian_tab"),
+                          menuItem(tags$b("Slovak"), tabName = "slovak_tab"),
                           menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
                           menuItem(tags$b("Urdu"), tabName = "urdu_tab"),
                           menuItem(tags$b("Simplified Chinese"), tabName = "s_chinese_tab"),
@@ -91,6 +92,7 @@ ui <- dashboardPage(skin = 'purple',
                           romanian_tab, 
                           russian_tab, 
                           serbian_tab, 
+                          slovak_tab,
                           turkish_tab,
                           urdu_tab, 
                           s_chinese_tab,
@@ -1168,6 +1170,46 @@ server <- function(input, output) {
         icon = icon("list"), color = "orange")
     })
     
+    # Slovak ----
+    output$sk_participant_data <- renderDT({
+      
+      colnames(sk_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(sk_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$sk_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(sk_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$sk_summary_table <- renderDT({
+      
+      datatable(sk_summary[sk_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$SlovakN_total <- renderInfoBox({
+      infoBox(
+        "Slovak", sum(grepl("keep", sk_participants$keep)), 
+        icon = icon("list"), color = "maroon")
+    })
+    
+    output$SlovakWORD_total <- renderInfoBox({
+      infoBox(
+        "Slovak", paste(round(sum(sk_summary$done_both, na.rm = T)/2000*100,1), 
+                         round(sum(sk_summary$done, na.rm = T)/2000*100,1), 
+                         round(sum(sk_summary$done_totalN, na.rm = T)/2000*100,1), 
+                         sep = " - "), 
+        icon = icon("list"), color = "maroon")
+    })
     
     
 }

@@ -127,3 +127,8 @@ nl_summary <- import("/var/www/html/summary_data/nl_summary.csv")
 
 zh_hk_participants <- import("/var/www/html/summary_data/zh_hk_participants.csv")
 zh_hk_summary <- import("/var/www/html/summary_data/zh_hk_summary.csv")
+
+# Slovak -----------------------------------------------------------------
+
+sk_participants <- import("/var/www/html/summary_data/sk_participants.csv")
+sk_summary <- import("/var/www/html/summary_data/sk_summary.csv")
