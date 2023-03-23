@@ -567,10 +567,10 @@ for (i in 1:number_folders){
   {"word": "kátrány", "class": "word"},
   {"word": "eldy", "class": "nonword"},
   {"word": "elültr", "class": "nonword"},
-  {"word": "ajándék", "class": "word"},
+  {"word": "ajánlat", "class": "word"},
   {"word": "fontosság", "class": "nonword"},
   {"word": "lövés", "class": "word"},
-  {"word": "szakember", "class": "nonword"},
+  {"word": "géhely", "class": "nonword"},
   {"word": "csomagtartó", "class": "word"}]'
 
   writeLines(practice, con = paste0(
