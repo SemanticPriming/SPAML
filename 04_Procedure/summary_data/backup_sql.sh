@@ -386,14 +386,17 @@ Rscript /var/www/html/summary_data/zh_summarize_stim_backup.R
 # move the data file
 mv /var/www/html/zh/data/data.sqlite /var/www/html/zh/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/zh1/data/data.sqlite /var/www/html/zh1/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/zh2/data/data.sqlite /var/www/html/zh2/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh1/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/zh2/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/zh/data/data.sqlite
 chmod 777 /var/www/html/zh1/data/data.sqlite
+chmod 777 /var/www/html/zh2/data/data.sqlite
 
 # ---- arabic -----
 # summarize the data
