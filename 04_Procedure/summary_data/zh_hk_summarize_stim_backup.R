@@ -171,7 +171,7 @@ zh_hk_words <- import("/var/www/html/zh_hk/zh_hk_words.csv")
 zh_hk_data_all <-
   bind_rows(processData("/var/www/html/zh_hk/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab)),
-            processData("./04_Procedure_real/zh_hk1/data/data.sqlite") %>%
+            processData("/var/www/html/zh_hk1/data/data.sqlite") %>%
                mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
