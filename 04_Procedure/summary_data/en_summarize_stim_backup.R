@@ -252,6 +252,15 @@ en_data_all <- en_data_all %>%
   ##create experiment information data
   exp <- en_data_all %>%
     filter(sender == "Consent Form")
+  
+  ## deal with double consent form issue
+  ### find the right uuid it's sender 1 when there's two
+  second_one <- exp %>% 
+    filter(sender_id == 1)
+  
+  ### filter to just those 
+  exp <- exp %>% 
+    filter(!(sender_id == 0 & observation %in% second_one$observation))
 
   demo_cols <- c("observation", "duration",
                  colnames(demos)[grep("^time", colnames(demos))],
