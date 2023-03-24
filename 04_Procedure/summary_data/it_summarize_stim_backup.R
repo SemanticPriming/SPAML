@@ -170,6 +170,16 @@ it_words <- import("/var/www/html/it/it_words.csv")
 # collected data
 it_data_all <-
   bind_rows(processData("/var/www/html/it/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/it1/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/it2/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/it3/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/it4/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/it5/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
