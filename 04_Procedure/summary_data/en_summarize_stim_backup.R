@@ -204,7 +204,22 @@ en_data_all <-
                           vars(one_of("url_special_code")), as.character),
            processData("/var/www/html/en12/data/data.sqlite") %>%
              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character))
+                       vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/en13/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/en14/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/en15/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/en16/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/en17/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character))
     
   for (i in 1:length(en_data_all)){
     en_data_all[[i]] <- en_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
