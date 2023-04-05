@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Köszönjük</h2>\n    \n    <p class=\"text-left\">Ezzel befejezte a kísérletet.</p>\n\n    <p class=\"text-left\">A véletlenszerű résztvevő azonosítója: \n      ${ window.uuid }. Ezzel a számmal igazolhatja kísérletvezetőjének, hogy befejezte a kísérletet.</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Most bezárhatja az ablakot.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Köszönjük</h2>\n    \n    <p class=\"text-left\">Ezzel befejezte a kísérletet.</p>\n\n    <p class=\"text-left\">A véletlenszerű résztvevő azonosítója: \n      ${ window.uuid }. Ezzel a számmal igazolhatja kísérletvezetőjének, hogy befejezte a kísérletet.</p>\n    \n    <p class=\"text-left\">Kérlek töltsd ki az alábbi kérdőívet, hogy megkapd a kísérleti pontjaid. <a href=\"https://forms.gle/skLGHaBgfV677amP7\">https://forms.gle/skLGHaBgfV677amP7</a>.\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  Most bezárhatja az ablakot.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true

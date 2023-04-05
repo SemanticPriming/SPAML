@@ -1355,7 +1355,7 @@ this.options.templateParameters = await response.json()
       },
       "messageHandlers": {},
       "title": "End of Experiment",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EKöszönjük\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EEzzel befejezte a kísérletet.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EA véletlenszerű résztvevő azonosítója: \n      ${ window.uuid }. Ezzel a számmal igazolhatja kísérletvezetőjének, hogy befejezte a kísérletet.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Most bezárhatja az ablakot.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EKöszönjük\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EEzzel befejezte a kísérletet.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EA véletlenszerű résztvevő azonosítója: \n      ${ window.uuid }. Ezzel a számmal igazolhatja kísérletvezetőjének, hogy befejezte a kísérletet.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-left\"\u003EKérlek töltsd ki az alábbi kérdőívet, hogy megkapd a kísérleti pontjaid. \u003Ca href=\"https:\u002F\u002Fforms.gle\u002FskLGHaBgfV677amP7\"\u003Ehttps:\u002F\u002Fforms.gle\u002FskLGHaBgfV677amP7\u003C\u002Fa\u003E.\n    \u003C\u002Fp\u003E\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Most bezárhatja az ablakot.\n\u003C\u002Ffooter\u003E",
       "plugins": [],
       "tardy": true
     }
