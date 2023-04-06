@@ -282,7 +282,7 @@ participant_DF <- merge(demos[ , demo_cols],
 colnames(participant_DF) <- gsub(".x$", "_demographics", colnames(participant_DF))
 colnames(participant_DF) <- gsub(".y$", "_consent", colnames(participant_DF))
 
-participant_DF$keep <- "keep"
+if (nrow(participant_DF) > 0) { participant_DF$keep <- "keep" } 
 
 # only above 18
 participant_DF$keep[(current_year - as.numeric(participant_DF$which_year_were_you_born)) < 18] <- "exclude"
