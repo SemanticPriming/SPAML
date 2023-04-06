@@ -216,13 +216,24 @@ zh_hk_data_all <- zh_hk_data_all %>%
     filter(sender == "Consent Form")
   
   ## deal with double consent form issue
-  ### find the right uuid it's sender 1 when there's two
+  # here are the doubles
   second_one <- exp %>% 
     filter(sender_id == 1)
   
-  ### filter to just those 
-  exp <- exp %>% 
-    filter(!(sender_id == 0 & observation %in% second_one$observation))
+  # find all the rows with sender_id == 0 and observation is in second one
+  dup_rows <- exp %>% 
+    filter(sender_id == 0 & observation %in% second_one$observation)
+  
+  # remove dup rows from en data all 
+  zh_hk_data_all <- zh_hk_data_all %>% 
+    anti_join(dup_rows)
+  
+  # add in url_lab
+  zh_hk_data_all$url_lab[zh_hk_data_all$observation %in% dup_rows$observation &
+                        zh_hk_data_all$sender_id == 1] <- 2772
+  
+  exp <- zh_hk_data_all %>%
+    filter(sender == "Consent Form")
 
   demo_cols <- c("observation", "duration",
                  colnames(demos)[grep("^time", colnames(demos))],
