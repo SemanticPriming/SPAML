@@ -169,49 +169,49 @@ tr_words <- import("/var/www/html/tr/tr_words.csv")
 
 # collected data
 tr_data_all <-
-  list(processData("/var/www/html/tr/data/data.sqlite") %>%
+  list(processData("/var/www/html/tr/data/data_2023-04-09T0000.sqlite") %>%
               mutate_at(vars(one_of("url_lab")), as.character,
                        vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr1/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr2/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr3/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr4/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr5/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr6/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr7/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr8/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr9/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr10/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr11/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr12/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr13/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                       vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/tr14/data/data.sqlite") %>%
+            # processData("/var/www/html/tr1/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr2/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr3/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr4/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr5/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr6/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr7/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr8/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr9/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr10/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr11/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr12/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            # processData("/var/www/html/tr13/data/data_2023-04-09T0000.sqlite") %>%
+            #   mutate_at(vars(one_of("url_lab")), as.character,
+            #            vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/tr14/data/data_2023-04-09T0000.sqlite") %>%
               mutate_at(vars(one_of("url_lab")), as.character,
                        vars(one_of("url_special_code")), as.character))
 
