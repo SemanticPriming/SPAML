@@ -219,6 +219,9 @@ en_data_all <-
                    vars(one_of("url_special_code")), as.character),
        processData("/var/www/html/en17/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character), 
+       processData("/var/www/html/en18/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character))
 
   for (i in 1:length(en_data_all)){
@@ -258,7 +261,7 @@ en_data_all <- en_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2023
-number_folders <- 18
+number_folders <- 19
 
 ##create demographics only data
 demos <- en_data_all %>% #data frame
