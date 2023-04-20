@@ -166,24 +166,30 @@ it_words <- import("/var/www/html/it/it_words.csv")
 
 # collected data
 it_data_all <-
-  bind_rows(processData("/var/www/html/it/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                        vars(one_of("url_special_code")), as.character),
-            processData("/var/www/html/it1/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                        vars(one_of("url_special_code")), as.character), 
-            processData("/var/www/html/it2/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                        vars(one_of("url_special_code")), as.character), 
-            processData("/var/www/html/it3/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                        vars(one_of("url_special_code")), as.character), 
-            processData("/var/www/html/it4/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                        vars(one_of("url_special_code")), as.character), 
-            processData("/var/www/html/it5/data/data.sqlite") %>%
-              mutate_at(vars(one_of("url_lab")), as.character,
-                        vars(one_of("url_special_code")), as.character)) %>% unique()
+  list(processData("/var/www/html/it/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/it1/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/it2/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/it3/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/it4/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/it4/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character))
+
+for (i in 1:length(it_data_all)){
+  it_data_all[[i]] <- it_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+}
+
+it_data_all <- bind_rows(it_data_all) %>% unique()
 
 # delete stuff before we started
 it_data_all <- it_data_all %>%
