@@ -167,17 +167,23 @@ it_words <- import("/var/www/html/it/it_words.csv")
 # collected data
 it_data_all <-
   bind_rows(processData("/var/www/html/it/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/it1/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)),
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
             processData("/var/www/html/it2/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)), 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
             processData("/var/www/html/it3/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)), 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
             processData("/var/www/html/it4/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab)), 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
             processData("/var/www/html/it5/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character)) %>% unique()
 
 # delete stuff before we started
 it_data_all <- it_data_all %>%
@@ -210,7 +216,7 @@ it_data_all <- it_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2023
-number_folders <- 1
+number_folders <- 6
 
 ##create demographics only data
 demos <- it_data_all %>% #data frame
