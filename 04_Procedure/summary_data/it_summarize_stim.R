@@ -181,7 +181,7 @@ it_data_all <-
        processData("/var/www/html/it4/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character),
-       processData("/var/www/html/it4/data/data.sqlite") %>%
+       processData("/var/www/html/it5/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character))
 
