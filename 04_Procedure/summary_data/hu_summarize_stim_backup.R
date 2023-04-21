@@ -165,11 +165,11 @@ processData <- function(database) {
 # setwd("/Users/erinbuchanan/GitHub/Research/2_projects/SPAML/SPAML-PSA")
 
 # original word lists
-hu_words <- import("/var/www/html/da/hu_words.csv")
+hu_words <- import("/var/www/html/hu/hu_words.csv")
 
 # collected data
 hu_data_all <-
-  bind_rows(processData("/var/www/html/da/data/data.sqlite") %>%
+  bind_rows(processData("/var/www/html/hu/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # # delete stuff before we started
