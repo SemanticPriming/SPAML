@@ -192,6 +192,8 @@ for (i in 1:length(it_data_all)){
   it_data_all[[i]] <- it_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
 }
 
+it_data_all <- bind_rows(it_data_all)
+
 # delete stuff before we started
 it_data_all <- it_data_all %>%
   filter(timestamp > as.POSIXct("2022-12-19")) 
