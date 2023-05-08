@@ -169,6 +169,8 @@ pl_data_all <-
   bind_rows(processData("/var/www/html/pl/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab)),
             processData("/var/www/html/pl1/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab)),
+            processData("/var/www/html/pl3/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
@@ -202,7 +204,7 @@ pl_data_all <- pl_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2023
-number_folders <- 2
+number_folders <- 3
 
 ##create demographics only data
 demos <- pl_data_all %>% #data frame

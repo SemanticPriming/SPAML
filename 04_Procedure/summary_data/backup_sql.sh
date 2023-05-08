@@ -572,14 +572,17 @@ Rscript /var/www/html/summary_data/pl_summarize_stim_backup.R
 # move the data file
 mv /var/www/html/pl/data/data.sqlite /var/www/html/pl/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/pl1/data/data.sqlite /var/www/html/pl1/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/pl1/data/data.sqlite /var/www/html/pl2/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/pl/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/pl1/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/pl2/data/
 
 # give the data the right permissions
 chmod 777 /var/www/html/pl/data/data.sqlite
 chmod 777 /var/www/html/pl1/data/data.sqlite
+chmod 777 /var/www/html/pl2/data/data.sqlite
 
 # ---- italian -----
 # summarize the data

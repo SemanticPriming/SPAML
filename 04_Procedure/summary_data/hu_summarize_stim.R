@@ -210,6 +210,26 @@ demos <- hu_data_all %>% #data frame
 exp <- hu_data_all %>%
   filter(sender == "Consent Form")
 
+## deal with double consent form issue
+# here are the doubles
+second_one <- exp %>% 
+  filter(sender_id == 1)
+
+# find all the rows with sender_id == 0 and observation is in second one
+dup_rows <- exp %>% 
+  filter(sender_id == 0 & observation %in% second_one$observation)
+
+# remove dup rows from en data all 
+hu_data_all <- hu_data_all %>% 
+  anti_join(dup_rows)
+
+# add in url_lab
+hu_data_all$url_lab[hu_data_all$observation %in% dup_rows$observation &
+                      hu_data_all$sender_id == 1] <- 60
+
+exp <- hu_data_all %>%
+  filter(sender == "Consent Form")
+
 demo_cols <- c("observation", "duration",
                colnames(demos)[grep("^time", colnames(demos))],
                "please_tell_us_your_gender", "which_year_were_you_born",
