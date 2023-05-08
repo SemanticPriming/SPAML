@@ -173,7 +173,7 @@ pl_data_all <-
               mutate(url_lab = as.character(url_lab)),
             processData("/var/www/html/pl1/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab)),
-            processData("/var/www/html/pl1/data/data.sqlite") %>%
+            processData("/var/www/html/pl2/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
