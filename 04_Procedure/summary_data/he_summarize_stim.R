@@ -560,16 +560,16 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "sneife", "class": "nonword"},
-  {"word": "læber", "class": "word"},
-  {"word": "tjære", "class": "word"},
-  {"word": "sødo", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
-  {"word": "gave", "class": "word"},
-  {"word": "kegthe", "class": "nonword"},
-  {"word": "skud", "class": "word"},
-  {"word": "ethorår", "class": "nonword"},
-  {"word": "støvle", "class": "word"}]'
+  {"word": "ף ל ב,", "class": "nonword"},
+  {"word": "שפתיים", "class": "word"},
+  {"word": "זֶפֶת", "class": "word"},
+  {"word": "מוזס ק", "class": "nonword"},
+  {"word": "ת ב,נ", "class": "nonword"},
+  {"word": "נתן", "class": "word"},
+  {"word": "ל ה ת פ  ע", "class": "nonword"},
+  {"word": "בְּעִיטָה", "class": "word"},
+  {"word": "יף,", "class": "nonword"},
+  {"word": "מַגָף", "class": "word"}]'
 
   writeLines(practice, con = paste0(
     "/var/www/html/he", folder_num,
