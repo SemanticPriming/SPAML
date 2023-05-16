@@ -26,7 +26,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Farsi"), tabName = "farsi_tab"),
                           menuItem(tags$b("Finnish"), tabName = "finnish_tab"),
                           menuItem(tags$b("French"), tabName = "french_tab"),
-                          #hebrew
+                          menuItem(tags$b("Hebrew"), tabName = "hebrew_tab"),
                           #hindi 
                           menuItem(tags$b("Hungarian"), tabName = "hungarian_tab"),
                           menuItem(tags$b("Italian"), tabName = "italian_tab"),
@@ -78,7 +78,8 @@ ui <- dashboardPage(skin = 'purple',
                           spanish_tab, 
                           farsi_tab, 
                           finnish_tab, 
-                          french_tab, 
+                          french_tab,
+                          hebrew_tab,
                           #hebrew, hindi
                           hungarian_tab, 
                           italian_tab, 
@@ -1210,6 +1211,48 @@ server <- function(input, output) {
                          sep = " - "), 
         icon = icon("list"), color = "maroon")
     })
+    
+    # hebrew ----
+    output$he_participant_data <- renderDT({
+      
+      colnames(he_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(he_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$he_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(he_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$he_summary_table <- renderDT({
+      
+      datatable(he_summary[he_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$hebrewN_total <- renderInfoBox({
+      infoBox(
+        "Hebrew", sum(grepl("keep", he_participants$keep)), 
+        icon = icon("list"), color = "red")
+    })
+    
+    output$hebrewWORD_total <- renderInfoBox({
+      infoBox(
+        "Hebrew", paste(round(sum(he_summary$done_both, na.rm = T)/2000*100,1),
+                         round(sum(he_summary$done, na.rm = T)/2000*100,1), 
+                         round(sum(he_summary$done_totalN, na.rm = T)/2000*100,1), 
+                         sep = " - "), 
+        icon = icon("list"), color = "red")
+    })
+    
     
     
 }

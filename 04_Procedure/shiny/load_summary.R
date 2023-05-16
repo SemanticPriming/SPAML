@@ -132,3 +132,8 @@ zh_hk_summary <- import("/var/www/html/summary_data/zh_hk_summary.csv")
 
 sk_participants <- import("/var/www/html/summary_data/sk_participants.csv")
 sk_summary <- import("/var/www/html/summary_data/sk_summary.csv")
+
+# Hebrew -----------------------------------------------------------------
+
+he_participants <- import("/var/www/html/summary_data/he_participants.csv")
+he_summary <- import("/var/www/html/summary_data/he_summary.csv")
