@@ -2240,7 +2240,7 @@ rm(list = ls())
 gc()
 ```
 
-## he Hebrew running
+## he Hebrew
 
 ```{r eval = F}
 # get data ----
