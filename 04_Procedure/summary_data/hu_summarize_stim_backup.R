@@ -211,27 +211,8 @@ hu_data_all <- hu_data_all %>%
 
   ##create experiment information data
   exp <- hu_data_all %>%
-    filter(sender == "Consent Form")
-  
-  ## deal with double consent form issue
-  # here are the doubles
-  second_one <- exp %>% 
-    filter(sender_id == 1)
-  
-  # find all the rows with sender_id == 0 and observation is in second one
-  dup_rows <- exp %>% 
-    filter(sender_id == 0 & observation %in% second_one$observation)
-  
-  # remove dup rows from en data all 
-  hu_data_all <- hu_data_all %>% 
-    anti_join(dup_rows)
-  
-  # add in url_lab
-  hu_data_all$url_lab[hu_data_all$observation %in% dup_rows$observation &
-                        hu_data_all$sender_id == 1] <- 60
-  
-  exp <- hu_data_all %>%
-    filter(sender == "Consent Form")
+    filter(sender == "Consent Form") %>% 
+    filter(sender_id == 0)
 
   demo_cols <- c("observation", "duration",
                  colnames(demos)[grep("^time", colnames(demos))],
@@ -413,7 +394,7 @@ hu_data_all <- hu_data_all %>%
   hu_merged$done <- hu_merged$sampleN >= 50
 
 # use data ----
-  hu_use <- subset(hu_merged, is.na(done) | done == FALSE)
+  hu_use <- subset(hu_merged, is.na(done_totalN) | done_totalN == FALSE)
   hu_sample <- subset(hu_merged, done_totalN == TRUE)
 
 # Generate ----------------------------------------------------------------
