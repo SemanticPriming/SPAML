@@ -184,19 +184,19 @@ de_data_all <-
             processData("/var/www/html/de4/data/data.sqlite") %>%
               mutate_at(vars(one_of("url_lab")), as.character,
                           vars(one_of("url_special_code")), as.character), 
-       ProcessData("/var/www/html/de5/data/data.sqlite") %>%
+       processData("/var/www/html/de5/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character), 
-       ProcessData("/var/www/html/de6/data/data.sqlite") %>%
+       processData("/var/www/html/de6/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character), 
-       ProcessData("/var/www/html/de7/data/data.sqlite") %>%
+       processData("/var/www/html/de7/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character), 
-       ProcessData("/var/www/html/de8/data/data.sqlite") %>%
+       processData("/var/www/html/de8/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character), 
-       ProcessData("/var/www/html/de9/data/data.sqlite") %>%
+       processData("/var/www/html/de9/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character))
 
