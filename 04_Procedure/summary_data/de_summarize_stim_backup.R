@@ -183,7 +183,22 @@ de_data_all <-
                         vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/de4/data/data.sqlite") %>%
               mutate_at(vars(one_of("url_lab")), as.character,
-                          vars(one_of("url_special_code")), as.character))
+                          vars(one_of("url_special_code")), as.character), 
+       ProcessData("/var/www/html/de5/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character), 
+       ProcessData("/var/www/html/de6/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character), 
+       ProcessData("/var/www/html/de7/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character), 
+       ProcessData("/var/www/html/de8/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character), 
+       ProcessData("/var/www/html/de9/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character))
 
   for (i in 1:length(de_data_all)){
     de_data_all[[i]] <- de_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
@@ -222,7 +237,7 @@ de_data_all <- de_data_all %>%
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
   current_year <- 2023
-  number_folders <- 5
+  number_folders <- 10
 
   ##create demographics only data
   demos <- de_data_all %>% #data frame

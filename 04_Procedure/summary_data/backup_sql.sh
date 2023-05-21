@@ -370,6 +370,12 @@ mv /var/www/html/de2/data/data.sqlite /var/www/html/de2/data/data_$(date +"%FT%H
 mv /var/www/html/de3/data/data.sqlite /var/www/html/de3/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/de4/data/data.sqlite /var/www/html/de4/data/data_$(date +"%FT%H%M").sqlite
 
+mv /var/www/html/de5/data/data.sqlite /var/www/html/de5/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de6/data/data.sqlite /var/www/html/de6/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de7/data/data.sqlite /var/www/html/de7/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de8/data/data.sqlite /var/www/html/de8/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/de9/data/data.sqlite /var/www/html/de9/data/data_$(date +"%FT%H%M").sqlite
+
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de1/data/
@@ -377,12 +383,24 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de2/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de3/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de4/data/
 
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de5/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de6/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de7/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de8/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/de9/data/
+
 # give the data the right permissions
 chmod 777 /var/www/html/de/data/data.sqlite
 chmod 777 /var/www/html/de1/data/data.sqlite
 chmod 777 /var/www/html/de2/data/data.sqlite
 chmod 777 /var/www/html/de3/data/data.sqlite
 chmod 777 /var/www/html/de4/data/data.sqlite
+
+chmod 777 /var/www/html/de5/data/data.sqlite
+chmod 777 /var/www/html/de6/data/data.sqlite
+chmod 777 /var/www/html/de7/data/data.sqlite
+chmod 777 /var/www/html/de8/data/data.sqlite
+chmod 777 /var/www/html/de9/data/data.sqlite
 
 # ---- portuguese -----
 # summarize the data
