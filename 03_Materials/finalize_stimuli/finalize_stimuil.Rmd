@@ -6080,3 +6080,6 @@ sk_final$ok <- NULL
 
 export(sk_final, "sk/sk_trials_final.csv")
 ```
+
+## th Thai
+

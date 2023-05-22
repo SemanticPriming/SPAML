@@ -3,6 +3,8 @@ title: "Create Translation Stimuli"
 author: "Erin M. Buchanan"
 date: "`r Sys.Date()`"
 output: html_document
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -5455,8 +5457,8 @@ gc()
 # get data ----
 vi <- words[ , c("vi_cue", "vi_target", "vi_fake_cue", "vi_fake_target", 
                  "en_cue", "en_target")]
-vi$vi_cue <- tolower(vi$vi_cue)
-vi$vi_target <- tolower(vi$vi_target)
+th$vi_cue <- tolower(th$vi_cue)
+th$vi_target <- tolower(th$vi_target)
 
 # get patterns -----
 vi_patterns <- read.hyph.pat("hyphen/hyph-af.tex", "af")
@@ -5469,7 +5471,7 @@ vi_subs <- vi_subs[1:100000, ]
 # create fake words based on cue
 vi_fake_words <- get_fake(wordlist = vi_subs$unigram, #possibles
                           language_hyp = vi_patterns, #hyphen rules
-                          replacewords = vi$vi_cue) #your words
+                          replacewords = th$vi_cue) #your words
 
 write.csv(vi_fake_words, "vi/vi_fake_cues.csv", row.names = F)
 
@@ -5477,15 +5479,15 @@ write.csv(vi_fake_words, "vi/vi_fake_cues.csv", row.names = F)
 vi <- merge(vi, 
             vi_fake_words[ , c("original_word", "replacement_word")], 
             by.x = "vi_cue", by.y = "original_word")
-vi$vi_fake_cue <- vi$replacement_word
-vi$replacement_word <- NULL
+th$vi_fake_cue <- th$replacement_word
+th$replacement_word <- NULL
 
 gc()
 
 # create fake words based on target
 vi_fake_words <- get_fake(wordlist = vi_subs$unigram, #possibles
                           language_hyp = vi_patterns, #hyphen rules
-                          replacewords = vi$vi_target) #your words
+                          replacewords = th$vi_target) #your words
 
 write.csv(vi_fake_words, "vi/vi_fake_targets.csv", row.names = F)
 
@@ -5493,8 +5495,8 @@ write.csv(vi_fake_words, "vi/vi_fake_targets.csv", row.names = F)
 vi <- merge(vi, 
             vi_fake_words[ , c("original_word", "replacement_word")], 
             by.x = "vi_target", by.y = "original_word")
-vi$vi_fake_target <- vi$replacement_word
-vi$replacement_word <- NULL
+th$vi_fake_target <- th$replacement_word
+th$replacement_word <- NULL
 
 gc()
 
@@ -5505,27 +5507,27 @@ vi_trials$cue_type <- "word"
 vi_trials$target_type <- "word"
 
 vi_trials <- rbind(vi_trials,
-                   data.frame(vi_cue = vi$vi_cue, 
-                              vi_target = vi$vi_target[sample(1:1000, 
+                   data.frame(vi_cue = th$vi_cue, 
+                              vi_target = th$vi_target[sample(1:1000, 
                                                               1000)],
                               type = "unrelated",
                               cue_type = "word", 
                               target_type = "word"), 
-                   data.frame(vi_cue = vi$vi_fake_cue, 
-                              vi_target = vi$vi_target[sample(1:1000, 
+                   data.frame(vi_cue = th$vi_fake_cue, 
+                              vi_target = th$vi_target[sample(1:1000, 
                                                               1000)],
                               type = "nonword",
                               cue_type = "nonword", 
                               target_type = "word"),
-                   data.frame(vi_cue = vi$vi_cue[sample(1:1000,
+                   data.frame(vi_cue = th$vi_cue[sample(1:1000,
                                                         1000)], 
-                              vi_target = vi$vi_fake_target,
+                              vi_target = th$vi_fake_target,
                               type = "nonword",
                               cue_type = "word", 
                               target_type = "nonword"),
-                   data.frame(vi_cue = vi$vi_fake_cue[sample(1:1000,
+                   data.frame(vi_cue = th$vi_fake_cue[sample(1:1000,
                                                              1000)], 
-                              vi_target = vi$vi_fake_target[sample(1:1000,
+                              vi_target = th$vi_fake_target[sample(1:1000,
                                                                    1000)],
                               type = "nonword",
                               cue_type = "nonword", 
@@ -5534,7 +5536,7 @@ vi_trials <- rbind(vi_trials,
 # check dups run until 0
 sum(duplicated(vi_trials[ , c("vi_cue", "vi_target")]))
 
-vi$vi_cosine <- NULL
+th$vi_cosine <- NULL
 write.csv(vi, "vi/vi_translate.csv", row.names = F)
 
 # get cosines -----
@@ -5577,7 +5579,7 @@ rm(list = ls())
 gc()
 ```
 
-## zn Chinese
+## zh Chinese
 
 ```{r eval = F}
 # get data ----
@@ -5671,5 +5673,46 @@ write.csv(zh_trials, "zh/zh_trials.csv", row.names = F)
 
 rm(list = ls())
 
+gc()
+```
+
+## th Thai
+
+```{r eval = F}
+# get data ----
+th <- import("th/th_translated.xlsx")
+
+th <- th[ , c("th_cue", "th_target", "th_fake_cue", "th_fake_target", 
+                 "en_cue", "en_target")]
+th$th_cue <- tolower(th$th_cue)
+th$th_target <- tolower(th$th_target)
+
+# create fake words based on cue
+th_patterns <- read.hyph.pat("hyphen/hyph-th.tex", "th")
+th_fake_words <- get_fake(wordlist = unique(c(th$th_cue, th$th_target)), #possibles
+                          language_hyp = th_patterns, #hyphen rules
+                          replacewords = th$th_cue) #your words
+
+# merge back into data
+th <- merge(th, 
+            th_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "th_cue", by.y = "original_word")
+th$th_fake_cue <- th$replacement_word
+th$replacement_word <- NULL
+
+gc()
+
+th_fake_words <- get_fake(wordlist = unique(c(th$th_cue, th$th_target)), #possibles
+                          language_hyp = th_patterns, #hyphen rules
+                          replacewords = th$th_target) #your words
+
+# merge back into data
+th <- merge(th, 
+            th_fake_words[ , c("original_word", "replacement_word")], 
+            by.x = "th_target", by.y = "original_word")
+th$th_fake_target <- th$replacement_word
+th$replacement_word <- NULL
+
+export(th, "th/th_translated_update.xlsx", rowNames = F)
 gc()
 ```
