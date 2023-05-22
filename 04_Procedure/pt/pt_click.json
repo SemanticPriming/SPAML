@@ -396,9 +396,9 @@
           "code": ""
         }
       ],
-      "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Obrigada!</h2>\n    \n    <p class=\"text-left\">Obrigada por concluir este inquérito. Se desejar obter mais informações sobre o estudo, poderá entrar em contato com Patrícia Arriaga (patricia.arriaga@iscte-iul.pt) ou com a coordenadora da investigação Erin M. Buchanan (ebuchanan@harrisburgu.edu). </p>\n\n    <p class=\"text-left\">Na plataforma Clickworker, registe o seguinte código no respetivo campo fornecido pelo formulário da plataforma. </p>\n\n    <p class=\"text-left\">CÓDIGO: SPALM@ARRIAGA</p>\n\n    <p class=\"text-left\">Muito obrigada! Pode fechar a janela.</p>\n\n\n  </div>\n</main>\n\n<footer>\n  Agora você pode fechar a janela.\n</footer>\n\n\n\n",
-      "_tab": "Content",
+      "title": "Get Code",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n    <div style=\"width: 90%;\">\n      \n      <form id=\"page-form\" style=\"display: block;\">\n  \n      <p class=\"text-left\">Se tomou conhecimento deste estudo através do Sistema de Participação em Investigação no ISCTE, pedimos-lhe que nos indique o seu número de identificação do SPI. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar a sua participação.</p>\n        <input\n          name=\"portuguese-sona\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        />\n  \n      </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form\">\n      Continuar →\n    </button>\n  </footer>\n  ",
+      "_tab": "Files",
       "plugins": [],
       "tardy": true
     },
@@ -1114,6 +1114,38 @@
       "title": "Demographics Form",
       "_tab": "Content",
       "scrollTop": true
+    },
+    "23": {
+      "id": "23",
+      "type": "lab.html.Screen",
+      "files": [],
+      "parameters": [
+        {
+          "name": "",
+          "value": "",
+          "type": "string"
+        }
+      ],
+      "responses": [
+        {
+          "label": "",
+          "event": "",
+          "target": "",
+          "filter": ""
+        }
+      ],
+      "messageHandlers": [
+        {
+          "title": "",
+          "message": "",
+          "code": ""
+        }
+      ],
+      "title": "End of Experiment",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Obrigada!</h2>\n    \n    <p class=\"text-left\">Obrigada por concluir este inquérito. Se desejar obter mais informações sobre o estudo, poderá entrar em contato com Patrícia Arriaga (patricia.arriaga@iscte-iul.pt) ou com a coordenadora da investigação Erin M. Buchanan (ebuchanan@harrisburgu.edu).</p>\n\n    <p class=\"text-left\">Se repondeu Clickworker, registe na plataforma Clickworker, o seguinte código: SPALM23@ARRIAGA</p>\n\n    <p class=\"text-left\">Caso não tenha recebido este inquérito pela Clickworker ignore este Código.</p>\n\n    <p class=\"text-left\">Muito obrigada! Pode fechar a janela.</p>\n\n\n  </div>\n</main>\n\n<footer>\n  Agora você pode fechar a janela.\n</footer>\n\n\n\n",
+      "_tab": "Content",
+      "plugins": [],
+      "tardy": true
     },
     "24": {
       "id": "24",
@@ -3218,7 +3250,8 @@
         "24",
         "14",
         "19",
-        "8"
+        "8",
+        "23"
       ],
       "parameters": [
         {

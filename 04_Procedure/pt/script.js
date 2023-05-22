@@ -1355,8 +1355,21 @@ this.options.templateParameters = await response.json()
         "": ""
       },
       "messageHandlers": {},
+      "title": "Get Code",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n    \u003Cdiv style=\"width: 90%;\"\u003E\n      \n      \u003Cform id=\"page-form\" style=\"display: block;\"\u003E\n  \n      \u003Cp class=\"text-left\"\u003ESe tomou conhecimento deste estudo através do Sistema de Participação em Investigação no ISCTE, pedimos-lhe que nos indique o seu número de identificação do SPI. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar a sua participação.\u003C\u002Fp\u003E\n        \u003Cinput\n          name=\"portuguese-sona\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        \u002F\u003E\n  \n      \u003C\u002Fform\u003E\n  \n    \u003C\u002Fdiv\u003E\n  \n  \u003C\u002Fmain\u003E\n  \n  \u003Cfooter\u003E\n    \u003Cbutton type=\"submit\" form=\"page-form\"\u003E\n      Continuar →\n    \u003C\u002Fbutton\u003E\n  \u003C\u002Ffooter\u003E\n  ",
+      "plugins": [],
+      "tardy": true
+    },
+    {
+      "type": "lab.html.Screen",
+      "files": {},
+      "parameters": {},
+      "responses": {
+        "": ""
+      },
+      "messageHandlers": {},
       "title": "End of Experiment",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EObrigada!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EObrigada por concluir este inquérito. Se desejar obter mais informações sobre o estudo, poderá entrar em contato com Patrícia Arriaga (patricia.arriaga@iscte-iul.pt) ou com a coordenadora da investigação Erin M. Buchanan (ebuchanan@harrisburgu.edu). \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003ENa plataforma Clickworker, registe o seguinte código no respetivo campo fornecido pelo formulário da plataforma. \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003ECÓDIGO: SPALM@ARRIAGA\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EMuito obrigada! Pode fechar a janela.\u003C\u002Fp\u003E\n\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Agora você pode fechar a janela.\n\u003C\u002Ffooter\u003E\n\n\n\n",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EObrigada!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EObrigada por concluir este inquérito. Se desejar obter mais informações sobre o estudo, poderá entrar em contato com Patrícia Arriaga (patricia.arriaga@iscte-iul.pt) ou com a coordenadora da investigação Erin M. Buchanan (ebuchanan@harrisburgu.edu).\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003ESe repondeu Clickworker, registe na plataforma Clickworker, o seguinte código: SPALM23@ARRIAGA\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003ECaso não tenha recebido este inquérito pela Clickworker ignore este Código.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EMuito obrigada! Pode fechar a janela.\u003C\u002Fp\u003E\n\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Agora você pode fechar a janela.\n\u003C\u002Ffooter\u003E\n\n\n\n",
       "plugins": [],
       "tardy": true
     }
