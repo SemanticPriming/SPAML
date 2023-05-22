@@ -1,0 +1,77 @@
+---
+title: "Thai Language Model"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{python}
+import gensim
+import nltk
+import pandas as pd
+from gensim.models.fasttext import FastText
+import numpy as np
+import gensim
+```
+
+```{r}
+library(rio)
+```
+
+## Data
+
+```{r}
+# https://www.kaggle.com/datasets/rtatman/hse-thai-corpus
+# wiki corpus
+DF <- read.csv("thai-wikipedia-corpus.csv")
+```
+
+```{python}
+DF = r.DF[ 1:100 ]
+```
+
+## fastText
+
+```{python}
+# tokenize
+tokenized_train = [nltk.word_tokenize(article) for article in DF['text'].to_list()]
+
+#build a fast test model
+ft_model = FastText(tokenized_train, 
+    min_count = 5, #
+    min_n = 3, # minn
+    max_n = 6, # maxn
+    #t = .0001,
+    alpha = .05, # lr learning rate
+    #lrUpdateRate = 100, 
+    vector_size = 500, #
+    window = 5, #
+    epochs = 10, #
+    negative = 10, # neg
+    sg = 1)
+```
+
+## Get Out Vectors
+
+```{python}
+# get word vec out
+vocab = ft_model.wv.key_to_index
+vectors = ft_model.wv.vectors
+
+# get label and vector index.
+label_index = np.array([(voc[0], voc[1]) for voc in vocab.items()])
+
+# init dataframe using embedding vectors and set index as node name
+tmp =  pd.DataFrame(vectors[label_index[:,1].astype(int)])
+tmp.index = label_index[:, 0]
+tmp.to_csv("matrix_with_labels.csv")
+```
+

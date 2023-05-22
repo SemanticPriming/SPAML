@@ -370,38 +370,6 @@
       "_tab": "Content",
       "tardy": true
     },
-    "8": {
-      "id": "8",
-      "type": "lab.html.Screen",
-      "files": [],
-      "parameters": [
-        {
-          "name": "",
-          "value": "",
-          "type": "string"
-        }
-      ],
-      "responses": [
-        {
-          "label": "",
-          "event": "",
-          "target": "",
-          "filter": ""
-        }
-      ],
-      "messageHandlers": [
-        {
-          "title": "",
-          "message": "",
-          "code": ""
-        }
-      ],
-      "title": "Get Code",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n    <div style=\"width: 90%;\">\n      \n      <form id=\"page-form\" style=\"display: block;\">\n  \n      <p class=\"text-left\">Se tomou conhecimento deste estudo através do Sistema de Participação em Investigação no ISCTE, pedimos-lhe que nos indique o seu número de identificação do SPI. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar a sua participação.</p>\n        <input\n          name=\"portuguese-sona\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        />\n  \n      </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form\">\n      Continuar →\n    </button>\n  </footer>\n  ",
-      "_tab": "Files",
-      "plugins": [],
-      "tardy": true
-    },
     "9": {
       "id": "9",
       "type": "lab.flow.Loop",
@@ -1000,7 +968,7 @@
     "19": {
       "id": "19",
       "type": "lab.html.Form",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <form id=\"page-form2\" style=\"display: block;\">\n\n      <p class=\"text-left\"><b>Se tomou conhecimento deste estudo através da Clickworker, pedimos-lhe que nos indique o seu número de identificação da Clickworker. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar que respondeu.</b></p>\n      <input\n        name=\"clickworker\"\n        style=\"width: 50%;\"\n        type=\"text\"\n        class=\"content-horizontal-left\"\n        required\n      />\n    </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form2\">\n      Continuar →\n    </button>\n  </footer>\n  ",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <form id=\"page-form2\" style=\"display: block;\">\n\n      <p class=\"text-left\"><b>Se tomou conhecimento deste estudo através da Clickworker, pedimos-lhe que nos indique o seu número de identificação da Clickworker. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar que respondeu.</b></p>\n      <input\n        name=\"clickworker\"\n        style=\"width: 50%;\"\n        type=\"text\"\n        class=\"content-horizontal-left\"\n      />\n\n      <p class=\"text-left\">Se tomou conhecimento deste estudo através do Sistema de Participação em Investigação no ISCTE, pedimos-lhe que nos indique o seu número de identificação do SPI. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar a sua participação.</p>\n        <input\n          name=\"portuguese-sona\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        />\n    </form>\n  \n    </div>\n  \n  </main>\n  \n  <footer>\n    <button type=\"submit\" form=\"page-form2\">\n      Continuar →\n    </button>\n  </footer>\n  ",
       "files": [],
       "parameters": [
         {
@@ -3250,7 +3218,6 @@
         "24",
         "14",
         "19",
-        "8",
         "23"
       ],
       "parameters": [

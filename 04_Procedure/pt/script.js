@@ -1337,7 +1337,7 @@ this.options.templateParameters = await response.json()
     },
     {
       "type": "lab.html.Form",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Cform id=\"page-form2\" style=\"display: block;\"\u003E\n\n      \u003Cp class=\"text-left\"\u003E\u003Cb\u003ESe tomou conhecimento deste estudo através da Clickworker, pedimos-lhe que nos indique o seu número de identificação da Clickworker. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar que respondeu.\u003C\u002Fb\u003E\u003C\u002Fp\u003E\n      \u003Cinput\n        name=\"clickworker\"\n        style=\"width: 50%;\"\n        type=\"text\"\n        class=\"content-horizontal-left\"\n        required\n      \u002F\u003E\n    \u003C\u002Fform\u003E\n  \n    \u003C\u002Fdiv\u003E\n  \n  \u003C\u002Fmain\u003E\n  \n  \u003Cfooter\u003E\n    \u003Cbutton type=\"submit\" form=\"page-form2\"\u003E\n      Continuar →\n    \u003C\u002Fbutton\u003E\n  \u003C\u002Ffooter\u003E\n  ",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Cform id=\"page-form2\" style=\"display: block;\"\u003E\n\n      \u003Cp class=\"text-left\"\u003E\u003Cb\u003ESe tomou conhecimento deste estudo através da Clickworker, pedimos-lhe que nos indique o seu número de identificação da Clickworker. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar que respondeu.\u003C\u002Fb\u003E\u003C\u002Fp\u003E\n      \u003Cinput\n        name=\"clickworker\"\n        style=\"width: 50%;\"\n        type=\"text\"\n        class=\"content-horizontal-left\"\n      \u002F\u003E\n\n      \u003Cp class=\"text-left\"\u003ESe tomou conhecimento deste estudo através do Sistema de Participação em Investigação no ISCTE, pedimos-lhe que nos indique o seu número de identificação do SPI. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar a sua participação.\u003C\u002Fp\u003E\n        \u003Cinput\n          name=\"portuguese-sona\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        \u002F\u003E\n    \u003C\u002Fform\u003E\n  \n    \u003C\u002Fdiv\u003E\n  \n  \u003C\u002Fmain\u003E\n  \n  \u003Cfooter\u003E\n    \u003Cbutton type=\"submit\" form=\"page-form2\"\u003E\n      Continuar →\n    \u003C\u002Fbutton\u003E\n  \u003C\u002Ffooter\u003E\n  ",
       "files": {},
       "parameters": {},
       "responses": {
@@ -1346,19 +1346,6 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Clickworker",
       "scrollTop": true
-    },
-    {
-      "type": "lab.html.Screen",
-      "files": {},
-      "parameters": {},
-      "responses": {
-        "": ""
-      },
-      "messageHandlers": {},
-      "title": "Get Code",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n    \u003Cdiv style=\"width: 90%;\"\u003E\n      \n      \u003Cform id=\"page-form\" style=\"display: block;\"\u003E\n  \n      \u003Cp class=\"text-left\"\u003ESe tomou conhecimento deste estudo através do Sistema de Participação em Investigação no ISCTE, pedimos-lhe que nos indique o seu número de identificação do SPI. Garantimos que iremos apagar este registo, mas o mesmo é necessário para poder validar a sua participação.\u003C\u002Fp\u003E\n        \u003Cinput\n          name=\"portuguese-sona\"\n          style=\"width: 50%;\"\n          type=\"text\"\n          class=\"content-horizontal-left\"\n        \u002F\u003E\n  \n      \u003C\u002Fform\u003E\n  \n    \u003C\u002Fdiv\u003E\n  \n  \u003C\u002Fmain\u003E\n  \n  \u003Cfooter\u003E\n    \u003Cbutton type=\"submit\" form=\"page-form\"\u003E\n      Continuar →\n    \u003C\u002Fbutton\u003E\n  \u003C\u002Ffooter\u003E\n  ",
-      "plugins": [],
-      "tardy": true
     },
     {
       "type": "lab.html.Screen",
