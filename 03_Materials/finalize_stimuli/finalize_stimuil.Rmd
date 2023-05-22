@@ -3,6 +3,8 @@ title: "Finalize Stimuli"
 author: "Erin M. Buchanan"
 date: "`r Sys.Date()`"
 output: html_document
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -2830,24 +2832,30 @@ he$en_cue <- gsub("digusting", "disgusting", he$en_cue)
 he_update <- import("he/he_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
+he_update$he_fake_cue <- he_update$he_fake_cue_update
+he_update$he_fake_target <- he_update$he_fake_target_update
+
 # fix cue words ----
-cues <- he_update %>% filter(he_cue_trans != "")
-for (i in 1:nrow(cues)){
-  he$he_cue[he$he_cue == cues$he_cue[i] #original cue match
-            & he$en_cue == cues$en_cue[i]] <- #english match
-    cues$he_cue_trans[i] #new cue
-}
+# cues <- he_update %>% filter(he_cue_trans != "")
+# for (i in 1:nrow(cues)){
+#   he$he_cue[he$he_cue == cues$he_cue[i] #original cue match
+#             & he$en_cue == cues$en_cue[i]] <- #english match
+#     cues$he_cue_trans[i] #new cue
+# }
+# 
+# targets <- he_update %>% filter(he_target_trans != "")
+# for (i in 1:nrow(targets)){
+#   he$he_target[he$he_target == targets$he_target[i] #original target match
+#             & he$en_target == targets$en_target[i]] <- #english match
+#     targets$he_target_trans[i] #new target
+# }
+# 
+# # fix fake words ----
+# he$he_fake_target <- he_update$he_fake_target_final
+# he$he_fake_cue <- he_update$he_fake_cue_final
 
-targets <- he_update %>% filter(he_target_trans != "")
-for (i in 1:nrow(targets)){
-  he$he_target[he$he_target == targets$he_target[i] #original target match
-            & he$en_target == targets$en_target[i]] <- #english match
-    targets$he_target_trans[i] #new target
-}
-
-# fix fake words ----
-he$he_fake_target <- he_update$he_fake_target_final
-he$he_fake_cue <- he_update$he_fake_cue_final
+he <- he_update %>% 
+  select(-he_fake_cue_update, -he_fake_target_update)
 
 sum(duplicated(he$he_cue))
 sum(duplicated(he$he_target))
