@@ -2832,9 +2832,6 @@ he$en_cue <- gsub("digusting", "disgusting", he$en_cue)
 he_update <- import("he/he_translated_final.xlsx") %>% 
   mutate(across(everything(), tolower))
 
-he_update$he_fake_cue <- he_update$he_fake_cue_update
-he_update$he_fake_target <- he_update$he_fake_target_update
-
 # fix cue words ----
 # cues <- he_update %>% filter(he_cue_trans != "")
 # for (i in 1:nrow(cues)){
@@ -2854,8 +2851,7 @@ he_update$he_fake_target <- he_update$he_fake_target_update
 # he$he_fake_target <- he_update$he_fake_target_final
 # he$he_fake_cue <- he_update$he_fake_cue_final
 
-he <- he_update %>% 
-  select(-he_fake_cue_update, -he_fake_target_update)
+he <- he_update 
 
 sum(duplicated(he$he_cue))
 sum(duplicated(he$he_target))
