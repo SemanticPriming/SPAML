@@ -173,8 +173,8 @@ he_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
-# he_data_all <- he_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-10-26"))
+he_data_all <- he_data_all %>%
+  filter(timestamp > as.POSIXct("2023-05-24"))
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0
@@ -254,6 +254,8 @@ he_data_all <-
   # mark those last few as excluded
   participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
   participant_DF$keep[participant_DF$correct < .80] <- "exclude"
+  
+  participant_DF$url_lab <- "2412"
 
 # grab only real trials ----
   real_trials <- he_data_all %>% #data frame
@@ -391,6 +393,9 @@ he_data_all <-
   he_merged$done_both <- (he_merged$target_answeredN >= 50 & he_merged$SE_Z <= .09) | he_merged$target_answeredN >= 320
   he_merged$done_totalN <- he_merged$target_answeredN >= 50
   he_merged$done <- he_merged$sampleN >= 50
+  
+  # take out the "
+  he_merged <- he_merged %>% filter(!grepl('"', word_combo))
 
 # use data ----
   he_use <- subset(he_merged, is.na(done_totalN) | done_totalN == FALSE)
@@ -413,6 +418,7 @@ he_data_all <-
     pull(observation)
 
   p_lab <- he_data_all[he_data_all$observation %in% p_end, ]
+  p_lab$url_lab[p_lab$sender == "Consent Form"] <- "2412"
   p_lab <- p_lab[!is.na(p_lab$url_lab), ]
   p_lab <- p_lab %>%
     left_join(participant_DF %>%

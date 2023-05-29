@@ -710,7 +710,7 @@ he_cue,he_target,type,cue_type,target_type,he_cosine
 מחקר,לימוד,related,word,word,0.35730167188967
 מיוחד,ייחודי,related,word,word,0.495484282773175
 מילון,ביטוי,related,word,word,0.387315437741281
-"מכ""ם",לווין,related,word,word,
+כוכב לכת,לווין,related,word,word,
 מכירה פומבית,מכירה,related,word,word,
 מלון,מלונית,related,word,word,0.517987038028341
 מנורה,נר,related,word,word,0.374108284231722
@@ -1322,7 +1322,7 @@ he_cue,he_target,type,cue_type,target_type,he_cosine
 פנסיה,לאשר,unrelated,word,word,0.117466514199685
 מכירה פומבית,תאוריה,unrelated,word,word,
 נינג'ה,ממחטה,unrelated,word,word,
-"מכ""ם",ארוחת צהריים,unrelated,word,word,
+כוכב לכת,ארוחת צהריים,unrelated,word,word,
 גיבור,סגור,unrelated,word,word,0.104917238403798
 קעקוע,מינוס,unrelated,word,word,0.103728962152823
 לוח שנה,נסיך,unrelated,word,word,
@@ -3362,7 +3362,7 @@ he_cue,he_target,type,cue_type,target_type,he_cosine
 למחות,להרשרף,nonword,word,nonword,
 יום שני,ללבל,nonword,word,nonword,
 דרוך,להעניע,nonword,word,nonword,
-"מכ""ם",ללעות,nonword,word,nonword,
+כוכב לכת,ללעות,nonword,word,nonword,
 קתולי,מגחון,nonword,word,nonword,
 בננה,אנטוף,nonword,word,nonword,
 מסך,לשגה,nonword,word,nonword,
