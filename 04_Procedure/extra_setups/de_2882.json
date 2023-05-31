@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Herzlichen Dank!</h2>\n    \n    <p class=\"text-left\">Das Experiment ist nun abgeschlossen.</p>\n\n    <p class=\"text-left\">Ihre zufällige Teilnehmer*in-ID lautet: \n      ${ window.uuid }. Sie können diese ID als Nachweis verwenden, um zu zeigen, dass Sie das Experiment abgeschlossen haben.</p>\n    </p>\n\n    <p class=\"text-left\">Ihr Code für Prolific lautet: CJN3KMQ4</p>\n\n  </div>\n</main>\n\n<footer>\n  Sie können jetzt das Fenster schließen.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Herzlichen Dank!</h2>\n    \n    <p class=\"text-left\">Das Experiment ist nun abgeschlossen.</p>\n\n    <p class=\"text-left\">Ihre zufällige Teilnehmer*in-ID lautet: \n      ${ window.uuid }. Sie können diese ID als Nachweis verwenden, um zu zeigen, dass Sie das Experiment abgeschlossen haben.</p>\n    </p>\n\n    <p class=\"text-left\">Ihr Code für Prolific lautet: CMX76B3R</p>\n\n  </div>\n</main>\n\n<footer>\n  Sie können jetzt das Fenster schließen.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
