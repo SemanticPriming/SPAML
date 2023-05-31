@@ -441,7 +441,7 @@ list_ja_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 ja_summaries <- bind_rows(list_ja_data, ja_merged)
 ja_merged <- ja_summaries %>%
-  select(-done_both, -done_totalN, -done) %>%
+  select(-contains("done")) %>%
   group_by(word_combo, ja_cue, ja_target, type, cue_type,
            target_type, ja_cosine) %>%
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),

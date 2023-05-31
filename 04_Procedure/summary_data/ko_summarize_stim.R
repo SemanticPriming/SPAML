@@ -441,7 +441,7 @@ list_ko_data <- lapply(list.files(path = "/var/www/html/summary_data",
                        import)
 ko_summaries <- bind_rows(list_ko_data, ko_merged)
 ko_merged <- ko_summaries %>%
-  select(-done_both, -done_totalN, -done) %>%
+  select(-contains("done")) %>%
   group_by(word_combo, ko_cue, ko_target, type, cue_type,
            target_type, ko_cosine) %>%
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),
