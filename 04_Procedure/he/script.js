@@ -394,7 +394,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {
@@ -530,7 +530,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {
@@ -666,7 +666,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {
@@ -802,7 +802,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {
@@ -938,7 +938,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {
@@ -1074,7 +1074,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {
@@ -1210,7 +1210,7 @@ this.options.templateParameters = await response.json()
       "messageHandlers": {},
       "title": "Break",
       "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n  \n  \u003Cdiv style=\"width: 90%;\"\u003E\n    \n    \u003Ch2\u003Eהַפסָקָה\u003C\u002Fh2\u003E\n\n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא קחו הפסקה קצרה.\u003C\u002Fp\u003E\n    \n    \u003Cp class=\"text-right\" dir = \"rtl\"\u003Eאנא הקישו על המקש \u003Ckbd\u003E${ window.word_key }\u003C\u002Fkbd\u003E למילה אמיתית, ועל המקש \u003Ckbd\u003E${ window.nonword_key }\u003C\u002Fkbd\u003E למילה מזויפת. \u003C\u002Fp\u003E\n  \n  \u003C\u002Fdiv\u003E\n\n\u003C\u002Fmain\u003E\n\n\u003Cfooter dir = \"rtl\"\u003E\n אנא הקישו על מקש הרווח \u003Ckbd\u003E(SPACE BAR)\u003C\u002Fkbd\u003E כדי להמשיך.\n\u003C\u002Ffooter\u003E",
-      "timeout": "60000",
+      "timeout": "600000",
       "tardy": true
     },
     {

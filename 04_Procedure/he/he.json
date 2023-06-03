@@ -1025,8 +1025,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "21": {
@@ -1115,8 +1115,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "25": {
@@ -1147,8 +1147,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "27": {
@@ -1264,8 +1264,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "35": {
@@ -1296,8 +1296,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "36": {
@@ -1328,8 +1328,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "52": {
@@ -1360,8 +1360,8 @@
       ],
       "title": "Break",
       "content": "<main class=\"content-horizontal-center content-vertical-center\">\n  \n  <div style=\"width: 90%;\">\n    \n    <h2>הַפסָקָה</h2>\n\n    <p class=\"text-right\" dir = \"rtl\">אנא קחו הפסקה קצרה.</p>\n    \n    <p class=\"text-right\" dir = \"rtl\">אנא הקישו על המקש <kbd>${ window.word_key }</kbd> למילה אמיתית, ועל המקש <kbd>${ window.nonword_key }</kbd> למילה מזויפת. </p>\n  \n  </div>\n\n</main>\n\n<footer dir = \"rtl\">\n אנא הקישו על מקש הרווח <kbd>(SPACE BAR)</kbd> כדי להמשיך.\n</footer>",
-      "_tab": "Content",
-      "timeout": "60000",
+      "_tab": "Behavior",
+      "timeout": "600000",
       "tardy": true
     },
     "53": {
