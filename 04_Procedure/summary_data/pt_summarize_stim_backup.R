@@ -169,8 +169,19 @@ pt_words <- import("/var/www/html/pt/pt_words.csv")
 
 # collected data
 pt_data_all <-
-  bind_rows(processData("/var/www/html/pt/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+  list(processData("/var/www/html/pt/data/data.sqlite") %>% 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
+            processData("/var/www/html/pt1/data/data.sqlite") %>% 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character)) 
+
+for (i in 1:length(pt_data_all)){
+  pt_data_all[[i]] <- pt_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+}
+
+pt_data_all <- bind_rows(pt_data_all) %>% unique()
+
 
 # # delete stuff before we started
 pt_data_all <- pt_data_all %>%
@@ -203,7 +214,7 @@ pt_data_all <- pt_data_all %>%
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
   current_year <- 2023
-  number_folders <- 1
+  number_folders <- 2
 
   ##create demographics only data
   demos <- pt_data_all %>% #data frame
