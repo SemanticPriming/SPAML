@@ -5,6 +5,7 @@
 /03_Materials/data/*/
 /03_Materials/frequency/*/
 /03_Materials/Translation/
+/11_Grants/NSF
 
 # don't refresh embedded tests
 */embedded/
