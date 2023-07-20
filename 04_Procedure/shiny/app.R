@@ -41,6 +41,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Russian"), tabName = "russian_tab"),
                           menuItem(tags$b("Serbian"), tabName = "serbian_tab"),
                           menuItem(tags$b("Slovak"), tabName = "slovak_tab"),
+                          menuItem(tags$b("Thai"), tabName = "thai_tab"),
                           menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
                           menuItem(tags$b("Urdu"), tabName = "urdu_tab"),
                           menuItem(tags$b("Simplified Chinese"), tabName = "s_chinese_tab"),
@@ -94,6 +95,7 @@ ui <- dashboardPage(skin = 'purple',
                           russian_tab, 
                           serbian_tab, 
                           slovak_tab,
+                          thai_tab,
                           turkish_tab,
                           urdu_tab, 
                           s_chinese_tab,
@@ -1264,7 +1266,46 @@ server <- function(input, output) {
         icon = icon("list"), color = "red")
     })
     
+    # thai ----
+    output$th_participant_data <- renderDT({
+      
+      colnames(th_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(th_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
     
+    output$th_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(th_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$th_summary_table <- renderDT({
+      
+      datatable(th_summary[th_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$thaiN_total <- renderInfoBox({
+      infoBox(
+        "Thai", sum(grepl("keep", th_participants$keep)), 
+        icon = icon("list"), color = "red")
+    })
+    
+    output$thaiWORD_total <- renderInfoBox({
+      infoBox(
+        "Thai", paste(round(sum(th_summary$done_both, na.rm = T)/2000*100,1),
+                        round(sum(th_summary$done, na.rm = T)/2000*100,1), 
+                        round(sum(th_summary$done_totalN, na.rm = T)/2000*100,1), 
+                        sep = " - "), 
+        icon = icon("list"), color = "red")
+    })
     
 }
 

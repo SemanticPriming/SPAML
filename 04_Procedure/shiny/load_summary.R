@@ -141,3 +141,9 @@ he_summary <- import("/var/www/html/summary_data/he_summary.csv")
 # Portuguese Together -----------------------------------------------------------------
 
 pt_br_summary <- import("/var/www/html/summary_data/pt_together_summary.csv")
+
+# Thai --------------------------------------------------------------------
+
+th_participants <- import("/var/www/html/summary_data/th_participants.csv")
+th_summary <- import("/var/www/html/summary_data/th_summary.csv")
+
