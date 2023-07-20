@@ -399,7 +399,7 @@ list_sl_data <- lapply(list.files(path = "/var/www/html/summary_data",
 sl_summaries <- bind_rows(list_sl_data, sl_merged)
 
 sl_merged <- sl_summaries %>%
-  select(-done_both, -done_totalN, -done) %>%
+  select(-any_of(c("done_both", "done_totalN", "done"))) %>%
   group_by(word_combo, sl_cue, sl_target, type, cue_type,
            target_type, sl_cosine) %>%
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),

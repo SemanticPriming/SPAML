@@ -403,7 +403,7 @@ th_summaries$th_cue <- gsub("digusting", "disgusting", th_summaries$th_cue)
 th_summaries$word_combo <- gsub("digusting", "disgusting", th_summaries$word_combo)
 
 th_merged <- th_summaries %>%
-  select(-done_both, -done_totalN, -done) %>%
+  select(-any_of(c("done_both", "done_totalN", "done"))) %>%
   group_by(word_combo, th_cue, th_target, type, cue_type,
            target_type, th_cosine) %>%
   summarize(M_Z = weighted.mean(M_Z, sampleN, na.rm = T),
