@@ -27,3 +27,4 @@ Rscript /var/www/html/summary_data/nl_summarize_stim.R
 Rscript /var/www/html/summary_data/zh_hk_summarize_stim.R
 Rscript /var/www/html/summary_data/sk_summarize_stim.R
 Rscript /var/www/html/summary_data/he_summarize_stim.R
+Rscript /var/www/html/summary_data/pt_br_together.R
