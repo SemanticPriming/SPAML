@@ -137,3 +137,7 @@ sk_summary <- import("/var/www/html/summary_data/sk_summary.csv")
 
 he_participants <- import("/var/www/html/summary_data/he_participants.csv")
 he_summary <- import("/var/www/html/summary_data/he_summary.csv")
+
+# Portuguese Together -----------------------------------------------------------------
+
+pt_br_summary <- import("/var/www/html/summary_data/pt_together_summary.csv")

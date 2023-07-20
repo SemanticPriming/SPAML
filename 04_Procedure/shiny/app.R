@@ -515,6 +515,17 @@ server <- function(input, output) {
         icon = icon("list"), color = "lime")
     })
     
+    output$Portuguese_TogetherWORD_total <- renderInfoBox({
+      total_N <- nrow(subset(pt_br_summary, type != "nonword"))
+      
+      infoBox(
+        "Combined Portuguese", paste(round(sum(pt_br_summary$done_both, na.rm = T)/total_N*100,1), 
+                            round(sum(pt_br_summary$done, na.rm = T)/total_N*100,1), 
+                            round(sum(pt_br_summary$done_totalN, na.rm = T)/total_N*100,1), 
+                            sep = " - "), 
+        icon = icon("list"), color = "orange")
+    })
+    
     # Simplified Chinese ----
     output$zh_participant_data <- renderDT({
       

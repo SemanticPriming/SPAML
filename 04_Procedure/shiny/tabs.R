@@ -96,6 +96,7 @@ overall_tab <-
               infoBoxOutput("UrduWORD_total"),
               infoBoxOutput("Simplified_ChineseWORD_total"),
               infoBoxOutput("Traditional_ChineseWORD_total"),
+              infoBoxOutput("Portuguese_TogetherWORD_total")
               
             )  # close box
           ) #close row
