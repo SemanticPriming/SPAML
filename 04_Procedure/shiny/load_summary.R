@@ -147,3 +147,9 @@ pt_br_summary <- import("/var/www/html/summary_data/pt_together_summary.csv")
 th_participants <- import("/var/www/html/summary_data/th_participants.csv")
 th_summary <- import("/var/www/html/summary_data/th_summary.csv")
 
+# Slovenian --------------------------------------------------------------------
+
+sl_participants <- import("/var/www/html/summary_data/sl_participants.csv")
+sl_summary <- import("/var/www/html/summary_data/sl_summary.csv")
+
+

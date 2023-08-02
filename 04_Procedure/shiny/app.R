@@ -41,6 +41,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Russian"), tabName = "russian_tab"),
                           menuItem(tags$b("Serbian"), tabName = "serbian_tab"),
                           menuItem(tags$b("Slovak"), tabName = "slovak_tab"),
+                          menuItem(tags$b("Slovenian"), tabName = "slovenian_tab"),
                           menuItem(tags$b("Thai"), tabName = "thai_tab"),
                           menuItem(tags$b("Turkish"), tabName = "turkish_tab"),
                           menuItem(tags$b("Urdu"), tabName = "urdu_tab"),
@@ -81,7 +82,7 @@ ui <- dashboardPage(skin = 'purple',
                           finnish_tab, 
                           french_tab,
                           hebrew_tab,
-                          #hebrew, hindi
+                          #hindi
                           hungarian_tab, 
                           italian_tab, 
                           japanese_tab, 
@@ -95,6 +96,7 @@ ui <- dashboardPage(skin = 'purple',
                           russian_tab, 
                           serbian_tab, 
                           slovak_tab,
+                          slovenian_tab,
                           thai_tab,
                           turkish_tab,
                           urdu_tab, 
@@ -1304,6 +1306,47 @@ server <- function(input, output) {
                         round(sum(th_summary$done, na.rm = T)/2000*100,1), 
                         round(sum(th_summary$done_totalN, na.rm = T)/2000*100,1), 
                         sep = " - "), 
+        icon = icon("list"), color = "red")
+    })
+    
+    # slovenian ----
+    output$sl_participant_data <- renderDT({
+      
+      colnames(sl_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(sl_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$sl_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(sl_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$sl_summary_table <- renderDT({
+      
+      datatable(sl_summary[sl_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$slovenianN_total <- renderInfoBox({
+      infoBox(
+        "slovenian", sum(grepl("keep", sl_participants$keep)), 
+        icon = icon("list"), color = "red")
+    })
+    
+    output$slovenianWORD_total <- renderInfoBox({
+      infoBox(
+        "slovenian", paste(round(sum(sl_summary$done_both, na.rm = T)/2000*100,1),
+                      round(sum(sl_summary$done, na.rm = T)/2000*100,1), 
+                      round(sum(sl_summary$done_totalN, na.rm = T)/2000*100,1), 
+                      sep = " - "), 
         icon = icon("list"), color = "red")
     })
     
