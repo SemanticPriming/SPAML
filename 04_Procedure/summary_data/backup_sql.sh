@@ -698,27 +698,27 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/th/data/
 chmod 777 /var/www/html/th/data/data.sqlite
 
 # ---- thai -----
-# summarize tth data
-# Rscript /var/www/html/summary_data/th_summarize_stim_backup.R
+# summarize the data
+Rscript /var/www/html/summary_data/th_summarize_stim_backup.R
 
 # move tth data file
-# mv /var/www/html/th/data/data.sqlite /var/www/html/th/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/th/data/data.sqlite /var/www/html/th/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
-# cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/th/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/th/data/
 
 # give tth data tth right permissions
-# chmod 777 /var/www/html/th/data/data.sqlite
+chmod 777 /var/www/html/th/data/data.sqlite
 
 # ---- slovenian -----
-# summarize tsl data
-# Rscript /var/www/html/summary_data/sl_summarize_stim_backup.R
+# summarize the data
+Rscript /var/www/html/summary_data/sl_summarize_stim_backup.R
 
 # move tsl data file
-# mv /var/www/html/sl/data/data.sqlite /var/www/html/sl/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/sl/data/data.sqlite /var/www/html/sl/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
-# cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/sl/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/sl/data/
 
 # give tsl data tsl right permissions
-# chmod 777 /var/www/html/sl/data/data.sqlite
+chmod 777 /var/www/html/sl/data/data.sqlite
