@@ -8,7 +8,7 @@ podjetje,agencija,related,word,word,0.349559487540335
 sprožite,aktivirajte,related,word,word,0.638214282893901
 opozorilo,alarm,related,word,word,0.338137031368364
 motiv,alibi,related,word,word,0.453179360375212
-NLP,vesoljec,related,word,word,
+nlp,vesoljec,related,word,word,
 kot,ulica,related,word,word,0.144289784806119
 bravo,alfa,related,word,word,0.387211390584603
 afrika,amerika,related,word,word,0.626841294428117
@@ -1390,7 +1390,7 @@ prisotnost,špageti,unrelated,word,word,0.0540710380225277
 avtor,dolar,unrelated,word,word,0.0775829427263233
 terminal,dati,unrelated,word,word,0.0751691005452472
 motiv,cvet,unrelated,word,word,0.1159713213952
-NLP,korito,unrelated,word,word,
+nlp,korito,unrelated,word,word,
 impresivno,umor,unrelated,word,word,0.118095820328824
 obdukcija,močno,unrelated,word,word,-0.0106889754133269
 naraven,skupina,unrelated,word,word,0.143957625482249
@@ -2813,7 +2813,7 @@ stražiti,strupivo,nonword,word,nonword,
 notranji,čebranski,nonword,word,nonword,
 original,cenij,nonword,word,nonword,
 plen,četrden,nonword,word,nonword,
-NLP,četobjektina,nonword,word,nonword,
+nlp,četobjektina,nonword,word,nonword,
 privlačen,četraj,nonword,word,nonword,
 igrati,stev,nonword,word,nonword,
 nenadoma,osmanjec,nonword,word,nonword,
