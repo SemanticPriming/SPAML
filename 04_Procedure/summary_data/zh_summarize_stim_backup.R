@@ -1,4 +1,4 @@
-n# Information -------------------------------------------------------------
+# Information -------------------------------------------------------------
 
 # This R script reads in the data from the SPAML experiment and then:
   # removes incorrect trials since they don't count
