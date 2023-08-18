@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Thank you!</h2>\n    \n    <p class=\"text-left\">You've now completed the experiment.</p>\n\n    <p class=\"text-left\">Your random participant id is: \n      ${ window.uuid }. You can use this number to give to your experimenter to show you completed the experiment.</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  You may now close the window.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Thank you!</h2>\n    \n    <p class=\"text-left\">You've now completed the experiment.</p>\n\n    <p class=\"text-left\">Your random participant id is: \n      ${ window.uuid }. You can use this number to give to your experimenter to show you completed the experiment.</p>\n\n    <p class = \"text-left\">\n      In order to get credit, you must copy, screenshot, or photograph this page and send it via email to ccpling@ualberta.ca.\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  You may now close the window.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true

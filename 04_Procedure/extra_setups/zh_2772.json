@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>谢谢你!</h2>\n    \n    <p class=\"text-left\">你已经完成本实验。</p>\n\n    <p class=\"text-left\">你的随机实验编号为: \n      ${ window.uuid }. 您可以提供此编号给您的实验者，以表明您已完成实验。</p>\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  你可以关闭该窗口。\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>谢谢你!</h2>\n    \n    <p class=\"text-left\">你已经完成本实验。</p>\n\n    <p class=\"text-left\">你的随机实验编号为: \n      ${ window.uuid }. 您可以提供此编号给您的实验者，以表明您已完成实验。\n      </p>\n\n    <p class=\"text-left\">\n      为了获得积分，您必须复制、截屏或拍摄此页面，并通过电子邮件将其发送至 ccpling@ualberta.ca。\n    </p>\n\n  </div>\n</main>\n\n<footer>\n  你可以关闭该窗口。\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
