@@ -177,8 +177,8 @@ th_data_all <-
   th_data_all <- bind_rows(th_data_all) %>% unique()
 
 # delete stuff before we started
-# th_data_all <- th_data_all %>%
-#   filter(timestamp > as.POSIXct("2022-08-01"))
+th_data_all <- th_data_all %>%
+  filter(timestamp > as.POSIXct("2023-08-15"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
@@ -214,8 +214,10 @@ demos <- th_data_all %>% #data frame
   filter(sender == "Demographics Form") #filter out only demographics lines
 
 ##create experiment information data
-exp <- th_data_all %>%
-  filter(sender == "Consent Form")
+exp <- th_data_all %>% 
+  filter(sender == "Consent Form") 
+
+exp$url_lab[is.na(exp$url_lab)] <- "2779"
 
 demo_cols <- c("observation", "duration",
                colnames(demos)[grep("^time", colnames(demos))],
