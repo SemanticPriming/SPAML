@@ -217,7 +217,7 @@ demos <- th_data_all %>% #data frame
 exp <- th_data_all %>% 
   filter(sender == "Consent Form") 
 
-exp$url_lab[is.na(exp$url_lab)] <- "2779"
+th_data_all$url_lab[is.na(th_data_all$url_lab) & th_data_all$sender == "Consent Form"] <- "2779"
 
 demo_cols <- c("observation", "duration",
                colnames(demos)[grep("^time", colnames(demos))],
