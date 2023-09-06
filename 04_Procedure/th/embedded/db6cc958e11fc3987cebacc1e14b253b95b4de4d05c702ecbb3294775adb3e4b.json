@@ -1,1 +1,11 @@
-[{"word":"DOCTOR","class":"word"},{"word":"NURSE","class":"word"},{"word":"HICE","class":"nonword"},{"word":"BOSSIL","class":"nonword"}]
+[
+  {"word": "แกมะ", "class": "nonword"},
+  {"word": "เปิดใช้งาน", "class": "word"},
+  {"word": "การแจ้งเตือน", "class": "word"},
+  {"word": "ความแง่ดี", "class": "nonword"},
+  {"word": "บาดงกาย", "class": "nonword"},
+  {"word": "ฮอร์โมน", "class": "word"},
+  {"word": "ภายเจน", "class": "nonword"},
+  {"word": "บริษัท", "class": "word"},
+  {"word": "วิสศพ", "class": "nonword"},
+  {"word": "ข้อตกลง", "class": "word"}]

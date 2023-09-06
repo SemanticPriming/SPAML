@@ -451,7 +451,7 @@ p_lab <- p_lab %>%
               select(keep, n_trials, correct, n_answered, observation,
                      start, end, study_length),
             by = c("observation" = "observation"))
-p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
+p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", 
                     "keep", "n_trials", "correct.y", "n_answered",
                     "start", "end", "study_length")]
 
@@ -468,11 +468,9 @@ list_th_data <- list_th_data[lapply(list_th_data, nrow) > 0]
 if (nrow(p_lab) > 0){
   if (length(list_th_data) > 0){
     p_lab <- unique(bind_rows(bind_rows(list_th_data) %>%
-                                mutate(url_lab = as.character(url_lab),
-                                       url_special_code = as.character(url_special_code)),
+                                mutate(url_lab = as.character(url_lab)),
                               p_lab %>%
-                                mutate(url_special_code = as.character(url_special_code),
-                                       study_length = as.numeric(study_length))))
+                                mutate(study_length = as.numeric(study_length))))
                                        }
 } else {
   p_lab <- unique(bind_rows(list_th_data))

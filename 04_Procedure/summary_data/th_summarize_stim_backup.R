@@ -426,7 +426,7 @@ th_data_all <- th_data_all %>%
                 select(keep, n_trials, correct, n_answered, observation,
                        start, end, study_length),
               by = c("observation" = "observation"))
-  p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid", "url_special_code",
+  p_lab <- p_lab[ , c("url_lab", "timestamp", "uuid",
                       "keep", "n_trials", "correct.y", "n_answered",
                       "start", "end", "study_length")]
 
