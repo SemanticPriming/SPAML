@@ -210,7 +210,10 @@ ru_data_all <-
                           vars(one_of("url_special_code")), as.character),
             processData("/var/www/html/ru13/data/data.sqlite") %>%
               mutate_at(vars(one_of("url_lab")), as.character,
-                          vars(one_of("url_special_code")), as.character))
+                          vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/ru14/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character))
 
   for (i in 1:length(ru_data_all)){
     ru_data_all[[i]] <- ru_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
@@ -249,7 +252,7 @@ ru_data_all <- ru_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2023
-number_folders <- 14
+number_folders <- 15
 static <- FALSE
 adaptive <- TRUE
 
