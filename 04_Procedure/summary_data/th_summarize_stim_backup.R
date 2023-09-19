@@ -166,7 +166,7 @@ th_words <- import("/var/www/html/th/th_words.csv")
 
 # collected data
 th_data_all <-
-  list(processData("/var/www/html/th/data/data_2023-09-02-23-00-01.sqlite") %>%
+  list(processData("/var/www/html/th/data/data.sqlite") %>%
               mutate_at(vars(one_of("url_lab")), as.character,
                           vars(one_of("url_special_code")), as.character))
     
