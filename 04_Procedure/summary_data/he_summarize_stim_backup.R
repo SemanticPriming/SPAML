@@ -255,7 +255,7 @@ he_data_all <- he_data_all %>%
   participant_DF$keep[participant_DF$n_trials < 100] <- "exclude"
   participant_DF$keep[participant_DF$correct < .80] <- "exclude"
   
-  participant_DF$url_lab <- "2412"
+#  participant_DF$url_lab <- "2412"
 
 # grab only real trials ----
   real_trials <- he_data_all %>% #data frame
