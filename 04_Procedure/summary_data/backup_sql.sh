@@ -421,14 +421,17 @@ Rscript /var/www/html/summary_data/pt_summarize_stim_backup.R
 # move tth data file
 mv /var/www/html/pt/data/data.sqlite /var/www/html/pt/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/pt1/data/data.sqlite /var/www/html/pt1/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/pt2/data/data.sqlite /var/www/html/pt2/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/pt/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/pt1/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/pt2/data/
 
 # give tth data tth right permissions
 chmod 777 /var/www/html/pt/data/data.sqlite
 chmod 777 /var/www/html/pt1/data/data.sqlite
+chmod 777 /var/www/html/pt2/data/data.sqlite
 
 # ---- simple chinese -----
 # summarize tth data
