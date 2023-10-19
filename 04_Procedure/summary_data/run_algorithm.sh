@@ -30,3 +30,4 @@ Rscript /var/www/html/summary_data/he_summarize_stim.R
 Rscript /var/www/html/summary_data/pt_br_together.R
 Rscript /var/www/html/summary_data/th_summarize_stim.R
 Rscript /var/www/html/summary_data/sl_summarize_stim.R
+Rscript /var/www/html/summary_data/hi_summarize_stim.R

@@ -725,3 +725,16 @@ cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/sl/data/
 
 # give tsl data tsl right permissions
 chmod 777 /var/www/html/sl/data/data.sqlite
+
+# ---- hindi -----
+# summarize the data
+Rscript /var/www/html/summary_data/hi_summarize_stim_backup.R
+
+# move the data file
+mv /var/www/html/hi/data/data.sqlite /var/www/html/hi/data/data_$(date +"%FT%H%M").sqlite
+
+# copy over temp data
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/hi/data/
+
+# give tsl data tsl right permissions
+chmod 777 /var/www/html/hi/data/data.sqlite

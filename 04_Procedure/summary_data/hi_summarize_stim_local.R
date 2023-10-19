@@ -199,7 +199,7 @@ hi_data_all <-
   # Participant did not indicate at least 18 years of age.
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
-  current_year <- 2022
+  current_year <- 2023
   number_folders <- 1
 
   ##create demographics only data
@@ -560,16 +560,16 @@ hi_data_all <-
     # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
     practice <- '[
-  {"word": "sneife", "class": "nonword"},
-  {"word": "læber", "class": "word"},
-  {"word": "tjære", "class": "word"},
-  {"word": "sødo", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
-  {"word": "gave", "class": "word"},
-  {"word": "kegthe", "class": "nonword"},
-  {"word": "skud", "class": "word"},
-  {"word": "ethorår", "class": "nonword"},
-  {"word": "støvle", "class": "word"}]'
+  {"word": "भावुय", "class": "nonword"},
+  {"word": "अच्छा", "class": "word"},
+  {"word": "यात्री", "class": "word"},
+  {"word": "अनाटेशन", "class": "nonword"},
+  {"word": "सतवनि", "class": "nonword"},
+  {"word": "आपातकालीन", "class": "word"},
+  {"word": "उम्मड़पति", "class": "nonword"},
+  {"word": "अभिमान", "class": "word"},
+  {"word": "आखिकल्प", "class": "nonword"},
+  {"word": "अंतरिक्ष", "class": "word"}]'
 
     writeLines(practice, con = paste0(
       "./04_Procedure/hi", folder_num,

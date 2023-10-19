@@ -170,10 +170,8 @@ hi_data_all <-
               mutate(url_lab = as.character(url_lab))) %>% unique()
 
 # delete stuff before we started
-hi_data_all <- hi_data_all %>%
-  filter(timestamp > as.POSIXct("2022-10-26")) %>%
-  # this was a tester on 10-26
-  filter(observation != "43143") # check no duplicates at the end
+# hi_data_all <- hi_data_all %>%
+#   filter(timestamp > as.POSIXct("2022-10-26"))
 
 # fix the issue of double displays that happened before 2022-09-01
 # 13_0_98 == 15_0_0
@@ -562,17 +560,17 @@ for (i in 1:number_folders){
   # db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json is practice
 
   practice <- '[
-  {"word": "sneife", "class": "nonword"},
-  {"word": "læber", "class": "word"},
-  {"word": "tjære", "class": "word"},
-  {"word": "sødo", "class": "nonword"},
-  {"word": "nwede", "class": "nonword"},
-  {"word": "gave", "class": "word"},
-  {"word": "kegthe", "class": "nonword"},
-  {"word": "skud", "class": "word"},
-  {"word": "ethorår", "class": "nonword"},
-  {"word": "støvle", "class": "word"}]'
-
+  {"word": "भावुय", "class": "nonword"},
+  {"word": "अच्छा", "class": "word"},
+  {"word": "यात्री", "class": "word"},
+  {"word": "अनाटेशन", "class": "nonword"},
+  {"word": "सतवनि", "class": "nonword"},
+  {"word": "आपातकालीन", "class": "word"},
+  {"word": "उम्मड़पति", "class": "nonword"},
+  {"word": "अभिमान", "class": "word"},
+  {"word": "आखिकल्प", "class": "nonword"},
+  {"word": "अंतरिक्ष", "class": "word"}]'
+  
   writeLines(practice, con = paste0(
     "/var/www/html/hi", folder_num,
     "/embedded/db6cc958e11fc3987cebacc1e14b253b95b4de4d05c702ecbb3294775adb3e4b.json"))
