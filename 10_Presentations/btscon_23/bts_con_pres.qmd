@@ -1,5 +1,5 @@
 ---
-title: 'Is priming consistent across languages? Preliminary findings from the SPAML: Semantic Priming Across Many Languages'
+title: ''
 author: "Erin M. Buchanan & The Psychological Science Accelerator"
 institute: "Harrisburg University"
 format: 

@@ -48,7 +48,21 @@ matchDF <- import("en_matched.csv") %>% mutate(across(everything(), tolower)) %>
   full_join(
     import("tr_matched.csv") %>% mutate(across(everything(), tolower)), 
     by = c("en_cue", "en_target")
-  )
+  ) %>% 
+  full_join(
+    import("tr_matched.csv") %>% mutate(across(everything(), tolower)), 
+    by = c("en_cue", "en_target")
+  ) %>% 
+  
+
+ #   ar br_pt    cs    da    de    el 
+ #    8   773  1000   996   999   801 
+ #   en    es    fa    fr    he    hu 
+ # 1000  1000     1   961    78   308 
+ #   it    ja    ko    pl    pt    ro 
+ #  526   999   999   999    42   778 
+ #   ru    sk    tr    ur    zh 
+ # 1000   544  1000   233   249 
 
 # make each pair unique by language 
 uniqueDF <- bind_rows(import("cs_trial_unique.csv") %>% 

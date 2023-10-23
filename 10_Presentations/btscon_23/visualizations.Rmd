@@ -1,0 +1,527 @@
+---
+title: "Visualizations"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(rio)
+library(tidyr)
+library(ggridges)
+library(nlme)
+library(broom)
+```
+
+## Participant Statistics
+
+```{r}
+files <- list.files(path = "10_Presentations/btscon_23/processed_data",
+                    pattern = "*_part.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import)
+
+PDF <- bind_rows(list.import) 
+
+# total participants
+sum(PDF$total)
+
+# total usable
+PDF %>% 
+  filter(keep_participant == "keep") %>% 
+  pull(total) %>% 
+  sum()
+
+PDF <- PDF %>% na.omit()
+
+# total number of participants 27 languages 
+ggplot(
+  PDF %>% 
+  group_by(language) %>% 
+  summarize(total = sum(total)), 
+  aes(x = language, 
+      y = total)) + 
+    geom_bar(stat = "identity") + 
+    theme_linedraw() + 
+    xlab("Study Language") + 
+    ylab("Total Participants") + 
+  geom_hline(yintercept = 800)
+
+# number of participants by language match by usable or not by language
+ggplot(PDF %>% 
+         filter(lang_match == "FALSE"), 
+       aes(x = language, y = total, fill = keep_participant)) + 
+  geom_bar(position = "fill",
+            stat = "identity") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Usable") + 
+  scale_fill_discrete(name = "Keep Participant", 
+                      labels = c("No", "Yes")) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Language: No Match")
+
+ggplot(PDF %>% 
+         filter(lang_match == "TRUE"), 
+       aes(x = language, y = total, fill = keep_participant)) + 
+  geom_bar(position = "fill",
+            stat = "identity") + 
+    theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Usable") + 
+  scale_fill_discrete(name = "Keep Participant", 
+                      labels = c("No", "Yes")) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Language: Match")
+```
+
+## Trial Statistics
+
+```{r}
+files <- list.files(path = "10_Presentations/btscon_23/processed_data",
+                    pattern = "*_trial.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import)
+TDF <- bind_rows(list.import) %>% 
+  na.omit()
+
+# total participants
+sum(TDF$total)
+
+# total usable
+TDF %>% 
+  filter(keep == "keep") %>% 
+  pull(total) %>% 
+  sum()
+
+# total number of participants 27 languages 
+ggplot(
+  TDF %>% 
+  group_by(language) %>% 
+  summarize(total = sum(total)), 
+  aes(x = language, 
+      y = total)) + 
+    geom_bar(stat = "identity") + 
+    theme_linedraw() + 
+    xlab("Study Language") + 
+    ylab("Total Trials") + 
+  geom_hline(yintercept = 800)
+
+# number of participants by language match by usable or not by language
+ggplot(TDF %>% 
+         filter(lang_match == "FALSE"), 
+       aes(x = language, y = total, fill = keep)) + 
+  geom_bar(position = "fill",
+            stat = "identity") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Usable") + 
+  scale_fill_discrete(name = "Keep Trial", 
+                      labels = c("No", "Yes")) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Language: No Match")
+
+ggplot(TDF %>% 
+         filter(lang_match == "TRUE"), 
+       aes(x = language, y = total, fill = keep)) + 
+  geom_bar(position = "fill",
+            stat = "identity") + 
+    theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Usable") + 
+  scale_fill_discrete(name = "Keep Trial", 
+                      labels = c("No", "Yes")) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Language: Match")
+```
+
+## Item Statistics
+
+```{r}
+files <- list.files(path = "10_Presentations/btscon_23/processed_data",
+                    pattern = "*_item.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import) 
+IDF <- bind_rows(list.import) %>% 
+  mutate(language = TDF$language)
+
+ggplot(IDF %>% 
+         filter(lang_match == "FALSE"), 
+       aes(x = language, y = accuracy, fill = class)) + 
+  geom_bar(stat = "identity",
+           position = "dodge") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Accuracy") + 
+  scale_fill_discrete(name = "Trial Type", 
+                      labels = c("Nonword", "Word")) + 
+  theme(legend.position = "bottom") + 
+  coord_cartesian(ylim = c(.75,1)) + 
+  ggtitle("Language: No Match")
+
+ggplot(IDF %>% 
+         filter(lang_match == "TRUE"), 
+       aes(x = language, y = accuracy, fill = class)) + 
+  geom_bar(stat = "identity",
+           position = "dodge") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Accuracy") + 
+  scale_fill_discrete(name = "Trial Type", 
+                      labels = c("Nonword", "Word")) + 
+  theme(legend.position = "bottom") + 
+  coord_cartesian(ylim = c(.75,1)) + 
+  ggtitle("Language: Match")
+
+ggplot(IDF %>% 
+         filter(lang_match == "FALSE"), 
+       aes(x = language, y = MZRT, fill = class)) + 
+  geom_bar(stat = "identity",
+           position = "dodge") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Mean Z-Score RT") + 
+  scale_fill_discrete(name = "Trial Type", 
+                      labels = c("Nonword", "Word")) + 
+  theme(legend.position = "bottom")  + 
+  ggtitle("Language: No Match")
+
+ggplot(IDF %>% 
+         filter(lang_match == "TRUE"), 
+       aes(x = language, y = MZRT, fill = class)) + 
+  geom_bar(stat = "identity",
+           position = "dodge") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Mean Z-Score RT") + 
+  scale_fill_discrete(name = "Trial Type", 
+                      labels = c("Nonword", "Word")) + 
+  theme(legend.position = "bottom")  + 
+  ggtitle("Language: Match")
+```
+
+## Priming Statistics 
+
+```{r}
+files <- list.files(path = "10_Presentations/btscon_23/processed_data",
+                    pattern = "*_priming.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import)
+num_rows <- unlist(lapply(list.import, nrow))
+languages <- unique(TDF$language)
+
+primeDF <- bind_rows(list.import) %>% 
+  mutate(language = rep(languages, times = num_rows)) %>% 
+  select(language, 
+         target_word_unique,
+         avgZ_prime_FALSE, 
+         avgZ_prime_TRUE,
+         avgZ_RT_related_FALSE, 
+         avgZ_RT_related_TRUE,
+         avgZ_RT_unrelated_FALSE, 
+         avgZ_RT_unrelated_TRUE,
+         # target_correct_keep_related_FALSE, 
+         # target_correct_keep_related_TRUE,
+         # target_correct_keep_unrelated_FALSE,
+         # target_correct_keep_unrelated_TRUE,
+         target_sample_keep_related_FALSE,
+         target_sample_keep_related_TRUE,
+         target_sample_keep_unrelated_FALSE,
+         target_sample_keep_unrelated_TRUE
+         )
+
+nrow(primeDF)
+
+all.20 <- primeDF %>% 
+  filter(target_sample_keep_related_FALSE >= 20 & 
+         target_sample_keep_related_TRUE >= 20 & 
+         target_sample_keep_unrelated_FALSE >= 20 & 
+         target_sample_keep_unrelated_TRUE)
+
+# need to pivot
+all.20.long <- all.20 %>% 
+  select(language, avgZ_prime_FALSE, avgZ_prime_TRUE, target_word_unique) %>% 
+  pivot_longer(
+    cols = c(avgZ_prime_FALSE, avgZ_prime_TRUE), 
+    names_to = "lang_match",
+    values_to = "primingRT"
+  )
+
+primeDF.long <- bind_rows( 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_FALSE, 
+         target_sample_keep_related_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_FALSE, 
+         z_RT = avgZ_RT_related_FALSE) %>% 
+    mutate(type = "related",
+           lang_match = FALSE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_FALSE, 
+         target_sample_keep_unrelated_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_FALSE, 
+         z_RT = avgZ_RT_unrelated_FALSE) %>% 
+    mutate(type = "unrelated",
+           lang_match = FALSE), 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_TRUE, 
+         target_sample_keep_related_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_TRUE, 
+         z_RT = avgZ_RT_related_TRUE) %>% 
+    mutate(type = "related",
+           lang_match = TRUE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_TRUE, 
+         target_sample_keep_unrelated_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_TRUE, 
+         z_RT = avgZ_RT_unrelated_TRUE) %>% 
+    mutate(type = "unrelated",
+           lang_match = TRUE)
+  ) %>% 
+  filter(size >= 20)
+
+# pivot and then do anything with at least 20 
+ggplot(all.20.long, 
+       aes(y = language, x = primingRT, fill = lang_match)) + 
+  geom_density_ridges(alpha = .4,
+                      scale = .8) + 
+  theme_linedraw() + 
+  xlab("Z RT Priming") + 
+  ylab("Language") + 
+  scale_fill_discrete(name = "Language", 
+                      labels = c("No Match", "Match")) + 
+  theme(legend.position = "bottom")
+  
+ggplot(primeDF.long %>% 
+         filter(lang_match == "FALSE"), 
+       aes(y = language, x = z_RT, fill = type)) + 
+  geom_density_ridges(alpha = .4,
+                      scale = .8) + 
+  theme_linedraw() + 
+  xlab("Z RT") + 
+  ylab("Language") + 
+  scale_fill_discrete(name = "Trial", 
+                      labels = c("Related", "Unrelated")) + 
+  theme(legend.position = "bottom") + 
+  coord_cartesian(xlim = c(-1.1, 1.1)) + 
+  ggtitle("Language: No Match")
+
+ggplot(primeDF.long %>% 
+         filter(lang_match == "TRUE"), 
+       aes(y = language, x = z_RT, fill = type)) + 
+  geom_density_ridges(alpha = .4,
+                      scale = .8) + 
+  theme_linedraw() + 
+  xlab("Z RT") + 
+  ylab("Language") + 
+  scale_fill_discrete(name = "Trial", 
+                      labels = c("Related", "Unrelated")) + 
+  theme(legend.position = "bottom") + 
+  coord_cartesian(xlim = c(-1.1, 1.1)) + 
+  ggtitle("Language: Match")
+
+model.prime.all.diff <- lme(
+  primingRT ~ lang_match,
+  random = list(~1|language),
+  data = all.20.long
+)
+
+summary(model.prime.all.diff)
+coef(model.prime.all.diff)
+
+model.prime.diff <- lme(
+  z_RT ~ type,
+  random = list(~1|language),
+  data = primeDF.long
+)
+
+summary(model.prime.diff)
+
+model.prime.diff.match <- lme(
+  z_RT ~ type*lang_match,
+  random = list(~1|language),
+  data = primeDF.long
+)
+
+summary(model.prime.diff.match)
+
+model.prime.diff.matchT <- lme(
+  z_RT ~ type,
+  random = list(~1|language),
+  data = primeDF.long %>% 
+    filter(lang_match == "TRUE")
+)
+
+summary(model.prime.diff.matchT)
+
+model.prime.diff.matchF <- lme(
+  z_RT ~ type,
+  random = list(~1|language),
+  data = primeDF.long %>% 
+    filter(lang_match == "FALSE")
+)
+
+summary(model.prime.diff.matchF)
+```
+
+```{r}
+matched <- read.csv("03_Materials/matched_stimuli/matched_stimuli.csv")
+
+primeDF.cross <- bind_rows( 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_FALSE, 
+         target_sample_keep_related_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_FALSE, 
+         z_RT = avgZ_RT_related_FALSE) %>% 
+    mutate(type = "related",
+           lang_match = FALSE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_FALSE, 
+         target_sample_keep_unrelated_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_FALSE, 
+         z_RT = avgZ_RT_unrelated_FALSE) %>% 
+    mutate(type = "unrelated",
+           lang_match = FALSE), 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_TRUE, 
+         target_sample_keep_related_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_TRUE, 
+         z_RT = avgZ_RT_related_TRUE) %>% 
+    mutate(type = "related",
+           lang_match = TRUE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_TRUE, 
+         target_sample_keep_unrelated_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_TRUE, 
+         z_RT = avgZ_RT_unrelated_TRUE) %>% 
+    mutate(type = "unrelated",
+           lang_match = TRUE)
+  ) %>% 
+  # for weighted means
+  mutate(z_RT = ifelse(is.na(z_RT), 0, z_RT),
+         size = ifelse(is.na(size), 0, size)) %>% 
+  group_by(type, target_word_unique, language) %>% 
+  summarize(z_RT = stats::weighted.mean(z_RT, size, na.rm = T),
+            size = sum(size),
+            .groups = "keep") %>% 
+  filter(size >= 20) %>% 
+  pivot_wider(id_cols = c(target_word_unique, language),
+              names_from = type, 
+              values_from = z_RT) %>% 
+  na.omit() %>% 
+  mutate(primeZRT = unrelated - related)
+
+ #   ar br_pt    cs    da    de    el 
+ #    8   773  1000   996   999   801 
+ #   en    es    fa    fr    he    hu 
+ # 1000  1000     1   961    78   308 
+ #   it    ja    ko    pl    pt    ro 
+ #  526   999   999   999    42   778 
+ #   ru    sk    tr    ur    zh 
+ # 1000   544  1000   233   249 
+
+matched2 <- matched %>% 
+  left_join(primeDF.cross %>% filter(language = "ar"),
+            by = "")
+
+matched2 <- matched %>% 
+  left_join(overall %>% filter(lang == "English") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(en_avgZ_prime = avgZ_prime), 
+            by = c("en_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Japanese") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ja_avgZ_prime = avgZ_prime), 
+            by = c("ja_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Korean") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ko_avgZ_prime = avgZ_prime), 
+            by = c("ko_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Russian") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(ru_avgZ_prime = avgZ_prime), 
+            by = c("ru_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Czech") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(cs_avgZ_prime = avgZ_prime), 
+            by = c("cs_target_word_unique" = "target_word_unique")) %>% 
+  left_join(overall %>% filter(lang == "Turkish") %>% 
+              select(avgZ_prime, target_word_unique) %>% 
+              rename(tr_avgZ_prime = avgZ_prime), 
+            by = c("tr_target_word_unique" = "target_word_unique")) 
+```
+
+
+
+## Cross Cultural Comparison
+
+<center>
+
+```{r graph4, out.height="100%", out.width="100%"}
+matched2$prop_work <- apply(matched2 %>% select(en_avgZ_prime:tr_avgZ_prime), 1, function(x) sum(x > 0))
+
+props <- 
+  matched2 %>% 
+  group_by(prop_work) %>% 
+  count() %>% 
+  mutate(hsize = 3,
+         prop_work = as.factor(prop_work)) %>% 
+  ungroup() %>% 
+  arrange(desc(prop_work)) %>% 
+  mutate(csum = cumsum(n), 
+         pos = n/2 + lag(csum, 1),
+         pos = if_else(is.na(pos), n/2, pos))
+
+ggplot(props, aes(x = hsize, y = n, fill = prop_work)) +
+  geom_col() +
+  coord_polar(theta = "y") +
+  xlim(c(0.2, 3 + 0.5)) +
+  theme_void() + 
+  geom_text(aes(label = round((n/1000*100))),
+            position = position_stack(vjust = 0.5)) + 
+  scale_fill_brewer(palette = "Paired") + 
+  geom_label_repel(data = props,
+                   aes(y = pos, label = paste0(prop_work)),
+                   size = 4.5, nudge_x = 1, show.legend = FALSE,
+                   segment.colour = NA) + 
+  theme(legend.position = "none")
+```
+
+</center>
+
+## Cross Cultural Comparison
+
+<center>
+
+```{r graph5, out.height="100%", out.width="100%", message = FALSE}
+ggpairs(matched2[ , 45:50]) + theme_bw()
+```
+
+</center>
