@@ -383,6 +383,7 @@ model.prime.diff.matchF <- lme(
 summary(model.prime.diff.matchF)
 ```
 
+
 ```{r}
 matched <- read.csv("03_Materials/matched_stimuli/matched_stimuli.csv")
 
@@ -436,92 +437,92 @@ primeDF.cross <- bind_rows(
               names_from = type, 
               values_from = z_RT) %>% 
   na.omit() %>% 
-  mutate(primeZRT = unrelated - related)
-
- #   ar br_pt    cs    da    de    el 
- #    8   773  1000   996   999   801 
- #   en    es    fa    fr    he    hu 
- # 1000  1000     1   961    78   308 
- #   it    ja    ko    pl    pt    ro 
- #  526   999   999   999    42   778 
- #   ru    sk    tr    ur    zh 
- # 1000   544  1000   233   249 
+  mutate(primeZRT = unrelated - related) %>% 
+  ungroup()
 
 matched2 <- matched %>% 
-  left_join(primeDF.cross %>% filter(language = "ar"),
-            by = "")
+  left_join(primeDF.cross %>% filter(language == "ar") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ar_target_word_unique" = "target_word_unique")) %>% 
+  left_join(primeDF.cross %>% filter(language == "br_pt") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("pt_br_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "cs") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("cs_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "da") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("da_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "de") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("de_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "el") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("el_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "en") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("en_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "es") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("es_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "fa") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("fa_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "fr") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("fr_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "he") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("he_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "hu") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("hu_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "it") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("it_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ja") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ja_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ko") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ko_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "pl") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("pl_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "pt") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("pt_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ro") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ro_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ru") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ru_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "sk") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("sk_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "tr") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("tr_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ur") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ur_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "zh") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("zh_target_word_unique" = "target_word_unique")) %>% 
+  select(starts_with("primeZRT"), en_cue, en_target)
 
-matched2 <- matched %>% 
-  left_join(overall %>% filter(lang == "English") %>% 
-              select(avgZ_prime, target_word_unique) %>% 
-              rename(en_avgZ_prime = avgZ_prime), 
-            by = c("en_target_word_unique" = "target_word_unique")) %>% 
-  left_join(overall %>% filter(lang == "Japanese") %>% 
-              select(avgZ_prime, target_word_unique) %>% 
-              rename(ja_avgZ_prime = avgZ_prime), 
-            by = c("ja_target_word_unique" = "target_word_unique")) %>% 
-  left_join(overall %>% filter(lang == "Korean") %>% 
-              select(avgZ_prime, target_word_unique) %>% 
-              rename(ko_avgZ_prime = avgZ_prime), 
-            by = c("ko_target_word_unique" = "target_word_unique")) %>% 
-  left_join(overall %>% filter(lang == "Russian") %>% 
-              select(avgZ_prime, target_word_unique) %>% 
-              rename(ru_avgZ_prime = avgZ_prime), 
-            by = c("ru_target_word_unique" = "target_word_unique")) %>% 
-  left_join(overall %>% filter(lang == "Czech") %>% 
-              select(avgZ_prime, target_word_unique) %>% 
-              rename(cs_avgZ_prime = avgZ_prime), 
-            by = c("cs_target_word_unique" = "target_word_unique")) %>% 
-  left_join(overall %>% filter(lang == "Turkish") %>% 
-              select(avgZ_prime, target_word_unique) %>% 
-              rename(tr_avgZ_prime = avgZ_prime), 
-            by = c("tr_target_word_unique" = "target_word_unique")) 
+matched2$prop_work <- apply(matched2 %>% select(-en_cue, -en_target), 1, function(x) sum(x > 0, na.rm = T) / length(na.omit(x)))
+
+ggplot(matched2, aes(x = prop_work)) + 
+  theme_linedraw() + 
+  geom_histogram(bins = 25, fill = "white", color = "black") + 
+  ylab("Frequency") + 
+  xlab("Proportion that 'Work'")
+
+matched2 %>% 
+  filter(prop_work == 1) %>% 
+  select(en_cue, en_target)
 ```
 
 
-
-## Cross Cultural Comparison
-
-<center>
-
-```{r graph4, out.height="100%", out.width="100%"}
-matched2$prop_work <- apply(matched2 %>% select(en_avgZ_prime:tr_avgZ_prime), 1, function(x) sum(x > 0))
-
-props <- 
-  matched2 %>% 
-  group_by(prop_work) %>% 
-  count() %>% 
-  mutate(hsize = 3,
-         prop_work = as.factor(prop_work)) %>% 
-  ungroup() %>% 
-  arrange(desc(prop_work)) %>% 
-  mutate(csum = cumsum(n), 
-         pos = n/2 + lag(csum, 1),
-         pos = if_else(is.na(pos), n/2, pos))
-
-ggplot(props, aes(x = hsize, y = n, fill = prop_work)) +
-  geom_col() +
-  coord_polar(theta = "y") +
-  xlim(c(0.2, 3 + 0.5)) +
-  theme_void() + 
-  geom_text(aes(label = round((n/1000*100))),
-            position = position_stack(vjust = 0.5)) + 
-  scale_fill_brewer(palette = "Paired") + 
-  geom_label_repel(data = props,
-                   aes(y = pos, label = paste0(prop_work)),
-                   size = 4.5, nudge_x = 1, show.legend = FALSE,
-                   segment.colour = NA) + 
-  theme(legend.position = "none")
-```
-
-</center>
-
-## Cross Cultural Comparison
-
-<center>
-
-```{r graph5, out.height="100%", out.width="100%", message = FALSE}
-ggpairs(matched2[ , 45:50]) + theme_bw()
-```
-
-</center>
