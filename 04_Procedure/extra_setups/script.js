@@ -38,7 +38,7 @@ window.uuid = this.random.uuid4()
 this.parameters['uuid'] = window.uuid
 
 const searchParams = new URLSearchParams(window.location.search);
-this.parameters['aid'] = console.log(searchParams); 
+this.parameters['aid'] = searchParams.get('aid'); 
 
 }
       },
