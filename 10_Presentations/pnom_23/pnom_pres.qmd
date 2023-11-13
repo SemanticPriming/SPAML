@@ -1,0 +1,184 @@
+---
+title: 'What can we learn about two million priming values? An update to the Semantic Priming Across Many Languages Project (SPAML)'
+author: "Erin M. Buchanan & The Psychological Science Accelerator"
+institute: "Harrisburg University"
+format: 
+  revealjs:
+    theme: night
+editor: source
+incremental: true 
+scrollable: true 
+preview-links: true
+code-copy: true 
+highlight-style: github 
+editor_options: 
+  chunk_output_type: inline
+---
+
+## Many Thanks{.smaller}
+
+```{css}
+h1.title {
+font-size: 1.5em;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(dplyr)
+library(rio)
+library(tidyr)
+library(ggridges)
+library(nlme)
+library(broom)
+library(ggrepel)
+library(knitr)
+```
+
+- The Psychological Science Accelerator
+- ZPID: https://leibniz-psychology.org/
+- Harrisburg University
+- Over 100 labs and 300+ collaborators
+- Many translators
+- The admin team 
+
+## Semantic Priming{.smaller} 
+:::: {.columns}
+::: {.column width="50%"}
+<center>
+FASTER
+
+```{r out.width="100%"}
+include_graphics("dog_cat.jpg")
+```
+</center>
+:::
+::: {.column width="50%"}
+<center>
+SLOWER
+```{r out.width="100%"}
+include_graphics("dog_spoon.jpg")
+```
+</center>
+:::
+::::
+
+## SPAML Stimuli{.smaller}
+
+- Selected by language word frequency and similarity using Open Subtitles 
+- 1000 cue-target pairs
+- Matched across 31 languages/dialects
+- Required: 10 languages for registered report
+
+## SPAML Procedure{.smaller}
+<center>
+```{r out.width="75%", out.height="75%"}
+include_graphics("procedure.jpg")
+```
+</center>
+
+## Participant Level Data{.smaller}
+
+```{r}
+files <- list.files(path = "processed_data",
+                    pattern = "*_part.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import)
+
+PDF <- bind_rows(list.import) 
+```
+
+- 125 labs have received a data collection link
+- 25431 total participants 
+- 21408 total "usable participants"
+  - At least 18
+  - At least 100 trials
+  - At least 80% accuracy 
+- Unfortunately, this is lower data retention than we anticipated 
+  - SPP was approximately 95%
+  - Ours is 84%
+  
+## Participant Level Data{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+PDF <- PDF
+
+# total number of participants 27 languages 
+ggplot(
+  PDF %>% 
+  group_by(language) %>% 
+  summarize(total = sum(total)), 
+  aes(x = language, 
+      y = total)) + 
+    geom_bar(stat = "identity") + 
+    theme_linedraw() + 
+    xlab("Study Language") + 
+    ylab("Total Participants") + 
+  geom_hline(yintercept = 800)
+```
+
+## Participant Level Data{.smaller}
+
+- For this talk, we are going to split the data into:
+  - Native: Took the study in their native language
+  - Non-Native/Multiple: Took the study in a different language or listed multiple native lagnauges 
+
+## Participant Level Data{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+# number of participants by language match by usable or not by language
+ggplot(PDF %>% 
+         filter(lang_match == "FALSE"), 
+       aes(x = language, y = total, fill = keep_participant)) + 
+  geom_bar(position = "fill",
+            stat = "identity") + 
+  theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Usable") + 
+  scale_fill_discrete(name = "Keep Participant", 
+                      labels = c("No", "Yes")) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Language: No Match")
+```
+
+## Participant Level Data{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+ggplot(PDF %>% 
+         filter(lang_match == "TRUE"), 
+       aes(x = language, y = total, fill = keep_participant)) + 
+  geom_bar(position = "fill",
+            stat = "identity") + 
+    theme_linedraw() + 
+  xlab("Study Language") + 
+  ylab("Percent Usable") + 
+  scale_fill_discrete(name = "Keep Participant", 
+                      labels = c("No", "Yes")) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Language: Match")
+```
+
+
+
+
+- participant counts and retention / split with match/nomatch language 1
+- priming for that stuff
+- priming across languages
+- priming matches 
+- thanks bye
+
+## Questions?{.smaller}
+
+:::: {.columns}
+::: {.column width="70%"}
+- Thank you for listening!
+- All PSA collaborators are listed with their author information online
+:::
+::: {.column width="30%"}
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("QR_links.png")
+```
+:::
+::::
