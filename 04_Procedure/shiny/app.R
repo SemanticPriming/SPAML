@@ -27,7 +27,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Finnish"), tabName = "finnish_tab"),
                           menuItem(tags$b("French"), tabName = "french_tab"),
                           menuItem(tags$b("Hebrew"), tabName = "hebrew_tab"),
-                          #hindi 
+                          menuItem(tags$b("Hindi"), tabName = "hindi_tab"),
                           menuItem(tags$b("Hungarian"), tabName = "hungarian_tab"),
                           menuItem(tags$b("Italian"), tabName = "italian_tab"),
                           menuItem(tags$b("Japanese"), tabName = "japanese_tab"),
@@ -82,7 +82,7 @@ ui <- dashboardPage(skin = 'purple',
                           finnish_tab, 
                           french_tab,
                           hebrew_tab,
-                          #hindi
+                          hindi_tab,
                           hungarian_tab, 
                           italian_tab, 
                           japanese_tab, 
@@ -1337,16 +1337,57 @@ server <- function(input, output) {
     
     output$slovenianN_total <- renderInfoBox({
       infoBox(
-        "slovenian", sum(grepl("keep", sl_participants$keep)), 
+        "Slovenian", sum(grepl("keep", sl_participants$keep)), 
         icon = icon("list"), color = "red")
     })
     
     output$slovenianWORD_total <- renderInfoBox({
       infoBox(
-        "slovenian", paste(round(sum(sl_summary$done_both, na.rm = T)/2000*100,1),
+        "Slovenian", paste(round(sum(sl_summary$done_both, na.rm = T)/2000*100,1),
                       round(sum(sl_summary$done, na.rm = T)/2000*100,1), 
                       round(sum(sl_summary$done_totalN, na.rm = T)/2000*100,1), 
                       sep = " - "), 
+        icon = icon("list"), color = "red")
+    })
+    
+    # hindi ----
+    output$hi_participant_data <- renderDT({
+      
+      colnames(hi_participants) <- c("PSA_ID", "Time", "Participant_ID")
+      datatable(hi_participants[ , 1:3], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$hi_participant_table <- renderDT({
+      
+      temp <- as.data.frame(table(hi_participants$url_lab))
+      
+      colnames(temp) <- c("PSA_ID", "Frequency")
+      datatable(temp, rownames = F,
+                filter = "top",
+                options = list(dom = 'tp'))
+    })
+    
+    output$hi_summary_table <- renderDT({
+      
+      datatable(hi_summary[hi_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
+    })
+    
+    output$slovenianN_total <- renderInfoBox({
+      infoBox(
+        "Hindi", sum(grepl("keep", hi_participants$keep)), 
+        icon = icon("list"), color = "red")
+    })
+    
+    output$slovenianWORD_total <- renderInfoBox({
+      infoBox(
+        "Hindi", paste(round(sum(hi_summary$done_both, na.rm = T)/2000*100,1),
+                           round(sum(hi_summary$done, na.rm = T)/2000*100,1), 
+                           round(sum(hi_summary$done_totalN, na.rm = T)/2000*100,1), 
+                           sep = " - "), 
         icon = icon("list"), color = "red")
     })
     

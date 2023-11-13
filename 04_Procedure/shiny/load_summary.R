@@ -152,4 +152,9 @@ th_summary <- import("/var/www/html/summary_data/th_summary.csv")
 sl_participants <- import("/var/www/html/summary_data/sl_participants.csv")
 sl_summary <- import("/var/www/html/summary_data/sl_summary.csv")
 
+# Hindi --------------------------------------------------------------------
+
+hi_participants <- import("/var/www/html/summary_data/hi_participants.csv")
+hi_summary <- import("/var/www/html/summary_data/hi_summary.csv")
+
 

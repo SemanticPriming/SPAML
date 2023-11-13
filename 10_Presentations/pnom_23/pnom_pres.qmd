@@ -91,6 +91,10 @@ PDF <- bind_rows(list.import)
 ```
 
 - 125 labs have received a data collection link
+
+
+
+
 - 25431 total participants 
 - 21408 total "usable participants"
   - At least 18

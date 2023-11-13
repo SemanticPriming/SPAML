@@ -20,8 +20,8 @@ library(tidyr)
 ## Import Language Data
 
 ```{r}
-lang <- "fa"
-native_lang <- "Farsi"
+lang <- "tr"
+native_lang <- "Turkish"
 native_other <- NULL
 
 # import participants to mark them
