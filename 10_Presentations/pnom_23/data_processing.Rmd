@@ -20,9 +20,9 @@ library(tidyr)
 ## Import Language Data
 
 ```{r}
-lang <- "tr"
-native_lang <- "Turkish"
-native_other <- NULL
+lang <- "zh"
+native_lang <- "Chinese"
+native_other <- "Mandarin"
 
 # import participants to mark them
 PDF <- import(paste0("05_Data_real/data_processing/output_data/",
@@ -51,6 +51,8 @@ PDF$lang_match <- (PDF$native_trans == native_lang | is.na(PDF$native_trans))
 if (!is.null(native_other)){
   PDF$lang_match[PDF$native_trans == native_other] <- TRUE
 }
+
+PDF$lang_match[!grepl(lang, PDF$meta_language)] <- FALSE
 
 table(PDF$lang_match)
 

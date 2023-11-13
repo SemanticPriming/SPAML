@@ -34,6 +34,8 @@ library(nlme)
 library(broom)
 library(ggrepel)
 library(knitr)
+library(wordcloud2)
+library(flextable)
 ```
 
 - The Psychological Science Accelerator
@@ -71,6 +73,21 @@ include_graphics("dog_spoon.jpg")
 - Matched across 31 languages/dialects
 - Required: 10 languages for registered report
 
+```{r}
+langs <- data.frame(
+  word = c("Chinese", "Portuguese", "Spanish", "English", "Czech",
+           "Korean", "Turkish", "Russian", "Japanese", "German"),
+  freq = rep(1,10)
+)
+  
+wordcloud2(data = langs, 
+           minRotation = 0, maxRotation = 0,
+           minSize = 1,
+           size = .25, 
+           color = "random-dark",
+           shape = "diamond")
+```
+
 ## SPAML Procedure{.smaller}
 <center>
 ```{r out.width="75%", out.height="75%"}
@@ -87,51 +104,91 @@ files <- list.files(path = "processed_data",
 
 list.import <- lapply(files, import)
 
-PDF <- bind_rows(list.import) 
+PDF <- bind_rows(list.import) %>% 
+  na.omit()
+
+files <- list.files(path = "processed_data",
+                    pattern = "*_trial.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import)
+TDF <- bind_rows(list.import) %>% 
+  na.omit()
 ```
 
 - 125 labs have received a data collection link
-
-
-
-
-- 25431 total participants 
-- 21408 total "usable participants"
+- `r sum(PDF$total)` total participants 
+- `r PDF %>% filter(keep_participant == "keep") %>% pull(total) %>% sum()` total "usable participants"
   - At least 18
   - At least 100 trials
   - At least 80% accuracy 
 - Unfortunately, this is lower data retention than we anticipated 
   - SPP was approximately 95%
   - Ours is 84%
+- Total number of trials: `r sum(TDF$total)`: `r TDF %>% filter(keep == "keep") %>% pull(total) %>% sum()` usable
   
 ## Participant Level Data{.smaller}
 
 ```{r out.height="100%", out.width="100%"}
-PDF <- PDF
-
-# total number of participants 27 languages 
-ggplot(
-  PDF %>% 
+PDF_temp <- PDF %>% 
   group_by(language) %>% 
-  summarize(total = sum(total)), 
-  aes(x = language, 
-      y = total)) + 
+  summarize(total = sum(total)) %>% 
+  mutate(color = ifelse(
+    total > 800, "Done", ifelse(
+      grepl("zh$|pt", language), "Need", ifelse(
+        grepl("fr|hu|it|ro|sr", language), "Should", "Unlikely"
+        )
+      )
+    )
+  ) %>% 
+  mutate(language = factor(language, 
+                           levels = unique(language), 
+                           labels = c("Arabic", "Portuguese-Br", 
+                                      "Czech", "Danish", "German", 
+                                      "Greek", "English", "Spanish", 
+                                      "Farsi", "French", "Hebrew", 
+                                      "Hungarian", "Italian", "Japanese", 
+                                      "Korean", "Dutch", "Norwegian", 
+                                      "Polish", "Portuguese", "Romanian", 
+                                      "Russian", "Slovak", "Serbian", 
+                                      "Turkish", "Urdu", "Mandarin", 
+                                      "Cantonese")))
+
+ggplot(PDF_temp, aes(x = reorder(language, -total), 
+      y = total, fill = color)) + 
     geom_bar(stat = "identity") + 
-    theme_linedraw() + 
+    theme_linedraw(base_size = 16) + 
     xlab("Study Language") + 
     ylab("Total Participants") + 
-  geom_hline(yintercept = 800)
+  geom_hline(yintercept = 800) +
+  scale_fill_discrete(name = "Status") + 
+  coord_flip()
 ```
+
+* Also Thai, Hindi, Slovenian, Finnish
 
 ## Participant Level Data{.smaller}
 
 - For this talk, we are going to split the data into:
-  - Native: Took the study in their native language
-  - Non-Native/Multiple: Took the study in a different language or listed multiple native lagnauges 
+  - Native: Took the study in their listed native language, browser matched language of study 
+  - Non-Native/Multiple: Took the study in a different language or listed multiple native languages or included a mismatch of browser and language of study
 
 ## Participant Level Data{.smaller}
 
 ```{r out.height="100%", out.width="100%"}
+PDF <- PDF %>% 
+  mutate(language = factor(language, 
+                           levels = unique(language), 
+                           labels = c("Arabic", "Portuguese-Br", 
+                                      "Czech", "Danish", "German", 
+                                      "Greek", "English", "Spanish", 
+                                      "Farsi", "French", "Hebrew", 
+                                      "Hungarian", "Italian", "Japanese", 
+                                      "Korean", "Dutch", "Norwegian", 
+                                      "Polish", "Portuguese", "Romanian", 
+                                      "Russian", "Slovak", "Serbian", 
+                                      "Turkish", "Urdu", "Mandarin", 
+                                      "Cantonese")))
 # number of participants by language match by usable or not by language
 ggplot(PDF %>% 
          filter(lang_match == "FALSE"), 
@@ -144,7 +201,8 @@ ggplot(PDF %>%
   scale_fill_discrete(name = "Keep Participant", 
                       labels = c("No", "Yes")) + 
   theme(legend.position = "bottom") + 
-  ggtitle("Language: No Match")
+  ggtitle("Language: Multiple") + 
+  coord_flip()
 ```
 
 ## Participant Level Data{.smaller}
@@ -161,17 +219,420 @@ ggplot(PDF %>%
   scale_fill_discrete(name = "Keep Participant", 
                       labels = c("No", "Yes")) + 
   theme(legend.position = "bottom") + 
-  ggtitle("Language: Match")
+  ggtitle("Language: Native") + 
+  coord_flip()
 ```
 
 
+## Priming Calculation{.smaller}
+
+- By item:
+  - Matched on the target and then averaged 
+  - {SPOON}-DOG trial for DOG *minus* {CAT}-DOG trial for DOG
+- By condition: 
+  - Overall unrelated condition mean on targets compared to related condition mean on targets
+- For this presentation, required *n* >= 20 for target word 
+
+## Priming Level Data: By Item{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+files <- list.files(path = "processed_data",
+                    pattern = "*_priming.csv",
+                    full.names = TRUE)
+
+list.import <- lapply(files, import)
+num_rows <- unlist(lapply(list.import, nrow))
+languages <- unique(TDF$language)
+
+primeDF <- bind_rows(list.import) %>% 
+  mutate(language = rep(languages, times = num_rows)) %>% 
+  select(language, 
+         target_word_unique,
+         avgZ_prime_FALSE, 
+         avgZ_prime_TRUE,
+         avgZ_RT_related_FALSE, 
+         avgZ_RT_related_TRUE,
+         avgZ_RT_unrelated_FALSE, 
+         avgZ_RT_unrelated_TRUE,
+         # target_correct_keep_related_FALSE, 
+         # target_correct_keep_related_TRUE,
+         # target_correct_keep_unrelated_FALSE,
+         # target_correct_keep_unrelated_TRUE,
+         target_sample_keep_related_FALSE,
+         target_sample_keep_related_TRUE,
+         target_sample_keep_unrelated_FALSE,
+         target_sample_keep_unrelated_TRUE
+         )
+
+# nrow(primeDF)
+
+all.20 <- primeDF %>% 
+  filter(target_sample_keep_related_FALSE >= 20 & 
+         target_sample_keep_related_TRUE >= 20 & 
+         target_sample_keep_unrelated_FALSE >= 20 & 
+         target_sample_keep_unrelated_TRUE)
+
+# need to pivot
+all.20.long <- all.20 %>% 
+  select(language, avgZ_prime_FALSE, avgZ_prime_TRUE, target_word_unique) %>% 
+  pivot_longer(
+    cols = c(avgZ_prime_FALSE, avgZ_prime_TRUE), 
+    names_to = "lang_match",
+    values_to = "primingRT"
+  )
+
+primeDF.long <- bind_rows( 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_FALSE, 
+         target_sample_keep_related_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_FALSE, 
+         z_RT = avgZ_RT_related_FALSE) %>% 
+    mutate(type = "related",
+           lang_match = FALSE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_FALSE, 
+         target_sample_keep_unrelated_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_FALSE, 
+         z_RT = avgZ_RT_unrelated_FALSE) %>% 
+    mutate(type = "unrelated",
+           lang_match = FALSE), 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_TRUE, 
+         target_sample_keep_related_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_TRUE, 
+         z_RT = avgZ_RT_related_TRUE) %>% 
+    mutate(type = "related",
+           lang_match = TRUE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_TRUE, 
+         target_sample_keep_unrelated_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_TRUE, 
+         z_RT = avgZ_RT_unrelated_TRUE) %>% 
+    mutate(type = "unrelated",
+           lang_match = TRUE)
+  ) %>% 
+  filter(size >= 20) 
+```
+
+```{r}
+# pivot and then do anything with at least 20 
+ggplot(all.20.long %>% 
+  filter(language %in% c("en", "tr", "de")) %>% 
+    mutate(language = factor(language,
+                             levels = c("en", "tr", "de"), 
+                             labels = c("English", "Turkish", "German"))), 
+       aes(y = language, x = primingRT, fill = lang_match)) + 
+  geom_density_ridges(alpha = .4,
+                      #jittered_points = TRUE,
+                      scale = .8) + 
+  theme_linedraw() + 
+  xlab("Z RT Priming") + 
+  ylab("Language") + 
+  scale_fill_discrete(name = "Language", 
+                      labels = c("Non-Native/Multiple", "Native")) + 
+  theme(legend.position = "bottom") + 
+  geom_vline(xintercept = 0)
+```
+
+## Priming Level Data: By Condition{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+ggplot(primeDF.long %>% 
+         filter(lang_match == "FALSE") %>% 
+         filter(language %in% c("tr", "sr", "ru", "ro", "pt", 
+                                "en", "es", "de")) %>% 
+         mutate(language = factor(language, 
+                                  levels = c("tr", "sr", "ru", "ro", "pt", 
+                                "en", "es", "de"),
+                                labels = c("Turkish", "Serbian", "Russian", "Romanian", "Portuguese", 
+                                "English", "Spanish", "German"))), 
+       aes(y = language, x = z_RT, fill = type)) + 
+  geom_density_ridges(alpha = .4,
+                      #jittered_points = TRUE,
+                      scale = .8) + 
+  theme_linedraw() + 
+  xlab("Z RT") + 
+  ylab("Language") + 
+  scale_fill_discrete(name = "Trial", 
+                      labels = c("Related", "Unrelated")) + 
+  theme(legend.position = "bottom") + 
+  coord_cartesian(xlim = c(-1.1, 1.1)) + 
+  ggtitle("Language: Non-Native/Multiple") 
+```
+
+## Priming Level Data: By Condition{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+ggplot(primeDF.long %>% 
+         filter(lang_match == "TRUE") %>% 
+         filter(!(language %in% c("ro", "nl", "ar", "sr"))) %>% 
+         mutate(language = factor(language, 
+                                  levels = c("br_pt","cs", "da","de",
+                                             "el","en","es","fr",
+                                             "he","hu","it","ja",
+                                             "ko","pl","pt","ru",
+                                             "sk","tr","ur","zh"), 
+                                  labels = c("Portuguese-Br","Czech", "Danish","German",
+                                             "Greek","English","Spanish","French",
+                                             "Hebrew","Hungarian","Italian","Japenese",
+                                             "Korean","Polish","Portuguese","Russian",
+                                             "Slovak","Turkish","Urdu","Mandarin"))), 
+       aes(y = language, x = z_RT, fill = type)) + 
+  geom_density_ridges(alpha = .4,
+                      #jittered_points = TRUE, 
+                      scale = .8) + 
+  theme_linedraw() + 
+  xlab("Z RT") + 
+  ylab("Language") + 
+  scale_fill_discrete(name = "Trial", 
+                      labels = c("Related", "Unrelated")) + 
+  theme(legend.position = "bottom") + 
+  coord_cartesian(xlim = c(-1.1, 1.1)) + 
+  ggtitle("Language: Native")
+```
+
+## Priming Level Data{.smaller}
+
+- By Item: 
+  - Priming ~ .11
+  - No differences in language groups
+- By Condition: 
+  - Priming ~ .11
+  - No difference/interaction in language groups
+
+```{r}
+model.prime.all.diff <- lme(
+  primingRT ~ lang_match,
+  random = list(~1|language),
+  data = all.20.long
+)
+
+# summary(model.prime.all.diff)
+# coef(model.prime.all.diff)
+
+model.prime.diff <- lme(
+  z_RT ~ type,
+  random = list(~1|language),
+  data = primeDF.long
+)
+
+# summary(model.prime.diff)
+
+model.prime.diff.match <- lme(
+  z_RT ~ type*lang_match,
+  random = list(~1|language),
+  data = primeDF.long
+)
+
+# summary(model.prime.diff.match)
+```
+
+## Priming Level Data{.smaller}
+
+```{r}
+prime_scores <- primeDF.long %>% 
+  mutate(language = factor(language, 
+         levels = c("da","de","en","es","fa", 
+                    "ko","pl","pt","ro","ru",
+                    "sr","tr","ar","it","br_pt",
+                    "cs","el","fr","he","hu",
+                    "ja","sk","ur","zh","nl" ), 
+         labels = c("Danish", "German", "English", "Spanish", 
+                    "Farsi", "Korean", "Polish", "Portuguese", 
+                    "Romanian", "Russian", "Serbian", "Turkish", 
+                    "Arabic", "Italian", "Portuguese-Br", "Czech", 
+                    "Greek", "French", "Hebew", "Hungarian", 
+                    "Japanese", "Slovak", "Urdu", "Mandarin", 
+                    "Dutch"))) %>% 
+  group_by(language, type) %>% 
+  summarize(avg = mean(z_RT), 
+            n = mean(size),
+            count = n(), .groups = "keep") %>% 
+  filter(!(language %in% c("Dutch", "Arabic", "Farsi"))) %>% 
+  pivot_wider(id_cols = language, 
+              names_from = type,
+              values_from = c(avg, n)) %>% 
+  mutate(priming = avg_unrelated-avg_related,
+         sample = mean(c(n_related, n_unrelated))) %>% 
+  na.omit()
 
 
-- participant counts and retention / split with match/nomatch language 1
-- priming for that stuff
-- priming across languages
-- priming matches 
-- thanks bye
+ggplot(prime_scores, aes(x = reorder(language, -priming), y = priming, size = sample)) + 
+    geom_point() +
+  theme_linedraw() + 
+  xlab("Language") +
+  ylab("Z-Condition Difference Mean") + 
+  theme(legend.position = "none") + 
+  coord_flip()
+```
+
+## Priming Level Data: Items Matched{.smaller}
+
+```{r out.height="100%", out.width="100%"}
+matched <- read.csv("../../03_Materials/matched_stimuli/matched_stimuli.csv")
+
+primeDF.cross <- bind_rows( 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_FALSE, 
+         target_sample_keep_related_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_FALSE, 
+         z_RT = avgZ_RT_related_FALSE) %>% 
+    mutate(type = "related",
+           lang_match = FALSE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_FALSE, 
+         target_sample_keep_unrelated_FALSE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_FALSE, 
+         z_RT = avgZ_RT_unrelated_FALSE) %>% 
+    mutate(type = "unrelated",
+           lang_match = FALSE), 
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_related_TRUE, 
+         target_sample_keep_related_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_related_TRUE, 
+         z_RT = avgZ_RT_related_TRUE) %>% 
+    mutate(type = "related",
+           lang_match = TRUE),
+  primeDF %>% 
+  select(language, 
+         avgZ_RT_unrelated_TRUE, 
+         target_sample_keep_unrelated_TRUE,
+         target_word_unique) %>% 
+  rename(size = target_sample_keep_unrelated_TRUE, 
+         z_RT = avgZ_RT_unrelated_TRUE) %>% 
+    mutate(type = "unrelated",
+           lang_match = TRUE)
+  ) %>% 
+  # for weighted means
+  mutate(z_RT = ifelse(is.na(z_RT), 0, z_RT),
+         size = ifelse(is.na(size), 0, size)) %>% 
+  group_by(type, target_word_unique, language) %>% 
+  summarize(z_RT = stats::weighted.mean(z_RT, size, na.rm = T),
+            size = sum(size),
+            .groups = "keep") %>% 
+  filter(size >= 20) %>% 
+  pivot_wider(id_cols = c(target_word_unique, language),
+              names_from = type, 
+              values_from = z_RT) %>% 
+  na.omit() %>% 
+  mutate(primeZRT = unrelated - related) %>% 
+  ungroup()
+
+matched2 <- matched %>% 
+  left_join(primeDF.cross %>% filter(language == "ar") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ar_target_word_unique" = "target_word_unique")) %>% 
+  left_join(primeDF.cross %>% filter(language == "br_pt") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("pt_br_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "cs") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("cs_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "da") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("da_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "de") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("de_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "el") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("el_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "en") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("en_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "es") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("es_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "fa") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("fa_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "fr") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("fr_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "he") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("he_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "hu") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("hu_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "it") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("it_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ja") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ja_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ko") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ko_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "pl") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("pl_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "pt") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("pt_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ro") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ro_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ru") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ru_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "sk") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("sk_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "tr") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("tr_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "ur") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("ur_target_word_unique" = "target_word_unique")) %>%
+  left_join(primeDF.cross %>% filter(language == "zh") %>% 
+              select(target_word_unique, primeZRT),
+            by = c("zh_target_word_unique" = "target_word_unique")) %>% 
+  select(starts_with("primeZRT"), en_cue, en_target)
+
+matched2$prop_work <- apply(matched2 %>% select(-en_cue, -en_target), 1, function(x) sum(x > 0, na.rm = T) / length(na.omit(x)))
+
+ggplot(matched2, aes(x = prop_work)) + 
+  theme_linedraw() + 
+  geom_histogram(bins = 25, fill = "white", color = "black") + 
+  ylab("Frequency") + 
+  xlab("Proportion that 'Work' by Item") +
+  geom_vline(xintercept = mean(matched2$prop_work), color = "red",
+             linewidth = 2) + 
+    geom_vline(xintercept = median(matched2$prop_work), color = "blue",
+             linewidth = 2) 
+```
+
+## Priming Level Data: Items Matched{.smaller}
+
+```{r}
+kable(matched2 %>% 
+  filter(prop_work == 1) %>% 
+  select(en_cue, en_target) %>% 
+    dplyr::rename("Cue" = "en_cue",
+                  "Target" = "en_target"))
+```
+
+## Final Thoughts{.smaller} 
+
+- We have a lot of data! It is so exciting!
+- There is priming! 
+- It appears to be consistent across native and multi-lingual people
+- Differences in amount by language 
 
 ## Questions?{.smaller}
 

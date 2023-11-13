@@ -1,4 +1,4 @@
 - source: pnom_pres_quarto.qmd
   quarto-pub:
-    - id: 6c392477-5884-4ff8-8fa4-a1b7894b39a5
-      url: 'https://quartopub.com/sites/doomlab/pnom22'
+    - id: c3c2ad35-5549-46b1-aa17-f9ab6ed8d99c
+      url: 'https://doomlab.quarto.pub/pnom22'

@@ -31,12 +31,12 @@ library(ggrepel)
 ```
 
 ```{r data}
-cs_prime <- read.csv("../../05_Data_real/output_data/cs_prime_data.csv")
-en_prime <- read.csv("../../05_Data_real/output_data/en_prime_data.csv")
-ja_prime <- read.csv("../../05_Data_real/output_data/ja_prime_data.csv")
-ko_prime <- read.csv("../../05_Data_real/output_data/ko_prime_data.csv")
-ru_prime <- read.csv("../../05_Data_real/output_data/ru_prime_data.csv")
-tr_prime <- read.csv("../../05_Data_real/output_data/tr_prime_data.csv")
+cs_prime <- read.csv("../../05_Data_real/data_processing/output_data/cs_prime_data.csv")
+en_prime <- read.csv("../../05_Data_real/data_processing/output_data/en_prime_data.csv")
+ja_prime <- read.csv("../../05_Data_real/data_processing/output_data/ja_prime_data.csv")
+ko_prime <- read.csv("../../05_Data_real/data_processing/output_data/ko_prime_data.csv")
+ru_prime <- read.csv("../../05_Data_real/data_processing/output_data/ru_prime_data.csv")
+tr_prime <- read.csv("../../05_Data_real/data_processing/output_data/tr_prime_data.csv")
 
 overall <- bind_rows(
   cs_prime %>% mutate(lang = "Czech", 
@@ -231,6 +231,7 @@ ggplot(overall, aes(lang, avgZ_prime, color = lang)) +
 overall_plot <- overall %>% 
   group_by(lang) %>% 
   arrange(avgZ_prime) %>% 
+  na.omit() %>% 
   mutate(count = 1:1000)
 
 ggplot(overall_plot, aes(count, avgZ_prime, color = lang)) + 
@@ -286,7 +287,7 @@ ggplot(props, aes(x = hsize, y = n, fill = prop_work)) +
 <center>
 
 ```{r graph5, out.height="100%", out.width="100%", message = FALSE}
-ggpairs(matched2[ , 45:50]) + theme_bw()
+ggpairs(matched2[ , 139:144]) + theme_bw()
 ```
 
 </center>
