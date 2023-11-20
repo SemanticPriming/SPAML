@@ -73,7 +73,7 @@ include_graphics("dog_spoon.jpg")
 - Matched across 31 languages/dialects
 - Required: 10 languages for registered report
 
-```{r}
+```{r results = 'asis'}
 langs <- data.frame(
   word = c("Chinese", "Portuguese", "Spanish", "English", "Czech",
            "Korean", "Turkish", "Russian", "Japanese", "German"),
@@ -134,7 +134,7 @@ PDF_temp <- PDF %>%
   group_by(language) %>% 
   summarize(total = sum(total)) %>% 
   mutate(color = ifelse(
-    total > 800, "Done", ifelse(
+    total > 740, "Done", ifelse(
       grepl("zh$|pt", language), "Need", ifelse(
         grepl("fr|hu|it|ro|sr", language), "Should", "Unlikely"
         )

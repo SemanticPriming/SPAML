@@ -219,6 +219,8 @@ number_folders <- 3
 demos <- pt_data_all %>% #data frame
   filter(sender == "Demographics Form") #filter out only demographics lines
 
+pt_data_all$url_lab[is.na(pt_data_all$url_lab) & pt_data_all$sender == "Consent Form"] <- "2926"
+
 ##create experiment information data
 exp <- pt_data_all %>%
   filter(sender == "Consent Form")

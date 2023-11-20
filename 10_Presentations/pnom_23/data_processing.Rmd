@@ -20,17 +20,16 @@ library(tidyr)
 ## Import Language Data
 
 ```{r}
-lang <- "zh"
-native_lang <- "Chinese"
-native_other <- "Mandarin"
-
+lang <- "sr"
+native_lang <- "Serbian"
+native_other <- NULL
 # import participants to mark them
-PDF <- import(paste0("05_Data_real/data_processing/output_data/",
+PDF <- import(paste0("../../05_Data_real/data_processing/output_data/",
                      lang, "_participant_data.csv"))
 # table(PDF$meta_language)
 
 # import language thingy
-trans <- import(paste0("05_Data_real/native_trans.xlsx"))
+trans <- import(paste0("../../05_Data_real/native_trans.xlsx"))
 trans$listed <- trimws(trans$listed)
 trans$listed <- tolower(trans$listed)
 trans <- trans %>% 
@@ -57,11 +56,11 @@ PDF$lang_match[!grepl(lang, PDF$meta_language)] <- FALSE
 table(PDF$lang_match)
 
 # import data - assumes the project is open
-DF <- import(paste0("05_Data_real/data_processing/output_data/", 
+DF <- import(paste0("../../05_Data_real/data_processing/output_data/", 
                     lang, "_trial_data.csv.gz"))
 
 # import stimulus data
-stimuli_data <- import(paste0("04_Procedure/", 
+stimuli_data <- import(paste0("../../04_Procedure/", 
                               lang, "/", 
                               lang, "_words.csv"))
 ```
@@ -281,18 +280,18 @@ item_stats <- DF %>%
 ## Write Out Data
 
 ```{r}
-export(item_stats, paste0("10_Presentations/pnom_23/processed_data/", 
+export(item_stats, paste0("../../10_Presentations/pnom_23/processed_data/", 
                           lang, "_item.csv"), row.names = F)
 
-export(part_stats, paste0("10_Presentations/pnom_23/processed_data/", 
+export(part_stats, paste0("../../10_Presentations/pnom_23/processed_data/", 
                           lang, "_part.csv"), row.names = F)
 
-export(trial_stats, paste0("10_Presentations/pnom_23/processed_data/", 
+export(trial_stats, paste0("../../10_Presentations/pnom_23/processed_data/", 
                           lang, "_trial.csv"), row.names = F)
 
-export(priming_Z_summary, paste0("10_Presentations/pnom_23/processed_data/", 
+export(priming_Z_summary, paste0("../../10_Presentations/pnom_23/processed_data/", 
                           lang, "_priming.csv"), row.names = F)
 
-beepr::beep()
+#beepr::beep()
 ```
 
