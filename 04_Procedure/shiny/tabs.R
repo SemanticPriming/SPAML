@@ -1376,3 +1376,27 @@ hindi_tab <-
             ) # close box
           ) #close row
   ) #close tab
+
+# pt together ------------------------------------------------------------------
+pt_combo_tab <- 
+  tabItem(tabName = "pt_combo_tab",
+          fluidRow(
+            
+            # words ----
+            box(
+              title = tags$b("Stimuli Counts + Tracker"),
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "primary",
+              width = 12,
+              p("This table shows you the status of each item's data collection. 
+                We are mainly tracking 
+                the related and unrelated conditions to reach 50 participants and a 
+                SE <= .09 OR maximum of 320 participants. Once a pair reaches these 
+                points, they will be sampled less often than the words that still 
+                need participants. "), 
+              DTOutput("pt_combo_summary_table")  
+              
+            ) # close box
+          ) #close row
+  ) #close tab

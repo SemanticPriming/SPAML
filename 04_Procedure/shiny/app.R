@@ -37,6 +37,7 @@ ui <- dashboardPage(skin = 'purple',
                           menuItem(tags$b("Polish"), tabName = "polish_tab"),
                           menuItem(tags$b("Portuguese"), tabName = "portuguese_tab"),
                           menuItem(tags$b("Brazilian Portuguese"), tabName = "b_portuguese_tab"),
+                          menuItem(tags$b("Combined Portuguese"), tabName = "pt_combo_tab"),
                           menuItem(tags$b("Romanian"), tabName = "romanian_tab"),
                           menuItem(tags$b("Russian"), tabName = "russian_tab"),
                           menuItem(tags$b("Serbian"), tabName = "serbian_tab"),
@@ -91,7 +92,8 @@ ui <- dashboardPage(skin = 'purple',
                           norwegian_tab, 
                           polish_tab, 
                           portuguese_tab, 
-                          b_portuguese_tab, 
+                          b_portuguese_tab,
+                          pt_combo_tab,
                           romanian_tab, 
                           russian_tab, 
                           serbian_tab, 
@@ -528,6 +530,13 @@ server <- function(input, output) {
                             round(sum(pt_br_summary$done_totalN, na.rm = T)/total_N*100,1), 
                             sep = " - "), 
         icon = icon("list"), color = "orange")
+    })
+    
+    output$pt_combo_summary_table <- renderDT({
+      
+      datatable(pt_combo_summary[pt_combo_summary$type != "nonword", ], rownames = F,
+                filter = "top",
+                options = list(dom = 'tp', scrollX = TRUE))
     })
     
     # Simplified Chinese ----
