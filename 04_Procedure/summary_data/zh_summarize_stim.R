@@ -405,8 +405,11 @@ zh_Z_summary <- zh_Z %>%
 zh_merged <- merge(zh_words, zh_Z_summary,
                    by = "word_combo", all.x = T)
 
+# deal with the fact that this language has repeated trials
+# otherwise it will double them up adding below 
 zh_merged <- merge(zh_merged, zh_num_trials,
-                   by = "word_combo", all.x = T)
+                   by = "word_combo", all.x = T) %>% 
+  unique()
 
 # merge with old data ----
 # pull in other information from previous weeks
