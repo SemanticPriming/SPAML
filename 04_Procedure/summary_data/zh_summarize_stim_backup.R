@@ -408,8 +408,10 @@ zh_data_all <- zh_data_all %>%
   zh_merged <- merge(zh_words, zh_Z_summary,
                      by = "word_combo", all.x = T)
 
+  # deal with repeated trials 
   zh_merged <- merge(zh_merged, zh_num_trials,
-                     by = "word_combo", all.x = T)
+                     by = "word_combo", all.x = T) %>% 
+    unique()
 
 # are we done? ----
   zh_merged$done_both <- (zh_merged$target_answeredN >= 50 & zh_merged$SE_Z <= .09) | zh_merged$target_answeredN >= 320
