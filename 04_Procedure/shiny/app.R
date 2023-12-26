@@ -573,9 +573,9 @@ server <- function(input, output) {
     
     output$Simplified_ChineseWORD_total <- renderInfoBox({
       infoBox(
-        "Simplified Chinese", paste(round(sum(zh_summary$done_both, na.rm = T)/2000*100,1), 
-                        round(sum(zh_summary$done, na.rm = T)/2000*100,1), 
-                        round(sum(zh_summary$done_totalN, na.rm = T)/2000*100,1), 
+        "Simplified Chinese", paste(round(sum(zh_summary$done_both, na.rm = T)/1996*100,1), 
+                        round(sum(zh_summary$done, na.rm = T)/1996*100,1), 
+                        round(sum(zh_summary$done_totalN, na.rm = T)/1996*100,1), 
                         sep = " - "), 
         icon = icon("list"), color = "orange")
     })
