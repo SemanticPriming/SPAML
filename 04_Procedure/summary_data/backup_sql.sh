@@ -499,16 +499,25 @@ Rscript /var/www/html/summary_data/fr_summarize_stim_backup.R
 mv /var/www/html/fr/data/data.sqlite /var/www/html/fr/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/fr1/data/data.sqlite /var/www/html/fr1/data/data_$(date +"%FT%H%M").sqlite
 mv /var/www/html/fr2/data/data.sqlite /var/www/html/fr2/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/fr3/data/data.sqlite /var/www/html/fr3/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/fr4/data/data.sqlite /var/www/html/fr4/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/fr5/data/data.sqlite /var/www/html/fr5/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/fr/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/fr1/data/
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/fr2/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/fr3/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/fr4/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/fr5/data/
 
 # give tth data tth right permissions
 chmod 777 /var/www/html/fr/data/data.sqlite
 chmod 777 /var/www/html/fr1/data/data.sqlite
 chmod 777 /var/www/html/fr2/data/data.sqlite
+chmod 777 /var/www/html/fr3/data/data.sqlite
+chmod 777 /var/www/html/fr4/data/data.sqlite
+chmod 777 /var/www/html/fr5/data/data.sqlite
 
 # ---- greek -----
 # summarize tth data
