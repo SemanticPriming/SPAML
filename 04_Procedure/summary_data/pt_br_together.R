@@ -468,21 +468,53 @@ for (i in 1:length(folder_list)){
   
   # eight blocks of 100 trials = 800 trials = 400 pairs or 8 blocks of 50
   # 150 non word non word = 300 trials
-  if (nrow(combo_use[combo_use$cue_type == "nonword" &
-                  combo_use$target_type == "nonword", ]) >= 150){
+  if (grepl("br", folder_num)){
+    combo_use2 <- bind_rows(
+      # just br nonwords
+      combo_use %>% filter(where_br == 1) %>% filter(type == "nonword"),
+      # all real words 
+      combo_use %>% filter(type != "nonword")
+    )
     
-    temp <- subset(combo_use,
-                   combo_use$cue_type == "nonword" &
-                     combo_use$target_type == "nonword")
+    combo_sample2 <- bind_rows(
+      # just br nonwords
+      combo_sample %>% filter(where_br == 1) %>% filter(type == "nonword"),
+      # all real words 
+      combo_sample %>% filter(type != "nonword")
+    )
+  } else {
+    
+    combo_use2 <- bind_rows(
+      # just pt nonwords
+      combo_use %>% filter(where_pt == 1) %>% filter(type == "nonword"),
+      # all real words 
+      combo_use %>% filter(type != "nonword")
+    )
+    
+    combo_sample2 <- bind_rows(
+      # just pt nonwords
+      combo_sample %>% filter(where_pt == 1) %>% filter(type == "nonword"),
+      # all real words 
+      combo_sample %>% filter(type != "nonword")
+    )
+    
+  }
+  
+  if (nrow(combo_use2[combo_use2$cue_type == "nonword" &
+                  combo_use2$target_type == "nonword", ]) >= 150){
+    
+    temp <- subset(combo_use2,
+                   combo_use2$cue_type == "nonword" &
+                     combo_use2$target_type == "nonword")
     nonwords <- temp[sample(1:nrow(temp), 150, replace = F), ]
     
   }else{
     
-    nonwords <- combo_use[combo_use$cue_type == "nonword" &
-                         combo_use$target_type == "nonword", ]
-    temp <- subset(combo_sample,
-                   combo_use$cue_type == "nonword" &
-                     combo_use$target_type == "nonword")
+    nonwords <- combo_use2[combo_use2$cue_type == "nonword" &
+                         combo_use2$target_type == "nonword", ]
+    temp <- subset(combo_sample2,
+                   combo_use2$cue_type == "nonword" &
+                     combo_use2$target_type == "nonword")
     nonwords <- rbind(nonwords,
                       temp[sample(1:nrow(temp),
                                   150-nrow(nonwords),
@@ -490,29 +522,29 @@ for (i in 1:length(folder_list)){
   }
   
   # 100 non word non word = 200 trials
-  if (nrow(combo_use[(combo_use$cue_type == "nonword" &
-                   combo_use$target_type == "word") |
-                  (combo_use$cue_type == "word" &
-                   combo_use$target_type == "nonword"), ]) >= 100){
+  if (nrow(combo_use2[(combo_use2$cue_type == "nonword" &
+                   combo_use2$target_type == "word") |
+                  (combo_use2$cue_type == "word" &
+                   combo_use2$target_type == "nonword"), ]) >= 100){
     
-    temp <- subset(combo_use,
-                   (combo_use$cue_type == "nonword" &
-                      combo_use$target_type == "word") |
-                     (combo_use$cue_type == "word" &
-                        combo_use$target_type == "nonword"))
+    temp <- subset(combo_use2,
+                   (combo_use2$cue_type == "nonword" &
+                      combo_use2$target_type == "word") |
+                     (combo_use2$cue_type == "word" &
+                        combo_use2$target_type == "nonword"))
     nonwords_mix <- temp[sample(1:nrow(temp), 100, replace = F), ]
     
   }else{
     
-    nonwords_mix <- combo_use[(combo_use$cue_type == "nonword" &
-                              combo_use$target_type == "word") |
-                             (combo_use$cue_type == "word" &
-                                combo_use$target_type == "nonword"), ]
-    temp <- subset(combo_sample,
-                   (combo_use$cue_type == "nonword" &
-                      combo_use$target_type == "word") |
-                     (combo_use$cue_type == "word" &
-                        combo_use$target_type == "nonword"))
+    nonwords_mix <- combo_use2[(combo_use2$cue_type == "nonword" &
+                              combo_use2$target_type == "word") |
+                             (combo_use2$cue_type == "word" &
+                                combo_use2$target_type == "nonword"), ]
+    temp <- subset(combo_sample2,
+                   (combo_use2$cue_type == "nonword" &
+                      combo_use2$target_type == "word") |
+                     (combo_use2$cue_type == "word" &
+                        combo_use2$target_type == "nonword"))
     nonwords_mix <- rbind(nonwords_mix,
                           temp[sample(1:nrow(temp),
                                       100-nrow(nonwords_mix),
@@ -520,15 +552,15 @@ for (i in 1:length(folder_list)){
   }
   
   # 75 related pairs = 150 trials
-  if (nrow(combo_use[combo_use$type == "related" , ]) >= 75){
+  if (nrow(combo_use2[combo_use2$type == "related" , ]) >= 75){
     
-    temp <- subset(combo_use, type == "related")
+    temp <- subset(combo_use2, type == "related")
     related <- temp[sample(1:nrow(temp), 75, replace = F), ]
     
   }else{
     
-    related <- combo_use[combo_use$type == "related", ]
-    temp <- subset(combo_sample, type == "related")
+    related <- combo_use2[combo_use2$type == "related", ]
+    temp <- subset(combo_sample2, type == "related")
     related <- rbind(related,
                      temp[sample(1:nrow(temp),
                                  75-nrow(related),
@@ -536,15 +568,15 @@ for (i in 1:length(folder_list)){
   }
   
   # 75 unrelated pairs = 150 trials
-  if (nrow(combo_use[combo_use$type == "unrelated" , ]) >= 75){
+  if (nrow(combo_use2[combo_use2$type == "unrelated" , ]) >= 75){
     
-    temp <- subset(combo_use, type == "unrelated")
+    temp <- subset(combo_use2, type == "unrelated")
     unrelated <- temp[sample(1:nrow(temp), 75, replace = F), ]
     
   }else{
     
-    unrelated <- combo_use[combo_use$type == "unrelated", ]
-    temp <- subset(combo_sample, type == "unrelated")
+    unrelated <- combo_use2[combo_use2$type == "unrelated", ]
+    temp <- subset(combo_sample2, type == "unrelated")
     unrelated <- rbind(unrelated,
                        temp[sample(1:nrow(temp),
                                    75-nrow(unrelated),
