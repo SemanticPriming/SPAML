@@ -174,6 +174,15 @@ pt_data_all <-
                    vars(one_of("url_special_code")), as.character),
        processData("/var/www/html/pt2/data/data.sqlite") %>% 
          mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/pt3/data/data.sqlite") %>% 
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/pt4/data/data.sqlite") %>% 
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/pt5/data/data.sqlite") %>% 
+         mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character)) 
 
 for (i in 1:length(pt_data_all)){
@@ -213,7 +222,7 @@ pt_data_all <- pt_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2023
-number_folders <- 3
+number_folders <- 6
 
 ##create demographics only data
 demos <- pt_data_all %>% #data frame

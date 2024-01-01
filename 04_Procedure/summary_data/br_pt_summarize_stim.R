@@ -166,8 +166,19 @@ br_pt_words <- import("/var/www/html/br_pt/br_pt_words.csv")
 
 # collected data
 br_pt_data_all <-
-  bind_rows(processData("/var/www/html/br_pt/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+  bind_rows(processData("/var/www/html/br_pt/data/data.sqlite") %>% 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/br_pt1/data/data.sqlite") %>% 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
+            processData("/var/www/html/br_pt2/data/data.sqlite") %>% 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character), 
+            processData("/var/www/html/br_pt3/data/data.sqlite") %>% 
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character)) %>% 
+  unique()
 
 # deal with issues of two weird time stamps 
 br_pt_data_all$timestamp[ br_pt_data_all$observation == "ec83f"] <- gsub("2010-08-11 04", "2023-02-10 15", br_pt_data_all$timestamp[ br_pt_data_all$observation == "ec83f"])
@@ -205,7 +216,7 @@ br_pt_data_all <- br_pt_data_all %>%
 # Participant did not complete at least 100 trials.
 # Participant did not achieve 80% correct.
 current_year <- 2023
-number_folders <- 1
+number_folders <- 4
 
 ##create demographics only data
 demos <- br_pt_data_all %>% #data frame
