@@ -604,12 +604,12 @@ for (i in 1:length(folder_list)){
   all_trials <- rbind(nonwords, related, unrelated, nonwords_mix)
   all_trials <- all_trials[sample(1:nrow(all_trials), nrow(all_trials), replace = F), ]
   all_trials$together <- paste('{"word": "',
-                               all_trials$combo_cue,
+                               all_trials$pt_cue,
                                '", "class": "',
                                all_trials$cue_type,
                                '"}, ', #cue
                                '{"word": "',
-                               all_trials$combo_target,
+                               all_trials$pt_target,
                                '", "class": "',
                                all_trials$target_type,
                                '"}', sep = "")
