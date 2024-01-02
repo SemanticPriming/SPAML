@@ -5,10 +5,10 @@ library(dplyr)
 
 # grab the current summaries
 list_pt_data <- lapply(list.files(path = "/var/www/html/summary_data",
-                                  pattern = "^pt_summary_[0-9].*.csv", full.names = T),
+                                  pattern = "^pt_summary.csv", full.names = T),
                        import)
 list_br_pt_data <- lapply(list.files(path = "/var/www/html/summary_data",
-                                     pattern = "br_pt_summary_[0-9].*.csv", full.names = T),
+                                     pattern = "br_pt_summary.csv", full.names = T),
                           import)
 
 pt_data_stimuli <- import("/var/www/html/pt/pt_words.csv") %>% 
