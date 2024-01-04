@@ -595,12 +595,24 @@ Rscript /var/www/html/summary_data/ro_summarize_stim_backup.R
 
 # move the data file
 mv /var/www/html/ro/data/data.sqlite /var/www/html/ro/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/ro1/data/data.sqlite /var/www/html/ro1/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/ro2/data/data.sqlite /var/www/html/ro2/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/ro3/data/data.sqlite /var/www/html/ro3/data/data_$(date +"%FT%H%M").sqlite
+mv /var/www/html/ro4/data/data.sqlite /var/www/html/ro4/data/data_$(date +"%FT%H%M").sqlite
 
 # copy over temp data
 cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ro/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ro1/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ro2/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ro3/data/
+cp ~/SPAML/04_Procedure/en/data/data.sqlite /var/www/html/ro4/data/
 
 # give the data tth right permissions
 chmod 777 /var/www/html/ro/data/data.sqlite
+chmod 777 /var/www/html/ro1/data/data.sqlite
+chmod 777 /var/www/html/ro2/data/data.sqlite
+chmod 777 /var/www/html/ro3/data/data.sqlite
+chmod 777 /var/www/html/ro4/data/data.sqlite
 
 # ---- serbian -----
 # summarize the data
