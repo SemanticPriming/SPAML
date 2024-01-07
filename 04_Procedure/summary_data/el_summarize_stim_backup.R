@@ -184,7 +184,7 @@ el_data_all <-
        processData("/var/www/html/el4/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character),
-       processData("/var/www/html/el5/data/data.sqlite") %>% 
+       processData("/var/www/html/el5/data/data.sqlite") %>%
          mutate_at(vars(one_of("url_lab")), as.character,
                    vars(one_of("url_special_code")), as.character))
 
@@ -224,8 +224,8 @@ el_data_all <- el_data_all %>%
   # Participant did not indicate at least 18 years of age.
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
-  current_year <- 2023
-  number_folders <- 1
+  current_year <- 2024
+  number_folders <- 6
 
   ##create demographics only data
   demos <- el_data_all %>% #data frame
