@@ -166,8 +166,30 @@ el_words <- import("/var/www/html/el/el_words.csv")
 
 # collected data
 el_data_all <-
-  bind_rows(processData("/var/www/html/el/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab))) %>% unique()
+  list(processData("/var/www/html/el/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
+            processData("/var/www/html/el1/data/data.sqlite") %>%
+              mutate_at(vars(one_of("url_lab")), as.character,
+                        vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/el2/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/el3/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/el4/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character),
+       processData("/var/www/html/el5/data/data.sqlite") %>%
+         mutate_at(vars(one_of("url_lab")), as.character,
+                   vars(one_of("url_special_code")), as.character))
+
+for (i in 1:length(el_data_all)){
+  el_data_all[[i]] <- el_data_all[[i]] %>% mutate_at(vars(one_of("url_special_code")), as.character)
+}
+
+el_data_all <- bind_rows(el_data_all) %>% unique()
 
 # delete stuff before we started
 el_data_all <- el_data_all %>%
