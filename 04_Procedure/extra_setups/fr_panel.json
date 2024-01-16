@@ -392,12 +392,12 @@
       "messageHandlers": [
         {
           "title": "",
-          "message": "",
-          "code": ""
+          "message": "before:prepare",
+          "code": "const searchParams = new URLSearchParams(window.location.search);\nthis.parameters['aid'] = searchParams.get('aid'); \nthis.parameters['return'] = '<h2><a href=\"https://app.cloudresearch.com/Router/End?aid='+this.parameters['aid']+'\">Retour à Qualtrics</a></h2>';\n"
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Merci!</h2>\n    \n    <p class=\"text-left\">Vous avez maintenant terminé l'expérience.</p>\n\n    <p class=\"text-left\">Votre identifiant de participant aléatoire est :\n        ${ window.uuid }. Vous pouvez utiliser ce numéro pour le donner à votre expérimentateur pour montrer que vous avez terminé l'expérience.</p>\n    </p>\n\n    ${ this.parameters.return }\n\n  </div>\n</main>\n\n<footer>\n  Vous pouvez maintenant fermer la fenêtre.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Merci!</h2>\n    \n    <p class=\"text-left\">Vous avez maintenant terminé l'expérience.</p>\n\n    <p class=\"text-left\">Votre identifiant de participant aléatoire est :\n        ${ window.uuid }. Vous pouvez utiliser ce numéro pour le donner à votre expérimentateur pour montrer que vous avez terminé l'expérience.</p>\n    </p>\n\n    <p class=\"text-left\">${ this.parameters.return }</p>\n\n  </div>\n</main>\n\n<footer>\n  Vous pouvez maintenant fermer la fenêtre.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
@@ -1052,7 +1052,7 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid\n\nconst searchParams = new URLSearchParams(window.location.search);\nthis.parameters['aid'] = searchParams.get('aid'); \nthis.parameters['return'] = '<h2><a href=\"https://app.cloudresearch.com/Router/End?aid='+this.parameters['aid']+'\">Retour à Qualtrics</a></h2>';\n"
+          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid"
         }
       ],
       "title": "Consent Form",
