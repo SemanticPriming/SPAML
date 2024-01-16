@@ -1352,7 +1352,7 @@ this.parameters['return'] = '<h2><a href="https://app.cloudresearch.com/Router/E
 }
       },
       "title": "End of Experiment",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EMerci!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EVous avez maintenant terminé l'expérience.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EVotre identifiant de participant aléatoire est :\n        ${ window.uuid }. Vous pouvez utiliser ce numéro pour le donner à votre expérimentateur pour montrer que vous avez terminé l'expérience.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003E${ this.parameters.return }\u003C\u002Fp\u003E\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Vous pouvez maintenant fermer la fenêtre.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EMerci!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003EVous avez maintenant terminé l'expérience.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EVotre identifiant de participant aléatoire est :\n        ${ window.uuid }. Vous pouvez utiliser ce numéro pour le donner à votre expérimentateur pour montrer que vous avez terminé l'expérience.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n    ${ this.parameters.return }\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Vous pouvez maintenant fermer la fenêtre.\n\u003C\u002Ffooter\u003E",
       "plugins": [],
       "tardy": true
     }

@@ -397,7 +397,7 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Merci!</h2>\n    \n    <p class=\"text-left\">Vous avez maintenant terminé l'expérience.</p>\n\n    <p class=\"text-left\">Votre identifiant de participant aléatoire est :\n        ${ window.uuid }. Vous pouvez utiliser ce numéro pour le donner à votre expérimentateur pour montrer que vous avez terminé l'expérience.</p>\n    </p>\n\n    <p class=\"text-left\">${ this.parameters.return }</p>\n\n  </div>\n</main>\n\n<footer>\n  Vous pouvez maintenant fermer la fenêtre.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Merci!</h2>\n    \n    <p class=\"text-left\">Vous avez maintenant terminé l'expérience.</p>\n\n    <p class=\"text-left\">Votre identifiant de participant aléatoire est :\n        ${ window.uuid }. Vous pouvez utiliser ce numéro pour le donner à votre expérimentateur pour montrer que vous avez terminé l'expérience.</p>\n    </p>\n\n    ${ this.parameters.return }\n\n  </div>\n</main>\n\n<footer>\n  Vous pouvez maintenant fermer la fenêtre.\n</footer>",
       "_tab": "Content",
       "plugins": [],
       "tardy": true
