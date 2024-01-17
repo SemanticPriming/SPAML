@@ -184,9 +184,6 @@ sr_data_all <-
             processData("/var/www/html/sr4/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab),
                      url_special_code = as.character(url_special_code)),
-            processData("/var/www/html/sr4/data/data.sqlite") %>%
-              mutate(url_lab = as.character(url_lab),
-                     url_special_code = as.character(url_special_code)),
             processData("/var/www/html/sr5/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab),
                      url_special_code = as.character(url_special_code)),
