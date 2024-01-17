@@ -1385,13 +1385,13 @@ server <- function(input, output) {
                 options = list(dom = 'tp', scrollX = TRUE))
     })
     
-    output$slovenianN_total <- renderInfoBox({
+    output$hindiN_total <- renderInfoBox({
       infoBox(
         "Hindi", sum(grepl("keep", hi_participants$keep)), 
         icon = icon("list"), color = "red")
     })
     
-    output$slovenianWORD_total <- renderInfoBox({
+    output$hindiWORD_total <- renderInfoBox({
       infoBox(
         "Hindi", paste(round(sum(hi_summary$done_both, na.rm = T)/2000*100,1),
                            round(sum(hi_summary$done, na.rm = T)/2000*100,1), 
