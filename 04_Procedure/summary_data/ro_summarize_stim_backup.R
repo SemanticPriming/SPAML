@@ -183,6 +183,39 @@ ro_data_all <-
                      url_special_code = as.character(url_special_code)),
             processData("/var/www/html/ro4/data/data.sqlite") %>%
               mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro4/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro5/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro6/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro7/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro8/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro9/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro10/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro11/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro12/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro13/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
+                     url_special_code = as.character(url_special_code)),
+            processData("/var/www/html/ro14/data/data.sqlite") %>%
+              mutate(url_lab = as.character(url_lab),
                      url_special_code = as.character(url_special_code))) %>% 
   unique()
 
@@ -217,7 +250,7 @@ ro_data_all <- ro_data_all %>%
   # Participant did not complete at least 100 trials.
   # Participant did not achieve 80% correct.
   current_year <- 2024
-  number_folders <- 5
+  number_folders <- 15
 
   ##create demographics only data
   demos <- ro_data_all %>% #data frame
