@@ -392,7 +392,7 @@
       "messageHandlers": [
         {
           "title": "",
-          "message": "",
+          "message": "before:prepare",
           "code": "const searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Înapoi la Qualtrics pentru plată</a></h2>';"
         }
       ],

@@ -1355,7 +1355,7 @@ this.parameters['return'] = '<h2><a href="https://survey.maximiles.com/complete?
 }
       },
       "title": "End of Experiment",
-      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EHvala vam!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003ESada ste završili eksperiment.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EVaš nasumični ID učesnika je: ${ window.uuid }. Možete da koristite ovaj broj da ga date svom eksperimentatoru da pokaže da ste završili eksperiment.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n    { this.parameters.return }\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Sada možete zatvoriti prozor.\n\u003C\u002Ffooter\u003E",
+      "content": "\u003Cmain class=\"content-horizontal-center content-vertical-center\"\u003E\n\n    \u003Cdiv style=\"width: 90%;\"\u003E\n\n    \u003Ch2\u003EHvala vam!\u003C\u002Fh2\u003E\n    \n    \u003Cp class=\"text-left\"\u003ESada ste završili eksperiment.\u003C\u002Fp\u003E\n\n    \u003Cp class=\"text-left\"\u003EVaš nasumični ID učesnika je: ${ window.uuid }. Možete da koristite ovaj broj da ga date svom eksperimentatoru da pokaže da ste završili eksperiment.\u003C\u002Fp\u003E\n    \u003C\u002Fp\u003E\n\n    ${ this.parameters.return }\n\n  \u003C\u002Fdiv\u003E\n\u003C\u002Fmain\u003E\n\n\u003Cfooter\u003E\n  Sada možete zatvoriti prozor.\n\u003C\u002Ffooter\u003E",
       "plugins": [],
       "tardy": true
     }

@@ -397,8 +397,8 @@
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Hvala vam!</h2>\n    \n    <p class=\"text-left\">Sada ste završili eksperiment.</p>\n\n    <p class=\"text-left\">Vaš nasumični ID učesnika je: ${ window.uuid }. Možete da koristite ovaj broj da ga date svom eksperimentatoru da pokaže da ste završili eksperiment.</p>\n    </p>\n\n    { this.parameters.return }\n\n  </div>\n</main>\n\n<footer>\n  Sada možete zatvoriti prozor.\n</footer>",
-      "_tab": "Scripts",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Hvala vam!</h2>\n    \n    <p class=\"text-left\">Sada ste završili eksperiment.</p>\n\n    <p class=\"text-left\">Vaš nasumični ID učesnika je: ${ window.uuid }. Možete da koristite ovaj broj da ga date svom eksperimentatoru da pokaže da ste završili eksperiment.</p>\n    </p>\n\n    ${ this.parameters.return }\n\n  </div>\n</main>\n\n<footer>\n  Sada možete zatvoriti prozor.\n</footer>",
+      "_tab": "Content",
       "plugins": [],
       "tardy": true
     },
