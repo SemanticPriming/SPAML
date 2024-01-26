@@ -39,7 +39,7 @@ this.parameters['uuid'] = window.uuid
 
 const searchParams = new URLSearchParams(window.location.search);
 this.parameters['special_code'] = searchParams.get('special_code'); 
-this.parameters['return'] = '<h2><a href=https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'">Înapoi la Qualtrics pentru plată</a></h2>';
+this.parameters['return'] = '<h2><a href="https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'">Înapoi la Qualtrics pentru plată</a></h2>';
 
 }
       },
