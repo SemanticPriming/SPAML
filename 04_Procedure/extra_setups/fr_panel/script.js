@@ -68,11 +68,11 @@ this.parameters['return'] = '<h2><a href="https://app.cloudresearch.com/Router/E
         "before:prepare": function anonymous(
 ) {
 if(this.state.dominanthand == "left") {
-  window.word_key = 'w'
-  window.nonword_key = 'n'
+  window.word_key = 'z'
+  window.nonword_key = 'm'
 } else if(this.state.dominanthand == "right") {
-  window.word_key = 'n'
-  window.nonword_key = 'w'
+  window.word_key = 'm'
+  window.nonword_key = 'z'
 }
 }
       },
