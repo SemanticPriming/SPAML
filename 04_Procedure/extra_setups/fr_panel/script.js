@@ -39,7 +39,7 @@ this.parameters['uuid'] = window.uuid
 
 const searchParams = new URLSearchParams(window.location.search);
 this.parameters['aid'] = searchParams.get('aid'); 
-this.parameters['return'] = '<h2><a href="https://app.cloudresearch.com/Router/End?aid=${e://Field/'+this.parameters['aid']+'}">Retour à Qualtrics</a></h2>';
+this.parameters['return'] = '<h2><a href="https://app.cloudresearch.com/Router/End?aid='+this.parameters['aid']+'">Retour à Qualtrics</a></h2>';
 }
       },
       "title": "Consent Form",
@@ -1351,7 +1351,8 @@ this.options.templateParameters = await response.json()
 ) {
 const searchParams = new URLSearchParams(window.location.search);
 this.parameters['aid'] = searchParams.get('aid'); 
-this.parameters['return'] = '<h2><a href="https://app.cloudresearch.com/Router/End?aid=${e://Field/'+this.parameters['aid']+'}">Retour à Qualtrics</a></h2>';
+this.parameters['return'] = '<h2><a href="https://app.cloudresearch.com/Router/End?aid='+this.parameters['aid']+'">Retour à Qualtrics</a></h2>';
+
 }
       },
       "title": "End of Experiment",
