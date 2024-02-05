@@ -393,11 +393,11 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "const searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Înapoi la Qualtrics pentru plată</a></h2>';"
+          "code": "const searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Vă rugăm să faceți clic pentru a trimite răspunsul dvspentru plată</a></h2>';"
         }
       ],
       "title": "End of Experiment",
-      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mulțumesc!</h2>\n    \n    <p class=\"text-left\">Acum ați finalizat experimentul.</p>\n\n    <p class=\"text-left\">ID-ul de participant aleatoriu este:\n       ${ window.uuid }. Puteți folosi acest număr pentru a-l oferi experimentatorului pentru a arăta că ați finalizat experimentul.</p>\n    </p>\n\n    ${ this.parameters.return }\n\n  </div>\n</main>\n\n<footer>\n  Acum puteți închide fereastra.\n</footer>",
+      "content": "<main class=\"content-horizontal-center content-vertical-center\">\n\n    <div style=\"width: 90%;\">\n\n    <h2>Mulțumesc!</h2>\n    \n    <p class=\"text-left\">Acum ați finalizat experimentul.</p>\n\n    ${ this.parameters.return }\n\n  </div>\n</main>\n\n<footer>\n  Acum puteți închide fereastra.\n</footer>",
       "_tab": "Scripts",
       "plugins": [],
       "tardy": true
@@ -1052,7 +1052,7 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid\n\nconst searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Înapoi la Qualtrics pentru plată</a></h2>';\n"
+          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid\n\nconst searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Vă rugăm să faceți clic pentru a trimite răspunsul dvspentru plată</a></h2>';\n"
         }
       ],
       "title": "Consent Form",
