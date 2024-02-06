@@ -38,8 +38,8 @@ window.uuid = this.random.uuid4()
 this.parameters['uuid'] = window.uuid
 
 const searchParams = new URLSearchParams(window.location.search);
-this.parameters['special_code'] = searchParams.get('special_code'); 
-this.parameters['return'] = '<h2><a href="https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'">Vă rugăm să faceți clic pentru a trimite răspunsul dvspentru plată</a></h2>';
+this.parameters['special_code'] = searchParams.get('special_code');
+this.parameters['return'] = '<h2><a href="https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'">Faceți clic pentru a trimite răspunsul dvs</a></h2>';
 
 }
       },
@@ -1351,8 +1351,8 @@ this.options.templateParameters = await response.json()
         "before:prepare": function anonymous(
 ) {
 const searchParams = new URLSearchParams(window.location.search);
-this.parameters['special_code'] = searchParams.get('special_code'); 
-this.parameters['return'] = '<h2><a href="https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'">Vă rugăm să faceți clic pentru a trimite răspunsul dvspentru plată</a></h2>';
+this.parameters['special_code'] = searchParams.get('special_code');
+this.parameters['return'] = '<h2><a href="https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'">Faceți clic pentru a trimite răspunsul dvs</a></h2>';
 }
       },
       "title": "End of Experiment",

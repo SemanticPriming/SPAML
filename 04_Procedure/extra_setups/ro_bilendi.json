@@ -393,7 +393,7 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "const searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Vă rugăm să faceți clic pentru a trimite răspunsul dvspentru plată</a></h2>';"
+          "code": "const searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Faceți clic pentru a trimite răspunsul dvs</a></h2>';"
         }
       ],
       "title": "End of Experiment",
@@ -1052,7 +1052,7 @@
         {
           "title": "",
           "message": "before:prepare",
-          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid\n\nconst searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Vă rugăm să faceți clic pentru a trimite răspunsul dvspentru plată</a></h2>';\n"
+          "code": "window.uuid = this.random.uuid4()\nthis.parameters['uuid'] = window.uuid\n\nconst searchParams = new URLSearchParams(window.location.search);\nthis.parameters['special_code'] = searchParams.get('special_code'); \nthis.parameters['return'] = '<h2><a href=\"https://survey.maximiles.com/complete?p=120956_cdb977ba&m='+this.parameters['special_code']+'\">Faceți clic pentru a trimite răspunsul dvs</a></h2>';\n"
         }
       ],
       "title": "Consent Form",
