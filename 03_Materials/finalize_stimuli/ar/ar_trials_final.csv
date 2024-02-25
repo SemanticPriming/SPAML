@@ -774,7 +774,7 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 شهادة دبلوم,متخرج,related,word,word,
 خبير,متخصص,related,word,word,0.684603159199498
 كيلومتر,متر,related,word,word,0.647394406655059
-غير مرتبطة,متزوج \ متزوجة,related,word,word,
+غير مرتبطة,متزوجة,related,word,word,
 علامة مرض,متلازمة,related,word,word,
 قلق,متوتر,related,word,word,0.538825880983925
 منخفض,عالي,related,word,word,0.622415994741024
@@ -1577,7 +1577,7 @@ ar_cue,ar_target,type,cue_type,target_type,ar_cosine
 ثعلب,يصلح,unrelated,word,word,0.117825649805526
 فأر,مصور فوتوغرافي,unrelated,word,word,
 مولد كهرباء,إعدام,unrelated,word,word,
-فلسفة,متزوج \ متزوجة,unrelated,word,word,
+فلسفة,متزوجة,unrelated,word,word,
 ننسى,حقنة,unrelated,word,word,0.0547196512562648
 يستبعد,عامل,unrelated,word,word,0.100594172429452
 علاوة,الأحد,unrelated,word,word,0.0464917154054286
@@ -2727,7 +2727,7 @@ beم,ملك,nonword,nonword,word,
 تزثق,يؤكد,nonword,nonword,word,
 طافين,مكتب,nonword,nonword,word,
 فوف,البضائع,nonword,nonword,word,
-عكاء,متزوج \ متزوجة,nonword,nonword,word,
+عكاء,متزوجة,nonword,nonword,word,
 خطبة عشاء,عاشق,nonword,nonword,word,
 ركهم,محيط,nonword,nonword,word,
 وحقي,خدّ,nonword,nonword,word,
