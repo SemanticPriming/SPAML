@@ -908,7 +908,7 @@ Priming is defined as the subtraction of average z-scored related response laten
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
   
-  export(priming_Z, "output_data/priming_data/pl_priming_trials.csv", row.names = F)
+  export(priming_Z, "output_data/priming_data/pl_prime_trials.csv", row.names = F)
   
 # Calculate Statistics ----------------------------------------------------
   
@@ -1050,9 +1050,9 @@ The similarity scores calculated during stimuli selection will be included, as w
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, "output_data/priming_data/pl_prime_data.csv", row.names = F)
-write.csv(priming_Z_summary_no2.5, "output_data/priming_data/pl_prime_data_no2.5.csv", row.names = F)
-write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pl_prime_data_no3.0.csv", row.names = F)
+write.csv(priming_Z_summary, "output_data/priming_data/pl_prime_summary.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/pl_prime_summary_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pl_prime_summary_no3.0.csv", row.names = F)
 ```
 
 ### Using Redefined Accuracy
@@ -1300,8 +1300,8 @@ The similarity scores calculated during stimuli selection will be included, as w
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, "output_data/priming_data/pl_answered_prime_data.csv", row.names = F)
-write.csv(priming_Z_summary_no2.5, "output_data/priming_data/pl_answered_prime_data_no2.5.csv", row.names = F)
-write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pl_answered_prime_data_no3.0.csv", row.names = F)
+write.csv(priming_Z_summary, "output_data/priming_data/pl_answered_prime_summary.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/pl_answered_prime_summary_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pl_answered_prime_summary_no3.0.csv", row.names = F)
 ```
 

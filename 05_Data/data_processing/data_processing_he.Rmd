@@ -1045,9 +1045,9 @@ The similarity scores calculated during stimuli selection will be included, as w
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, "output_data/priming_data/he_prime_data.csv", row.names = F)
-write.csv(priming_Z_summary_no2.5, "output_data/priming_data/he_prime_data_no2.5.csv", row.names = F)
-write.csv(priming_Z_summary_no3.0, "output_data/priming_data/he_prime_data_no3.0.csv", row.names = F)
+write.csv(priming_Z_summary, "output_data/priming_data/he_prime_summary.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/he_prime_summary_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/he_prime_summary_no3.0.csv", row.names = F)
 ```
 
 ### Using Redefined Accuracy
@@ -1295,7 +1295,7 @@ The similarity scores calculated during stimuli selection will be included, as w
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, "output_data/priming_data/he_answered_prime_data.csv", row.names = F)
-write.csv(priming_Z_summary_no2.5, "output_data/priming_data/he_answered_prime_data_no2.5.csv", row.names = F)
-write.csv(priming_Z_summary_no3.0, "output_data/priming_data/he_answered_prime_data_no3.0.csv", row.names = F)
+write.csv(priming_Z_summary, "output_data/priming_data/he_answered_prime_summary.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/he_answered_prime_summary_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/he_answered_prime_summary_no3.0.csv", row.names = F)
 ```

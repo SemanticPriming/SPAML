@@ -21,8 +21,8 @@ library(tidyverse)
 # Merge Data
 
 ```{r}
-native.trans <- import("../05_Data_real/native_trans.xlsx")
-browser.lang <- import("../05_Data_real/browser_language.xlsx")
+native.trans <- import("native_trans.xlsx")
+browser.lang <- import("browser_language.xlsx")
 ```
 
 # Participant level data
@@ -270,6 +270,7 @@ calculate transition probabilities
 ridgeline plot 
 
 In a separate file, we will also prepare information about priming results which includes the target word, average response latencies, averaged Z-scored response latencies, sample sizes, standard errors, and priming response latency. For each item, priming is defined as the average z-scored response latency when presented in the unrelated minus the related condition. Therefore, the timing for DOG-CAT would be subtracted from BUS-CAT to indicate priming for the word CAT. The similarity scores calculated during stimuli selection will be provided in this file, as well as other popular measures of similarity if they are available in that language. For example, semantic feature overlap norms are also available in Italian95, German96, Spanish26, and Dutch97.
+
 We will provide the average statistics for z-score priming, z-score unrelated response latency, z-score related response latency, sample size for unrelated trials, and sample size for related trials. These values will be calculated overall, by language, and with/without z- score level exclusions. Last, we will calculate the participant level priming reliability98 and item-level priming reliability44.
 Exclusion summary
 Data will be excluded for the following reasons in this order:
