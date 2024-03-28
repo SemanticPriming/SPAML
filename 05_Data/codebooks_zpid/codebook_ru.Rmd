@@ -1,0 +1,101 @@
+---
+title: "SPAML Russian Data Outputs"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    code_folding: 'hide'
+    self_contained: true
+  pdf_document:
+    toc: yes
+    toc_depth: 4
+    latex_engine: xelatex
+---
+
+# Set Options
+
+```{r setup}
+knitr::opts_chunk$set(
+  warning = TRUE, # show warnings during codebook generation
+  message = TRUE, # show messages during codebook generation
+  error = TRUE, # do not interrupt codebook generation in case of errors,
+                # usually better for debugging
+  echo = TRUE  # show R code
+)
+ggplot2::theme_set(ggplot2::theme_bw())
+
+library(rio)
+library(labelled)
+```
+
+# Prep Data
+
+```{r prepare_codebook}
+library(codebook)
+codebook_data <- import("output_data/ru_full_data.csv.gz")
+
+var_label(codebook_data) <- list(
+        observation = "Unique participant ID number.",
+        sender = "Section of the experiment currently displayed.",
+        sender_type = "Type of labjs object currently displayed.",
+        sender_id = "Order of blocks shown from labjs. Underscores separate different components to the block (block_task_trial_item).",
+        response = "Participant response to the trial.",
+        response_action = "Keypress used to indicate their response to the trial.", 
+        ended_on = "How the trial ended (timeout, form submit, completion, response).",
+        duration = "The duration in milliseconds of the entire trial from time shown to time end.",
+        time_run = "The time in milliseconds from the start of the experiment it took to run (start to display) the trial.",
+        time_render = "The time in milliseconds from the start of the experiment it took to render (prepare, get ready for) the trial.",
+        time_show = "The time in milliseconds from the start of the experiment it took to show the trial on the screen to the participant.",
+        time_end = "The time in milliseconds from the start of the experiment it took to end the current trial.",
+        time_commit = "The time in milliseconds from the start of the experiment it took to save the current trial.",
+        timestamp = "The approximate timestamp of the trial in UTC server time.",
+        time_switch = "The time in milliseconds from the start of the experiment it took to switch between the previous trial and the current trial.",
+        url_lab = "The lab code for the PSA member that ran the study.",
+        meta_labjs_version = "The version of labjs used in the study.",
+        meta_user_agent = "The browser the participant used in the study.",
+        meta_platform = "The operating system of the computer used in the experiment.",
+        meta_language = "The default language set for the browser the participant used in the study.",
+        meta_locale = "The location of the browser the participant used in the study.",
+        meta_time_zone = "The timezone set for the browser/computer the participant used in the study.",
+        meta_timezone_offset = "The time zone offset from UTC time.",
+        meta_screen_width = "The width of the screen in pixels.",
+        meta_screen_height = "The height of the screen in pixels.",
+        meta_scroll_height = "The height of the scroll bar.",
+        meta_scroll_width = "The width of the scroll bar.", 
+        meta_window_inner_width = "The width of the browser window in pixels.",
+        meta_window_inner_height = "The height of the browser window in pixels.",
+        meta_device_pixel_ratio = "The ratio of width to height of the screen in pixels.",
+        meta_labjs_build_flavor = "The version build of the labjs version - usually production.",
+        meta_labjs_build_commit = "The commit version of the labjs build.",
+        please_tell_us_your_gender = "A multiple choice option for the gender of the participant. All answer choices were in the target language, but are presented in English equivalents here.",
+        which_year_were_you_born = "A numeric entry box for the year of birth for the participant.",
+        please_tell_us_your_education_level = "A multiple choice option for the education level of the participant. All answer choices were in the target language, but are presented in English equivalents here.",
+        native_language = "An open choice answer box for the native language of the participant.",
+        dominanthand = "The domininant hand indicated by the participant, which controlled the keys pressed for each answer choice (word or nonword).",
+        word = "The string of letters/characters shown on the screen for the trial.",
+        class = "The type of stimuli shown on the screen (word or nonword).",
+        correct_response = "The correct answer for the trial.",
+        correct = "A logical variable indicating if the participant got the trial answer correct.",
+        feedback = "The feedback a participant received during practice trials.",
+        fix_sender = "The sender_id column in a sortable format. You can sort the data by observation and this column to ensure it is in trial order."
+)
+
+metadata(codebook_data)$name <- "Semantic Priming Across Many Languages Russian"
+metadata(codebook_data)$description <- "This dataset contains the raw trial data of the Russian data collection from the SPAML project with funding from ZPID and a Bilendi data collection team. The data is presented here in long format, with each trial representing one row in the data. Please note that the information about the build of the study will only display on the first trial, and the demographic information will only display on the trial that collected this information. You can assume all other rows with the same observation ID are those same build and demographics. Other 'missing' data occurs when a column is not relevant for that trial (i.e., correct will not show for non-word trial pages). 
+
+Semantic priming has been studied for nearly 50 years across various experimental manipulations and theoretical frameworks. These studies provide insight into the cognitive underpinnings of semantic representations in both healthy and clinical populations; however, they have suffered from several issues including generally low sample sizes and a lack of diversity in linguistic implementations. Here, we will test the size and the variability of the semantic priming effect across ten languages by creating a large database of semantic priming values, based on an adaptive sampling procedure. Differences in response latencies between related word-pair conditions and unrelated word-pair conditions (i.e., difference score confidence interval is greater than zero) will allow quantifying evidence for semantic priming, whereas improvements in model fit with the addition of a random intercept for language will provide support for variability in semantic priming across languages."
+metadata(codebook_data)$identifier <- "https://doi.org/10.23668/psycharchives.7074"
+metadata(codebook_data)$creator <- "Erin M. Buchanan"
+metadata(codebook_data)$citation <- "Buchanan, E. M., Cuccolo, K., Coles, N. A., Heyman, T., Iyer, A., Lewis, N. A., Jr., … Lewis, S. C. (2021, December 7). Measuring the Semantic Priming Effect Across Many Languages. https://doi.org/10.31219/osf.io/q4fjy"
+metadata(codebook_data)$url <- "https://osf.io/wrpj4/"
+metadata(codebook_data)$datePublished <- "2023-02-10"
+metadata(codebook_data)$temporalCoverage <- "2022-2023" 
+metadata(codebook_data)$spatialCoverage <- "Online" 
+```
+
+# Create codebook
+
+```{r codebook}
+codebook(codebook_data)
+```

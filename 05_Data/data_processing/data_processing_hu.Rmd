@@ -1,0 +1,1328 @@
+---
+title: "Data Processing - Hungarian"
+author: "Erin M. Buchanan"
+date: "Last Update `r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize", message = F)
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+## Libraries
+
+```{r libraries}
+library(dplyr)
+library(psych)
+library(tidyr)
+library(ggplot2)
+library(rio)
+library(RSQLite)
+library(tidyverse)
+library(jsonlite)
+library(janitor)
+library(widyr)
+library(LexOPS)
+library(ggplot2)
+```
+
+## Functions
+
+This function is provided by labjs to convert the sqlite files until useable R dataframes for processing. 
+
+```{r functions}
+# from labjs docs
+processData <- function(database) {
+  con <- dbConnect(
+    drv=RSQLite::SQLite(),
+    dbname=database
+  )
+  
+  # Extract main table
+  if(con %>% DBI::dbExistsTable("labjs")){
+  d <- dbGetQuery(
+    conn=con,
+    statement='SELECT * FROM labjs'
+  )
+  
+  # Close connection
+  dbDisconnect(
+    conn=con
+  )
+  
+  # Discard connection
+  rm(con)
+  
+  d.meta <- map_dfr(d$metadata, fromJSON) %>%
+    dplyr::rename(
+      observation=id
+    )
+  
+  d <- d %>%
+    bind_cols(d.meta) %>%
+    select(
+      -metadata # Remove metadata column
+    )
+  
+  # Remove temporary data frame
+  rm(d.meta)
+  
+  count_unique <- function(x) {
+    return(length(unique(x)))
+  }
+  
+  information_preserved <- function(x, length) {
+    return(
+      count_unique(str_sub(x, end=i)) ==
+        count_unique(x)
+    )
+  }
+  
+  # Figure out the length of the random ids needed
+  # to preserve the information therein. (five characters
+  # should usually be enougth, but better safe)
+  for (i in 5:36) {
+    if (
+      information_preserved(d$session, i) &&
+      information_preserved(d$observation, i)
+    ) {
+      break()
+    }
+  }
+  
+  d <- d %>%
+    dplyr::mutate(
+      session=str_sub(session, end=i),
+      observation=str_sub(observation, end=i)
+    )
+  
+  rm(i, count_unique, information_preserved)
+  
+  parseJSON <- function(input) {
+    return(input %>%
+             fromJSON(flatten=T) %>% {
+               # Coerce lists
+               if (class(.) == 'list') {
+                 discard(., is.null) %>%
+                   as_tibble()
+               } else {
+                 .
+               } } %>%
+             # Sanitize names
+             janitor::clean_names() %>%
+             # Use only strings for now, and re-encode types later
+             mutate_all(as.character)
+    )
+  }
+  
+  d.full <- d %>%
+    dplyr::filter(payload == 'full')
+  
+  if (nrow(d.full) > 0) {
+    d.full %>%
+      group_by(observation, id) %>%
+      do(
+        { map_dfr(.$data, parseJSON) } %>%
+          bind_rows()
+      ) %>%
+      ungroup() %>%
+      select(-id) -> d.full
+  } else {
+    # If there are no full datasets, start from an entirely empty df
+    # in order to avoid introducing unwanted columns into the following
+    # merge steps.
+    d.full <- tibble()
+  }
+  
+  d %>%
+    dplyr::filter(payload %in% c('incremental', 'latest')) %>%
+    group_by(observation, id) %>%
+    do(
+      { map_dfr(.$data, parseJSON) } %>%
+        bind_rows()
+    ) %>%
+    ungroup() %>%
+    select(-id) -> d.incremental
+  
+  if (nrow(d.full) > 0){
+  
+  d.output <- d.full %>%
+    bind_rows(
+      d.incremental %>% filter(!(observation %in% d.full$observation))
+    ) %>%
+    type_convert()
+  
+  } else {
+    
+    d.output <- d.incremental %>% type_convert()
+    
+  }
+  
+  d.output %>%
+    group_by(observation) %>%
+    fill(matches('code'), .direction='down') %>%
+    fill(matches('code'), .direction='up') %>%
+    ungroup() -> d.output
+  
+  return(d.output)
+  } else {
+    DF <- data.frame(url_lab = as.character())
+    return(DF)
+  }
+}
+```
+
+## Data Processing Real Data
+
+Import all the data files for that specific language - use the unique() function to eliminate any duplicates from copying the data during the backup process. The data was backed up each week and a "fake" dataset was copied over to have something for the server to write to for practical purposes. 
+
+```{r import_data, eval = F, message = F}
+# get all the files
+hu_files <- list.files("../../04_Procedure_real",
+                       pattern = "*.sqlite",
+                       full.names = TRUE,
+                       recursive = TRUE)
+hu_files <- hu_files[grepl("hu", hu_files)]
+
+hu_data <- list()
+
+# open all files
+for (i in 1:length(hu_files)){
+  hu_data[[i]] <- processData(hu_files[i])
+  hu_data[[i]]$url_lab <- as.character(hu_data[[i]]$url_lab)
+}
+
+# convert to data frame and make unique
+hu_data_all <- bind_rows(hu_data) %>% unique()
+
+nrow(hu_data_all)
+
+# timestamp is somewhat unreliable fix up sender_id
+sender_ids <- import("sender_id.csv")
+hu_data_all <- hu_data_all %>% 
+  left_join(sender_ids, by = "sender_id")
+
+nrow(hu_data_all)
+```
+
+### Remove Test Data
+
+Remove all rows that were testers before we officially launched this language. 
+
+```{r remove-test, eval = F}
+# remove test data before official start 
+hu_data_all <- hu_data_all %>%
+  filter(timestamp > as.POSIXct("2023-04-05")) 
+
+nrow(hu_data_all)
+
+# fix the issue of double displays that happened before 2022-09-01
+  # 13_0_98 == 15_0_0 
+  # 13_0_99 == 15_0_1
+  # figure out everyone who saw 15_100 and 15_101 which means extra
+  obs_extra <- hu_data_all %>% 
+    filter(grepl("15_0_100", sender_id)) %>% 
+    pull(observation) %>% 
+    unique()
+  # remove second instance of trials so 15_0_0* or 15_0_1*
+  # be specific because regex coding
+  hu_data_all <- hu_data_all %>% 
+    filter(!(observation %in% obs_extra &
+               grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
+    ))
+  
+nrow(hu_data_all)
+```
+
+### Remove the Participant Information 
+
+Here we remove all the columns of unique participant information. Because observation (labjs unique ID code) is not always unique, we bind it with a random subset of our unique code to create no repetitions. 
+
+```{r remove-partno, eval = F}
+names(hu_data_all)
+
+# fill in uuid for each row
+hu_data_all <- fill(hu_data_all, uuid, .direction = "down")
+
+# ensure that observation-uuid combination doesn't go awry
+temp <- hu_data_all %>% 
+  group_by(uuid, observation) %>% 
+  summarize(count = n(), .groups = "keep") %>% 
+  ungroup() %>% 
+  mutate(dups_o = duplicated(observation),
+         dups_u = duplicated(uuid))
+
+table(temp$dups_o, useNA = "ifany")
+table(temp$dups_u, useNA = "ifany")
+
+hu_data_all$uuid[hu_data_all$observation == "df459"] <- "3b61e4c8-1083-496b-b2bd-6dd651022d08"
+
+hu_data_all$observation <- paste0(hu_data_all$observation, substr(hu_data_all$uuid, 20, 30))
+
+# make sure every row has an id number 
+sum(is.na(hu_data_all$observation))
+
+# remove ZPID, mturk, uuid 
+hu_data_all <- hu_data_all %>% 
+  select(-url_special_code, -uuid, 
+         -meta_location, -x, -url, -url_fbclid)
+
+ncol(hu_data_all)
+```
+
+### Write Out Shareable Data
+
+We save the shareable data in compressed format due to large file size. These can be read in with R. 
+
+```{r write-full, eval = F}
+write.csv(hu_data_all, 
+       gzfile("output_data/full_data/hu_full_data.csv.gz"),
+       row.names = F)
+```
+
+## Read in Processed Data 
+
+If you are reviewing this file for how we processed data, you would start here by importing the shared data file. 
+
+```{r read-full}
+hu_data_all <- read.csv("output_data/full_data/hu_full_data.csv.gz")
+```
+
+### Original Data Structure
+
+```{r data-structure}
+str(hu_data_all)
+```
+
+## Participant and Experiment Information 
+
+In this section, we will put together the demographic data and experiment information data to save as an overall participant information file. This information can be merged with the other data using the `observation` column. 
+
+We will mark participants who do not meet our criteria to exclude below:  
+
+- Participant did not indicate at least 18 years of age. 
+- Participant did not complete at least 100 trials. 
+- Participant did not achieve 80% correct. 
+
+We also add information about the length of time within the study, if desired, for filtering, but please note the exclusions later for "too fast" and "too slow" trials. 
+
+Next, we add a secondary calculation of percent correct. The research team had a disagreement over percent correct as either: $\frac{n_correct}{n_seen}$ (original calculation that EMB did during the pre-registration) or $\frac{n_correct}{n_answered}$ (secondary discussion that the team *thought* the pre-registration stated). We include both, but used the original way for the calculations because this was the original code *and* it was more conservative (i.e., more people were excluded). 
+
+```{r lab_code_fix}
+# fix any issues with lab codes
+lab_codes <- hu_data_all %>% 
+  filter(sender == "Consent Form") %>% 
+  group_by(url_lab) %>% 
+  summarize(count = n())
+
+lab_codes
+
+# consent forms are duplicated by seeing two of them
+# mark them all as 60 lab to ensure they stay
+# only one lab
+hu_data_all$url_lab[is.na(hu_data_all$url_lab)] <- "60"
+
+sum(lab_codes$count)
+```
+
+```{r participant_data}
+##create demographics only data
+demos <- hu_data_all %>% #data frame
+  filter(sender == "Demographics Form") #filter out only demographics lines
+
+nrow(demos)
+
+##create experiment information data
+exp <- hu_data_all %>% 
+  filter(sender == "Consent Form") %>% 
+    filter(sender_id == 0)
+
+nrow(exp)
+
+demo_cols <- c("observation", "duration",
+             colnames(demos)[grep("^time", colnames(demos))],
+             "please_tell_us_your_gender", "which_year_were_you_born", 
+             "please_tell_us_your_education_level", "native_language")
+exp_cols <- c("observation", "duration",
+              colnames(exp)[grep("^time", colnames(exp))],
+              "url_lab", 
+              colnames(exp)[grep("meta", colnames(exp))])
+
+participant_DF <- merge(demos[ , demo_cols], 
+                        exp[ , exp_cols],
+                        by = "observation", 
+                        all = T)
+
+colnames(participant_DF) <- gsub(".x$", "_demographics", colnames(participant_DF))
+colnames(participant_DF) <- gsub(".y$", "_consent", colnames(participant_DF))
+
+# look for issues with no consent form
+nrow(participant_DF)
+sum(is.na(participant_DF$timestamp_consent))
+
+participant_DF$keep_answered <- participant_DF$keep <- "keep"
+
+# only above 18
+class(participant_DF$which_year_were_you_born)
+
+participant_DF$keep[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) < 18 | is.na(participant_DF$which_year_were_you_born)] <- "exclude"
+
+participant_DF$keep_answered[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) < 18 | is.na(participant_DF$which_year_were_you_born)] <- "exclude"
+
+table((as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) < 18, useNA = "ifany")
+
+# at least 100 trials + 80%
+# in this section, we also merge a representation of the 
+# time spent in the study in case you wish to use that as 
+# a filter 
+number_trials <- hu_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  group_by(observation) %>% 
+  summarize(n_trials = n(), 
+            n_correct = sum(correct, na.rm = T), 
+            p_correct = sum(correct, na.rm = T) / n(), 
+            n_answered = sum(!is.na(response_action)),
+            p_correct_answered = n_correct/n_answered,
+            start = min(timestamp),
+            end = max(timestamp)) %>% 
+  mutate(study_length = difftime(end, start, units = "mins"))
+
+number_trials$p_correct_answered[is.na(number_trials$p_correct_answered)] <- 0
+
+# merge with participant data
+participant_DF <- merge(participant_DF, 
+                        number_trials,
+                        by = "observation",
+                        all = T)
+
+nrow(participant_DF)
+
+# mark the people without 100 trials 
+participant_DF$keep[participant_DF$n_trials < 100 | is.na(participant_DF$n_trials)] <- "exclude"
+participant_DF$keep_answered[participant_DF$n_trials < 100 | is.na(participant_DF$n_trials)] <- "exclude"
+
+table(participant_DF$n_trials < 100, useNA = "ifany")
+
+# mark the people who could not get 80% correct 
+participant_DF$keep[participant_DF$p_correct < .80 | is.na(participant_DF$p_correct)] <- "exclude"
+participant_DF$keep_answered[participant_DF$p_correct_answered < .80 | is.na(participant_DF$p_correct_answered)] <- "exclude"
+
+table(participant_DF$p_correct < .80, useNA = "ifany")
+table(participant_DF$p_correct_answered < .80, useNA = "ifany")
+
+export(participant_DF, "output_data/participant_data/hu_participant_data.csv", row.names = F)
+```
+
+## Trial Data
+
+Each language will be saved in a separate file with an item specific trial identification number to allow for matching concepts across languages (i.e., cat → katze → gatta). 
+
+Participants are expected to incorrectly answer trials; however, they are included in the raw trial level data for this output. Further, computer errors or trials due to missing data (i.e., participant inattentiveness and timeout trials, internet disconnection, computer crashes) are already marked as such in the final data with NA values.
+
+```{r incorrect_trials}
+##grab only real trials 
+real_trials <- hu_data_all %>% #data frame
+  filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
+  select(observation, fix_sender, response, response_action, ended_on, duration,
+         colnames(hu_data_all)[grep("^time", colnames(hu_data_all))], 
+         word, class, correct_response, correct)
+
+nrow(real_trials)
+```
+
+The response latencies from each participant's session will be z-scored in line with recommendations from Faust, Balota, Spieler, and Ferraro (1999). We will z-score these *without* the excluded trials:
+
+- Timeout trials (i.e., no response given in 3s window)
+- Incorrectly answered trials.
+- Response latencies shorter than 160 ms. 
+
+Note that it's ok if we include participants in this file that should be overall excluded, as they will get excluded in the descriptive statistics calculations and before item level results. Basically, everything stays in this file but we mark them for keep or not keep. 
+
+```{r z_score}
+# hang on to original time
+real_trials$original_duration <- real_trials$duration 
+
+# correct overall
+table(real_trials$correct, useNA = "ifany")
+
+# exclude due to too short or too long
+table(real_trials$duration < 160, useNA = "ifany")
+table(real_trials$duration > 3000, useNA = "ifany")
+
+# Separate out NA data for the z-score part
+# this mostly controls for timeouts
+real_trials_NA <- real_trials %>% #data frame
+  filter(is.na(correct) | #grab time out trials OR
+           correct == FALSE | #grab incorrect trials OR
+           duration < 160 | #grab short rts 
+           duration > 3000) %>%  #grab too long rts
+  mutate(Z_RT = NA, #set all Z_RTs to NA for these trials
+         duration = NA, 
+         keep = "exclude")
+
+nrow(real_trials_NA)
+
+# this section z-scores the rest of the data
+# just not time outs
+real_trials_nonNA <- 
+  real_trials %>% #data frame
+  group_by(observation) %>% #group by participant
+  filter(!is.na(correct)) %>% #take out the NA timeouts
+  filter(correct == TRUE) %>% #only correct trials
+  filter(duration >= 160) %>% #longer response latencies 
+  filter(duration <= 3000) %>% #can't be too long
+  mutate(Z_RT = as.vector(scale(duration)), #create a z-score RT
+         keep = "keep")
+
+nrow(real_trials_nonNA)
+
+# make sure you equally split 
+nrow(real_trials) == nrow(real_trials_NA) + nrow(real_trials_nonNA)
+
+# put the time outs with the answered trials 
+real_trials <- bind_rows(real_trials_NA, real_trials_nonNA)
+
+nrow(real_trials)
+
+# indicate what participants to exclude
+real_trials <- real_trials %>% 
+  left_join(
+    (participant_DF %>% select(observation, keep, keep_answered) %>% 
+       rename(keep_participant = keep, keep_participant_answered = keep_answered)), 
+    by = c("observation" = "observation")) %>% 
+  # sort this so the trial type is right
+  arrange(observation, fix_sender)
+
+nrow(real_trials)
+
+##write out raw trial data 
+write.csv(real_trials, 
+          gzfile("output_data/trial_data/hu_trial_data.csv.gz"), 
+          row.names = F)
+```
+
+## Item Data
+
+The item file will contain lexical information about all stimuli (length, frequency, orthographic neighborhood, bigram frequency). We will merge that information at the end of the study. 
+
+The descriptive statistics calculated from the trial level data will then be included: average response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. The exclusions applied above created `Z_RT` as NA, therefore, they are automatically excluded here as well. 
+
+### Using Original Scoring
+
+```{r merge_stimuli}
+##read in stimuli data
+stimuli_data <- import("../../04_Procedure/hu/hu_words.csv")
+
+# overall numbers of stimuli 
+nrow(stimuli_data)
+stimuli_data %>% 
+  group_by(type, cue_type, target_type) %>% 
+  summarize(n = n(), .groups = "keep")
+
+stimuli_data %>% 
+  select(target_type, hu_target) %>% 
+  group_by(target_type) %>% 
+  unique() %>% 
+  summarize(n = n())
+
+stimuli_data %>% 
+  select(cue_type, hu_cue) %>% 
+  group_by(cue_type) %>% 
+  unique() %>% 
+  summarize(n = n())
+
+describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not calculating any numbers on excluded trials 
+describeBy(real_trials$duration, group = real_trials$keep)
+
+##create item level data by summarizing
+item_data <- real_trials %>% #data frame
+  filter(keep_participant == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  #note that duration is NA for excluded trials
+  #note that Z_RT is NA for excluded trials
+  #so the keep is just an extra column 
+  #need to keep all trials because otherwise accuracy is 100%
+  #the keep column includes both timeouts and got it wrongs
+  #but probably need to exclude time outs for accuracy
+  filter(ended_on == "response") %>% 
+  group_by(word, class) %>%  #group by word
+  dplyr::summarize(avgRT = mean(duration, na.rm = T), #average RT
+            avgZ_RT = mean(Z_RT, na.rm = T), #average Z RT
+            samplesize = length(na.omit(Z_RT)), #sample size correct
+            n_answered = length(Z_RT),
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))), #SE RT
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))), #SE Z RT
+            accuracy = length(na.omit(Z_RT))/length(Z_RT), #accuracy
+            .groups = "keep") #word type
+
+# examine words that will get excluded for issues
+temp <- item_data %>% 
+  filter(!(word %in% c(stimuli_data$hu_cue, stimuli_data$hu_target)))
+
+temp
+
+##remove words that aren't part of the real data (testers)
+item_data <- item_data %>% 
+  filter(word %in% c(stimuli_data$hu_cue, stimuli_data$hu_target))
+
+# number of items run 
+nrow(item_data)
+# total number of real items
+length(unique(c(stimuli_data$hu_cue, stimuli_data$hu_target)))
+# what word forms aren't there
+setdiff(unique(c(stimuli_data$hu_cue, stimuli_data$hu_target)), item_data$word)
+```
+
+No data will be excluded for being a potential outlier, however, we will recommend cut off criterion for z-score outliers at 2.5 and 3.0 and will calculate these same statistics with those subsets of trials excluded.
+
+```{r outliers}
+##example outlier exclusion for Z > 2.5
+##same as above with one extra filter
+item_data_2.5 <- real_trials %>% 
+  filter(abs(Z_RT) < 2.5) %>% #take out trials above 2.5 z scores
+  filter(keep_participant == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  filter(ended_on == "response") %>% 
+  group_by(word, class) %>% 
+  dplyr::summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)),
+            n_answered = length(Z_RT),
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))),
+            accuracy = length(na.omit(Z_RT))/length(Z_RT), #accuracy
+            .groups = "keep")
+
+##make new column names for these calculations
+colnames(item_data_2.5)[-c(1,2)] <- paste("Z2.5_", colnames(item_data_2.5)[-c(1,2)], sep = "")
+
+##example outlier exclusion for Z > 3.0
+##same as above with one extra filter
+item_data_3.0 <- real_trials %>% 
+  filter(abs(Z_RT) < 3.0) %>% #take out trials above 3.0 z scores
+  filter(keep_participant == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  filter(ended_on == "response") %>%
+  group_by(word, class) %>% 
+  dplyr::summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)), 
+            n_answered = length(Z_RT),
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))),
+            accuracy = length(na.omit(Z_RT))/length(Z_RT), #accuracy
+            .groups = "keep")
+
+##make new column names for these calculations
+colnames(item_data_3.0)[-c(1,2)] <- paste("Z3.0_", colnames(item_data_3.0)[-c(1,2)], sep = "")
+
+#merge together two z score calculations
+item_data_combo <- item_data %>% 
+  left_join(item_data_2.5, 
+            by = c("word" = "word", "class" = "class")) %>% 
+  left_join(item_data_3.0, 
+            by = c("word" = "word", "class" = "class")) 
+
+nrow(item_data_combo)
+```
+
+For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values will be indicated because these values do not exist for nonwords. (Example provided from lexops, real data to come after stimuli select set)
+
+```{r stimuli_merge}
+##merge with stimuli data
+# item_data <- merge(item_data_combo,
+#                    lexops, 
+#                    by.x = "word", 
+#                    by.y = "string", 
+#                    all.x = T)
+
+##write out item level data 
+write.csv(item_data_combo, "output_data/item_data/hu_item_data.csv", row.names = F)
+```
+
+### Using Redefined Scoring
+
+```{r merge_stimuli_answered}
+##read in stimuli data
+stimuli_data <- import("../../04_Procedure/hu/hu_words.csv")
+
+describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not calculating any numbers on excluded trials 
+describeBy(real_trials$duration, group = real_trials$keep)
+
+##create item level data by summarizing
+item_data <- real_trials %>% #data frame
+  filter(keep_participant_answered == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  #note that duration is NA for excluded trials
+  #note that Z_RT is NA for excluded trials
+  #so the keep is just an extra column 
+  #need to keep all trials because otherwise accuracy is 100%
+  #the keep column includes both timeouts and got it wrongs
+  #but probably need to exclude time outs for accuracy 
+  filter(ended_on == "response") %>% 
+  group_by(word, class) %>%  #group by word
+  dplyr::summarize(avgRT = mean(duration, na.rm = T), #average RT
+            avgZ_RT = mean(Z_RT, na.rm = T), #average Z RT
+            samplesize = length(na.omit(Z_RT)), #sample size correct
+            n_answered = length(Z_RT),
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))), #SE RT
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))), #SE Z RT
+            accuracy = length(na.omit(Z_RT))/length(Z_RT), #accuracy
+            .groups = "keep") #word type
+
+##remove words that aren't part of the real data (testers)
+item_data <- item_data %>% 
+  filter(word %in% c(stimuli_data$hu_cue, stimuli_data$hu_target))
+
+nrow(item_data)
+length(unique(c(stimuli_data$hu_cue, stimuli_data$hu_target)))
+```
+
+```{r outliers_answered}
+##example outlier exclusion for Z > 2.5
+##same as above with one extra filter
+item_data_2.5 <- real_trials %>% 
+  filter(abs(Z_RT) < 2.5) %>% #take out trials above 2.5 z scores
+  filter(keep_participant_answered == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  filter(ended_on == "response") %>% 
+  group_by(word, class) %>% 
+  dplyr::summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)),
+            n_answered = length(Z_RT),
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))),
+            accuracy = length(na.omit(Z_RT))/length(Z_RT), #accuracy
+            .groups = "keep")
+
+##make new column names for these calculations
+colnames(item_data_2.5)[-c(1,2)] <- paste("Z2.5_", colnames(item_data_2.5)[-c(1,2)], sep = "")
+
+##example outlier exclusion for Z > 3.0
+##same as above with one extra filter
+item_data_3.0 <- real_trials %>% 
+  filter(abs(Z_RT) < 3.0) %>% #take out trials above 3.0 z scores
+  filter(keep_participant_answered == "keep") %>% #participants to keep
+  #filter(keep == "keep") %>% #trials to keep
+  filter(ended_on == "response") %>%
+  group_by(word, class) %>% 
+  dplyr::summarize(avgRT = mean(duration, na.rm = T),
+            avgZ_RT = mean(Z_RT, na.rm = T),
+            samplesize = length(na.omit(Z_RT)), 
+            n_answered = length(Z_RT),
+            seRT = sd(duration, na.rm = T)/sqrt(length(na.omit(duration))),
+            seZ_RT = sd(Z_RT, na.rm = T)/sqrt(length(na.omit(Z_RT))),
+            accuracy = length(na.omit(Z_RT))/length(Z_RT), #accuracy
+            .groups = "keep")
+
+##make new column names for these calculations
+colnames(item_data_3.0)[-c(1,2)] <- paste("Z3.0_", colnames(item_data_3.0)[-c(1,2)], sep = "")
+
+#merge together two z score calculations
+item_data_combo <- item_data %>% 
+  left_join(item_data_2.5, 
+            by = c("word" = "word", "class" = "class")) %>% 
+  left_join(item_data_3.0, 
+            by = c("word" = "word", "class" = "class")) 
+
+nrow(item_data_combo)
+```
+
+```{r stimuli_merge_answered}
+##merge with stimuli data
+# item_data <- merge(item_data_combo,
+#                    lexops, 
+#                    by.x = "word", 
+#                    by.y = "string", 
+#                    all.x = T)
+
+##write out item level data 
+write.csv(item_data_combo, "output_data/item_data/hu_answered_item_data.csv", row.names = F)
+```
+
+## Priming Data
+
+- 5/19, no misaligned trials. 
+
+### Using Original Scoring
+
+Priming is defined as the subtraction of average z-scored related response latency for an item from the corresponding item in the unrelated condition. Also, we've included the calculation for non-scaled data, but the z-score calculation is recommended. 
+
+```{r priming_calc}
+# figure out trial type ----
+  # only select only a few columns
+  priming_trials <- real_trials %>% 
+  # note that we don't exclude trials here because we need to keep 
+  # them in order to pair together cue-target
+  # they will excluded in a minute 
+    select(observation, duration, word, class, correct, 
+           Z_RT, fix_sender, timestamp, keep, keep_participant, 
+           keep_participant_answered, ended_on, original_duration) %>% 
+    arrange(observation, fix_sender)
+  # add trial code and if it's cue/target
+  priming_trials$trial_code <- NA
+  priming_trials$which <- NA
+  # add that information 
+  for (person in unique(priming_trials$observation)){
+    
+    priming_trials$trial_code[priming_trials$observation == person] <- 
+      rep(1:401, each = 2, length.out = length(priming_trials$trial_code[priming_trials$observation == person]))
+    
+    priming_trials$which[priming_trials$observation == person] <-
+      rep(c("cue", "target"), times = 2, 
+          length.out = length(priming_trials$trial_code[priming_trials$observation == person]))
+    
+  }
+  
+  nrow(priming_trials)
+  
+  # pivot wider with information you need
+  priming_trials$unique_trial <- paste(priming_trials$observation, 
+                                        priming_trials$trial_code, sep = "_")
+  # do it with merge because ugh pivot
+  priming_wide <- merge(
+    priming_trials[priming_trials$which == "cue" , ], #just cues
+    priming_trials[priming_trials$which == "target" , ], #just targets
+    by = "unique_trial",
+    all = T
+  )
+  # take just what we need
+  priming_wide <- priming_wide[ , c("unique_trial", "observation.x", "word.x", 
+                                  "class.x", "correct.x", "trial_code.x", 
+                                  "duration.y", "word.y", "class.y", "correct.y", 
+                                  "Z_RT.y", "keep.y", "keep_participant.y",
+                                  "keep_participant_answered.y",
+                                  "ended_on.x", "ended_on.y",
+                                  "original_duration.y")]
+
+  # good names
+  colnames(priming_wide) <- c("unique_trial", "observation", "cue_word", 
+                            "cue_type", "cue_correct", "trial_order", 
+                            "target_duration", "target_word", "target_type", 
+                            "target_correct", "target_Z_RT",
+                            "keep_target", "keep_participant", 
+                            "keep_participant_answered",
+                            "cue_end_of_trial", "target_end_of_trial", 
+                            "target_original_duration")
+  
+  nrow(priming_wide)
+  
+  temp <- 
+    priming_wide %>% 
+    group_by(observation, cue_type, target_type) %>% 
+    summarize(trial_n = n(), 
+              .groups = "keep") %>%
+    filter(!is.na(target_type)) %>% 
+    left_join(priming_wide %>% 
+                group_by(observation) %>% 
+                summarize(person_n = n(), 
+                          .groups = "keep"),
+              by = "observation") %>% 
+    # filter(person_n > 49) %>% 
+    mutate(prop_n = trial_n / person_n) %>% 
+    group_by(cue_type, target_type) %>% 
+    summarize(overall_prop = mean(prop_n),
+              .groups = "keep")
+  
+  temp
+  
+  # only focus on related-unrelated
+  priming_focus <- subset(priming_wide, target_type == "word" & cue_type == "word")
+  priming_focus$word_combo <- paste0(priming_focus$cue_word, priming_focus$target_word)
+  
+  # add if it's related or unrelated
+  stimuli_data$word_combo <- paste0(stimuli_data$hu_cue, stimuli_data$hu_target)
+  priming_focus <- merge(priming_focus, stimuli_data[ , c("type", "word_combo")], 
+                    by = "word_combo", all.x = T)
+  
+  # check for issues
+  temp <- priming_focus %>% 
+    filter(is.na(type))
+  nrow(temp)
+  
+  # subset out NAs at some point they will be practice trials
+  priming_focus <- subset(priming_focus, !is.na(type))
+  
+  nrow(priming_focus)
+  table(priming_focus$type, useNA = "ifany")
+  
+  temp <- priming_focus %>% 
+    group_by(observation, type) %>% 
+    summarize(person_n = n(), .groups = "keep") %>% 
+    left_join(
+      priming_focus %>% 
+        group_by(observation) %>% 
+        summarize(total_n = n(), .groups = "keep"), 
+      by = "observation"
+    ) %>% 
+    mutate(overall_prop = person_n / total_n) %>% 
+    group_by(type) %>% 
+    summarize(mean_prop = mean(overall_prop), .groups = "keep")
+  
+  temp
+  
+  # calculate the total N versus timeout N
+  hu_num_trials <- priming_focus %>% 
+    group_by(word_combo) %>% 
+    summarize(target_correct = sum(target_correct, na.rm = T),
+              target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+              target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+              target_prop_correct = target_correct/target_answeredN,
+              cue_correct = sum(cue_correct, na.rm = T),
+              cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+              cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+              cue_prop_correct = cue_correct/cue_answeredN)
+  
+  hu_num_trials2 <-
+    priming_focus %>% 
+    filter(keep_participant == "keep") %>%  # keep the participant 
+    group_by(word_combo) %>% 
+    summarize(target_correct_keep = sum(target_correct, na.rm = T),
+              target_answeredN_keep = sum(target_end_of_trial == "response", na.rm = T), 
+              target_timeoutN_keep = sum(target_end_of_trial == "timeout", na.rm = T),
+              target_prop_correct_keep = target_correct_keep/target_answeredN_keep,
+              cue_correct_keep = sum(cue_correct, na.rm = T),
+              cue_answeredN_keep = sum(cue_end_of_trial == "response", na.rm = T), 
+              cue_timeoutN_keep = sum(cue_end_of_trial == "timeout", na.rm = T),
+              cue_prop_correct_keep = cue_correct_keep/cue_answeredN_keep)
+  
+  hu_num_trials <- hu_num_trials %>% 
+    full_join(hu_num_trials2)
+  
+  # subset out NAs they are test / practice trials
+  # only correct answers and trials to keep
+  priming_Z <- priming_focus %>% 
+    filter(!is.na(type)) %>% 
+    filter(keep_target == "keep") %>% # to exclude correct trials too short
+    filter(target_correct == TRUE) %>% # to make sure only correct trials 
+    filter(keep_participant == "keep") # participants to keep
+  
+  nrow(priming_Z)
+  table(priming_Z$type, useNA = "ifany")
+  
+  export(priming_Z, "output_data/priming_data/hu_prime_trials.csv", row.names = F)
+  
+# Calculate Statistics ----------------------------------------------------
+  
+  priming_Z_summary <- priming_Z %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_combo, type, target_word) %>% 
+  ##create average scores by condition 
+  dplyr::summarize(avgRT = mean(target_duration, na.rm = T),
+            avgZ_RT = mean(target_Z_RT, na.rm = T),
+            target_sample_keep = length(na.omit(target_Z_RT)), 
+            seRT = sd(target_duration, na.rm = T)/sqrt(length(na.omit(target_duration))),
+            seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
+            .groups = "keep") %>% 
+    # merge with the number of trials data
+    full_join(hu_num_trials, by = c("word_combo" = "word_combo")) %>% 
+      # deal with mingling
+      mutate(type = ifelse(word_combo == "mingling", "related", type),
+             target_word = ifelse(word_combo == "mingling", "ling", target_word)) %>% 
+    # deal with duplicates because of translation
+    arrange(target_word, type) %>% 
+      group_by(type) %>% 
+      mutate(target_word_unique = make.unique(target_word)) %>% 
+    ungroup() %>% 
+      # filter(type == "related") %>% 
+      # select(word_combo, target_word_unique) %>% 
+      # export(., file = "../../03_Materials/matched_stimuli/hu_trial_unique.csv")
+      
+    ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "type",
+              id_cols = "target_word_unique", 
+              values_from = c("avgRT", "avgZ_RT", 
+                              "seRT", "seZ_RT", 
+                              "target_correct", 
+                              "target_answeredN", 
+                              "target_timeoutN",
+                              "target_prop_correct", 
+                              "target_correct_keep", 
+                              "target_answeredN_keep",
+                              "target_timeoutN_keep", 
+                              "target_prop_correct_keep",
+                              "cue_correct", 
+                              "cue_answeredN", 
+                              "cue_timeoutN",
+                              "cue_prop_correct", 
+                              "cue_correct_keep", 
+                              "cue_answeredN_keep",
+                              "cue_timeoutN_keep", 
+                              "cue_prop_correct_keep", 
+                              "target_sample_keep"
+                              )) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated - avgRT_related) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated - avgZ_RT_related)
+  
+  nrow(priming_Z_summary)
+
+## this process will be repeated for 2.5 and 3.0 z score outliers excluded
+  priming_Z_summary_no2.5 <- priming_Z %>% 
+  ##filter out z score outliers
+  filter(target_Z_RT < 2.50) %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_combo, type, target_word) %>% 
+  ##create average scores by condition 
+  dplyr::summarize(avgRT = mean(target_duration, na.rm = T),
+            avgZ_RT = mean(target_Z_RT, na.rm = T),
+            target_sample_keep = length(na.omit(target_Z_RT)), 
+            seRT = sd(target_duration, na.rm = T)/sqrt(length(na.omit(target_duration))),
+            seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
+            .groups = "keep") %>% 
+    # deal with mingling
+      mutate(type = ifelse(word_combo == "mingling", "related", type),
+             target_word = ifelse(word_combo == "mingling", "ling", target_word)) %>% 
+    # deal with duplicates because of translation
+    arrange(target_word, type) %>% 
+      group_by(type) %>% 
+      mutate(target_word_unique = make.unique(target_word)) %>% 
+    ungroup() %>% 
+  ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "type",
+              id_cols = "target_word_unique", 
+              values_from = c("avgRT", "avgZ_RT", "seRT", "seZ_RT", 
+                              "target_sample_keep")) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated - avgRT_related) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated - avgZ_RT_related)
+  
+  priming_Z_summary_no3.0 <- priming_Z %>% 
+  ##filter out z score outliers
+  filter(target_Z_RT < 3.0) %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_combo, type, target_word) %>% 
+  ##create average scores by condition 
+  dplyr::summarize(avgRT = mean(target_duration, na.rm = T),
+            avgZ_RT = mean(target_Z_RT, na.rm = T),
+            target_sample_keep = length(na.omit(target_Z_RT)), 
+            seRT = sd(target_duration, na.rm = T)/sqrt(length(na.omit(target_duration))),
+            seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
+            .groups = "keep") %>% 
+    # deal with mingling
+      mutate(type = ifelse(word_combo == "mingling", "related", type),
+             target_word = ifelse(word_combo == "mingling", "ling", target_word)) %>% 
+    # merge with the number of trials data
+    left_join(hu_num_trials, by = c("word_combo" = "word_combo")) %>% 
+    # deal with duplicates because of translation
+    arrange(target_word, type) %>% 
+      group_by(type) %>% 
+      mutate(target_word_unique = make.unique(target_word)) %>% 
+    ungroup() %>% 
+  ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "type",
+              id_cols = "target_word_unique", 
+              values_from = c("avgRT", "avgZ_RT", "seRT", "seZ_RT",
+                              "target_sample_keep")) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated - avgRT_related) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated - avgZ_RT_related)
+```
+
+Here we make a quick plot to ensure nothing super weird is happening with the distribution of the data. 
+
+```{r priming_plot}
+combo <- bind_rows(
+  priming_Z_summary %>% mutate(where = "priming"),
+  priming_Z_summary_no2.5 %>% mutate(where = "priming2.5"), 
+  priming_Z_summary_no3.0 %>% mutate(where = "priming3.0")
+)
+
+nrow(combo) / 3
+
+tapply(combo$avgZ_prime, combo$where, mean, na.rm = T)
+tapply(combo$avgZ_prime, combo$where, sd, na.rm = T)
+tapply(combo$avgZ_prime, combo$where, function(x){sd(x, na.rm = T)/sqrt(length(!is.na(x)))})
+
+ggplot(combo, aes(where, avgZ_prime)) +
+  geom_violin() +
+  geom_boxplot() + 
+  theme_classic() + 
+  ylab("Z Priming Scores") + 
+  xlab("Z Priming Calculation") + 
+  scale_x_discrete(labels = c("No Exclusion", "Exclude 2.5", "Exclude 3.0"))
+```
+
+### Write out Original Scores
+
+The similarity scores calculated during stimuli selection will be included, as well as other popular measures of similarity if they are available in that language. 
+
+```{r similarity}
+##merge target information with the similarity scores 
+## -- to be added after calculation for final pairs -- 
+
+##write out the priming data 
+write.csv(priming_Z_summary, "output_data/priming_data/hu_prime_data.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/hu_prime_data_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/hu_prime_data_no3.0.csv", row.names = F)
+```
+
+### Using Redefined Accuracy
+
+```{r priming_calc_answered}
+# figure out trial type ----
+  # only select only a few columns
+  priming_trials <- real_trials %>% 
+  # note that we don't exclude trials here because we need to keep 
+  # them in order to pair together cue-target
+  # they will excluded in a minute 
+    select(observation, duration, word, class, correct, 
+           Z_RT, fix_sender, timestamp, keep, keep_participant, 
+           keep_participant_answered, ended_on, original_duration) %>% 
+    arrange(observation, fix_sender)
+  # add trial code and if it's cue/target
+  priming_trials$trial_code <- NA
+  priming_trials$which <- NA
+  # add that information 
+  for (person in unique(priming_trials$observation)){
+    
+    priming_trials$trial_code[priming_trials$observation == person] <- 
+      rep(1:401, each = 2, length.out = length(priming_trials$trial_code[priming_trials$observation == person]))
+    
+    priming_trials$which[priming_trials$observation == person] <-
+      rep(c("cue", "target"), times = 2, 
+          length.out = length(priming_trials$trial_code[priming_trials$observation == person]))
+    
+  }
+  
+  # pivot wider with information you need
+  priming_trials$unique_trial <- paste(priming_trials$observation, 
+                                        priming_trials$trial_code, sep = "_")
+  # do it with merge because ugh pivot
+  priming_wide <- merge(
+    priming_trials[priming_trials$which == "cue" , ], #just cues
+    priming_trials[priming_trials$which == "target" , ], #just targets
+    by = "unique_trial",
+    all = T
+  )
+  # take just what we need
+  priming_wide <- priming_wide[ , c("unique_trial", "observation.x", "word.x", 
+                                  "class.x", "correct.x", "trial_code.x", 
+                                  "duration.y", "word.y", "class.y", "correct.y", 
+                                  "Z_RT.y", "keep.y", "keep_participant.y",
+                                  "keep_participant_answered.y",
+                                  "ended_on.x", "ended_on.y",
+                                  "original_duration.y")]
+
+  # good names
+  colnames(priming_wide) <- c("unique_trial", "observation", "cue_word", 
+                            "cue_type", "cue_correct", "trial_order", 
+                            "target_duration", "target_word", "target_type", 
+                            "target_correct", "target_Z_RT",
+                            "keep_target", "keep_participant", 
+                            "keep_participant_answered",
+                            "cue_end_of_trial", "target_end_of_trial", 
+                            "target_original_duration")
+  
+  # only focus on related-unrelated
+  priming_focus <- subset(priming_wide, target_type == "word" & cue_type == "word")
+  priming_focus$word_combo <- paste0(priming_focus$cue_word, priming_focus$target_word)
+  
+  # add if it's related or unrelated
+  stimuli_data$word_combo <- paste0(stimuli_data$hu_cue, stimuli_data$hu_target)
+  priming_focus <- merge(priming_focus, stimuli_data[ , c("type", "word_combo")], 
+                    by = "word_combo", all.x = T)
+  
+  # subset out NAs at some point they will be practice trials
+  priming_focus <- subset(priming_focus, !is.na(type))
+  
+  # calculate the total N versus timeout N
+  hu_num_trials <- priming_focus %>% 
+    group_by(word_combo) %>% 
+    summarize(target_correct = sum(target_correct, na.rm = T),
+              target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
+              target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
+              target_prop_correct = target_correct/target_answeredN,
+              cue_correct = sum(cue_correct, na.rm = T),
+              cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
+              cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
+              cue_prop_correct = cue_correct/cue_answeredN)
+  
+  hu_num_trials2 <-
+    priming_focus %>% 
+    filter(keep_participant_answered == "keep") %>%  # keep the participant 
+    group_by(word_combo) %>% 
+    summarize(target_correct_keep = sum(target_correct, na.rm = T),
+              target_answeredN_keep = sum(target_end_of_trial == "response", na.rm = T), 
+              target_timeoutN_keep = sum(target_end_of_trial == "timeout", na.rm = T),
+              target_prop_correct_keep = target_correct_keep/target_answeredN_keep,
+              cue_correct_keep = sum(cue_correct, na.rm = T),
+              cue_answeredN_keep = sum(cue_end_of_trial == "response", na.rm = T), 
+              cue_timeoutN_keep = sum(cue_end_of_trial == "timeout", na.rm = T),
+              cue_prop_correct_keep = cue_correct_keep/cue_answeredN_keep)
+  
+  hu_num_trials <- hu_num_trials %>% 
+    full_join(hu_num_trials2)
+  
+  # subset out NAs they are test / practice trials
+  # only correct answers and trials to keep
+  priming_Z <- priming_focus %>% 
+    filter(!is.na(type)) %>% 
+    filter(keep_target == "keep") %>% # to exclude correct trials too short
+    filter(target_correct == TRUE) %>% # to make sure only correct trials 
+    filter(keep_participant_answered == "keep") # participants to keep
+  
+  nrow(priming_Z)
+  table(priming_Z$type, useNA = "ifany")
+
+  export(priming_Z, "output_data/priming_data/hu_answered_prime_trials.csv", row.names = F)
+  
+# Calculate Statistics ----------------------------------------------------
+  
+  priming_Z_summary <- priming_Z %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_combo, type, target_word) %>% 
+  ##create average scores by condition 
+  dplyr::summarize(avgRT = mean(target_duration, na.rm = T),
+            avgZ_RT = mean(target_Z_RT, na.rm = T),
+            target_sample_keep = length(na.omit(target_Z_RT)), 
+            seRT = sd(target_duration, na.rm = T)/sqrt(length(na.omit(target_duration))),
+            seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
+            .groups = "keep") %>% 
+    # merge with the number of trials data
+    full_join(hu_num_trials, by = c("word_combo" = "word_combo")) %>% 
+      # deal with mingling
+      mutate(type = ifelse(word_combo == "mingling", "related", type),
+             target_word = ifelse(word_combo == "mingling", "ling", target_word)) %>% 
+    # deal with duplicates because of translation
+    arrange(target_word, type) %>% 
+      group_by(type) %>% 
+      mutate(target_word_unique = make.unique(target_word)) %>% 
+    ungroup() %>% 
+    ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "type",
+              id_cols = "target_word_unique", 
+              values_from = c("avgRT", "avgZ_RT", 
+                              "seRT", "seZ_RT", 
+                              "target_correct", 
+                              "target_answeredN", 
+                              "target_timeoutN",
+                              "target_prop_correct", 
+                              "target_correct_keep", 
+                              "target_answeredN_keep",
+                              "target_timeoutN_keep", 
+                              "target_prop_correct_keep",
+                              "cue_correct", 
+                              "cue_answeredN", 
+                              "cue_timeoutN",
+                              "cue_prop_correct", 
+                              "cue_correct_keep", 
+                              "cue_answeredN_keep",
+                              "cue_timeoutN_keep", 
+                              "cue_prop_correct_keep",
+                              "target_sample_keep"
+                              )) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated - avgRT_related) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated - avgZ_RT_related)
+  
+  nrow(priming_Z_summary)
+
+## this process will be repeated for 2.5 and 3.0 z score outliers excluded
+  priming_Z_summary_no2.5 <- priming_Z %>% 
+  ##filter out z score outliers
+  filter(target_Z_RT < 2.50) %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_combo, type, target_word) %>% 
+  ##create average scores by condition 
+  dplyr::summarize(avgRT = mean(target_duration, na.rm = T),
+            avgZ_RT = mean(target_Z_RT, na.rm = T),
+            target_sample_keep = length(na.omit(target_Z_RT)), 
+            seRT = sd(target_duration, na.rm = T)/sqrt(length(na.omit(target_duration))),
+            seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
+            .groups = "keep") %>% 
+    # deal with mingling
+      mutate(type = ifelse(word_combo == "mingling", "related", type),
+             target_word = ifelse(word_combo == "mingling", "ling", target_word)) %>% 
+    # deal with duplicates because of translation
+    arrange(target_word, type) %>% 
+      group_by(type) %>% 
+      mutate(target_word_unique = make.unique(target_word)) %>% 
+    ungroup() %>% 
+  ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "type",
+              id_cols = "target_word_unique", 
+              values_from = c("avgRT", "avgZ_RT", "seRT", "seZ_RT", 
+                              "target_sample_keep")) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated - avgRT_related) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated - avgZ_RT_related)
+  
+  priming_Z_summary_no3.0 <- priming_Z %>% 
+  ##filter out z score outliers
+  filter(target_Z_RT < 3.0) %>% 
+  ##group them by target word and condition related/unrelated
+  group_by(word_combo, type, target_word) %>% 
+  ##create average scores by condition 
+  dplyr::summarize(avgRT = mean(target_duration, na.rm = T),
+            avgZ_RT = mean(target_Z_RT, na.rm = T),
+            target_sample_keep = length(na.omit(target_Z_RT)), 
+            seRT = sd(target_duration, na.rm = T)/sqrt(length(na.omit(target_duration))),
+            seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
+            .groups = "keep") %>% 
+    # deal with mingling
+      mutate(type = ifelse(word_combo == "mingling", "related", type),
+             target_word = ifelse(word_combo == "mingling", "ling", target_word)) %>% 
+    # merge with the number of trials data
+    left_join(hu_num_trials, by = c("word_combo" = "word_combo")) %>% 
+    # deal with duplicates because of translation
+    arrange(target_word, type) %>% 
+      group_by(type) %>% 
+      mutate(target_word_unique = make.unique(target_word)) %>% 
+    ungroup() %>% 
+  ##spread that into wide format so we can subtract
+  pivot_wider(names_from = "type",
+              id_cols = "target_word_unique", 
+              values_from = c("avgRT", "avgZ_RT", "seRT", "seZ_RT",
+                              "target_sample_keep")) %>% 
+  ##create the priming scores by subtracting unrelated - related for that target word only 
+  mutate(avgRT_prime = avgRT_unrelated - avgRT_related) %>% 
+  mutate(avgZ_prime = avgZ_RT_unrelated - avgZ_RT_related)
+```
+
+```{r plot_priming_answered}
+combo <- bind_rows(
+  priming_Z_summary %>% mutate(where = "priming"),
+  priming_Z_summary_no2.5 %>% mutate(where = "priming2.5"), 
+  priming_Z_summary_no3.0 %>% mutate(where = "priming3.0")
+)
+
+nrow(combo) / 3
+
+tapply(combo$avgZ_prime, combo$where, mean, na.rm = T)
+tapply(combo$avgZ_prime, combo$where, sd, na.rm = T)
+tapply(combo$avgZ_prime, combo$where, function(x){sd(x, na.rm = T)/sqrt(length(!is.na(x)))})
+
+ggplot(combo, aes(where, avgZ_prime)) +
+  geom_violin() +
+  geom_boxplot() + 
+  theme_classic() + 
+  ylab("Z Priming Scores") + 
+  xlab("Z Priming Calculation") + 
+  scale_x_discrete(labels = c("No Exclusion", "Exclude 2.5", "Exclude 3.0"))
+```
+
+### Write out Recalculated Scores
+
+The similarity scores calculated during stimuli selection will be included, as well as other popular measures of similarity if they are available in that language. 
+
+```{r similarity_answered}
+##merge target information with the similarity scores 
+## -- to be added after calculation for final pairs -- 
+
+##write out the priming data 
+write.csv(priming_Z_summary, "output_data/priming_data/hu_answered_prime_data.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/hu_answered_prime_data_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/hu_answered_prime_data_no3.0.csv", row.names = F)
+```

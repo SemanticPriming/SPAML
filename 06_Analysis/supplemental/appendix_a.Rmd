@@ -1,0 +1,41 @@
+---
+title: "Appendix A"
+author: "Erin Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Important Links 
+
+### Complete Files 
+
+- Open Science Framework: https://osf.io/wrpj4/
+- GitHub: 
+- Zenodo: 
+
+### Methods 
+
+- Ethics: 
+- labjs Scripts: 
+- Deviation Guide:
+- Translation Information: 
+
+### Data
+
+- Zenodo: 
+- Data Release: 
+- Data Processing Scripts:
+
+### Analyses 
+
+- Scripts: 
+
+### Manuscript
+
+- Pre-registration: https://osf.io/u5bp6
+- Registered Report Stage 1: https://osf.io/preprints/osf/q4fjy 
+- Registered Report Stage 2: 
