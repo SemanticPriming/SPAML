@@ -19,16 +19,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Methods 
 
-- Ethics: 
-- labjs Scripts: 
+- Ethics folder link:
+- Lab Table/IRB links with summary: 
+- labjs Scripts (procedure folder):  
 - Deviation Guide:
-- Translation Information: 
+- Translation Information (link to readme): 
 
 ### Data
 
 - Zenodo: 
 - Data Release: 
 - Data Processing Scripts:
+- Codebooks: 
 
 ### Analyses 
 
@@ -37,5 +39,4 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Manuscript
 
 - Pre-registration: https://osf.io/u5bp6
-- Registered Report Stage 1: https://osf.io/preprints/osf/q4fjy 
-- Registered Report Stage 2: 
+- Registered Report: https://osf.io/preprints/osf/q4fjy 

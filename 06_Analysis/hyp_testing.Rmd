@@ -32,33 +32,105 @@ library(nlme)
 library(MuMIn)
 library(performance)
 library(parameters)
+library(ggridges)
 ```
 
 ## Import the Files
 
 ```{r import-data, message = F}
-langs <- c("en", "pl", "sr", "ro", "tr", "pt", "br_pt", "")
+langs <- c("cs", "da", "de", "el", "en", 
+           "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_combo", "br_pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
 
+langs.length <- c(rep(1000, 10),
+                  1034, 
+                  rep(1000, 8))
 
+# original data ----
 original <- list.files("../05_Data_real/data_processing/output_data/priming_data",
-                       pattern = ".csv",
+                       pattern = "prime_summary.csv",
                        full.names = TRUE,
                        recursive = TRUE)
 
+original <- original[grepl(paste0(langs, "_prime_summary.csv",
+                                        collapse = "|"), original)]
+original.data <- bind_rows(lapply(original, import)) %>% 
+  mutate(Language = rep(langs, times = langs.length))
 
+# original 2.5 ----
+original2 <- list.files("../05_Data_real/data_processing/output_data/priming_data",
+                       pattern = "prime_summary_no2.5.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
 
-answered <- original[grepl("answered", original)]
-original <- original[!grepl("answered", original)]
+original2 <- original2[grepl(paste0(langs, "_prime_summary_no2.5.csv",
+                                        collapse = "|"), original2)]
+original2.data <- bind_rows(lapply(original2, import)) %>% 
+  mutate(Language = rep(langs, times = langs.length))
 
-original.data <- lapply(original, import)
+# original 3.0 ----
+original3 <- list.files("../05_Data_real/data_processing/output_data/priming_data",
+                       pattern = "prime_summary_no3.0.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
 
+original3 <- original3[grepl(paste0(langs, "_prime_summary_no3.0.csv",
+                                        collapse = "|"), original3)]
+original3.data <- bind_rows(lapply(original3, import)) %>% 
+  mutate(Language = rep(langs, times = langs.length))
 ```
 
+```{r import-data-answered, message = F}
+langs <- c("cs", "da", "de", "el", "en", 
+           "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_combo", "br_pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+langs.length <- c(rep(1000, 10),
+                  1034, 
+                  rep(1000, 8))
+
+# original.answered data ----
+original.answered <- list.files("../05_Data_real/data_processing/output_data/priming_data",
+                       pattern = "answered_prime_summary.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+
+original.answered <- original.answered[grepl(paste0(langs, "_answered_prime_summary.csv",
+                                        collapse = "|"), original.answered)]
+original.answered.data <- bind_rows(lapply(original.answered, import)) %>% 
+  mutate(Language = rep(langs, times = langs.length))
+
+# original.answered 2.5 ----
+original.answered2 <- list.files("../05_Data_real/data_processing/output_data/priming_data",
+                       pattern = "answered_prime_summary_no2.5.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+
+original.answered2 <- original.answered2[grepl(paste0(langs, "_answered_prime_summary_no2.5.csv",
+                                        collapse = "|"), original.answered2)]
+original.answered2.data <- bind_rows(lapply(original.answered2, import)) %>% 
+  mutate(Language = rep(langs, times = langs.length))
+
+# original.answered 3.0 ----
+original.answered3 <- list.files("../05_Data_real/data_processing/output_data/priming_data",
+                       pattern = "answered_prime_summary_no3.0.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+
+original.answered3 <- original.answered3[grepl(paste0(langs, "_answered_prime_summary_no3.0.csv",
+                                        collapse = "|"), original.answered3)]
+original.answered3.data <- bind_rows(lapply(original.answered3, import)) %>% 
+  mutate(Language = rep(langs, times = langs.length))
+```
 ## Hypothesis 1
 
-```{r}
+```{r hyp1-original, message = F}
 # run the analysis
-hyp1 <- lm(avgZ_prime ~ 1, data = sim_data_same)
+hyp1 <- lm(avgZ_prime ~ 1, data = original.data)
 
 # print the results
 summary(hyp1)
@@ -79,8 +151,9 @@ Hypothesis 2 explores the extent to which these semantic priming effects vary ac
 ```{r}
 # run the model
 hyp2 <- lme(avgZ_prime ~ 1, 
-            data = sim_data_same, 
+            data = original.data, 
             method = "REML", 
+            na.action = "na.omit",
             random = ~1|Language)
 
 # model assumptions
@@ -101,8 +174,63 @@ r.squaredGLMM(hyp2)
 ```
 
 ```{r}
-# example plot
-ggplot(sim_data_same, aes(Language, avgZ_prime)) +
+# forest plot
+combo.original <- bind_rows(
+  original.data %>% mutate(cutoff = "None"),
+  original2.data %>% mutate(cutoff = "Z = 2.5"),
+  original3.data %>% mutate(cutoff = "Z = 3.0")
+)
+
+# re org the data
+order <- original.data %>% 
+  ungroup() %>% 
+  group_by(Language) %>% 
+  summarize(avgZ_prime = mean(avgZ_prime, na.rm = T)) %>% 
+  arrange(avgZ_prime) %>% 
+  pull(Language)
+
+combo.original <- combo.original %>% 
+  mutate(Language = factor(Language, 
+                           levels = order))
+
+ggplot(combo.original, aes(Language, avgZ_prime, color = cutoff)) +
+  stat_summary(fun.data = mean_cl_normal, 
+               geom = "errorbar", 
+               width = .2, 
+               position = position_dodge(width = .2)) + 
+  stat_summary(fun = mean,
+               geom = "point", 
+               position = position_dodge()) + 
+  xlab("Language") + 
+  ylab("Z Score Priming") +
+  theme_classic() + 
+  geom_hline(yintercept = .1165) + 
+  coord_flip() + 
+  facet_wrap(~cutoff)
+```
+
+```{r message = F}
+ggplot(original.data %>% 
+  mutate(Language = factor(Language, 
+                           levels = order)), 
+         aes(avgZ_prime, Language)) + 
+  geom_density_ridges(scale = 3, alpha = .5) + 
+  theme_bw() + 
+  #coord_cartesian(xlim = c(-1,1)) + 
+  xlab("Z-Score Priming")
+```
+
+
+```{r}
+# forest plot
+combo.answered.original <- bind_rows(
+  original.answered.data %>% mutate(cutoff = "None"),
+  original.answered2.data %>% mutate(cutoff = "Z = 2.5"),
+  original.answered3.data %>% mutate(cutoff = "Z = 3.0")
+)
+
+
+ggplot(combo.answered.original, aes(Language, avgZ_prime, color = cutoff)) +
   stat_summary(fun.data = mean_cl_normal, 
                geom = "errorbar", 
                width = .2, 
@@ -114,6 +242,13 @@ ggplot(sim_data_same, aes(Language, avgZ_prime)) +
   ylab("Z Score Priming") +
   theme_classic() + 
   coord_flip() + 
-  geom_hline(yintercept = 0)
+  facet_wrap(~cutoff)
 ```
 
+```{r message = F}
+ggplot(combo.answered.original, aes(avgZ_prime, Language, color = cutoff)) + 
+  geom_density_ridges(scale = 3) + 
+  theme_bw() + 
+  coord_cartesian(xlim = c(-1,1)) + 
+  facet_wrap(~cutoff)
+```

@@ -1,0 +1,424 @@
+---
+title: "Data Summary"
+author: "Erin M. Buchanan"
+date: "Last Update `r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+## Libraries
+
+```{r libraries}
+library(dplyr)
+library(rio)
+library(flextable)
+library(tidyverse)
+library(googlesheets4)
+```
+
+## Data Summary Chart
+
+Note that this document assumes each language's individual summary has been analyzed/ran on the current dataset. 
+
+```{r eval = F}
+rmarkdown::render("data_processing_ar.Rmd") # april 
+rmarkdown::render("data_processing_br_pt.Rmd") # june 
+rmarkdown::render("data_processing_cs.Rmd") # march
+rmarkdown::render("data_processing_da.Rmd") # may
+rmarkdown::render("data_processing_de.Rmd") # current
+rmarkdown::render("data_processing_el.Rmd") # current
+rmarkdown::render("data_processing_en.Rmd") # current
+rmarkdown::render("data_processing_es.Rmd") # current
+rmarkdown::render("data_processing_fa.Rmd") # august 
+# finnish
+rmarkdown::render("data_processing_fr.Rmd") # august 
+rmarkdown::render("data_processing_he.Rmd") # june 
+rmarkdown::render("data_processing_hi.Rmd") 
+rmarkdown::render("data_processing_hu.Rmd") # june 
+rmarkdown::render("data_processing_it.Rmd") # august 
+rmarkdown::render("data_processing_ja.Rmd") # done
+rmarkdown::render("data_processing_ko.Rmd") # done
+rmarkdown::render("data_processing_no.Rmd") # june 
+rmarkdown::render("data_processing_nl.Rmd") # july 
+rmarkdown::render("data_processing_pl.Rmd") # august 
+rmarkdown::render("data_processing_pt.Rmd") # july 
+rmarkdown::render("data_processing_ro.Rmd") # june 
+rmarkdown::render("data_processing_ru.Rmd") # august 
+rmarkdown::render("data_processing_sr.Rmd") # may 
+rmarkdown::render("data_processing_sk.Rmd") # july 
+rmarkdown::render("data_processing_sl.Rmd") 
+rmarkdown::render("data_processing_th.Rmd") # current
+rmarkdown::render("data_processing_tr.Rmd") # august 
+rmarkdown::render("data_processing_ur.Rmd") # jan
+rmarkdown::render("data_processing_zh.Rmd") # current 
+rmarkdown::render("data_processing_zh_hk.Rmd") # current 
+```
+
+```{r}
+# get all the files
+participant_files <- list.files("data_processing/output_data/participant_data",
+                       pattern = "_participant_data.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+
+participant_data <- list()
+
+# open all files
+for (i in 1:length(participant_files)){
+  if (nrow(import(participant_files[i]) > 0)) { 
+  participant_data[[i]] <- import(participant_files[i])
+  
+  participant_data[[i]]$url_lab <- as.character(participant_data[[i]]$url_lab)
+  
+  participant_data[[i]] <- participant_data[[i]] %>% 
+    mutate(across(any_of("url_special_code"), as.character))
+
+    participant_data[[i]]$lang <- 
+      gsub("data_processing/output_data/participant_data/|_participant_data.csv|_combo", 
+           "", 
+           participant_files[i])
+  }
+}
+
+# convert to data frame and make unique
+participant_data <- bind_rows(participant_data) 
+
+# print out which you need to rerun
+participant_data %>% 
+  arrange(desc(timestamp_consent)) %>% 
+  group_by(lang) %>% 
+  slice_head() %>% 
+  select(timestamp_consent, lang) %>% 
+  ungroup() %>% 
+  arrange(desc(timestamp_consent))
+# last run july 19, aug 2, sept 19, october 19, nov 11, dec 7
+
+```
+
+## Import Summary Participant Files 
+
+```{r import_data, eval = T}
+# deal with blank gender, education
+participant_data$please_tell_us_your_gender[participant_data$please_tell_us_your_gender == ""] <- NA
+participant_data$please_tell_us_your_education_level[participant_data$please_tell_us_your_education_level == ""] <- NA
+```
+
+## Import Priming Level Data 
+
+```{r}
+# get all the files
+prime_files <- list.files("data_processing/output_data/priming_data",
+                       pattern = "_prime_summary.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+
+prime_files <- prime_files[!grepl("answered", prime_files)]
+prime_data <- lapply(prime_files, import)
+num_rows <- unlist(lapply(prime_data, nrow))
+
+# convert to data frame and make unique
+prime_data <- bind_rows(prime_data)
+prime_data$lang <- rep(x = prime_files, times = num_rows)
+
+# deal with language spelling
+prime_data$lang <- gsub("data_processing/output_data/priming_data/", "", prime_data$lang)
+prime_data$lang <- gsub("_prime_summary.csv", "", prime_data$lang)
+```
+
+## Report of Data Overall
+
+```{r}
+## number of participants overall that opened it 
+nrow(participant_data)
+
+## number of participants that are usable
+table(participant_data$keep)
+
+## number of participants that are usable secondary scoring
+table(participant_data$keep_answered)
+
+## gender
+table(participant_data$please_tell_us_your_gender, useNA = "ifany")
+
+## education
+table(participant_data$please_tell_us_your_education_level, useNA = "ifany")
+
+## age
+# current_year - mean(participant_data$which_year_were_you_born, na.rm = T)
+# sd(current_year - participant_data$which_year_were_you_born, na.rm = T)
+# min(current_year - participant_data$which_year_were_you_born, na.rm = T)
+# max(current_year - participant_data$which_year_were_you_born, na.rm = T)
+
+## n trials for keep people original scoring 
+## n answered for keep people
+## percent correct for keep people
+## timing by trials
+participant_data %>% 
+  filter(keep == "keep") %>% 
+  summarize(mean_trials = mean(n_trials),
+            mean_answered = mean(n_answered), 
+            mean_correct = mean(p_correct), 
+            mean_timing = mean(study_length/n_trials*800), 
+            med_timing = median(study_length/n_trials*800))
+```
+
+## Report by Language
+
+```{r}
+participant_data$age <- as.numeric(substr(participant_data$timestamp_consent, 1, 4)) - participant_data$which_year_were_you_bor
+
+lang_DF <- 
+  participant_data %>% 
+  group_by(lang, keep) %>% 
+  count() %>% 
+  pivot_wider(id_cols = lang, names_from = keep, values_from = n) %>% 
+  
+  # keep answered
+  left_join(
+    (participant_data %>% 
+  group_by(lang, keep_answered) %>% 
+  count() %>% 
+  pivot_wider(id_cols = lang, names_from = keep_answered, values_from = n)), 
+  by = "lang"
+  ) %>% 
+  
+  # gender
+  left_join(
+    (participant_data %>% 
+      group_by(lang, please_tell_us_your_gender) %>% 
+      count() %>% 
+      pivot_wider(id_cols = lang, names_from = please_tell_us_your_gender, values_from = n)), 
+    by = "lang"
+  ) %>% 
+  
+  # education
+  left_join(
+    (participant_data %>% 
+      group_by(lang, please_tell_us_your_education_level) %>% 
+      count() %>% 
+      pivot_wider(id_cols = lang, names_from = please_tell_us_your_education_level, values_from = n)), 
+    by = "lang"
+  ) %>% 
+  
+  # age
+  left_join(
+    (participant_data %>% 
+      group_by(lang) %>% 
+      summarize(mean_age = round(mean(age, na.rm = T), 2), 
+                sd_age = round(sd(age, na.rm = T), 2), 
+                min_age = min(age, na.rm = T), 
+                max_age = max(age, na.rm = T))), 
+    by = "lang"
+  ) %>% 
+  
+    # age keep
+  left_join(
+    (participant_data %>% 
+       filter(keep == "keep") %>%
+      group_by(lang) %>% 
+      summarize(mean_age_keep = round(mean(age, na.rm = T), 2), 
+                sd_age_keep = round(sd(age, na.rm = T), 2), 
+                min_age_keep = min(age, na.rm = T), 
+                max_age_keep = max(age, na.rm = T))), 
+    by = "lang"
+  ) %>% 
+  
+  # keep in study timing 
+  left_join(
+   (participant_data %>% 
+  filter(keep == "keep") %>% 
+    group_by(lang) %>% 
+  summarize(mean_trials = round(mean(n_trials), 2),
+            mean_answered = round(mean(n_answered), 2), 
+            mean_correct = round(mean(p_correct), 2), 
+            mean_timing = round(mean(study_length/n_trials*800), 2), 
+            med_timing = round(median(study_length/n_trials*800), 2))),
+  by = "lang"
+  )
+
+colnames(lang_DF) <- c("Language", "Exclude", "Keep", "Exclude_Rescored", 
+                         "Keep_Rescored", "Female", "Male", "Not_Say", "Other", 
+                         "Gender_Missing", "College", "Doctorate", "High_School", 
+                         "Less_High_School", "Masters", "Some_College", 
+                         "Education_Missing", "Elementary", "M_Age", "SD_Age", "Min_Age", "Max_Age",
+                       "M_Age_Keep", "SD_Age_Keep", "Min_Age_Keep", "Max_Age_Keep",
+                      "M_Trials", "M_Answered", "M_Correct", "M_Time", "Med_Time")
+```
+
+### Add Priming Totals
+
+```{r}
+prime_DF <- prime_data %>% 
+  group_by(lang) %>% 
+  summarize(total_done = sum(target_answeredN_unrelated > 49 & 
+              target_answeredN_related > 49, na.rm = T),
+            related_done = sum(target_answeredN_related > 49, na.rm = T), 
+            unrelated_done = sum(target_answeredN_unrelated > 49, na.rm = T)) %>% 
+  mutate(lang = gsub("_combo", "", lang))
+
+lang_DF <- lang_DF %>% 
+  full_join(
+    prime_DF, by = c("Language" = "lang")
+  )
+
+lang_DF <- lang_DF %>% select(
+  "Language", "Exclude", "Keep", "Exclude_Rescored",
+  "Keep_Rescored", "Female", "Male",  "Other", "Not_Say",
+  "Gender_Missing", "Less_High_School", "High_School", 
+  "Some_College", "College", "Masters", "Doctorate", 
+  "Education_Missing", "Elementary", "M_Age", "SD_Age", "Min_Age", "Max_Age",
+  "M_Age_Keep", "SD_Age_Keep", "Min_Age_Keep", "Max_Age_Keep",
+  "M_Trials", "M_Answered", "M_Correct", "M_Time", "Med_Time", 
+  "total_done", "related_done", "unrelated_done"
+)
+
+flextable(lang_DF)
+```
+
+### Write to Google Sheets
+
+```{r eval = F}
+write_sheet(data = lang_DF, 
+  ss = "https://docs.google.com/spreadsheets/d/1v5e97stFqKSvVZdgowTOnN40hhB1QGGUbANnSNYCCB4/edit#gid=577705755", 
+  sheet = 4)
+```
+
+
+## Report by Lab
+
+```{r}
+participant_data$url_lab[is.na(participant_data$url_lab) | 
+                           participant_data$url_lab == "" |
+                         participant_data$url_lab == "1234"] <- "No Lab ID"
+
+View(table(participant_data$url_lab))
+
+lab_DF <- 
+  participant_data %>% 
+  group_by(url_lab, keep) %>% 
+  count() %>% 
+  pivot_wider(id_cols = url_lab, names_from = keep, values_from = n) %>% 
+  
+  # keep answered
+  left_join(
+    (participant_data %>% 
+  group_by(url_lab, keep_answered) %>% 
+  count() %>% 
+  pivot_wider(id_cols = url_lab, names_from = keep_answered, values_from = n)), 
+  by = "url_lab"
+  ) %>% 
+  
+  # gender
+  left_join(
+    (participant_data %>% 
+      group_by(url_lab, please_tell_us_your_gender) %>% 
+      count() %>% 
+      pivot_wider(id_cols = url_lab, names_from = please_tell_us_your_gender, values_from = n)), 
+    by = "url_lab"
+  ) %>% 
+  
+  # education
+  left_join(
+    (participant_data %>% 
+      group_by(url_lab, please_tell_us_your_education_level) %>% 
+      count() %>% 
+      pivot_wider(id_cols = url_lab, names_from = please_tell_us_your_education_level, values_from = n)), 
+    by = "url_lab"
+  ) %>% 
+  
+  # age
+  left_join(
+    (participant_data %>% 
+      group_by(url_lab) %>% 
+      summarize(mean_age = round(mean(age, na.rm = T), 2), 
+                sd_age = round(sd(age, na.rm = T), 2), 
+                min_age = min(age, na.rm = T), 
+                max_age = max(age, na.rm = T))), 
+    by = "url_lab"
+  ) %>% 
+  
+    # age
+  left_join(
+    (participant_data %>% 
+       filter(keep == "keep") %>% 
+      group_by(url_lab) %>% 
+      summarize(mean_age_keep = round(mean(age, na.rm = T), 2), 
+                sd_age_keep = round(sd(age, na.rm = T), 2), 
+                min_age_keep = min(age, na.rm = T), 
+                max_age_keep = max(age, na.rm = T))), 
+    by = "url_lab"
+  ) %>% 
+  
+  # other timing
+  left_join(
+   (participant_data %>% 
+  filter(keep == "keep") %>% 
+    group_by(url_lab) %>% 
+  summarize(mean_trials = round(mean(n_trials), 2),
+            mean_answered = round(mean(n_answered), 2), 
+            mean_correct = round(mean(p_correct), 2), 
+            mean_timing = round(mean(study_length/n_trials*800), 2), 
+            med_timing = round(median(study_length/n_trials*800), 2))),
+  by = "url_lab"
+  ) %>% 
+  mutate(min_age = ifelse(abs(min_age) == Inf, NA, min_age),
+         max_age = ifelse(abs(max_age) == Inf, NA, max_age))
+
+colnames(lab_DF) <- c("Lab", "Exclude", "Keep", "Exclude_Rescored", 
+                         "Keep_Rescored", "Female", "Male", "Not_Say", "Other", 
+                         "Gender_Missing", "College", "Doctorate", "High_School", 
+                         "Less_High_School", "Some_College", 
+                      "Masters", "Education_Missing", "Elementary",
+                      "M_Age", "SD_Age", "Min_Age", "Max_Age",
+                      "M_Age_Keep", "SD_Age_Keep", "Min_Age_Keep", "Max_Age_Keep",
+                      "M_Trials", "M_Answered", "M_Correct", "M_Time", "Med_Time") 
+
+lab_DF$Total_N <- apply(lab_DF[ , c("Keep", "Exclude")], 1, sum, na.rm = T)
+
+lab_DF <- lab_DF %>% select(
+  "Lab", "Total_N", "Keep", "Exclude", "Keep_Rescored",
+  "Exclude_Rescored", "Female", "Male",  "Other", "Not_Say",
+  "Gender_Missing", "Less_High_School", "High_School", 
+  "Some_College", "College", "Masters", "Doctorate", 
+  "Education_Missing", "Elementary", "M_Age", "SD_Age", "Min_Age", "Max_Age",
+  "M_Age_Keep", "SD_Age_Keep", "Min_Age_Keep", "Max_Age_Keep",
+  "M_Trials", "M_Answered", "M_Correct", "M_Time", "Med_Time"
+)
+
+flextable(lab_DF)
+```
+
+### Write to Google Sheets
+
+```{r}
+# read in google sheet
+lab_sheet <- read_sheet("https://docs.google.com/spreadsheets/d/1v5e97stFqKSvVZdgowTOnN40hhB1QGGUbANnSNYCCB4/edit#gid=577705755", 
+                        sheet = 3)
+
+lab_sheet <- lab_sheet %>% 
+  mutate(PSA_ID = as.character(PSA_ID)) %>% 
+  select(PSA_ID:individual) %>% 
+  full_join(
+    lab_DF, 
+    by = c("PSA_ID" = "Lab")
+  )
+
+write_sheet(data = lab_sheet, 
+  ss = "https://docs.google.com/spreadsheets/d/1v5e97stFqKSvVZdgowTOnN40hhB1QGGUbANnSNYCCB4/edit#gid=577705755", 
+  sheet = 3)
+```
+
+

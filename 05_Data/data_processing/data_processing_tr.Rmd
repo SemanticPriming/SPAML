@@ -1,5 +1,5 @@
 ---
-title: "Data Processing - Arabic"
+title: "Data Processing - Turkish"
 author: "Erin M. Buchanan"
 date: "Last Update `r Sys.Date()`"
 output:
@@ -11,7 +11,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, size="scriptsize")
+knitr::opts_chunk$set(echo = TRUE, size="scriptsize", message = F)
 def.chunk.hook <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -21,7 +21,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 
 ## Libraries
 
-```{r libraries, message = FALSE}
+```{r libraries}
 library(dplyr)
 library(psych)
 library(tidyr)
@@ -184,36 +184,38 @@ processData <- function(database) {
 
 ## Data Processing Real Data
 
-Import all the data files for that specific language - use the `unique()` function to eliminate any duplicates from copying the data during the backup process. The data was backed up each week and a "fake" dataset was copied over to have something for the server to write to for practical purposes. 
+Import all the data files for that specific language - use the unique() function to eliminate any duplicates from copying the data during the backup process. The data was backed up each week and a "fake" dataset was copied over to have something for the server to write to for practical purposes. 
 
-```{r import_data, eval = F, message = FALSE}
+```{r import_data, eval = F, message = F}
 # get all the files
-ar_files <- list.files("../../04_Procedure_real",
+tr_files <- list.files("../../04_Procedure_real",
                        pattern = "*.sqlite",
                        full.names = TRUE,
                        recursive = TRUE)
-ar_files <- ar_files[grepl("ar", ar_files)]
+tr_files <- tr_files[grepl("tr", tr_files)]
 
-ar_data <- list()
+tr_info <- file.info(tr_files)
+tr_files <- tr_files[ tr_info$size > 1531904]
+
+tr_data <- list()
 
 # open all files
-for (i in 1:length(ar_files)){
-  ar_data[[i]] <- processData(ar_files[i])
-  ar_data[[i]]$url_lab <- as.character(ar_data[[i]]$url_lab)
+for (i in 1:length(tr_files)){
+  tr_data[[i]] <- processData(tr_files[i])
+  tr_data[[i]]$url_lab <- as.character(tr_data[[i]]$url_lab)
 }
 
 # convert to data frame and make unique
-ar_data_all <- bind_rows(ar_data) %>% unique()
+tr_data_all <- bind_rows(tr_data) %>% unique()
 
-# total number of rows
-nrow(ar_data_all)
+nrow(tr_data_all)
 
 # timestamp is somewhat unreliable fix up sender_id
 sender_ids <- import("sender_id.csv")
-ar_data_all <- ar_data_all %>% 
+tr_data_all <- tr_data_all %>%
   left_join(sender_ids, by = "sender_id")
 
-nrow(ar_data_all)
+nrow(tr_data_all)
 ```
 
 ### Remove Test Data
@@ -221,28 +223,28 @@ nrow(ar_data_all)
 Remove all rows that were testers before we officially launched this language. 
 
 ```{r remove-test, eval = F}
-# remove test data before official start
-ar_data_all <- ar_data_all %>% 
-  filter(timestamp > as.POSIXct("2022-12-06"))
+# remove test data before official start turkish
+tr_data_all <- tr_data_all %>% 
+  filter(timestamp > as.POSIXct("2022-08-25"))
 
-nrow(ar_data_all)
+nrow(tr_data_all)
 
 # fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0 
   # 13_0_99 == 15_0_1
   # figure out everyone who saw 15_100 and 15_101 which means extra
-  obs_extra <- ar_data_all %>% 
+  obs_extra <- tr_data_all %>% 
     filter(grepl("15_0_100", sender_id)) %>% 
     pull(observation) %>% 
     unique()
   # remove second instance of trials so 15_0_0* or 15_0_1*
   # be specific because regex coding
-  ar_data_all <- ar_data_all %>% 
+  tr_data_all <- tr_data_all %>% 
     filter(!(observation %in% obs_extra &
                grepl("15_0_0_0$|15_0_0_1$|15_0_0$|15_0_1_0$|15_0_1_1$|15_0_1$", sender_id)
     ))
   
-nrow(ar_data_all)
+nrow(tr_data_all)
 ```
 
 ### Remove the Participant Information 
@@ -250,13 +252,13 @@ nrow(ar_data_all)
 Here we remove all the columns of unique participant information. Because observation (labjs unique ID code) is not always unique, we bind it with a random subset of our unique code to create no repetitions. 
 
 ```{r remove-partno, eval = F}
-names(ar_data_all)
+names(tr_data_all)
 
 # fill in uuid for each row
-ar_data_all <- fill(ar_data_all, uuid, .direction = "down")
+tr_data_all <- fill(tr_data_all, uuid, .direction = "down")
 
 # ensure that observation-uuid combination doesn't go awry
-temp <- ar_data_all %>% 
+temp <- tr_data_all %>% 
   group_by(uuid, observation) %>% 
   summarize(count = n(), .groups = "keep") %>% 
   ungroup() %>% 
@@ -265,19 +267,21 @@ temp <- ar_data_all %>%
 table(temp$dups_o, useNA = "ifany")
 table(temp$dups_u, useNA = "ifany")
 
-ar_data_all$uuid[ar_data_all$observation == "c30b3"] <- "312e7b8a-186d-4a2c-b22b-2af4626b1027"
+tr_data_all$uuid[tr_data_all$observation == "b5503"] <- "b859c701-b404-4499-8f7a-324c20c4645b"
 
-ar_data_all$observation <- paste0(ar_data_all$observation, substr(ar_data_all$uuid, 20, 28))
+tr_data_all$observation <- paste0(tr_data_all$observation, substr(tr_data_all$uuid, 20, 28))
 
 # make sure every row has an id number 
-sum(is.na(ar_data_all$observation))
+sum(is.na(tr_data_all$observation))
 
 # remove ZPID, mturk, uuid 
-ar_data_all <- ar_data_all %>% 
-  select(-url_special_code, -uuid, -x, -url,
-         -meta_location)
+tr_data_all <- tr_data_all %>% 
+  select(-url_special_code, -uuid, 
+         -meta_location, -x, -url, 
+         -url_special_code222526045147377, 
+         -url_mbstx, -url_fbclid)
 
-ncol(ar_data_all)
+ncol(tr_data_all)
 ```
 
 ### Write Out Shareable Data
@@ -285,8 +289,8 @@ ncol(ar_data_all)
 We save the shareable data in compressed format due to large file size. These can be read in with R. 
 
 ```{r write-full, eval = F}
-write.csv(ar_data_all, 
-       gzfile("output_data/full_data/ar_full_data.csv.gz"),
+write.csv(tr_data_all, 
+       gzfile("output_data/full_data/tr_full_data.csv.gz"),
        row.names = F)
 ```
 
@@ -295,13 +299,13 @@ write.csv(ar_data_all,
 If you are reviewing this file for how we processed data, you would start here by importing the shared data file. 
 
 ```{r read-full}
-ar_data_all <- read.csv("output_data/full_data/ar_full_data.csv.gz")
+tr_data_all <- read.csv("output_data/full_data/tr_full_data.csv.gz")
 ```
 
 ### Original Data Structure
 
 ```{r data-structure}
-str(ar_data_all)
+str(tr_data_all)
 ```
 
 ## Participant and Experiment Information 
@@ -320,27 +324,29 @@ Next, we add a secondary calculation of percent correct. The research team had a
 
 ```{r lab_code_fix}
 # fix any issues with lab codes
-lab_codes <- ar_data_all %>% 
+lab_codes <- tr_data_all %>% 
   filter(sender == "Consent Form") %>% 
   group_by(url_lab) %>% 
   summarize(count = n())
 
 lab_codes
 
-# 58 is a turkish lab, so unclear how they are here 
+tr_data_all$url_lab <- gsub("[[:punct:]]", "", tr_data_all$url_lab)
+tr_data_all$url_lab <- gsub("387293", "387", tr_data_all$url_lab)
+tr_data_all$url_lab[is.na(tr_data_all$url_lab)] <- "No Lab ID"
 
 sum(lab_codes$count)
 ```
 
 ```{r participant_data}
-# create demographics only data
-demos <- ar_data_all %>% #data frame
+##create demographics only data
+demos <- tr_data_all %>% #data frame
   filter(sender == "Demographics Form") #filter out only demographics lines
 
 nrow(demos)
 
-# create experiment information data
-exp <- ar_data_all %>% 
+##create experiment information data
+exp <- tr_data_all %>% 
   filter(sender == "Consent Form")
 
 nrow(exp)
@@ -381,7 +387,7 @@ table((as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_D
 # in this section, we also merge a representation of the 
 # time spent in the study in case you wish to use that as 
 # a filter 
-number_trials <- ar_data_all %>% #data frame
+number_trials <- tr_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   group_by(observation) %>% 
   summarize(n_trials = n(), 
@@ -393,13 +399,12 @@ number_trials <- ar_data_all %>% #data frame
             end = max(timestamp)) %>% 
   mutate(study_length = difftime(end, start, units = "mins"))
 
-# people who didn't answer anything 
 number_trials$p_correct_answered[is.na(number_trials$p_correct_answered)] <- 0
 
 # merge with participant data
 participant_DF <- merge(participant_DF, 
                         number_trials,
-                        by = "observation", 
+                        by = "observation",
                         all = T)
 
 nrow(participant_DF)
@@ -417,31 +422,7 @@ participant_DF$keep_answered[participant_DF$p_correct_answered < .80 | is.na(par
 table(participant_DF$p_correct < .80, useNA = "ifany")
 table(participant_DF$p_correct_answered < .80, useNA = "ifany")
 
-export(participant_DF, "output_data/participant_data/ar_participant_data.csv", row.names = F)
-```
-
-### Exclude Too Young
-
-```{r}
-# find too young
-too_young <- na.omit(participant_DF$observation[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) < 18])
-
-# filter out the data
-participant_DF <- participant_DF %>% 
-  filter(!(observation) %in% too_young)
-
-ar_data_all <- ar_data_all %>% 
-  filter(!(observation) %in% too_young)
-
-nrow(participant_DF)
-nrow(ar_data_all)
-
-# rewrite data
-write.csv(ar_data_all, 
-       gzfile("output_data/full_data/ar_full_data.csv.gz"),
-       row.names = F)
-
-export(participant_DF, "output_data/participant_data/ar_participant_data.csv", row.names = F)
+export(participant_DF, "output_data/participant_data/tr_participant_data.csv", row.names = F)
 ```
 
 ## Trial Data
@@ -452,10 +433,10 @@ Participants are expected to incorrectly answer trials; however, they are includ
 
 ```{r incorrect_trials}
 ##grab only real trials 
-real_trials <- ar_data_all %>% #data frame
+real_trials <- tr_data_all %>% #data frame
   filter(sender == "Stimulus Real") %>%  #filter out only the real stimuli
   select(observation, fix_sender, response, response_action, ended_on, duration,
-         colnames(ar_data_all)[grep("^time", colnames(ar_data_all))], 
+         colnames(tr_data_all)[grep("^time", colnames(tr_data_all))], 
          word, class, correct_response, correct)
 
 nrow(real_trials)
@@ -466,13 +447,11 @@ The response latencies from each participant's session will be z-scored in line 
 - Timeout trials (i.e., no response given in 3s window)
 - Incorrectly answered trials.
 - Response latencies shorter than 160 ms. 
-- Response latencies longer than 3000 ms (note we determined these do happen even with a timeout set on the software).
 
 Note that it's ok if we include participants in this file that should be overall excluded, as they will get excluded in the descriptive statistics calculations and before item level results. Basically, everything stays in this file but we mark them for keep or not keep. 
 
 ```{r z_score}
-# hang on to original time
-real_trials$original_duration <- real_trials$duration 
+real_trials$original_duration <- real_trials$duration #hang on to original time
 
 # correct overall
 table(real_trials$correct, useNA = "ifany")
@@ -481,8 +460,8 @@ table(real_trials$correct, useNA = "ifany")
 table(real_trials$duration < 160, useNA = "ifany")
 table(real_trials$duration > 3000, useNA = "ifany")
 
-# Separate out NA data for the z-score part
-# this mostly controls for timeouts
+##Separate out NA data for the z-score part
+##this mostly controls for timeouts
 real_trials_NA <- real_trials %>% #data frame
   filter(is.na(correct) | #grab time out trials OR
            correct == FALSE | #grab incorrect trials OR
@@ -514,8 +493,6 @@ nrow(real_trials) == nrow(real_trials_NA) + nrow(real_trials_nonNA)
 ##put the time outs with the answered trials 
 real_trials <- bind_rows(real_trials_NA, real_trials_nonNA)
 
-nrow(real_trials)
-
 ##indicate what participants to exclude
 real_trials <- real_trials %>% 
   left_join(
@@ -523,13 +500,13 @@ real_trials <- real_trials %>%
        rename(keep_participant = keep, keep_participant_answered = keep_answered)), 
     by = c("observation" = "observation")) %>% 
   # sort this so the trial type is right
-  arrange(observation, fix_sender)
+  arrange(observation, timestamp)
 
 nrow(real_trials)
 
 ##write out raw trial data 
 write.csv(real_trials, 
-          gzfile("output_data/trial_data/ar_trial_data.csv.gz"), 
+          gzfile("output_data/trial_data/tr_trial_data.csv.gz"), 
           row.names = F)
 ```
 
@@ -543,7 +520,7 @@ The descriptive statistics calculated from the trial level data will then be inc
 
 ```{r merge_stimuli}
 ##read in stimuli data
-stimuli_data <- import("../../04_Procedure/ar/ar_words.csv")
+stimuli_data <- import("../../04_Procedure/tr/tr_words.csv")
 
 # overall numbers of stimuli 
 nrow(stimuli_data)
@@ -552,18 +529,17 @@ stimuli_data %>%
   summarize(n = n(), .groups = "keep")
 
 stimuli_data %>% 
-  select(target_type, ar_target) %>% 
+  select(target_type, tr_target) %>% 
   group_by(target_type) %>% 
   unique() %>% 
   summarize(n = n())
 
 stimuli_data %>% 
-  select(cue_type, ar_cue) %>% 
+  select(cue_type, tr_cue) %>% 
   group_by(cue_type) %>% 
   unique() %>% 
   summarize(n = n())
 
-# summaries 
 describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not calculating any numbers on excluded trials 
 describeBy(real_trials$duration, group = real_trials$keep)
 
@@ -576,7 +552,7 @@ item_data <- real_trials %>% #data frame
   #so the keep is just an extra column 
   #need to keep all trials because otherwise accuracy is 100%
   #the keep column includes both timeouts and got it wrongs
-  #but probably need to exclude time outs for accuracy (see redefined accuracy)
+  #but probably need to exclude time outs for accuracy
   filter(ended_on == "response") %>% 
   group_by(word, class) %>%  #group by word
   dplyr::summarize(avgRT = mean(duration, na.rm = T), #average RT
@@ -590,20 +566,18 @@ item_data <- real_trials %>% #data frame
 
 # examine words that will get excluded for issues
 temp <- item_data %>% 
-  filter(!(word %in% c(stimuli_data$ar_cue, stimuli_data$ar_target)))
+  filter(!(word %in% c(stimuli_data$tr_cue, stimuli_data$tr_target)))
 
 temp
 
-# remove words that aren't part of the real data (testers)
+##remove words that aren't part of the real data (testers)
 item_data <- item_data %>% 
-  filter(word %in% c(stimuli_data$ar_cue, stimuli_data$ar_target))
+  filter(word %in% c(stimuli_data$tr_cue, stimuli_data$tr_target))
 
-# number of items run 
 nrow(item_data)
-# total number of real items
-length(unique(c(stimuli_data$ar_cue, stimuli_data$ar_target)))
+length(unique(c(stimuli_data$tr_cue, stimuli_data$tr_target)))
 # what word forms aren't there
-setdiff(unique(c(stimuli_data$ar_cue, stimuli_data$ar_target)), item_data$word)
+setdiff(unique(c(stimuli_data$tr_cue, stimuli_data$tr_target)), item_data$word)
 ```
 
 No data will be excluded for being a potential outlier, however, we will recommend cut off criterion for z-score outliers at 2.5 and 3.0 and will calculate these same statistics with those subsets of trials excluded.
@@ -649,7 +623,6 @@ item_data_3.0 <- real_trials %>%
 ##make new column names for these calculations
 colnames(item_data_3.0)[-c(1,2)] <- paste("Z3.0_", colnames(item_data_3.0)[-c(1,2)], sep = "")
 
-nrow(item_data)
 #merge together two z score calculations
 item_data_combo <- item_data %>% 
   left_join(item_data_2.5, 
@@ -671,14 +644,14 @@ For all real words, the age of acquisition, imageability, concreteness, valence,
 #                    all.x = T)
 
 ##write out item level data 
-write.csv(item_data_combo, "output_data/item_data/ar_item_data.csv", row.names = F)
+write.csv(item_data_combo, "output_data/item_data/vtr_item_data.csv", row.names = F)
 ```
 
 ### Using Redefined Scoring
 
 ```{r merge_stimuli_answered}
 ##read in stimuli data
-stimuli_data <- import("../../04_Procedure/ar/ar_words.csv")
+stimuli_data <- import("../../04_Procedure/tr/tr_words.csv")
 
 describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not calculating any numbers on excluded trials 
 describeBy(real_trials$duration, group = real_trials$keep)
@@ -692,7 +665,7 @@ item_data <- real_trials %>% #data frame
   #so the keep is just an extra column 
   #need to keep all trials because otherwise accuracy is 100%
   #the keep column includes both timeouts and got it wrongs
-  #but probably need to exclude time outs for accuracy
+  #but probably need to exclude time outs for accuracy 
   filter(ended_on == "response") %>% 
   group_by(word, class) %>%  #group by word
   dplyr::summarize(avgRT = mean(duration, na.rm = T), #average RT
@@ -706,13 +679,11 @@ item_data <- real_trials %>% #data frame
 
 ##remove words that aren't part of the real data (testers)
 item_data <- item_data %>% 
-  filter(word %in% c(stimuli_data$ar_cue, stimuli_data$ar_target))
+  filter(word %in% c(stimuli_data$tr_cue, stimuli_data$tr_target))
 
 nrow(item_data)
-length(unique(c(stimuli_data$ar_cue, stimuli_data$ar_target)))
+length(unique(c(stimuli_data$tr_cue, stimuli_data$tr_target)))
 ```
-
-No data will be excluded for being a potential outlier, however, we will recommend cut off criterion for z-score outliers at 2.5 and 3.0 and will calculate these same statistics with those subsets of trials excluded.
 
 ```{r outliers_answered}
 ##example outlier exclusion for Z > 2.5
@@ -761,9 +732,9 @@ item_data_combo <- item_data %>%
             by = c("word" = "word", "class" = "class")) %>% 
   left_join(item_data_3.0, 
             by = c("word" = "word", "class" = "class")) 
-```
 
-For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values will be indicated because these values do not exist for nonwords. (Example provided from lexops, real data to come after stimuli select set)
+nrow(item_data_combo)
+```
 
 ```{r stimuli_merge_answered}
 ##merge with stimuli data
@@ -774,12 +745,12 @@ For all real words, the age of acquisition, imageability, concreteness, valence,
 #                    all.x = T)
 
 ##write out item level data 
-write.csv(item_data_combo, "output_data/item_data/ar_answered_item_data.csv", row.names = F)
+write.csv(item_data_combo, "output_data/item_data/tr_answered_item_data.csv", row.names = F)
 ```
 
 ## Priming Data
 
-- Checked 5/3/23 only two trials were not matched, early in the study, we fixed a typo in the stimuli. 
+- 5/31: 57 rows due to typos and one person who did not answer anything
 
 ### Using Original Scoring
 
@@ -868,7 +839,7 @@ Priming is defined as the subtraction of average z-scored related response laten
   priming_focus$word_combo <- paste0(priming_focus$cue_word, priming_focus$target_word)
   
   # add if it's related or unrelated
-  stimuli_data$word_combo <- paste0(stimuli_data$ar_cue, stimuli_data$ar_target)
+  stimuli_data$word_combo <- paste0(stimuli_data$tr_cue, stimuli_data$tr_target)
   priming_focus <- merge(priming_focus, stimuli_data[ , c("type", "word_combo")], 
                     by = "word_combo", all.x = T)
   
@@ -898,7 +869,7 @@ Priming is defined as the subtraction of average z-scored related response laten
   temp
   
   # calculate the total N versus timeout N
-  ar_num_trials <- priming_focus %>% 
+  tr_num_trials <- priming_focus %>% 
     group_by(word_combo) %>% 
     summarize(target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
@@ -909,7 +880,7 @@ Priming is defined as the subtraction of average z-scored related response laten
               cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
               cue_prop_correct = cue_correct/cue_answeredN)
   
-  ar_num_trials2 <-
+  tr_num_trials2 <-
     priming_focus %>% 
     filter(keep_participant == "keep") %>%  # keep the participant 
     group_by(word_combo) %>% 
@@ -922,8 +893,8 @@ Priming is defined as the subtraction of average z-scored related response laten
               cue_timeoutN_keep = sum(cue_end_of_trial == "timeout", na.rm = T),
               cue_prop_correct_keep = cue_correct_keep/cue_answeredN_keep)
   
-  ar_num_trials <- ar_num_trials %>% 
-    full_join(ar_num_trials2, by = "word_combo")
+  tr_num_trials <- tr_num_trials %>% 
+    full_join(tr_num_trials2)
   
   # subset out NAs they are test / practice trials
   # only correct answers and trials to keep
@@ -936,8 +907,8 @@ Priming is defined as the subtraction of average z-scored related response laten
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
   
-  export(priming_Z, "output_data/priming_data/ar_prime_trials.csv", row.names = F)
-  
+  export(priming_Z, "output_data/priming_data/tr_prime_trials.csv", row.names = F)
+
 # Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary <- priming_Z %>% 
@@ -951,7 +922,7 @@ Priming is defined as the subtraction of average z-scored related response laten
             seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
             .groups = "keep") %>% 
     # merge with the number of trials data
-    left_join(ar_num_trials, by = c("word_combo" = "word_combo")) %>% 
+    left_join(tr_num_trials, by = c("word_combo" = "word_combo")) %>% 
     # deal with duplicates because of translation
     arrange(target_word, type) %>% 
       group_by(type) %>% 
@@ -959,7 +930,8 @@ Priming is defined as the subtraction of average z-scored related response laten
     ungroup() %>% 
       # filter(type == "related") %>% 
       # select(word_combo, target_word_unique) %>% 
-      # export(., file = "../../03_Materials/matched_stimuli/ar_trial_unique.csv")
+      # export(., file = "../../03_Materials/matched_stimuli/tr_trial_unique.csv")
+
     ##spread that into wide format so we can subtract
   pivot_wider(names_from = "type",
               id_cols = "target_word_unique", 
@@ -1029,7 +1001,7 @@ Priming is defined as the subtraction of average z-scored related response laten
             seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
             .groups = "keep") %>% 
     # merge with the number of trials data
-    left_join(ar_num_trials, by = c("word_combo" = "word_combo")) %>% 
+    left_join(tr_num_trials, by = c("word_combo" = "word_combo")) %>% 
     # deal with duplicates because of translation
     arrange(target_word, type) %>% 
       group_by(type) %>% 
@@ -1054,7 +1026,7 @@ combo <- bind_rows(
   priming_Z_summary_no3.0 %>% mutate(where = "priming3.0")
 )
 
-nrow(combo) / 3
+nrow(combo) / 3 
 
 tapply(combo$avgZ_prime, combo$where, mean, na.rm = T)
 tapply(combo$avgZ_prime, combo$where, sd, na.rm = T)
@@ -1078,9 +1050,9 @@ The similarity scores calculated during stimuli selection will be included, as w
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, "output_data/priming_data/ar_prime_summary.csv", row.names = F)
-write.csv(priming_Z_summary_no2.5, "output_data/priming_data/ar_prime_summary_no2.5.csv", row.names = F)
-write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no3.0.csv", row.names = F)
+write.csv(priming_Z_summary, "output_data/priming_data/tr_prime_summary.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/tr_prime_summary_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/tr_prime_summary_no3.0.csv", row.names = F)
 ```
 
 ### Using Redefined Accuracy
@@ -1145,7 +1117,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
   priming_focus$word_combo <- paste0(priming_focus$cue_word, priming_focus$target_word)
   
   # add if it's related or unrelated
-  stimuli_data$word_combo <- paste0(stimuli_data$ar_cue, stimuli_data$ar_target)
+  stimuli_data$word_combo <- paste0(stimuli_data$tr_cue, stimuli_data$tr_target)
   priming_focus <- merge(priming_focus, stimuli_data[ , c("type", "word_combo")], 
                     by = "word_combo", all.x = T)
   
@@ -1153,7 +1125,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
   priming_focus <- subset(priming_focus, !is.na(type))
   
   # calculate the total N versus timeout N
-  ar_num_trials <- priming_focus %>% 
+  tr_num_trials <- priming_focus %>% 
     group_by(word_combo) %>% 
     summarize(target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
@@ -1164,7 +1136,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
               cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
               cue_prop_correct = cue_correct/cue_answeredN)
   
-  ar_num_trials2 <-
+  tr_num_trials2 <-
     priming_focus %>% 
     filter(keep_participant_answered == "keep") %>%  # keep the participant 
     group_by(word_combo) %>% 
@@ -1177,8 +1149,8 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
               cue_timeoutN_keep = sum(cue_end_of_trial == "timeout", na.rm = T),
               cue_prop_correct_keep = cue_correct_keep/cue_answeredN_keep)
   
-  ar_num_trials <- ar_num_trials %>% 
-    full_join(ar_num_trials2, by = "word_combo")
+  tr_num_trials <- tr_num_trials %>% 
+    full_join(tr_num_trials2)
   
   # subset out NAs they are test / practice trials
   # only correct answers and trials to keep
@@ -1191,7 +1163,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
   
-  export(priming_Z, "output_data/priming_data/ar_answered_prime_trials.csv", row.names = F)
+  export(priming_Z, "output_data/priming_data/tr_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1206,7 +1178,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
             seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
             .groups = "keep") %>% 
     # merge with the number of trials data
-    left_join(ar_num_trials, by = c("word_combo" = "word_combo")) %>% 
+    left_join(tr_num_trials, by = c("word_combo" = "word_combo")) %>% 
     # deal with duplicates because of translation
     arrange(target_word, type) %>% 
       group_by(type) %>% 
@@ -1281,7 +1253,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_prime_summary_no
             seZ_RT = sd(target_Z_RT, na.rm = T)/sqrt(length(na.omit(target_Z_RT))),
             .groups = "keep") %>% 
     # merge with the number of trials data
-    left_join(ar_num_trials, by = c("word_combo" = "word_combo")) %>% 
+    left_join(tr_num_trials, by = c("word_combo" = "word_combo")) %>% 
     # deal with duplicates because of translation
     arrange(target_word, type) %>% 
       group_by(type) %>% 
@@ -1328,8 +1300,8 @@ The similarity scores calculated during stimuli selection will be included, as w
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, "output_data/priming_data/ar_answered_prime_summary.csv", row.names = F)
-write.csv(priming_Z_summary_no2.5, "output_data/priming_data/ar_answered_prime_summary_no2.5.csv", row.names = F)
-write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ar_answered_prime_summary_no3.0.csv", row.names = F)
+write.csv(priming_Z_summary, "output_data/priming_data/tr_answered_prime_summary.csv", row.names = F)
+write.csv(priming_Z_summary_no2.5, "output_data/priming_data/tr_answered_prime_summary_no2.5.csv", row.names = F)
+write.csv(priming_Z_summary_no3.0, "output_data/priming_data/tr_answered_prime_summary_no3.0.csv", row.names = F)
 ```
 

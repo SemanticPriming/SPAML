@@ -7,6 +7,7 @@
 /03_Materials/Translation/
 /11_Grants/NSF
 /10_Presentations/*/processed_data
+05_Data/data_processing/output_data/*
 
 # don't refresh embedded tests
 */embedded/
