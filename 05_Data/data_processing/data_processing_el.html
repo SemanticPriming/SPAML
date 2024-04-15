@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Greek</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-03-26</h4>
+<h4 class="date">Last Update 2024-04-05</h4>
 
 </div>
 
@@ -1643,7 +1643,11 @@ Information</a></li>
 <li><a href="#original-data-structure" id="toc-original-data-structure">Original Data Structure</a></li>
 </ul></li>
 <li><a href="#participant-and-experiment-information" id="toc-participant-and-experiment-information">Participant and
-Experiment Information</a></li>
+Experiment Information</a>
+<ul>
+<li><a href="#exclude-too-young" id="toc-exclude-too-young">Exclude Too
+Young</a></li>
+</ul></li>
 <li><a href="#trial-data" id="toc-trial-data">Trial Data</a></li>
 <li><a href="#item-data" id="toc-item-data">Item Data</a>
 <ul>
@@ -1824,11 +1828,6 @@ processData &lt;- function(database) {
 </div>
 <div id="data-processing-real-data" class="section level2">
 <h2>Data Processing Real Data</h2>
-<p>Import all the data files for that specific language - use the
-unique() function to eliminate any duplicates from copying the data
-during the backup process. The data was backed up each week and a “fake”
-dataset was copied over to have something for the server to write to for
-practical purposes.</p>
 <pre class="r"><code># get all the files
 el_files &lt;- list.files(&quot;../../04_Procedure_real&quot;,
                        pattern = &quot;*.sqlite&quot;,
@@ -2062,7 +2061,7 @@ lab_codes</code></pre>
 <pre class="r"><code># no lab 13, unclear
 el_data_all$url_lab[el_data_all$url_lab == &quot;13&quot;] &lt;- &quot;No Lab ID&quot;
 el_data_all$url_lab[el_data_all$url_lab == &quot;999&quot;] &lt;- &quot;No Lab ID&quot;
-el_data_all$url_lab[el_data_all$url_lab == &quot;761&quot;] &lt;- &quot;762&quot;
+el_data_all$url_lab[el_data_all$url_lab == &quot;762&quot;] &lt;- &quot;761&quot;
 
 sum(lab_codes$count)</code></pre>
 <pre><code>## [1] 819</code></pre>
@@ -2162,6 +2161,36 @@ table(participant_DF$p_correct &lt; .80, useNA = &quot;ifany&quot;)</code></pre>
 ##   712    36    71</code></pre>
 <pre class="r"><code>export(participant_DF, &quot;output_data/participant_data/el_participant_data.csv&quot;, row.names = F)</code></pre>
 <p></p>
+<div id="exclude-too-young" class="section level3">
+<h3>Exclude Too Young</h3>
+<pre class="r"><code># find too young
+too_young &lt;- na.omit(participant_DF$observation[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) &lt; 18])
+
+# censor out the data
+  # keep timestamp consent, url_lab, no keep so code works later
+  demo_censor &lt;- colnames(participant_DF)[ -c(1, 20, 22, 39, 40) ]
+  
+  all_censor &lt;- colnames(el_data_all)[ c(6, 8:37, 41:42) ]
+
+
+participant_DF[ participant_DF$observation %in% too_young , 
+                demo_censor] &lt;- NA
+
+nrow(participant_DF)</code></pre>
+<pre><code>## [1] 819</code></pre>
+<pre class="r"><code>el_data_all[ el_data_all$observation %in% too_young , 
+             all_censor ] &lt;- NA
+
+nrow(el_data_all)</code></pre>
+<pre><code>## [1] 1738314</code></pre>
+<pre class="r"><code># rewrite data
+export(participant_DF, &quot;output_data/participant_data/el_participant_data.csv&quot;, row.names = F)
+
+write.csv(el_data_all, 
+       gzfile(&quot;output_data/full_data/el_full_data.csv.gz&quot;),
+       row.names = F)</code></pre>
+<p></p>
+</div>
 </div>
 <div id="trial-data" class="section level2">
 <h2>Trial Data</h2>
@@ -2204,16 +2233,16 @@ real_trials$original_duration &lt;- real_trials$duration
 table(real_trials$correct, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ##  FALSE   TRUE   &lt;NA&gt; 
-##  34635 521812   5936</code></pre>
+##  34430 521223   6730</code></pre>
 <pre class="r"><code># exclude due to too short or too long
 table(real_trials$duration &lt; 160, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
-##  FALSE   TRUE 
-## 556082   6301</code></pre>
+##  FALSE   TRUE   &lt;NA&gt; 
+## 555535   6048    800</code></pre>
 <pre class="r"><code>table(real_trials$duration &gt; 3000, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
-##  FALSE   TRUE 
-## 560686   1697</code></pre>
+##  FALSE   TRUE   &lt;NA&gt; 
+## 559886   1697    800</code></pre>
 <pre class="r"><code># Separate out NA data for the z-score part
 # this mostly controls for timeouts
 real_trials_NA &lt;- real_trials %&gt;% #data frame
@@ -2226,7 +2255,7 @@ real_trials_NA &lt;- real_trials %&gt;% #data frame
          keep = &quot;exclude&quot;)
 
 nrow(real_trials_NA)</code></pre>
-<pre><code>## [1] 43827</code></pre>
+<pre><code>## [1] 44292</code></pre>
 <pre class="r"><code># this section z-scores the rest of the data
 # just not time outs
 real_trials_nonNA &lt;- 
@@ -2240,7 +2269,7 @@ real_trials_nonNA &lt;-
          keep = &quot;keep&quot;)
 
 nrow(real_trials_nonNA)</code></pre>
-<pre><code>## [1] 518556</code></pre>
+<pre><code>## [1] 518091</code></pre>
 <pre class="r"><code># make sure you equally split 
 nrow(real_trials) == nrow(real_trials_NA) + nrow(real_trials_nonNA)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -2326,7 +2355,7 @@ nrow(stimuli_data)</code></pre>
 ## ------------------------------------------------------------ 
 ## group: keep
 ##    vars      n mean sd median trimmed  mad  min   max range skew kurtosis se
-## X1    1 518556    0  1  -0.26   -0.16 0.62 -2.9 19.78 22.68 2.51    10.96  0</code></pre>
+## X1    1 518091    0  1  -0.26   -0.16 0.62 -2.9 19.78 22.68 2.51    10.96  0</code></pre>
 <pre class="r"><code>describeBy(real_trials$duration, group = real_trials$keep)</code></pre>
 <pre><code>## Warning in min(x, na.rm = na.rm): no non-missing arguments to min; returning
 ## Inf
@@ -2341,7 +2370,7 @@ nrow(stimuli_data)</code></pre>
 ## ------------------------------------------------------------ 
 ## group: keep
 ##    vars      n   mean     sd median trimmed    mad   min    max  range skew
-## X1    1 518556 725.76 318.08  636.3  670.18 177.94 160.2 2989.8 2829.6 2.55
+## X1    1 518091 725.81 318.09 636.33  670.22 177.95 160.2 2989.8 2829.6 2.55
 ##    kurtosis   se
 ## X1     9.11 0.44</code></pre>
 <pre class="r"><code>##create item level data by summarizing
@@ -2476,7 +2505,7 @@ describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not ca
 ## ------------------------------------------------------------ 
 ## group: keep
 ##    vars      n mean sd median trimmed  mad  min   max range skew kurtosis se
-## X1    1 518556    0  1  -0.26   -0.16 0.62 -2.9 19.78 22.68 2.51    10.96  0</code></pre>
+## X1    1 518091    0  1  -0.26   -0.16 0.62 -2.9 19.78 22.68 2.51    10.96  0</code></pre>
 <pre class="r"><code>describeBy(real_trials$duration, group = real_trials$keep)</code></pre>
 <pre><code>## Warning in min(x, na.rm = na.rm): no non-missing arguments to min; returning
 ## Inf
@@ -2491,7 +2520,7 @@ describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not ca
 ## ------------------------------------------------------------ 
 ## group: keep
 ##    vars      n   mean     sd median trimmed    mad   min    max  range skew
-## X1    1 518556 725.76 318.08  636.3  670.18 177.94 160.2 2989.8 2829.6 2.55
+## X1    1 518091 725.81 318.09 636.33  670.22 177.95 160.2 2989.8 2829.6 2.55
 ##    kurtosis   se
 ## X1     9.11 0.44</code></pre>
 <pre class="r"><code>##create item level data by summarizing
@@ -2728,14 +2757,16 @@ data, but the z-score calculation is recommended.</p>
 <pre class="r"><code>  # calculate the total N versus timeout N
   el_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == &quot;response&quot;, na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == &quot;response&quot;, na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   el_num_trials2 &lt;-
     priming_focus %&gt;% 
@@ -2798,18 +2829,18 @@ data, but the z-score calculation is recommended.</p>
               id_cols = &quot;target_word_unique&quot;, 
               values_from = c(&quot;avgRT&quot;, &quot;avgZ_RT&quot;, 
                               &quot;seRT&quot;, &quot;seZ_RT&quot;, 
-                              &quot;target_correct&quot;, 
+                              # &quot;target_correct&quot;, 
                               &quot;target_answeredN&quot;, 
                               &quot;target_timeoutN&quot;,
-                              &quot;target_prop_correct&quot;, 
+                              # &quot;target_prop_correct&quot;, 
                               &quot;target_correct_keep&quot;, 
                               &quot;target_answeredN_keep&quot;,
                               &quot;target_timeoutN_keep&quot;, 
                               &quot;target_prop_correct_keep&quot;,
-                              &quot;cue_correct&quot;, 
+                              # &quot;cue_correct&quot;, 
                               &quot;cue_answeredN&quot;, 
                               &quot;cue_timeoutN&quot;,
-                              &quot;cue_prop_correct&quot;, 
+                              # &quot;cue_prop_correct&quot;, 
                               &quot;cue_correct_keep&quot;, 
                               &quot;cue_answeredN_keep&quot;,
                               &quot;cue_timeoutN_keep&quot;, 
@@ -2915,9 +2946,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/el_prime_data.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/el_prime_data_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/el_prime_data_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/el_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/el_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/el_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 <div id="using-redefined-accuracy" class="section level3">
@@ -2997,14 +3028,16 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/el_prime_data_
 <pre class="r"><code>  # calculate the total N versus timeout N
   el_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == &quot;response&quot;, na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == &quot;response&quot;, na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   el_num_trials2 &lt;-
     priming_focus %&gt;% 
@@ -3062,18 +3095,18 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/el_prime_data_
               id_cols = &quot;target_word_unique&quot;, 
               values_from = c(&quot;avgRT&quot;, &quot;avgZ_RT&quot;, 
                               &quot;seRT&quot;, &quot;seZ_RT&quot;, 
-                              &quot;target_correct&quot;, 
+                              # &quot;target_correct&quot;, 
                               &quot;target_answeredN&quot;, 
                               &quot;target_timeoutN&quot;,
-                              &quot;target_prop_correct&quot;, 
+                              # &quot;target_prop_correct&quot;, 
                               &quot;target_correct_keep&quot;, 
                               &quot;target_answeredN_keep&quot;,
                               &quot;target_timeoutN_keep&quot;, 
                               &quot;target_prop_correct_keep&quot;,
-                              &quot;cue_correct&quot;, 
+                              # &quot;cue_correct&quot;, 
                               &quot;cue_answeredN&quot;, 
                               &quot;cue_timeoutN&quot;,
-                              &quot;cue_prop_correct&quot;, 
+                              # &quot;cue_prop_correct&quot;, 
                               &quot;cue_correct_keep&quot;, 
                               &quot;cue_answeredN_keep&quot;,
                               &quot;cue_timeoutN_keep&quot;, 
@@ -3177,9 +3210,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/el_answered_prime_data.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/el_answered_prime_data_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/el_answered_prime_data_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/el_answered_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/el_answered_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/el_answered_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 </div>

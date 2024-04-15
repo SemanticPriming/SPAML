@@ -1,0 +1,84 @@
+---
+title: "Method"
+author: "Erin M. Buchanan"
+date: "Last Update `r Sys.Date()`"
+output: bookdown::word_document2
+---
+
+```{r setup, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+```{r libraries, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+## libraries
+library(dplyr)
+library(psych)
+library(tidyr)
+library(ggplot2)
+library(rio)
+set.seed(58902)
+library(nlme)
+library(MuMIn)
+library(performance)
+library(parameters)
+library(ggridges)
+library(papaja)
+library(flextable)
+```
+
+```{r import-data}
+parts <- list.files("../05_Data/data_processing/output_data/participant_data",
+                       pattern = "data.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+parts.list <- list()
+for (i in 1:length(parts)){
+  parts.list[[i]] <- import(parts[i]) %>% 
+    mutate(url_lab = as.character(url_lab),
+           language = parts[i])
+}
+
+parts.data <- bind_rows(parts.list) %>% 
+  mutate(language = gsub("../05_Data/data_processing/output_data/participant_data/|_participant_data.csv", "", language)) %>% 
+  unique()
+
+lab.data <- import("../05_Data/summary_tables/irb_lab_summary.csv")
+lang.data <- import("../05_Data/summary_tables/language_summary.csv")
+```
+
+
+## Languages 
+
+43 languages were originally identified for possible data collection based on the information available from the OpenSubtitles and subs2vec project. The following languages/dialects were translated and collected at least one participant (starred languages indicate our pre-registered minimum data collection plan): Arabic, Czech\*, Danish, German\*, Greek, English\*, Spanish\*, Farsi, French, Hebrew, Hindi, Hungarian, Italian, Japanese\*, Korean\*, Dutch, Norwegian, Polish, Portuguese\*, Brazilian Portuguese, Romanian, Russian\*, Slovak, Slovenian, Serbian, Thai, Turkish\*, Urdu, Simplified Chinese\*, and Traditional Chinese. Table X portrays a summary of the each language's data collection for number of included participants (based on the pre-registered data inclusion rules), the number of excluded participants, proportion correct answers for included participants, and median time completion for included participants. The complete breakdown of gender, education, age, and stimuli completion can be found in the supplemental materials. 
+
+```{r table-lang}
+# lang table 
+flextable(
+  lang.data %>% 
+  select(Language_Name, Keep, Exclude, M_Correct, Med_Time)
+  ) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N Include", "N Exclude", "Proportion Correct", 
+                      "Median Time"))
+  
+```
+
+## Participating Labs / Ethics
+
+Ethics Information talk about labs here 
+
+We did not collect any identifiable private or personal data as part of the experiment. This project was approved by Harrisburg University of Science and Technology conforming to all relevant ethical guidelines and the Declaration of Helsinki, with special care to conform to the General Data Protection Regulation (GDPR; eugdpr.org). No global exclusion criteria for participating in the study was used, except for a minimum age requirement of 18 years (i.e., adult participants). Please see analysis section below for other participant and trial level exclusion criteria related to analyses.
+
+XX labs completed ethics documentation for data collection, and XX labs in XX geopolitical regions collected data for the study. Each research lab obtained local ethical review (XX), relied on the ethical review provided by Harrisburg University (XX), or provided evidence of no required ethical review (XX). The supplemental materials provide links for the IRB approvals on the Open Science Framework (OSF) and a table of participating labs with their data collection information include languages sampled, geopolitical region of the team, compensation procedure and amount, online versus in person testing, and testing type (individual participants or classroom type settings). This information can be matched to study data using the lab code that is present in the participant and trial level files. 
+
+## Participants
+
+Talk about participants here 
+
+- how many opened
+

@@ -417,6 +417,36 @@ table(participant_DF$p_correct_answered < .80, useNA = "ifany")
 export(participant_DF, "output_data/participant_data/ur_participant_data.csv", row.names = F)
 ```
 
+### Exclude Too Young
+
+```{r exclude-young}
+# find too young
+too_young <- na.omit(participant_DF$observation[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) < 18])
+# censor out the data
+  # keep timestamp consent, url_lab, no keep so code works later
+  demo_censor <- colnames(participant_DF)[ -c(1, 20, 22, 39, 40) ]
+  
+  all_censor <- colnames(ur_data_all)[ c(6, 8:37, 41:42) ]
+
+
+participant_DF[ participant_DF$observation %in% too_young , 
+                demo_censor] <- NA
+
+nrow(participant_DF)
+
+ur_data_all[ ur_data_all$observation %in% too_young , 
+             all_censor ] <- NA
+
+nrow(ur_data_all)
+
+# rewrite data
+export(participant_DF, "output_data/participant_data/ur_participant_data.csv", row.names = F)
+
+write.csv(ur_data_all, 
+       gzfile("output_data/full_data/ur_full_data.csv.gz"),
+       row.names = F)
+```
+
 ## Trial Data
 
 Each language will be saved in a separate file with an item specific trial identification number to allow for matching concepts across languages (i.e., cat → katze → gatta). 
@@ -863,14 +893,16 @@ Priming is defined as the subtraction of average z-scored related response laten
   # calculate the total N versus timeout N
   ur_num_trials <- priming_focus %>% 
     group_by(word_combo) %>% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   ur_num_trials2 <-
     priming_focus %>% 
@@ -930,18 +962,18 @@ Priming is defined as the subtraction of average z-scored related response laten
               id_cols = "target_word_unique", 
               values_from = c("avgRT", "avgZ_RT", 
                               "seRT", "seZ_RT", 
-                              "target_correct", 
+                              # "target_correct", 
                               "target_answeredN", 
                               "target_timeoutN",
-                              "target_prop_correct", 
+                              # "target_prop_correct", 
                               "target_correct_keep", 
                               "target_answeredN_keep",
                               "target_timeoutN_keep", 
                               "target_prop_correct_keep",
-                              "cue_correct", 
+                              # "cue_correct", 
                               "cue_answeredN", 
                               "cue_timeoutN",
-                              "cue_prop_correct", 
+                              # "cue_prop_correct",
                               "cue_correct_keep", 
                               "cue_answeredN_keep",
                               "cue_timeoutN_keep", 
@@ -1120,14 +1152,16 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ur_priming_summary_
   # calculate the total N versus timeout N
   ur_num_trials <- priming_focus %>% 
     group_by(word_combo) %>% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == "response", na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == "timeout", na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == "response", na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == "timeout", na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   ur_num_trials2 <-
     priming_focus %>% 
@@ -1182,18 +1216,18 @@ nrow(priming_Z)
               id_cols = "target_word_unique", 
               values_from = c("avgRT", "avgZ_RT", 
                               "seRT", "seZ_RT", 
-                              "target_correct", 
+                              # "target_correct", 
                               "target_answeredN", 
                               "target_timeoutN",
-                              "target_prop_correct", 
+                              # "target_prop_correct", 
                               "target_correct_keep", 
                               "target_answeredN_keep",
                               "target_timeoutN_keep", 
                               "target_prop_correct_keep",
-                              "cue_correct", 
+                              # "cue_correct", 
                               "cue_answeredN", 
                               "cue_timeoutN",
-                              "cue_prop_correct", 
+                              # "cue_prop_correct", 
                               "cue_correct_keep", 
                               "cue_answeredN_keep",
                               "cue_timeoutN_keep", 

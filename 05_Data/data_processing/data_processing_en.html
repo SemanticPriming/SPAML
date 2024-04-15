@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - English</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-03-26</h4>
+<h4 class="date">Last Update 2024-04-06</h4>
 
 </div>
 
@@ -1643,7 +1643,11 @@ Information</a></li>
 <li><a href="#original-data-structure" id="toc-original-data-structure">Original Data Structure</a></li>
 </ul></li>
 <li><a href="#participant-and-experiment-information" id="toc-participant-and-experiment-information">Participant and
-Experiment Information</a></li>
+Experiment Information</a>
+<ul>
+<li><a href="#exclude-too-young" id="toc-exclude-too-young">Exclude Too
+Young</a></li>
+</ul></li>
 <li><a href="#trial-data" id="toc-trial-data">Trial Data</a></li>
 <li><a href="#item-data" id="toc-item-data">Item Data</a>
 <ul>
@@ -1854,14 +1858,15 @@ for (i in 1:length(en_files)){
 # convert to data frame and make unique
 en_data_all &lt;- bind_rows(en_data) %&gt;% unique()
 
-nrow(en_data_all)
-
-# timestamp is somewhat unreliable fix up sender_id
+nrow(en_data_all)</code></pre>
+<pre><code>## [1] 13919113</code></pre>
+<pre class="r"><code># timestamp is somewhat unreliable fix up sender_id
 sender_ids &lt;- import(&quot;sender_id.csv&quot;)
 en_data_all &lt;- en_data_all %&gt;% 
   left_join(sender_ids, by = &quot;sender_id&quot;)
 
 nrow(en_data_all)</code></pre>
+<pre><code>## [1] 13919113</code></pre>
 <p></p>
 <div id="remove-test-data" class="section level3">
 <h3>Remove Test Data</h3>
@@ -1871,9 +1876,9 @@ language.</p>
 en_data_all &lt;- en_data_all %&gt;% 
   filter(timestamp &gt; as.POSIXct(&quot;2022-08-01&quot;)) 
 
-nrow(en_data_all)
-
-remove_zpid &lt;- en_data_all %&gt;% 
+nrow(en_data_all)</code></pre>
+<pre><code>## [1] 13907149</code></pre>
+<pre class="r"><code>remove_zpid &lt;- en_data_all %&gt;% 
   filter(url_lab == &quot;ZPID&quot;) %&gt;% 
   pull(observation)
 
@@ -1881,9 +1886,9 @@ en_data_all &lt;- en_data_all %&gt;%
   filter(!(observation %in% remove_zpid)) %&gt;% 
   mutate(word = tolower(word))
 
-nrow(en_data_all)
-
-# fix the issue of double displays that happened before 2022-09-01
+nrow(en_data_all)</code></pre>
+<pre><code>## [1] 13902199</code></pre>
+<pre class="r"><code># fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0 
   # 13_0_99 == 15_0_1
   # figure out everyone who saw 15_100 and 15_101 which means extra
@@ -1899,6 +1904,7 @@ nrow(en_data_all)
     ))
   
 nrow(en_data_all)</code></pre>
+<pre><code>## [1] 13901593</code></pre>
 <p></p>
 </div>
 <div id="remove-the-participant-information" class="section level3">
@@ -1906,16 +1912,46 @@ nrow(en_data_all)</code></pre>
 <p>Here we remove all the columns of unique participant information.
 Because observation (labjs unique ID code) is not always unique, we bind
 it with a random subset of our unique code to create no repetitions.</p>
-<pre class="r"><code>names(en_data_all)
-
-# fix lab 829 before removing column
+<pre class="r"><code>names(en_data_all)</code></pre>
+<pre><code>##  [1] &quot;observation&quot;                         &quot;sender&quot;                             
+##  [3] &quot;sender_type&quot;                         &quot;sender_id&quot;                          
+##  [5] &quot;uuid&quot;                                &quot;response&quot;                           
+##  [7] &quot;response_action&quot;                     &quot;ended_on&quot;                           
+##  [9] &quot;duration&quot;                            &quot;time_run&quot;                           
+## [11] &quot;time_render&quot;                         &quot;time_show&quot;                          
+## [13] &quot;time_end&quot;                            &quot;time_commit&quot;                        
+## [15] &quot;timestamp&quot;                           &quot;time_switch&quot;                        
+## [17] &quot;url_lab&quot;                             &quot;meta_labjs_version&quot;                 
+## [19] &quot;meta_location&quot;                       &quot;meta_user_agent&quot;                    
+## [21] &quot;meta_platform&quot;                       &quot;meta_language&quot;                      
+## [23] &quot;meta_locale&quot;                         &quot;meta_time_zone&quot;                     
+## [25] &quot;meta_timezone_offset&quot;                &quot;meta_screen_width&quot;                  
+## [27] &quot;meta_screen_height&quot;                  &quot;meta_scroll_width&quot;                  
+## [29] &quot;meta_scroll_height&quot;                  &quot;meta_window_inner_width&quot;            
+## [31] &quot;meta_window_inner_height&quot;            &quot;meta_device_pixel_ratio&quot;            
+## [33] &quot;meta_labjs_build_flavor&quot;             &quot;meta_labjs_build_commit&quot;            
+## [35] &quot;please_tell_us_your_gender&quot;          &quot;which_year_were_you_born&quot;           
+## [37] &quot;please_tell_us_your_education_level&quot; &quot;native_language&quot;                    
+## [39] &quot;dominanthand&quot;                        &quot;x&quot;                                  
+## [41] &quot;word&quot;                                &quot;class&quot;                              
+## [43] &quot;correct_response&quot;                    &quot;correct&quot;                            
+## [45] &quot;feedback&quot;                            &quot;url_special_code&quot;                   
+## [47] &quot;url&quot;                                 &quot;url_fbclid&quot;                         
+## [49] &quot;url_lab_829&quot;                         &quot;url_lab829&quot;                         
+## [51] &quot;url_special&quot;                         &quot;please_tell_us_english_reading&quot;     
+## [53] &quot;please_tell_us_english_writing&quot;      &quot;fix_sender&quot;</code></pre>
+<pre class="r"><code># fix lab 829 before removing column
 temp_obs &lt;- en_data_all %&gt;% 
   filter(sender == &quot;Consent Form&quot;) %&gt;% 
   filter(!is.na(url_lab829) | !is.na(url_lab_829))
 
-temp_obs # none so ok 
-
-# fill in uuid for each row
+temp_obs # none so ok </code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["observation"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sender"],"name":[2],"type":["chr"],"align":["left"]},{"label":["sender_type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sender_id"],"name":[4],"type":["chr"],"align":["left"]},{"label":["uuid"],"name":[5],"type":["chr"],"align":["left"]},{"label":["response"],"name":[6],"type":["chr"],"align":["left"]},{"label":["response_action"],"name":[7],"type":["chr"],"align":["left"]},{"label":["ended_on"],"name":[8],"type":["chr"],"align":["left"]},{"label":["duration"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["time_run"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["time_render"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["time_show"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["time_end"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["time_commit"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["timestamp"],"name":[15],"type":["dttm"],"align":["right"]},{"label":["time_switch"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["url_lab"],"name":[17],"type":["chr"],"align":["left"]},{"label":["meta_labjs_version"],"name":[18],"type":["chr"],"align":["left"]},{"label":["meta_location"],"name":[19],"type":["chr"],"align":["left"]},{"label":["meta_user_agent"],"name":[20],"type":["chr"],"align":["left"]},{"label":["meta_platform"],"name":[21],"type":["chr"],"align":["left"]},{"label":["meta_language"],"name":[22],"type":["chr"],"align":["left"]},{"label":["meta_locale"],"name":[23],"type":["chr"],"align":["left"]},{"label":["meta_time_zone"],"name":[24],"type":["chr"],"align":["left"]},{"label":["meta_timezone_offset"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["meta_screen_width"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["meta_screen_height"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["meta_scroll_width"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["meta_scroll_height"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["meta_window_inner_width"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["meta_window_inner_height"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["meta_device_pixel_ratio"],"name":[32],"type":["dbl"],"align":["right"]},{"label":["meta_labjs_build_flavor"],"name":[33],"type":["chr"],"align":["left"]},{"label":["meta_labjs_build_commit"],"name":[34],"type":["chr"],"align":["left"]},{"label":["please_tell_us_your_gender"],"name":[35],"type":["chr"],"align":["left"]},{"label":["which_year_were_you_born"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["please_tell_us_your_education_level"],"name":[37],"type":["chr"],"align":["left"]},{"label":["native_language"],"name":[38],"type":["chr"],"align":["left"]},{"label":["dominanthand"],"name":[39],"type":["chr"],"align":["left"]},{"label":["x"],"name":[40],"type":["chr"],"align":["left"]},{"label":["word"],"name":[41],"type":["chr"],"align":["left"]},{"label":["class"],"name":[42],"type":["chr"],"align":["left"]},{"label":["correct_response"],"name":[43],"type":["chr"],"align":["left"]},{"label":["correct"],"name":[44],"type":["lgl"],"align":["right"]},{"label":["feedback"],"name":[45],"type":["chr"],"align":["left"]},{"label":["url_special_code"],"name":[46],"type":["chr"],"align":["left"]},{"label":["url"],"name":[47],"type":["chr"],"align":["left"]},{"label":["url_fbclid"],"name":[48],"type":["chr"],"align":["left"]},{"label":["url_lab_829"],"name":[49],"type":["lgl"],"align":["right"]},{"label":["url_lab829"],"name":[50],"type":["lgl"],"align":["right"]},{"label":["url_special"],"name":[51],"type":["lgl"],"align":["right"]},{"label":["please_tell_us_english_reading"],"name":[52],"type":["chr"],"align":["left"]},{"label":["please_tell_us_english_writing"],"name":[53],"type":["chr"],"align":["left"]},{"label":["fix_sender"],"name":[54],"type":["chr"],"align":["left"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># fill in uuid for each row
 en_data_all &lt;- fill(en_data_all, uuid, .direction = &quot;down&quot;)
 
 # ensure that observation-uuid combination doesn&#39;t go awry
@@ -1926,10 +1962,17 @@ temp &lt;- en_data_all %&gt;%
   mutate(dups_o = duplicated(observation),
          dups_u = duplicated(uuid))
 
-table(temp$dups_o, useNA = &quot;ifany&quot;)
-table(temp$dups_u, useNA = &quot;ifany&quot;)
-
-# work out the issues
+table(temp$dups_o, useNA = &quot;ifany&quot;)</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##  6709   738</code></pre>
+<pre class="r"><code>table(temp$dups_u, useNA = &quot;ifany&quot;)</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##  7432    15</code></pre>
+<pre class="r"><code>&quot;b78448ffa-80d4&quot;</code></pre>
+<pre><code>## [1] &quot;b78448ffa-80d4&quot;</code></pre>
+<pre class="r"><code># work out the issues
 temp_2 &lt;- temp %&gt;% 
   filter(observation %in% temp$observation[temp$dups_o])
 
@@ -1964,14 +2007,14 @@ en_data_all$uuid[en_data_all$observation == &quot;fa987&quot;] &lt;- &quot;36c73
 en_data_all$observation &lt;- paste0(en_data_all$observation, substr(en_data_all$uuid, 20, 28))
 
 # make sure every row has an id number 
-sum(is.na(en_data_all$observation))
-
-# remove ZPID, mturk, uuid 
+sum(is.na(en_data_all$observation))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code># remove ZPID, mturk, uuid 
 en_data_all &lt;- en_data_all %&gt;% 
   select(-url_special_code, -uuid, -meta_location, -x, -url,
          -url_fbclid, -url_lab_829, -url_lab829, -url_special)
 
-# deal with issues
+# deal with issues of words that were incorrect 
 temp &lt;- en_data_all %&gt;% 
   group_by(word, class) %&gt;% 
   summarize(accuracy = sum(correct, na.rm = T) / n())
@@ -1983,19 +2026,24 @@ incorrect_words &lt;- c(&quot;midnight&quot;, &quot;strawberry&quot;, &quot;dvd&
 find_trials &lt;- en_data_all$word %in% incorrect_words &amp; 
                             en_data_all$class == &quot;nonword&quot;
 
-table(en_data_all$correct[find_trials])
-
-en_data_all$correct[find_trials] &lt;- ifelse(
+table(en_data_all$correct[find_trials])</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##   825   508</code></pre>
+<pre class="r"><code>en_data_all$correct[find_trials] &lt;- ifelse(
   en_data_all$correct[find_trials] == FALSE, TRUE, ifelse(
     en_data_all$correct[find_trials] == TRUE, FALSE, en_data_all$correct[find_trials]
   )
 )
 
-table(en_data_all$correct[find_trials])
-
-en_data_all$class[find_trials] &lt;- &quot;word&quot;
+table(en_data_all$correct[find_trials])</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##   508   825</code></pre>
+<pre class="r"><code>en_data_all$class[find_trials] &lt;- &quot;word&quot;
 
 ncol(en_data_all)</code></pre>
+<pre><code>## [1] 45</code></pre>
 <p></p>
 </div>
 <div id="write-out-shareable-data" class="section level3">
@@ -2063,6 +2111,9 @@ start here by importing the shared data file.</p>
 ##  $ please_tell_us_english_reading     : chr  NA NA NA NA ...
 ##  $ please_tell_us_english_writing     : chr  NA NA NA NA ...
 ##  $ fix_sender                         : chr  NA NA NA NA ...</code></pre>
+<pre class="r"><code># make timestamp a time
+en_data_all$timestamp &lt;- as.POSIXct(substr(en_data_all$timestamp, 1, 19), 
+                                    format = &quot;%Y-%m-%d %H:%M:%OS&quot;)</code></pre>
 <p></p>
 </div>
 </div>
@@ -2101,7 +2152,8 @@ lab_codes</code></pre>
 {"columns":[{"label":["url_lab"],"name":[1],"type":["chr"],"align":["left"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"10","2":"235"},{"1":"1026","2":"3"},{"1":"1072","2":"90"},{"1":"1234","2":"26"},{"1":"1234\\\\","2":"1"},{"1":"1295","2":"77"},{"1":"1382","2":"107"},{"1":"14","2":"55"},{"1":"1485","2":"72"},{"1":"151","2":"158"},{"1":"1531","2":"112"},{"1":"1538","2":"84"},{"1":"1564","2":"248"},{"1":"162","2":"58"},{"1":"1733","2":"123"},{"1":"1897","2":"91"},{"1":"2","2":"24"},{"1":"2192","2":"70"},{"1":"22","2":"697"},{"1":"223","2":"45"},{"1":"261","2":"88"},{"1":"2633","2":"197"},{"1":"2635","2":"76"},{"1":"266","2":"178"},{"1":"2699","2":"15"},{"1":"2772","2":"717"},{"1":"2788","2":"69"},{"1":"279","2":"1"},{"1":"2791","2":"3"},{"1":"2793127","2":"2"},{"1":"2793128","2":"2"},{"1":"2793131","2":"1"},{"1":"2793132","2":"1"},{"1":"2793135","2":"3"},{"1":"2793136","2":"3"},{"1":"2793137","2":"2"},{"1":"2793138","2":"1"},{"1":"2793139","2":"1"},{"1":"2793141","2":"1"},{"1":"2793142","2":"2"},{"1":"2793144","2":"2"},{"1":"2793145","2":"1"},{"1":"2793146","2":"3"},{"1":"2793147","2":"3"},{"1":"2793149","2":"2"},{"1":"2793151","2":"2"},{"1":"2793153","2":"1"},{"1":"2793154","2":"1"},{"1":"2793157","2":"2"},{"1":"2793158","2":"2"},{"1":"2793159","2":"1"},{"1":"2793160","2":"1"},{"1":"2793161","2":"1"},{"1":"2793162","2":"1"},{"1":"2793163","2":"1"},{"1":"2793164","2":"2"},{"1":"2793165","2":"1"},{"1":"2793166","2":"1"},{"1":"2793167","2":"1"},{"1":"2793168","2":"1"},{"1":"2793169","2":"1"},{"1":"2793170","2":"3"},{"1":"2793172","2":"1"},{"1":"2793173","2":"1"},{"1":"2793174","2":"1"},{"1":"2793175","2":"1"},{"1":"2793176","2":"1"},{"1":"2793177","2":"1"},{"1":"2793178","2":"1"},{"1":"2793179","2":"1"},{"1":"2793180","2":"1"},{"1":"2793182","2":"1"},{"1":"2793184","2":"2"},{"1":"2793185","2":"2"},{"1":"2793186","2":"1"},{"1":"2793187","2":"3"},{"1":"2793188","2":"2"},{"1":"2793189","2":"1"},{"1":"2793191","2":"1"},{"1":"2793192","2":"1"},{"1":"2793193","2":"1"},{"1":"2793194","2":"1"},{"1":"2793196","2":"1"},{"1":"2793198","2":"1"},{"1":"2793199","2":"1"},{"1":"2793200","2":"1"},{"1":"2793202","2":"1"},{"1":"2793209","2":"1"},{"1":"2793210","2":"1"},{"1":"2793211","2":"1"},{"1":"2793212","2":"2"},{"1":"2793216","2":"1"},{"1":"2793220","2":"1"},{"1":"2793222","2":"1"},{"1":"2793223","2":"2"},{"1":"2793225","2":"1"},{"1":"2793226","2":"3"},{"1":"2793229","2":"1"},{"1":"2793232","2":"1"},{"1":"2793233","2":"2"},{"1":"2793235","2":"1"},{"1":"2793237","2":"1"},{"1":"2793238","2":"3"},{"1":"2793239","2":"1"},{"1":"2793240","2":"1"},{"1":"2793242","2":"2"},{"1":"2793243","2":"2"},{"1":"2793245","2":"2"},{"1":"2793247","2":"1"},{"1":"2793249","2":"1"},{"1":"2793251","2":"1"},{"1":"2793252","2":"2"},{"1":"2793257","2":"1"},{"1":"2793258","2":"2"},{"1":"2793261","2":"1"},{"1":"2793263","2":"1"},{"1":"2793267","2":"2"},{"1":"2793268","2":"1"},{"1":"2793270","2":"1"},{"1":"2793274","2":"1"},{"1":"2793276","2":"1"},{"1":"2793277","2":"2"},{"1":"2793279","2":"2"},{"1":"2793280","2":"2"},{"1":"2793281","2":"1"},{"1":"2793282","2":"1"},{"1":"2793283","2":"1"},{"1":"2793286","2":"3"},{"1":"2793287","2":"1"},{"1":"2793288","2":"1"},{"1":"2793290","2":"1"},{"1":"2793291","2":"2"},{"1":"2793292","2":"2"},{"1":"2793294","2":"1"},{"1":"2793295","2":"1"},{"1":"2793296","2":"1"},{"1":"2793298","2":"1"},{"1":"2793299","2":"4"},{"1":"2793300","2":"1"},{"1":"2793302","2":"1"},{"1":"2793303","2":"1"},{"1":"2793304","2":"1"},{"1":"2970","2":"51"},{"1":"2976","2":"43"},{"1":"3083","2":"52"},{"1":"3088","2":"242"},{"1":"3143","2":"111"},{"1":"337","2":"107"},{"1":"35","2":"133"},{"1":"358","2":"89"},{"1":"37","2":"1"},{"1":"371","2":"48"},{"1":"408","2":"155"},{"1":"421","2":"67"},{"1":"423","2":"2"},{"1":"44","2":"40"},{"1":"64","2":"227"},{"1":"712","2":"261"},{"1":"728","2":"303"},{"1":"76","2":"179"},{"1":"828","2":"1"},{"1":"829","2":"79"},{"1":"87","2":"279"},{"1":"91","2":"325"},{"1":"93","2":"1"},{"1":"98","2":"13"},{"1":"999","2":"1"},{"1":"9999","2":"7"},{"1":"NA","2":"734"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="r"><code>en_data_all$url_lab &lt;- gsub(&quot;^2793.*&quot;, &quot;279&quot;, en_data_all$url_lab)
+<pre class="r"><code>en_data_all$url_lab &lt;- gsub(&quot;[[:punct:]]&quot;, &quot;&quot;, en_data_all$url_lab)
+en_data_all$url_lab &lt;- gsub(&quot;^2793.*&quot;, &quot;279&quot;, en_data_all$url_lab)
 en_data_all$url_lab &lt;- gsub(&quot;^2791.*&quot;, &quot;279&quot;, en_data_all$url_lab)
 en_data_all$url_lab &lt;- gsub(&quot;^2792.*&quot;, &quot;279&quot;, en_data_all$url_lab)
 en_data_all$url_lab &lt;- gsub(&quot;^2970$&quot;, &quot;2790&quot;, en_data_all$url_lab)
@@ -2113,7 +2165,6 @@ en_data_all$url_lab[is.na(en_data_all$url_lab) |
                       en_data_all$url_lab == &quot;2&quot; | 
                       en_data_all$url_lab == &quot;1234&quot;
                       ] &lt;- &quot;No Lab ID&quot;
-en_data_all$url_lab &lt;- gsub(&quot;[[:punct:]]&quot;, &quot;&quot;, en_data_all$url_lab)
 en_data_all$url_lab[en_data_all$url_lab == &quot;828&quot;] &lt;- &quot;829&quot;
 
 # Merge 373 and 1485
@@ -2203,7 +2254,7 @@ lab_codes &lt;- en_data_all %&gt;%
 lab_codes</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["url_lab"],"name":[1],"type":["chr"],"align":["left"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"10","2":"235"},{"1":"1026","2":"3"},{"1":"1072","2":"90"},{"1":"1234","2":"1"},{"1":"1295","2":"77"},{"1":"1382","2":"107"},{"1":"14","2":"55"},{"1":"151","2":"158"},{"1":"1531","2":"112"},{"1":"1538","2":"84"},{"1":"1564","2":"248"},{"1":"162","2":"58"},{"1":"1733","2":"123"},{"1":"1897","2":"91"},{"1":"2192","2":"70"},{"1":"22","2":"697"},{"1":"223","2":"45"},{"1":"261","2":"88"},{"1":"2633","2":"197"},{"1":"2635","2":"76"},{"1":"266","2":"178"},{"1":"2699","2":"15"},{"1":"2772","2":"717"},{"1":"2788","2":"69"},{"1":"279","2":"165"},{"1":"2790","2":"51"},{"1":"2976","2":"43"},{"1":"3083","2":"52"},{"1":"3088","2":"242"},{"1":"3143","2":"111"},{"1":"337","2":"107"},{"1":"35","2":"133"},{"1":"358","2":"89"},{"1":"371","2":"49"},{"1":"373-1485","2":"72"},{"1":"408","2":"155"},{"1":"421","2":"67"},{"1":"423","2":"2"},{"1":"44","2":"40"},{"1":"64","2":"227"},{"1":"712","2":"261"},{"1":"728","2":"303"},{"1":"76","2":"179"},{"1":"829","2":"80"},{"1":"87","2":"279"},{"1":"91","2":"325"},{"1":"93","2":"1"},{"1":"98","2":"13"},{"1":"No Lab ID","2":"89"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["url_lab"],"name":[1],"type":["chr"],"align":["left"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"10","2":"235"},{"1":"1026","2":"3"},{"1":"1072","2":"90"},{"1":"1295","2":"77"},{"1":"1382","2":"107"},{"1":"14","2":"55"},{"1":"151","2":"158"},{"1":"1531","2":"112"},{"1":"1538","2":"84"},{"1":"1564","2":"248"},{"1":"162","2":"58"},{"1":"1733","2":"123"},{"1":"1897","2":"91"},{"1":"2192","2":"70"},{"1":"22","2":"697"},{"1":"223","2":"45"},{"1":"261","2":"88"},{"1":"2633","2":"197"},{"1":"2635","2":"76"},{"1":"266","2":"178"},{"1":"2699","2":"15"},{"1":"2772","2":"717"},{"1":"2788","2":"69"},{"1":"279","2":"165"},{"1":"2790","2":"51"},{"1":"2976","2":"43"},{"1":"3083","2":"52"},{"1":"3088","2":"242"},{"1":"3143","2":"111"},{"1":"337","2":"107"},{"1":"35","2":"133"},{"1":"358","2":"89"},{"1":"371","2":"49"},{"1":"373-1485","2":"72"},{"1":"408","2":"155"},{"1":"421","2":"67"},{"1":"423","2":"2"},{"1":"44","2":"40"},{"1":"64","2":"227"},{"1":"712","2":"261"},{"1":"728","2":"303"},{"1":"76","2":"179"},{"1":"829","2":"80"},{"1":"87","2":"279"},{"1":"91","2":"325"},{"1":"93","2":"1"},{"1":"98","2":"13"},{"1":"No Lab ID","2":"90"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>sum(lab_codes$count)</code></pre>
@@ -2237,6 +2288,8 @@ colnames(participant_DF) &lt;- gsub(&quot;.y$&quot;, &quot;_consent&quot;, colna
 nrow(participant_DF)</code></pre>
 <pre><code>## [1] 6729</code></pre>
 <pre class="r"><code>sum(is.na(participant_DF$timestamp_consent))</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>sum(is.na(participant_DF$time_commit_consent))</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>participant_DF$keep_answered &lt;- participant_DF$keep &lt;- &quot;keep&quot;
 
@@ -2260,7 +2313,7 @@ participant_DF$keep_answered[(as.numeric(substr(participant_DF$timestamp_consent
 table((as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) &lt; 18, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ## FALSE  TRUE  &lt;NA&gt; 
-##  6219    33   477</code></pre>
+##  6218    33   478</code></pre>
 <pre class="r"><code># at least 100 trials + 80%
 # in this section, we also merge a representation of the 
 # time spent in the study in case you wish to use that as 
@@ -2309,6 +2362,36 @@ table(participant_DF$p_correct &lt; .80, useNA = &quot;ifany&quot;)</code></pre>
 ##  5339   625   765</code></pre>
 <pre class="r"><code>export(participant_DF, &quot;output_data/participant_data/en_participant_data.csv&quot;, row.names = F)</code></pre>
 <p></p>
+<div id="exclude-too-young" class="section level3">
+<h3>Exclude Too Young</h3>
+<pre class="r"><code># find too young
+too_young &lt;- na.omit(participant_DF$observation[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) &lt; 18])
+
+# censor out the data
+  # keep timestamp consent, url_lab, no keep so code works later
+  demo_censor &lt;- colnames(participant_DF)[ -c(1, 20, 22, 39, 40) ]
+  
+  all_censor &lt;- colnames(en_data_all)[ c(6, 8:37, 41:42) ]
+
+
+participant_DF[ participant_DF$observation %in% too_young , 
+                demo_censor] &lt;- NA
+
+nrow(participant_DF)</code></pre>
+<pre><code>## [1] 6729</code></pre>
+<pre class="r"><code>en_data_all[ en_data_all$observation %in% too_young , 
+             all_censor ] &lt;- NA
+
+nrow(en_data_all)</code></pre>
+<pre><code>## [1] 13900890</code></pre>
+<pre class="r"><code># rewrite data
+export(participant_DF, &quot;output_data/participant_data/en_participant_data.csv&quot;, row.names = F)
+
+write.csv(en_data_all, 
+       gzfile(&quot;output_data/full_data/en_full_data.csv.gz&quot;),
+       row.names = F)</code></pre>
+<p></p>
+</div>
 </div>
 <div id="trial-data" class="section level2">
 <h2>Trial Data</h2>
@@ -2350,16 +2433,16 @@ everything stays in this file but we mark them for keep or not keep.</p>
 table(real_trials$correct, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ##   FALSE    TRUE    &lt;NA&gt; 
-##  425095 4010110   62665</code></pre>
+##  422110 3990131   85629</code></pre>
 <pre class="r"><code># exclude due to too short or too long
 table(real_trials$duration &lt; 160, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
-##   FALSE    TRUE 
-## 4384802  113068</code></pre>
+##   FALSE    TRUE    &lt;NA&gt; 
+## 4362641  111842   23387</code></pre>
 <pre class="r"><code>table(real_trials$duration &gt; 3000, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
-##   FALSE    TRUE 
-## 4474233   23637</code></pre>
+##   FALSE    TRUE    &lt;NA&gt; 
+## 4450943   23540   23387</code></pre>
 <pre class="r"><code>##Separate out NA data for the z-score part
 ##this mostly controls for timeouts
 real_trials_NA &lt;- real_trials %&gt;% #data frame
@@ -2372,7 +2455,7 @@ real_trials_NA &lt;- real_trials %&gt;% #data frame
          keep = &quot;exclude&quot;)
 
 nrow(real_trials_NA)</code></pre>
-<pre><code>## [1] 546778</code></pre>
+<pre><code>## [1] 566107</code></pre>
 <pre class="r"><code>##this section z-scores the rest of the data
 ##just not time outs
 real_trials_nonNA &lt;- 
@@ -2386,7 +2469,7 @@ real_trials_nonNA &lt;-
          keep = &quot;keep&quot;)
 
 nrow(real_trials_nonNA)</code></pre>
-<pre><code>## [1] 3951092</code></pre>
+<pre><code>## [1] 3931763</code></pre>
 <pre class="r"><code># make sure you equally split 
 nrow(real_trials) == nrow(real_trials_NA) + nrow(real_trials_nonNA)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -2472,7 +2555,7 @@ nrow(stimuli_data)</code></pre>
 ## ------------------------------------------------------------ 
 ## group: keep
 ##    vars       n mean sd median trimmed  mad   min   max range skew kurtosis se
-## X1    1 3951087    0  1  -0.24   -0.16 0.59 -5.82 17.72 23.54 2.79    13.34  0</code></pre>
+## X1    1 3931758    0  1  -0.24   -0.16 0.59 -5.82 17.72 23.54 2.79    13.34  0</code></pre>
 <pre class="r"><code>describeBy(real_trials$duration, group = real_trials$keep)</code></pre>
 <pre><code>## Warning in min(x, na.rm = na.rm): no non-missing arguments to min; returning
 ## Inf
@@ -2486,10 +2569,10 @@ nrow(stimuli_data)</code></pre>
 ## X1    1 0  NaN NA     NA     NaN  NA Inf -Inf  -Inf   NA       NA NA
 ## ------------------------------------------------------------ 
 ## group: keep
-##    vars       n   mean  sd median trimmed    mad min  max range skew kurtosis
-## X1    1 3951092 671.99 297 597.58  622.11 163.99 160 3000  2840 2.79    11.51
-##      se
-## X1 0.15</code></pre>
+##    vars       n   mean     sd median trimmed    mad min  max range skew
+## X1    1 3931763 671.95 296.88 597.61  622.11 163.98 160 3000  2840 2.79
+##    kurtosis   se
+## X1    11.52 0.15</code></pre>
 <pre class="r"><code>##create item level data by summarizing
 item_data &lt;- real_trials %&gt;% #data frame
   filter(keep_participant == &quot;keep&quot;) %&gt;% #participants to keep
@@ -2622,7 +2705,7 @@ describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not ca
 ## ------------------------------------------------------------ 
 ## group: keep
 ##    vars       n mean sd median trimmed  mad   min   max range skew kurtosis se
-## X1    1 3951087    0  1  -0.24   -0.16 0.59 -5.82 17.72 23.54 2.79    13.34  0</code></pre>
+## X1    1 3931758    0  1  -0.24   -0.16 0.59 -5.82 17.72 23.54 2.79    13.34  0</code></pre>
 <pre class="r"><code>describeBy(real_trials$duration, group = real_trials$keep)</code></pre>
 <pre><code>## Warning in min(x, na.rm = na.rm): no non-missing arguments to min; returning
 ## Inf
@@ -2636,10 +2719,10 @@ describeBy(real_trials$Z_RT, group = real_trials$keep) # to ensure we are not ca
 ## X1    1 0  NaN NA     NA     NaN  NA Inf -Inf  -Inf   NA       NA NA
 ## ------------------------------------------------------------ 
 ## group: keep
-##    vars       n   mean  sd median trimmed    mad min  max range skew kurtosis
-## X1    1 3951092 671.99 297 597.58  622.11 163.99 160 3000  2840 2.79    11.51
-##      se
-## X1 0.15</code></pre>
+##    vars       n   mean     sd median trimmed    mad min  max range skew
+## X1    1 3931763 671.95 296.88 597.61  622.11 163.98 160 3000  2840 2.79
+##    kurtosis   se
+## X1    11.52 0.15</code></pre>
 <pre class="r"><code>##create item level data by summarizing
 item_data &lt;- real_trials %&gt;% #data frame
   filter(keep_participant_answered == &quot;keep&quot;) %&gt;% #participants to keep
@@ -2877,14 +2960,16 @@ data, but the z-score calculation is recommended.</p>
 <pre class="r"><code>  # calculate the total N versus timeout N
   en_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == &quot;response&quot;, na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == &quot;response&quot;, na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   en_num_trials2 &lt;-
     priming_focus %&gt;% 
@@ -2947,18 +3032,18 @@ data, but the z-score calculation is recommended.</p>
               id_cols = &quot;target_word_unique&quot;, 
               values_from = c(&quot;avgRT&quot;, &quot;avgZ_RT&quot;, 
                               &quot;seRT&quot;, &quot;seZ_RT&quot;, 
-                              &quot;target_correct&quot;, 
+                              # &quot;target_correct&quot;, 
                               &quot;target_answeredN&quot;, 
                               &quot;target_timeoutN&quot;,
-                              &quot;target_prop_correct&quot;, 
+                              # &quot;target_prop_correct&quot;, 
                               &quot;target_correct_keep&quot;, 
                               &quot;target_answeredN_keep&quot;,
                               &quot;target_timeoutN_keep&quot;, 
                               &quot;target_prop_correct_keep&quot;,
-                              &quot;cue_correct&quot;, 
+                              # &quot;cue_correct&quot;, 
                               &quot;cue_answeredN&quot;, 
                               &quot;cue_timeoutN&quot;,
-                              &quot;cue_prop_correct&quot;, 
+                              # &quot;cue_prop_correct&quot;, 
                               &quot;cue_correct_keep&quot;, 
                               &quot;cue_answeredN_keep&quot;,
                               &quot;cue_timeoutN_keep&quot;, 
@@ -3064,9 +3149,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/en_prime_data.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/en_prime_data_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/en_prime_data_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/en_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/en_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/en_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 <div id="using-redefined-accuracy" class="section level3">
@@ -3147,14 +3232,16 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/en_prime_data_
 <pre class="r"><code>  # calculate the total N versus timeout N
   en_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == &quot;response&quot;, na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == &quot;response&quot;, na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   en_num_trials2 &lt;-
     priming_focus %&gt;% 
@@ -3213,18 +3300,18 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/en_prime_data_
               id_cols = &quot;target_word_unique&quot;, 
               values_from = c(&quot;avgRT&quot;, &quot;avgZ_RT&quot;, 
                               &quot;seRT&quot;, &quot;seZ_RT&quot;, 
-                              &quot;target_correct&quot;, 
+                              # &quot;target_correct&quot;, 
                               &quot;target_answeredN&quot;, 
                               &quot;target_timeoutN&quot;,
-                              &quot;target_prop_correct&quot;, 
+                              # &quot;target_prop_correct&quot;, 
                               &quot;target_correct_keep&quot;, 
                               &quot;target_answeredN_keep&quot;,
                               &quot;target_timeoutN_keep&quot;, 
                               &quot;target_prop_correct_keep&quot;,
-                              &quot;cue_correct&quot;, 
+                              # &quot;cue_correct&quot;, 
                               &quot;cue_answeredN&quot;, 
                               &quot;cue_timeoutN&quot;,
-                              &quot;cue_prop_correct&quot;, 
+                              # &quot;cue_prop_correct&quot;, 
                               &quot;cue_correct_keep&quot;, 
                               &quot;cue_answeredN_keep&quot;,
                               &quot;cue_timeoutN_keep&quot;, 
@@ -3328,9 +3415,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/en_answered_prime_data.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/en_answered_prime_data_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/en_answered_prime_data_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/en_answered_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/en_answered_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/en_answered_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 </div>

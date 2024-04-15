@@ -14,22 +14,24 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Complete Files 
 
 - Open Science Framework: https://osf.io/wrpj4/
-- GitHub: 
-- Zenodo: 
+- GitHub: https://github.com/SemanticPriming/SPAML
+- Zenodo: https://zenodo.org/records/10888833
 
-### Methods 
+### Method
 
-- Ethics folder link:
-- Lab Table/IRB links with summary: 
-- labjs Scripts (procedure folder):  
+- Language Table Information: 
+- Ethics Component OSF Link: https://osf.io/ycn7z/ 
+- IRB/Lab Table Summary: 
+- labjs Scripts (Procedure Folder):  
 - Deviation Guide:
 - Translation Information (link to readme): 
 
 ### Data
 
-- Zenodo: 
+- Zenodo: https://zenodo.org/records/10888833
 - Data Release: 
 - Data Processing Scripts:
+- Data Processing Checks/Summary:
 - Codebooks: 
 
 ### Analyses 

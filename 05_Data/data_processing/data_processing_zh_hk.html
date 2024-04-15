@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Traditional Chinese</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-03-26</h4>
+<h4 class="date">Last Update 2024-04-06</h4>
 
 </div>
 
@@ -1643,7 +1643,11 @@ Information</a></li>
 <li><a href="#original-data-structure" id="toc-original-data-structure">Original Data Structure</a></li>
 </ul></li>
 <li><a href="#participant-and-experiment-information" id="toc-participant-and-experiment-information">Participant and
-Experiment Information</a></li>
+Experiment Information</a>
+<ul>
+<li><a href="#exclude-too-young" id="toc-exclude-too-young">Exclude Too
+Young</a></li>
+</ul></li>
 <li><a href="#trial-data" id="toc-trial-data">Trial Data</a></li>
 <li><a href="#item-data" id="toc-item-data">Item Data</a>
 <ul>
@@ -2245,6 +2249,35 @@ table(participant_DF$p_correct &lt; .80, useNA = &quot;ifany&quot;)</code></pre>
 ##   180    42    19</code></pre>
 <pre class="r"><code>export(participant_DF, &quot;output_data/participant_data/zh_hk_participant_data.csv&quot;, row.names = F)</code></pre>
 <p></p>
+<div id="exclude-too-young" class="section level3">
+<h3>Exclude Too Young</h3>
+<pre class="r"><code># find too young
+too_young &lt;- na.omit(participant_DF$observation[(as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) &lt; 18])
+# censor out the data
+  # keep timestamp consent, url_lab, no keep so code works later
+  demo_censor &lt;- colnames(participant_DF)[ -c(1, 20, 22, 39, 40) ]
+  
+  all_censor &lt;- colnames(zh_hk_data_all)[ c(6, 8:37, 41:42) ]
+
+
+participant_DF[ participant_DF$observation %in% too_young , 
+                demo_censor] &lt;- NA
+
+nrow(participant_DF)</code></pre>
+<pre><code>## [1] 241</code></pre>
+<pre class="r"><code>zh_hk_data_all[ zh_hk_data_all$observation %in% too_young , 
+             all_censor ] &lt;- NA
+
+nrow(zh_hk_data_all)</code></pre>
+<pre><code>## [1] 527930</code></pre>
+<pre class="r"><code># rewrite data
+export(participant_DF, &quot;output_data/participant_data/zh_hk_participant_data.csv&quot;, row.names = F)
+
+write.csv(zh_hk_data_all, 
+       gzfile(&quot;output_data/full_data/zh_hk_full_data.csv.gz&quot;),
+       row.names = F)</code></pre>
+<p></p>
+</div>
 </div>
 <div id="trial-data" class="section level2">
 <h2>Trial Data</h2>
@@ -2533,7 +2566,7 @@ provided from lexops, real data to come after stimuli select set)</p>
 #                    all.x = T)
 
 ##write out item level data 
-write.csv(item_data_combo, &quot;output_data/zh_hk_item_data.csv&quot;, row.names = F)</code></pre>
+write.csv(item_data_combo, &quot;output_data/item_data/zh_hk_item_data.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 <div id="using-redefined-scoring" class="section level3">
@@ -2660,7 +2693,7 @@ nrow(item_data_combo)</code></pre>
 #                    all.x = T)
 
 ##write out item level data 
-write.csv(item_data_combo, &quot;output_data/zh_hk_answered_item_data.csv&quot;, row.names = F)</code></pre>
+write.csv(item_data_combo, &quot;output_data/item_data/zh_hk_answered_item_data.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 </div>
@@ -2797,14 +2830,16 @@ data, but the z-score calculation is recommended.</p>
 <pre class="r"><code>  # calculate the total N versus timeout N
   zh_hk_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == &quot;response&quot;, na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == &quot;response&quot;, na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   zh_hk_num_trials2 &lt;-
     priming_focus %&gt;% 
@@ -2837,7 +2872,7 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     12364     12267</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/zh_hk_priming_trials.csv&quot;, row.names = F)
+<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/zh_hk_prime_trials.csv&quot;, row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -2867,18 +2902,18 @@ data, but the z-score calculation is recommended.</p>
               id_cols = &quot;target_word_unique&quot;, 
               values_from = c(&quot;avgRT&quot;, &quot;avgZ_RT&quot;, 
                               &quot;seRT&quot;, &quot;seZ_RT&quot;, 
-                              &quot;target_correct&quot;, 
+                              # &quot;target_correct&quot;, 
                               &quot;target_answeredN&quot;, 
                               &quot;target_timeoutN&quot;,
-                              &quot;target_prop_correct&quot;, 
+                              # &quot;target_prop_correct&quot;, 
                               &quot;target_correct_keep&quot;, 
                               &quot;target_answeredN_keep&quot;,
                               &quot;target_timeoutN_keep&quot;, 
                               &quot;target_prop_correct_keep&quot;,
-                              &quot;cue_correct&quot;, 
+                              # &quot;cue_correct&quot;, 
                               &quot;cue_answeredN&quot;, 
                               &quot;cue_timeoutN&quot;,
-                              &quot;cue_prop_correct&quot;, 
+                              # &quot;cue_prop_correct&quot;, 
                               &quot;cue_correct_keep&quot;, 
                               &quot;cue_answeredN_keep&quot;,
                               &quot;cue_timeoutN_keep&quot;, 
@@ -2988,9 +3023,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/zh_hk_prime_data.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/zh_hk_prime_data_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/zh_hk_prime_data_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/zh_hk_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/zh_hk_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/zh_hk_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 <div id="using-redefined-accuracy" class="section level3">
@@ -3070,14 +3105,16 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/zh_hk_prime_data_no3.0.csv&
 <pre class="r"><code>  # calculate the total N versus timeout N
   zh_hk_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
-    summarize(target_correct = sum(target_correct, na.rm = T),
+    summarize(
+              # target_correct = sum(target_correct, na.rm = T),
               target_answeredN = sum(target_end_of_trial == &quot;response&quot;, na.rm = T), 
               target_timeoutN = sum(target_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              target_prop_correct = target_correct/target_answeredN,
-              cue_correct = sum(cue_correct, na.rm = T),
+              # target_prop_correct = target_correct/target_answeredN,
+              # cue_correct = sum(cue_correct, na.rm = T),
               cue_answeredN = sum(cue_end_of_trial == &quot;response&quot;, na.rm = T), 
               cue_timeoutN = sum(cue_end_of_trial == &quot;timeout&quot;, na.rm = T),
-              cue_prop_correct = cue_correct/cue_answeredN)
+              # cue_prop_correct = cue_correct/cue_answeredN
+              )
   
   zh_hk_num_trials2 &lt;-
     priming_focus %&gt;% 
@@ -3136,18 +3173,18 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/zh_hk_prime_data_no3.0.csv&
               id_cols = &quot;target_word_unique&quot;, 
               values_from = c(&quot;avgRT&quot;, &quot;avgZ_RT&quot;, 
                               &quot;seRT&quot;, &quot;seZ_RT&quot;, 
-                              &quot;target_correct&quot;, 
+                              # &quot;target_correct&quot;, 
                               &quot;target_answeredN&quot;, 
                               &quot;target_timeoutN&quot;,
-                              &quot;target_prop_correct&quot;, 
+                              # &quot;target_prop_correct&quot;, 
                               &quot;target_correct_keep&quot;, 
                               &quot;target_answeredN_keep&quot;,
                               &quot;target_timeoutN_keep&quot;, 
                               &quot;target_prop_correct_keep&quot;,
-                              &quot;cue_correct&quot;, 
+                              # &quot;cue_correct&quot;, 
                               &quot;cue_answeredN&quot;, 
                               &quot;cue_timeoutN&quot;,
-                              &quot;cue_prop_correct&quot;, 
+                              # &quot;cue_prop_correct&quot;, 
                               &quot;cue_correct_keep&quot;, 
                               &quot;cue_answeredN_keep&quot;,
                               &quot;cue_timeoutN_keep&quot;, 
@@ -3255,9 +3292,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/zh_hk_answered_prime_data.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/zh_hk_answered_prime_data_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/zh_hk_answered_prime_data_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/zh_hk_answered_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/zh_hk_answered_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/zh_hk_answered_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 </div>
