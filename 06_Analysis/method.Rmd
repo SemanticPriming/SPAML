@@ -110,3 +110,10 @@ only.parts <- parts.data %>%
 
 `r nrow(parts.data)` participants opened the link to the study, and `r length(na.omit(parts.data$n_trials))` proceeded through to complete at least one trial of the study trials (i.e., past the practice trials). Of these participants, `r sum(parts.data$keep == "keep")` were retained for analysis because they met our three participant level inclusion rules: 1) at least 18 years of age, 2) completed at least 100 trials, and 3) scored at least 80% correct. All exclusion criteria are summarized in the results section for clarity. The pre-registered plan calculated accuracy as $\frac{N_{Correct}}{N_{Trials Seen}}$ in the planned scripts; however, an administrative team discussion revealed that the pre-registered report could be interpreted as $\frac{N_{Correct}}{N_{Answered}}$. If accuracy is recalculated using this formula, `r sum(parts.data$keep_answered == "keep")` participants would be included for analysis. This report will use the stricter criterion of accuracy for analysis, while the analysis using the rescored accuracy can be found in our supplemental materials. The analyses reported below only examine languages that met the minimum data criteria, which includes `r nrow(only.parts)` total participants, `r length(na.omit(only.parts$n_trials))` who completed at least one trial, `r sum(only.parts$keep == "keep")` who meet the strict inclusion rules, and `r sum(only.parts$keep_answered == "keep")` that meet the rescored version of the inclusion rule for accuracy. Descriptive statistics about participants are provided below in the results for the `r sum(only.parts$keep == "keep")` participants who meet the strict inclusion rules. 
 
+```{r echo = F}
+only.parts %>% 
+  filter(keep == "keep") %>% 
+  summarize(median(study_length, na.rm = T))
+
+
+```
