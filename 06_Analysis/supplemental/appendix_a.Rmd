@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Important Links 
 
+Please note: all files are synced to OSF through GitHub. We have also included the folder you can find files in if the GitHub add-on is not working on OSF. 
+
 ### Complete Files 
 
 - Open Science Framework: https://osf.io/wrpj4/
@@ -19,11 +21,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Method
 
-- Language Table Information: 
+- Language Table Information: https://osf.io/ztkfg
+  - GitHub: 05_Data > summary_tables
 - Ethics Component OSF Link: https://osf.io/ycn7z/ 
-- IRB/Lab Table Summary: 
-- labjs Scripts (Procedure Folder):  
-- Deviation Guide:
+- IRB/Lab Table Summary: https://osf.io/mh9ny
+  - GitHub: 05_Data > summary_tables
+- labjs Scripts (Procedure Folder):  https://github.com/SemanticPriming/SPAML/tree/master/04_Procedure
+  - OSF: 04_Procedure
+- Deviation Guide: 
 - Translation Information (link to readme): 
 
 ### Data

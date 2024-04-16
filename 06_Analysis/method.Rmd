@@ -54,31 +54,59 @@ lang.data <- import("../05_Data/summary_tables/language_summary.csv")
 
 ## Languages 
 
-43 languages were originally identified for possible data collection based on the information available from the OpenSubtitles and subs2vec project. The following languages/dialects were translated and collected at least one participant (starred languages indicate our pre-registered minimum data collection plan): Arabic, Czech\*, Danish, German\*, Greek, English\*, Spanish\*, Farsi, French, Hebrew, Hindi, Hungarian, Italian, Japanese\*, Korean\*, Dutch, Norwegian, Polish, Portuguese\*, Brazilian Portuguese, Romanian, Russian\*, Slovak, Slovenian, Serbian, Thai, Turkish\*, Urdu, Simplified Chinese\*, and Traditional Chinese. Table X portrays a summary of the each language's data collection for number of included participants (based on the pre-registered data inclusion rules), the number of excluded participants, proportion correct answers for included participants, and median time completion for included participants. The complete breakdown of gender, education, age, and stimuli completion can be found in the supplemental materials. 
+43 languages were originally identified for possible data collection based on the information available from the OpenSubtitles and subs2vec project. The following languages/dialects were translated and collected at least one participant (starred languages indicate our pre-registered minimum data collection plan): Arabic, Czech\*, Danish, German\*, Greek, English\*, Spanish\*, Farsi, French, Hebrew, Hindi, Hungarian, Italian, Japanese\*, Korean\*, Dutch, Norwegian, Polish, Portuguese\*, Brazilian Portuguese, Romanian, Russian\*, Slovak, Slovenian, Serbian, Thai, Turkish\*, Urdu, Simplified Chinese\*, and Traditional Chinese. Table X portrays a summary of each language's data collection for number of included participants (based on the pre-registered data inclusion rules), the number of excluded participants, proportion correct answers for included participants, and median time completion for included participants. The complete breakdown of gender, education, age, and stimuli completion can be found in the supplemental materials. The following languages met the minimum data collection requirements and will be analyzed in this manuscript: Czech, Danish, German, Greek, English, Spanish, French, Hungarian, Italian, Japanese, Korean, Polish, Portuguese, Brazilian Portuguese, Romanian, Russian, Serbian, Turkish, and Simplified Chinese. The stimuli list for Portuguese and Brazilian Portuguese overlapped by 90%, and data were combined such that each unique target (unrelated and related trials) obtained the minimum number of participant answers. All data is available online, even those languages that did not meet the pre-registered minimum data collection for analysis. For each language, we also provide data checks and a summary of the number of participants, trials, items, and priming trials during data processing (see Supplemental Materials). 
 
 ```{r table-lang}
 # lang table 
 flextable(
   lang.data %>% 
-  select(Language_Name, Keep, Exclude, M_Correct, Med_Time)
+  select(Language_Name, Keep, Exclude, M_Correct, Med_Time) %>% 
+    filter(Language_Name != "Brazilian Portuguese")
   ) %>% 
   set_header_labels(x = ., 
                     values = c("Language", "N Include", "N Exclude", "Proportion Correct", 
-                      "Median Time"))
+                      "Median Time")) %>% 
+  autofit()
   
 ```
 
-## Participating Labs / Ethics
+## Ethics and Research Labs
 
-Ethics Information talk about labs here 
+We did not collect any identifiable private or personal data as part of the experiment. This project was approved by Harrisburg University of Science and Technology conforming to all relevant ethical guidelines and the Declaration of Helsinki, with special care to conform to the General Data Protection Regulation (GDPR; eugdpr.org). No global exclusion criteria for participating in the study was used, except for a minimum age requirement of 18 years (i.e., adult participants). Please see the analysis section below for other participant and trial level exclusion criteria related to analyses.
 
-We did not collect any identifiable private or personal data as part of the experiment. This project was approved by Harrisburg University of Science and Technology conforming to all relevant ethical guidelines and the Declaration of Helsinki, with special care to conform to the General Data Protection Regulation (GDPR; eugdpr.org). No global exclusion criteria for participating in the study was used, except for a minimum age requirement of 18 years (i.e., adult participants). Please see analysis section below for other participant and trial level exclusion criteria related to analyses.
+```{r}
+lab.data$link_IRB[lab.data$link_IRB == ""] <- "https://osf.io/download/sg5ac"
+# 14 ZPID were covered under erin
+# all people saw HU IRB, so No Labs also covered
+lab.data$type_IRB[lab.data$type_IRB == ""] <- "Local IRB"
+lab.data$submit_date_IRB[lab.data$submit_date_IRB == ""] <- "June 25th, 2021"
 
-XX labs completed ethics documentation for data collection, and XX labs in XX geopolitical regions collected data for the study. Each research lab obtained local ethical review (XX), relied on the ethical review provided by Harrisburg University (XX), or provided evidence of no required ethical review (XX). The supplemental materials provide links for the IRB approvals on the Open Science Framework (OSF) and a table of participating labs with their data collection information include languages sampled, geopolitical region of the team, compensation procedure and amount, online versus in person testing, and testing type (individual participants or classroom type settings). This information can be matched to study data using the lab code that is present in the participant and trial level files. 
+
+geo <- lab.data$country
+geo <- strsplit(geo, ",")
+geo <- unlist(geo)
+geo <- geo[!grepl("^NA|No Requirement", geo)]
+geo <- unique(trimws(tolower(geo)))
+
+only_collect_IRB <- lab.data %>% 
+  filter(!duplicated(lab.data %>% select(link_IRB))) %>% 
+  filter(Keep >= 1) %>% 
+  group_by(type_IRB) %>% 
+  summarize(count_labs = n())
+```
+
+`r length(unique(lab.data$link_IRB))` labs completed ethics documentation for data collection, and `r length(unique(na.omit(lab.data$link_IRB[lab.data$Keep >= 1])))` labs in `r length(geo)` geopolitical regions collected data (i.e., *N* >= 1) for the study. Each data collection lab obtained local ethical review (`r only_collect_IRB %>% filter(type_IRB == "Local IRB") %>% pull(count_labs)`), relied on the ethical review provided by Harrisburg University (`r only_collect_IRB %>% filter(type_IRB == "Rely on HU") %>% pull(count_labs)`), or provided evidence of no required ethical review (`r only_collect_IRB %>% filter(type_IRB == "No Ethics") %>% pull(count_labs)`). The supplemental materials provide links for the IRB approvals on the Open Science Framework (OSF) and a table of participating labs with their data collection information include languages sampled, geopolitical region of the team, compensation procedure and amount, online versus in person testing, and testing type (individual participants or classroom type settings). This information can be matched to study data using the lab code that is present in the participant and trial level files. 
 
 ## Participants
 
-Talk about participants here 
+```{r}
+languages <- c("cs", "da", "de", "el", "en", "es", "fr", "hu", 
+               "it", "ja", "ko", "pl", "pt_combo", "ro", "ru", 
+               "sr", "tr", "zh")
 
-- how many opened
+only.parts <- parts.data %>% 
+  filter(language %in% languages)
+```
+
+`r nrow(parts.data)` participants opened the link to the study, and `r length(na.omit(parts.data$n_trials))` proceeded through to complete at least one trial of the study trials (i.e., past the practice trials). Of these participants, `r sum(parts.data$keep == "keep")` were retained for analysis because they met our three participant level inclusion rules: 1) at least 18 years of age, 2) completed at least 100 trials, and 3) scored at least 80% correct. All exclusion criteria are summarized in the results section for clarity. The pre-registered plan calculated accuracy as $\frac{N_{Correct}}{N_{Trials Seen}}$ in the planned scripts; however, an administrative team discussion revealed that the pre-registered report could be interpreted as $\frac{N_{Correct}}{N_{Answered}}$. If accuracy is recalculated using this formula, `r sum(parts.data$keep_answered == "keep")` participants would be included for analysis. This report will use the stricter criterion of accuracy for analysis, while the analysis using the rescored accuracy can be found in our supplemental materials. The analyses reported below only examine languages that met the minimum data criteria, which includes `r nrow(only.parts)` total participants, `r length(na.omit(only.parts$n_trials))` who completed at least one trial, `r sum(only.parts$keep == "keep")` who meet the strict inclusion rules, and `r sum(only.parts$keep_answered == "keep")` that meet the rescored version of the inclusion rule for accuracy. Descriptive statistics about participants are provided below in the results for the `r sum(only.parts$keep == "keep")` participants who meet the strict inclusion rules. 
 
