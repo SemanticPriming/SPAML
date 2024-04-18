@@ -114,6 +114,4 @@ only.parts <- parts.data %>%
 only.parts %>% 
   filter(keep == "keep") %>% 
   summarize(median(study_length, na.rm = T))
-
-
 ```

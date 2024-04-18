@@ -5,34 +5,34 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 ```
 
-# Libraries
-
-```{r libraries, message = F}
+```{r libraries, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
 library(rio)
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
+library(uaparserjs)
+library(papaja)
+library(flextable)
 ```
 
-# Merge Data
-
-```{r}
-native.trans <- import("native_trans.xlsx")
-browser.lang <- import("browser_language.xlsx")
+```{r import-merge}
+native.trans <- import("../05_Data/native_trans.xlsx")
+browser.lang <- import("../05_Data/browser_language.xlsx")
 ```
-
-# Participant level data
-
-We will present descriptive statistics on the participants involved in the study including percentages of gender, education levels, native language, and average age. Information about the device used to complete the study will include percentages of computer operating system, the web browser, and the language locale (i.e., the language the browser defaults to using). Finally, the sample sizes collected by the collaborating labs will be provided. Each of these statistics will be provided for the overall data and the data separated by language.
 
 ```{r import-participant}
 # open all participant data
 p.list <- list.files(
-  path = "../05_Data_real/data_processing/output_data",
+  path = "../05_Data/data_processing/output_data",
   full.names = TRUE,
   recursive = TRUE,
   pattern = "*.participant_data.csv"
@@ -42,7 +42,7 @@ p.list <- list.files(
 p.files <- lapply(p.list, import)
 
 # give them names 
-names(p.files) <- gsub("../05_Data_real/data_processing/output_data/participant_data/|_participant_data.csv", "", p.list)
+names(p.files) <- gsub("../05_Data/data_processing/output_data/participant_data/|_participant_data.csv", "", p.list)
 
 # deal with mismatches
 for (i in 1:length(p.files)){
@@ -109,15 +109,193 @@ temp <-
   filter(Freq > 0) %>% 
   filter(is.na(Var2))
 
-temp
+# export(temp, "browser_codes.csv", row.names = F)
+
+p.df <- p.df %>% 
+  mutate(please_tell_us_your_gender = factor(please_tell_us_your_gender, 
+                                             levels = c("Missing", "female", 
+                                                        "male", "notsay", "other"), 
+                                             labels = c("Missing", "Female", 
+                                                        "Male", "Not Say", "Other")),
+         please_tell_us_your_education_level = factor(please_tell_us_your_education_level, 
+                                                      levels = c("Missing", 
+                                                                 "less than high school", 
+                                                                 "high school",
+                                                                 "some college",
+                                                                 "college", 
+                                                                 "master",
+                                                                 "doctorate"),
+                                                      labels = c("Missing", 
+                                                                 "Less than High School",
+                                                                 "High School", 
+                                                                 "Some College",
+                                                                 "College", 
+                                                                 "Masters", 
+                                                                 "Doctorate")))
 ```
+
+Please note that this file only includes languages that are analyzed in the full paper. You can view complete data demographics by using this markdown file and turning off the data filter. 
+
+```{r filter-data, eval = T}
+# change eval = T to eval = F to get the full dataset 
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+p.df <- p.df %>% 
+  filter(language %in% langs)
+```
+
+The links to the language files can be found in our supplemental materials. The paper is presented with an upcoming *R* package `semanticprimeR` that allows one to open data files directly in *R* and a Shiny application [CITE shiny] to download a specific set of language files. The data can be cited using our Zenodo doi [CITE] which will indicate which version of the data was examined.   
+
+# Participant level data
+
+## Gender
+
+```{r gender-split}
+p.overall.gender <- p.df %>% 
+  group_by(please_tell_us_your_gender) %>% 
+  summarize(freq.gender = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keep.gender <- p.df %>% 
+  filter(keep == "keep") %>% 
+  group_by(please_tell_us_your_gender) %>% 
+  summarize(freq.gender = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keepanswered.gender <- p.df %>% 
+  filter(keep_answered == "keep") %>% 
+  group_by(please_tell_us_your_gender) %>% 
+  summarize(freq.gender = n() / nrow(.) * 100,
+            .groups = "keep") 
+```
+
+Participants were generally female (`r apa_num(p.overall.gender %>% filter(please_tell_us_your_gender == "Female") %>% pull(freq.gender))`%) or male (`r apa_num(p.overall.gender %>% filter(please_tell_us_your_gender == "Male") %>% pull(freq.gender))`)% with the rest either missing data, not wanting to indicate their gender or other. If data was filtered to only participants that were kept for analysis, the data was again predominantly female  (`r apa_num(p.keep.gender %>% filter(please_tell_us_your_gender == "Female") %>% pull(freq.gender))`%) or male (`r apa_num(p.keep.gender %>% filter(please_tell_us_your_gender == "Male") %>% pull(freq.gender))`)%. 
+
+### Overall Gender 
+
+```{r}
+flextable(p.overall.gender) %>% 
+  set_header_labels(x = ., 
+                    values = c("Gender", "Frequency")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Gender for Original Accuracy Participants
+
+```{r}
+flextable(p.keep.gender) %>% 
+  set_header_labels(x = ., 
+                    values = c("Gender", "Frequency")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Gender for Rescored Accuracy Participants
+
+```{r}
+flextable(p.keepanswered.gender) %>% 
+  set_header_labels(x = ., 
+                    values = c("Gender", "Frequency")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+## Education Levels
+
+```{r education-split}
+p.overall.education <- p.df %>% 
+  group_by(please_tell_us_your_education_level) %>% 
+  summarize(freq.education = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keep.education <- p.df %>% 
+  filter(keep == "keep") %>% 
+  group_by(please_tell_us_your_education_level) %>% 
+  summarize(freq.education = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keepanswered.education <- p.df %>% 
+  filter(keep_answered == "keep") %>% 
+  group_by(please_tell_us_your_education_level) %>% 
+  summarize(freq.education = n() / nrow(.) * 100,
+            .groups = "keep") 
+```
+
+Participants indicated they had completed high school (`r apa_num(p.overall.education %>% filter(please_tell_us_your_education_level == "High School") %>% pull(freq.education))`%), some college (`r apa_num(p.overall.education %>% filter(please_tell_us_your_education_level == "Some College") %>% pull(freq.education))`%), college (`r apa_num(p.overall.education %>% filter(please_tell_us_your_education_level == "College") %>% pull(freq.education))`%), master's (`r apa_num(p.overall.education %>% filter(please_tell_us_your_education_level == "Masters") %>% pull(freq.education))`%), and the rest other options (Less than High School, Missing, or Doctorate). Participants kept for analysis also followed this pattern: high school (`r apa_num(p.keep.education %>% filter(please_tell_us_your_education_level == "High School") %>% pull(freq.education))`%), some college (`r apa_num(p.keep.education %>% filter(please_tell_us_your_education_level == "Some College") %>% pull(freq.education))`%), college (`r apa_num(p.keep.education %>% filter(please_tell_us_your_education_level == "College") %>% pull(freq.education))`%), master's (`r apa_num(p.keep.education %>% filter(please_tell_us_your_education_level == "Masters") %>% pull(freq.education))`%).
+
+### Overall Education 
+
+```{r}
+flextable(p.overall.education) %>% 
+  set_header_labels(x = ., 
+                    values = c("Education", "Frequency")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Education for Original Accuracy Participants
+
+```{r}
+flextable(p.keep.education) %>% 
+  set_header_labels(x = ., 
+                    values = c("Education", "Frequency")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Education for Rescored Accuracy Participants
+
+```{r}
+flextable(p.keepanswered.education) %>% 
+  set_header_labels(x = ., 
+                    values = c("Education", "Frequency")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+## Native Language
+
+## Average Age
+
+## Operating System
+
+## Web Browser
+
+## Language Locale
+
+## Data by Lab
+
+```{r}
+
+```
+
+## Data by Language
+
+```{r}
+
+```
+
 
 ```{r overall-percents}
 # overall version
-p.overall.gender <- p.df %>% 
-  group_by(please_tell_us_your_gender, keep) %>% 
-  summarize(freq.gender = n() / nrow(.) * 100,
-            .groups = "keep") 
+
 p.overall.education <- p.df %>% 
   group_by(please_tell_us_your_education_level, keep) %>% 
   summarize(freq.edu = n() / nrow(.) * 100,
@@ -233,32 +411,37 @@ p.summary.locale <-
 # look up meta language, meta locale 
 ```
 
-```{r sample-lab}
-# merge this with lab table from online 
-p.sample.lab <- p.df %>% 
-  group_by(url_lab, language) %>% 
-  summarize(n.lab = n(), 
-            .groups = "keep")
-```
+
+
+
+
+
+
 
 make a map picture by where labs were recruiting 
 - figure out how to deal with prolific, mturk, qualtrics, bilendi 
 
 # Trial level data
 
-Each language will be saved in a separate file with an item specific trial identification number to allow for matching concepts across languages (i.e., CAT [English] → KATZE [German] → GATTA [Italian]). If a participant leaves the study early (e.g., Internet disconnection, computer crash, closes the study), the data past this point in the study is not recorded, and therefore, the trial level data represents all trials displayed during the experiment. Participants are expected to incorrectly answer trials, and these trials will be marked for exclusion. All timeout trials will be marked as missing values in the final data. No missing values will be imputed.
+Each language is saved in a separate file with an item specific trial identification number to allow for matching concepts across languages (i.e., CAT [English] → KATZE [German] → GATTA [Italian]). 
 
-We will mark for exclusion minimum response latencies of less than 160 ms (i.e., all trials will be presented in the trial level data for openness, but these will be excluded for analysis and calculations listed below). The response latencies from each participant’s session will then be z-scored in line with recommendations from Faust et al.. We will not collect enough data to note if a person takes the experiment multiple times for privacy reasons, but as these would be considered different sessions, the recommended z-score procedure should control for participant variability at this level. Therefore, repeated participation would not be detrimental to data collection. Finally, participants' overall proportion of correct answers will be calculated, and participants who do not correctly answer at least 80% of 100 minimum trials will be excluded for item data, priming data, and analysis. The average error in the Semantic Priming Project ranged from 4% to 5%, and this criterion was chosen to include participants who were focused on the task.
+- you would need to do this somehow ... merge with trial data codes? 
+
+If a participant left the study early (e.g., Internet disconnection, computer crash, closes the study), the data past this point in the study is not recorded, and therefore, the trial level data represents all trials displayed during the experiment. Participants were expected to incorrectly answer trials, and these trials are be marked for exclusion. All timeout trials are marked as missing values in the final data. No missing values will be imputed.
+
+Trials were marked for exclusion if they were under the minimum response latency of less than 160 ms (i.e., all trials will be presented in the trial level data for openness, but these will be excluded for analysis and calculations listed below). Further, labjs automatically codes timeout data with a special marker (i.e., data ended on response or timeout as a column), which excludes trials over 3000 ms as our maximum response latency. However, due to differences in browser/screen refresh rates, some trials were answered with response latencies over 3000 ms when a participant made a key press at the very end of the trial before timeout. Given our pre-registered exclusion rules, these were also marked for exclusion. 
+
+The response latencies from each participant’s session were then *z*-scored in line with recommendations from Faust et al.[CITE]. We did not collect enough data to note if a person took the experiment multiple times for privacy reasons, but as these are considered different sessions, the recommended *z*-score procedure should control for participant variability at this level. Therefore, repeated participation was not be detrimental to data collection. Finally, participants' overall proportion of correct answers was be calculated, and participants who did not correctly answer at least 80% of 100 minimum trials were marked for exclusion for item data, priming data, and analysis. The average error in the Semantic Priming Project ranged from 4% to 5%, and this criterion was chosen to include participants who were focused on the task.
 
 We will provide descriptive statistics on the average time to complete the study, the number of trials by word type (word, nonword), the accuracy by word type, and average z-scored response latencies by word type (overall, excluding Z > 2.5, excluding Z > 3.0; see below). These values will be provided for overall results and separated by language.
 
 ```{r}
-
+# DO THIS PART
 ```
 
 # Item level data
 
-The item file will contain lexical information about all stimuli calculated from the OpenSubtitles23 and subs2vec55 projects (length, frequency, orthographic neighborhood, bigram frequency, orthographic and phonographic Levenshtein distance). The descriptive statistics calculated from the trial level data will then be included: mean response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. No data will be excluded for being a potential outlier; however, we will recommend a cut-off criterion for absolute value z-score outliers at 2.5 and 3.0, and we will calculate these same statistics with those subsets of trials excluded. For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values will be included. These values do not exist for non-words.
+The item data files contain lexical information about all stimuli calculated from the OpenSubtitles23 and subs2vec55 projects (length, frequency, orthographic neighborhood, bigram frequency, orthographic and phonographic Levenshtein distance). The descriptive statistics calculated from the trial level data will then be included: mean response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. No data will be excluded for being a potential outlier; however, we will recommend a cut-off criterion for absolute value z-score outliers at 2.5 and 3.0, and we will calculate these same statistics with those subsets of trials excluded. For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values will be included. These values do not exist for non-words.
 24
 
 We will provide descriptive statistics on the average sample size, average z-scored response latencies, and average SE for the z-scored response latencies by each word type (word, nonword). These values will be calculated for the overall data set, separated by language, and without each level of z-score outlier criterion.
@@ -267,31 +450,7 @@ We will provide descriptive statistics on the average sample size, average z-sco
 
 add note about overall proportions of priming trials 
 calculate transition probabilities 
-ridgeline plot 
 
 In a separate file, we will also prepare information about priming results which includes the target word, average response latencies, averaged Z-scored response latencies, sample sizes, standard errors, and priming response latency. For each item, priming is defined as the average z-scored response latency when presented in the unrelated minus the related condition. Therefore, the timing for DOG-CAT would be subtracted from BUS-CAT to indicate priming for the word CAT. The similarity scores calculated during stimuli selection will be provided in this file, as well as other popular measures of similarity if they are available in that language. For example, semantic feature overlap norms are also available in Italian95, German96, Spanish26, and Dutch97.
 
 We will provide the average statistics for z-score priming, z-score unrelated response latency, z-score related response latency, sample size for unrelated trials, and sample size for related trials. These values will be calculated overall, by language, and with/without z- score level exclusions. Last, we will calculate the participant level priming reliability98 and item-level priming reliability44.
-Exclusion summary
-Data will be excluded for the following reasons in this order:
-1) Participant level data: the entire participant’s data will be removed from the analyses.
-a) Participant did not indicate at least 18 years of age.
-b) Participant did not complete at least 100 trials.
-c) Participant did not achieve 80% correct.
-2) Trial level data: only the individual trials will be removed from the analyses.
-a) Timeout trials (i.e., no response given in 3 s window).
-25
-
-b) Incorrectly answered trials.
-c) Response latencies shorter than 160 ms.
-3) Trial level exclusions dependent on test: trials marked for exclusion that are tested
-with and without these values in the hypotheses described below.
-a) Response latencies over the absolute value of Z = 2.5.
-b) Response latencies over the absolute value of Z = 3.0.
-Hypothesis 1
-Hypothesis information is presented in Table 1. Hypothesis 1 predicts semantic facilitation with reduced response latencies for related than unrelated words. Hypothesis 1 will be analyzed by calculating an intercept-only regression model using the z-scored priming response latency as the dependent variable. The intercept and its 95% confidence interval will represent the grand mean of the priming effect across all languages. The priming response latency is calculated by taking the average of the unrelated pair z-scored response latency minus the related pair response latency within each item. Therefore, values that are positive and greater than zero (e.g., > 0.0001) indicate priming because the related pair had a faster response latency than the unrelated pair. We will determine support for Hypothesis 1 if the lower limit of the confidence interval is greater than zero (i.e., a directional comparison). This process will be repeated for average priming scores calculated without trials that were marked as 2.50 z-score outliers and 3.00 z-score outliers separately. The decision criteria will remain the same, and we will identify any differences in decisions based on outlier statistics (e.g., priming only occurs when X trials are removed).
-Hypothesis 2
-Hypothesis 2 explores the extent to which these semantic priming effects vary across languages. Therefore, we will calculate a random effects model using the nlme99 package in R wherein the random intercept of language will be added to the overall intercept only model for Hypothesis 1. We will report the standard deviation of the random effect, its 95% confidence interval, the AIC change between models, and the pseudo-R2 values for the
-26
-
-effect size of this parameter100. Results will support significant heterogeneity when the AIC for the random effects model is two points or more less than the AIC for the intercept-only model56. This analysis will be repeated with the 2.50 z-score outliers and 3.00 z-score outliers excluded. We will include a forest plot of the priming effect and their 95% confidence intervals to visualize the potential heterogeneity in the priming results. Simulations of models within and without variability in the priming effects can be found at https://osf.io/fbhr8/.
