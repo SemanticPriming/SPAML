@@ -186,7 +186,7 @@ processData <- function(database) {
 
 Import all the data files for that specific language - use the unique() function to eliminate any duplicates from copying the data during the backup process. The data was backed up each week and a "fake" dataset was copied over to have something for the server to write to for practical purposes. 
 
-```{r import_data, eval = F, message = F}
+```{r import_data, eval = T, message = F}
 # get all the files
 ru_files <- list.files("../../04_Procedure_real",
                        pattern = "*.sqlite",
@@ -219,7 +219,7 @@ nrow(ru_data_all)
 
 Remove all rows that were testers before we officially launched this language. 
 
-```{r remove-test, eval = F}
+```{r remove-test, eval = T}
 # remove test data before official start english
 ru_data_all <- ru_data_all %>% 
   filter(timestamp > as.POSIXct("2022-08-25"))
@@ -249,7 +249,7 @@ nrow(ru_data_all)
 
 Here we remove all the columns of unique participant information. Because observation (labjs unique ID code) is not always unique, we bind it with a random subset of our unique code to create no repetitions. 
 
-```{r remove-partno, eval = F}
+```{r remove-partno, eval = T}
 names(ru_data_all)
 
 # fill in uuid for each row
@@ -284,7 +284,7 @@ ncol(ru_data_all)
 
 We save the shareable data in compressed format due to large file size. These can be read in with R. 
 
-```{r write-full, eval = F}
+```{r write-full, eval = T}
 write.csv(ru_data_all, 
        gzfile("output_data/full_data/ru_full_data.csv.gz"),
        row.names = F)
@@ -488,6 +488,7 @@ table(real_trials$duration > 3000, useNA = "ifany")
 ##this mostly controls for timeouts
 real_trials_NA <- real_trials %>% #data frame
   filter(is.na(correct) | #grab time out trials OR
+           is.na(duration) | #deal with weird data storage
            correct == FALSE | #grab incorrect trials OR
            duration < 160 | #grab short rts 
            duration > 3000) %>%  #grab too long rts
