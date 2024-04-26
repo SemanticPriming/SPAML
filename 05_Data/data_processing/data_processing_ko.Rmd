@@ -498,6 +498,7 @@ table(real_trials$duration > 3000, useNA = "ifany")
 # this mostly controls for timeouts
 real_trials_NA <- real_trials %>% #data frame
   filter(is.na(correct) | #grab time out trials OR
+           is.na(duration) | #deal with weird non-time records
            correct == FALSE | #grab incorrect trials OR
            duration < 160 | #grab short rts 
            duration > 3000) %>%  #grab too long rts

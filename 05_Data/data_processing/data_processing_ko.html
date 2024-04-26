@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Korean</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-04-06</h4>
+<h4 class="date">Last Update 2024-04-25</h4>
 
 </div>
 
@@ -2250,6 +2250,7 @@ table(real_trials$duration &lt; 160, useNA = &quot;ifany&quot;)</code></pre>
 # this mostly controls for timeouts
 real_trials_NA &lt;- real_trials %&gt;% #data frame
   filter(is.na(correct) | #grab time out trials OR
+           is.na(duration) | #deal with weird non-time records
            correct == FALSE | #grab incorrect trials OR
            duration &lt; 160 | #grab short rts 
            duration &gt; 3000) %&gt;%  #grab too long rts
@@ -2258,7 +2259,7 @@ real_trials_NA &lt;- real_trials %&gt;% #data frame
          keep = &quot;exclude&quot;)
 
 nrow(real_trials_NA)</code></pre>
-<pre><code>## [1] 127103</code></pre>
+<pre><code>## [1] 127104</code></pre>
 <pre class="r"><code># this section z-scores the rest of the data
 # just not time outs
 real_trials_nonNA &lt;- 
@@ -2275,12 +2276,12 @@ nrow(real_trials_nonNA)</code></pre>
 <pre><code>## [1] 651884</code></pre>
 <pre class="r"><code># make sure you equally split 
 nrow(real_trials) == nrow(real_trials_NA) + nrow(real_trials_nonNA)</code></pre>
-<pre><code>## [1] FALSE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code># put the time outs with the answered trials 
 real_trials &lt;- bind_rows(real_trials_NA, real_trials_nonNA)
 
 nrow(real_trials)</code></pre>
-<pre><code>## [1] 778987</code></pre>
+<pre><code>## [1] 778988</code></pre>
 <pre class="r"><code># indicate what participants to exclude
 real_trials &lt;- real_trials %&gt;% 
   left_join(
@@ -2291,7 +2292,7 @@ real_trials &lt;- real_trials %&gt;%
   arrange(observation, fix_sender)
 
 nrow(real_trials)</code></pre>
-<pre><code>## [1] 778987</code></pre>
+<pre><code>## [1] 778988</code></pre>
 <pre class="r"><code>##write out raw trial data 
 write.csv(real_trials, 
           gzfile(&quot;output_data/trial_data/ko_trial_data.csv.gz&quot;), 
@@ -2659,7 +2660,7 @@ data, but the z-score calculation is recommended.</p>
   }
   
   nrow(priming_trials)</code></pre>
-<pre><code>## [1] 778986</code></pre>
+<pre><code>## [1] 778987</code></pre>
 <pre class="r"><code>  # pivot wider with information you need
   priming_trials$unique_trial &lt;- paste(priming_trials$observation, 
                                         priming_trials$trial_code, sep = &quot;_&quot;)
@@ -2711,7 +2712,7 @@ data, but the z-score calculation is recommended.</p>
   temp</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["cue_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["target_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["overall_prop"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"nonword","2":"nonword","3":"0.3728555"},{"1":"nonword","2":"word","3":"0.1245644"},{"1":"word","2":"nonword","3":"0.1264297"},{"1":"word","2":"word","3":"0.3775168"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["cue_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["target_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["overall_prop"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"nonword","2":"nonword","3":"0.3728717"},{"1":"nonword","2":"word","3":"0.1245417"},{"1":"word","2":"nonword","3":"0.1264199"},{"1":"word","2":"word","3":"0.3775362"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>  # only focus on related-unrelated
@@ -2727,17 +2728,17 @@ data, but the z-score calculation is recommended.</p>
   temp &lt;- priming_focus %&gt;% 
     filter(is.na(type))
   nrow(temp)</code></pre>
-<pre><code>## [1] 272</code></pre>
+<pre><code>## [1] 262</code></pre>
 <pre class="r"><code>  # subset out NAs at some point they will be practice trials
   priming_focus &lt;- subset(priming_focus, !is.na(type))
   priming_focus &lt;- subset(priming_focus, type != &quot;nonword&quot;)
   
   nrow(priming_focus)</code></pre>
-<pre><code>## [1] 146067</code></pre>
+<pre><code>## [1] 146082</code></pre>
 <pre class="r"><code>  table(priming_focus$type, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ##   related unrelated 
-##     73250     72817</code></pre>
+##     73256     72826</code></pre>
 <pre class="r"><code>  temp &lt;- priming_focus %&gt;% 
     group_by(observation, type) %&gt;% 
     summarize(person_n = n(), .groups = &quot;keep&quot;) %&gt;% 
@@ -2754,7 +2755,7 @@ data, but the z-score calculation is recommended.</p>
   temp</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_prop"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"related","2":"0.5038409"},{"1":"unrelated","2":"0.4981803"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_prop"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"related","2":"0.5038272"},{"1":"unrelated","2":"0.4981940"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>  # calculate the total N versus timeout N
