@@ -278,8 +278,8 @@ sum(is.na(cs_data_all$observation))
 
 # remove ZPID, mturk, uuid 
 cs_data_all <- cs_data_all %>% 
-  select(-url_special_code, -uuid, -x, -url, -
-           url_fbclid, -meta_location)
+  select(-url_special_code, -uuid, -x, -url, 
+         -url_fbclid, -meta_location)
 
 ncol(cs_data_all)
 ```
