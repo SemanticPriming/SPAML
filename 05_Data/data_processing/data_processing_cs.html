@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Czech</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-04-05</h4>
+<h4 class="date">Last Update 2024-04-27</h4>
 
 </div>
 
@@ -1988,8 +1988,8 @@ sum(is.na(cs_data_all$observation))</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code># remove ZPID, mturk, uuid 
 cs_data_all &lt;- cs_data_all %&gt;% 
-  select(-url_special_code, -uuid, -x, -url, -
-           url_fbclid, -meta_location)
+  select(-url_special_code, -uuid, -x, -url, 
+         -url_fbclid, -meta_location)
 
 ncol(cs_data_all)</code></pre>
 <pre><code>## [1] 43</code></pre>
