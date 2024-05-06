@@ -462,7 +462,7 @@ nrow(pt_data_all)
 export(participant_DF, "output_data/participant_data/pt_combo_participant_data.csv", row.names = F)
 
 write.csv(pt_data_all, 
-       gzfile("output_data/full_data/pt_full_data.csv.gz"),
+       gzfile("output_data/full_data/pt_combo_full_data.csv.gz"),
        row.names = F)
 ```
 
@@ -1560,7 +1560,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/br_pt_combo_prime_s
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
   
-  export(priming_Z, "output_data/priming_data/pt_answered_prime_trials.csv", row.names = F)
+  export(priming_Z, "output_data/priming_data/pt_combo_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1751,7 +1751,7 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pt_combo_answered_p
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
   
-  export(priming_Z, "output_data/priming_data/br_pt_answered_prime_trials.csv", row.names = F)
+  export(priming_Z, "output_data/priming_data/br_pt_combo_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   

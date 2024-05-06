@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Urdu</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-04-25</h4>
+<h4 class="date">Last Update 2024-05-05</h4>
 
 </div>
 
@@ -1851,15 +1851,14 @@ for (i in 1:length(ur_files)){
 # convert to data frame and make unique
 ur_data_all &lt;- bind_rows(ur_data) %&gt;% unique()
 
-nrow(ur_data_all)</code></pre>
-<pre><code>## [1] 1326035</code></pre>
-<pre class="r"><code># timestamp is somewhat unreliable fix up sender_id
+nrow(ur_data_all)
+
+# timestamp is somewhat unreliable fix up sender_id
 sender_ids &lt;- import(&quot;sender_id.csv&quot;)
 ur_data_all &lt;- ur_data_all %&gt;% 
   left_join(sender_ids, by = &quot;sender_id&quot;)
 
 nrow(ur_data_all)</code></pre>
-<pre><code>## [1] 1326035</code></pre>
 <p></p>
 <div id="remove-test-data" class="section level3">
 <h3>Remove Test Data</h3>
@@ -1869,9 +1868,9 @@ language.</p>
 ur_data_all &lt;- ur_data_all %&gt;%
   filter(timestamp &gt; as.POSIXct(&quot;2022-12-06&quot;))
 
-nrow(ur_data_all)</code></pre>
-<pre><code>## [1] 1319758</code></pre>
-<pre class="r"><code># fix the issue of double displays that happened before 2022-09-01
+nrow(ur_data_all)
+
+# fix the issue of double displays that happened before 2022-09-01
   # 13_0_98 == 15_0_0 
   # 13_0_99 == 15_0_1
   # figure out everyone who saw 15_100 and 15_101 which means extra
@@ -1887,7 +1886,6 @@ nrow(ur_data_all)</code></pre>
     ))
   
 nrow(ur_data_all)</code></pre>
-<pre><code>## [1] 1319758</code></pre>
 <p></p>
 </div>
 <div id="remove-the-participant-information" class="section level3">
@@ -1895,33 +1893,9 @@ nrow(ur_data_all)</code></pre>
 <p>Here we remove all the columns of unique participant information.
 Because observation (labjs unique ID code) is not always unique, we bind
 it with a random subset of our unique code to create no repetitions.</p>
-<pre class="r"><code>names(ur_data_all)</code></pre>
-<pre><code>##  [1] &quot;observation&quot;                         &quot;sender&quot;                             
-##  [3] &quot;sender_type&quot;                         &quot;sender_id&quot;                          
-##  [5] &quot;uuid&quot;                                &quot;response&quot;                           
-##  [7] &quot;response_action&quot;                     &quot;ended_on&quot;                           
-##  [9] &quot;duration&quot;                            &quot;time_run&quot;                           
-## [11] &quot;time_render&quot;                         &quot;time_show&quot;                          
-## [13] &quot;time_end&quot;                            &quot;time_commit&quot;                        
-## [15] &quot;timestamp&quot;                           &quot;time_switch&quot;                        
-## [17] &quot;url_lab&quot;                             &quot;meta_labjs_version&quot;                 
-## [19] &quot;meta_location&quot;                       &quot;meta_user_agent&quot;                    
-## [21] &quot;meta_platform&quot;                       &quot;meta_language&quot;                      
-## [23] &quot;meta_locale&quot;                         &quot;meta_time_zone&quot;                     
-## [25] &quot;meta_timezone_offset&quot;                &quot;meta_screen_width&quot;                  
-## [27] &quot;meta_screen_height&quot;                  &quot;meta_scroll_width&quot;                  
-## [29] &quot;meta_scroll_height&quot;                  &quot;meta_window_inner_width&quot;            
-## [31] &quot;meta_window_inner_height&quot;            &quot;meta_device_pixel_ratio&quot;            
-## [33] &quot;meta_labjs_build_flavor&quot;             &quot;meta_labjs_build_commit&quot;            
-## [35] &quot;please_tell_us_your_gender&quot;          &quot;which_year_were_you_born&quot;           
-## [37] &quot;please_tell_us_your_education_level&quot; &quot;native_language&quot;                    
-## [39] &quot;dominanthand&quot;                        &quot;x&quot;                                  
-## [41] &quot;word&quot;                                &quot;class&quot;                              
-## [43] &quot;correct_response&quot;                    &quot;correct&quot;                            
-## [45] &quot;feedback&quot;                            &quot;url_special_code&quot;                   
-## [47] &quot;url&quot;                                 &quot;url_fbclid&quot;                         
-## [49] &quot;fix_sender&quot;</code></pre>
-<pre class="r"><code># fill in uuid for each row
+<pre class="r"><code>names(ur_data_all)
+
+# fill in uuid for each row
 ur_data_all &lt;- fill(ur_data_all, uuid, .direction = &quot;down&quot;)
 
 # ensure that observation-uuid combination doesn&#39;t go awry
@@ -1931,29 +1905,23 @@ temp &lt;- ur_data_all %&gt;%
   ungroup() %&gt;% 
   mutate(dups_o = duplicated(observation),
          dups_u = duplicated(uuid))
-table(temp$dups_o, useNA = &quot;ifany&quot;)</code></pre>
-<pre><code>## 
-## FALSE  TRUE 
-##   696     1</code></pre>
-<pre class="r"><code>table(temp$dups_u, useNA = &quot;ifany&quot;)</code></pre>
-<pre><code>## 
-## FALSE  TRUE 
-##   696     1</code></pre>
-<pre class="r"><code>ur_data_all$uuid[ur_data_all$observation == &quot;af154&quot;] &lt;- &quot;a8665008-a410-425b-a296-95ed2d48f812&quot;
+table(temp$dups_o, useNA = &quot;ifany&quot;)
+table(temp$dups_u, useNA = &quot;ifany&quot;)
+
+ur_data_all$uuid[ur_data_all$observation == &quot;af154&quot;] &lt;- &quot;a8665008-a410-425b-a296-95ed2d48f812&quot;
 
 ur_data_all$observation &lt;- paste0(ur_data_all$observation, substr(ur_data_all$uuid, 20, 28))
 
 # make sure every row has an id number 
-sum(is.na(ur_data_all$observation))</code></pre>
-<pre><code>## [1] 0</code></pre>
-<pre class="r"><code># remove ZPID, mturk, uuid 
+sum(is.na(ur_data_all$observation))
+
+# remove ZPID, mturk, uuid 
 ur_data_all &lt;- ur_data_all %&gt;% 
   select(-url_special_code, -uuid, 
          -meta_location, -x, -url, 
          -url_fbclid)
 
 ncol(ur_data_all)</code></pre>
-<pre><code>## [1] 43</code></pre>
 <p></p>
 </div>
 <div id="write-out-shareable-data" class="section level3">
@@ -2054,7 +2022,7 @@ lab_codes &lt;- ur_data_all %&gt;%
 lab_codes</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["url_lab"],"name":[1],"type":["int"],"align":["right"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1698","2":"696"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["url_lab"],"name":[1],"type":["int"],"align":["right"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1698","2":"675"},{"1":"NA","2":"21"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>sum(lab_codes$count)</code></pre>
@@ -2093,7 +2061,7 @@ colnames(participant_DF) &lt;- gsub(&quot;.y$&quot;, &quot;_consent&quot;, colna
 nrow(participant_DF)</code></pre>
 <pre><code>## [1] 696</code></pre>
 <pre class="r"><code>sum(is.na(participant_DF$timestamp_consent))</code></pre>
-<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 21</code></pre>
 <pre class="r"><code>participant_DF$keep_answered &lt;- participant_DF$keep &lt;- &quot;keep&quot;
 
 # only above 18
@@ -2105,8 +2073,8 @@ participant_DF$keep_answered[(as.numeric(substr(participant_DF$timestamp_consent
 
 table((as.numeric(substr(participant_DF$timestamp_consent, 1,4)) - participant_DF$which_year_were_you_born) &lt; 18, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
-## FALSE  TRUE  &lt;NA&gt; 
-##   636    21    39</code></pre>
+## FALSE  &lt;NA&gt; 
+##   636    60</code></pre>
 <pre class="r"><code># at least 100 trials + 80%
 # in this section, we also merge a representation of the 
 # time spent in the study in case you wish to use that as 
@@ -2148,11 +2116,11 @@ participant_DF$keep_answered[participant_DF$p_correct_answered &lt; .80 | is.na(
 table(participant_DF$p_correct &lt; .80, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ## FALSE  TRUE  &lt;NA&gt; 
-##   324   284    88</code></pre>
+##   317   291    88</code></pre>
 <pre class="r"><code>table(participant_DF$p_correct_answered &lt; .80, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
 ## FALSE  TRUE  &lt;NA&gt; 
-##   371   237    88</code></pre>
+##   362   246    88</code></pre>
 <pre class="r"><code>export(participant_DF, &quot;output_data/participant_data/ur_participant_data.csv&quot;, row.names = F)</code></pre>
 <p></p>
 <div id="exclude-too-young" class="section level3">
@@ -2927,9 +2895,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/ur_priming_summary.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/ur_priming_summary_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/ur_priming_summary_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/ur_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/ur_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/ur_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 <div id="using-redefined-accuracy" class="section level3">
@@ -3185,9 +3153,9 @@ available in that language.</p>
 ## -- to be added after calculation for final pairs -- 
 
 ##write out the priming data 
-write.csv(priming_Z_summary, &quot;output_data/priming_data/ur_answered_priming_summary.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/ur_answered_priming_summary_no2.5.csv&quot;, row.names = F)
-write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/ur_answered_priming_summary_no3.0.csv&quot;, row.names = F)</code></pre>
+write.csv(priming_Z_summary, &quot;output_data/priming_data/ur_answered_prime_summary.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no2.5, &quot;output_data/priming_data/ur_answered_prime_summary_no2.5.csv&quot;, row.names = F)
+write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/ur_answered_prime_summary_no3.0.csv&quot;, row.names = F)</code></pre>
 <p></p>
 </div>
 </div>
