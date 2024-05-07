@@ -23,11 +23,15 @@ library(tidyverse)
 library(uaparserjs)
 library(papaja)
 library(flextable)
+library(psych)
 ```
 
 ```{r import-merge}
-native.trans <- import("../05_Data/native_trans.xlsx")
-browser.lang <- import("../05_Data/browser_language.xlsx")
+native.trans <- import("recoding_files/native_trans.xlsx")
+browser.lang <- import("recoding_files/browser_language.xlsx") %>% 
+  mutate(Language = gsub(" \\(.*\\)", "", Language),
+         Language = trimws(Language))
+  
 ```
 
 ```{r import-participant}
@@ -47,7 +51,7 @@ names(p.files) <- gsub("../05_Data/data_processing/output_data/participant_data/
 
 # deal with mismatches
 for (i in 1:length(p.files)){
-  p.files[[i]]$url_lab <- as.character(p.files[[i]]$url_lab)
+  p.files[[i]]$language <- as.character(p.files[[i]]$language)
 }
 
 # merge them together
@@ -147,9 +151,10 @@ native.df <- p.df %>%
            "language" = "lang")
   )
 
-export(native.df, "supplemental/native_answers.xlsx", row.names = F)
+# used to create native_trans files 
+export(native.df, "recoding_files/native_answers.xlsx", row.names = F)
 
-View(table(p.df$native_language_translated, useNA = "ifany"))
+# View(table(p.df$native_language_translated, useNA = "ifany"))
 ```
 
 Please note that this file only includes languages that are analyzed in the full paper. You can view complete data demographics by using this markdown file and turning off the data filter.
@@ -325,7 +330,7 @@ p.toptwenty.n_lang <- p.overall.n_lang %>%
   )
 ```
 
-The top twenty native languages represented in the data are shown in Table X. Full language percent tables can be found in the supplemental data.
+The top twenty native languages represented in the data are shown in Table X. Full language percent tables can be found in the supplemental data. The data indicates that the pattern of native languages are similar in the full data and data used for analysis.
 
 ```{r}
 flextable(p.toptwenty.n_lang) %>% 
@@ -340,43 +345,49 @@ flextable(p.toptwenty.n_lang) %>%
 
 ### Overall Native Language
 
+Please see XX LINK XX for a summarized list of all native languages.
+
 ```{r}
-flextable(p.overall.n_lang) %>% 
-  set_header_labels(x = ., 
-                    values = c("Native Language", "Percent")) %>% 
-  colformat_double(
-  x = .,
-  big.mark = ",", digits = 2, na_str = "N/A"
-)
+export(p.overall.n_lang, "supplemental/overall_native_language.csv", row.names = F)
 ```
 
 ### Native Language for Original Accuracy Participants
 
+Please see XX LINK XX for a summarized list of all native languages for participants used in analysis.
+
 ```{r}
-flextable(p.keep.n_lang) %>% 
-  set_header_labels(x = ., 
-                    values = c("Native Language", "Percent")) %>% 
-  colformat_double(
-  x = .,
-  big.mark = ",", digits = 2, na_str = "N/A"
-)
+export(p.keep.n_lang, "supplemental/keep_native_language.csv", row.names = F)
 ```
 
 ### Native Language for Rescored Accuracy Participants
 
+Please see XX LINK XX for a summarized list of all native languages for rescored accuracy in native language.
+
 ```{r}
-flextable(p.keepanswered.n_lang) %>% 
-  set_header_labels(x = ., 
-                    values = c("Native Language", "Percent")) %>% 
-  colformat_double(
-  x = .,
-  big.mark = ",", digits = 2, na_str = "N/A"
-)
+export(p.keepanswered.n_lang, "supplemental/keep_answered_native_language.csv", row.names = F)
 ```
 
 ## Average Age
 
+```{r age-split}
+p.overall.age <- describe(p.df$age, na.rm = T)
+
+p.keep.age <- describe(p.df$age[p.df$keep == "keep"], na.rm = T)
+
+p.keepanswered.age <- describe(p.df$age[p.df$keep_answered == "keep"], na.rm = T)
+```
+
+The average age for all participants was $M$ = `r apa_num(p.overall.age$mean)` ($SD$ = `r apa_num(p.overall.age$sd)`) ranging from `r apa_num(p.overall.age$min)` to `r apa_num(p.overall.age$max)`. The demographic question asked participants to enter their year of birth, and the high maximum values were likely participants who entered the minimum possible year allowable in the data collection form. The participants kept for analysis showed the same pattern of ages: $M$ = `r apa_num(p.keep.age$mean)` ($SD$ = `r apa_num(p.keep.age$sd)`) ranging from `r apa_num(p.keep.age$min)` to `r apa_num(p.keep.age$max)`.
+
+The rescored accuracy participants showed the following age pattern: $M$ = `r apa_num(p.keepanswered.age$mean)` ($SD$ = `r apa_num(p.keepanswered.age$sd)`) ranging from `r apa_num(p.keepanswered.age$min)` to `r apa_num(p.keepanswered.age$max)`.
+
 ## Operating System
+
+```{r overall-os}
+p.df %>% 
+  group_by(language, meta_platform) %>% 
+  summarize(frequency = n(), .groups = "keep")
+```
 
 ## Web Browser
 
@@ -384,152 +395,125 @@ flextable(p.keepanswered.n_lang) %>%
 
 ## Data by Lab
 
-```{r}
+Please see summary report located at: <https://osf.io/mh9ny> which includes gender, education, age, and sample size counts for a summary. This table also includes information about the ethics submissions and data collection procedures for each lab.
 
+Native Language by Lab:
+
+Operating System by Lab:
+
+Web Browser by Lab:
+
+Language Locale by Lab:
+
+```{r separate-by-lab}
+p.df %>% 
+  group_by(language, native_language_translated) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  mutate(language = paste0("lab_", language)) %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lab_native_language.csv", row.names = F)
+
+p.df %>% 
+  group_by(language, meta_platform) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  mutate(language = paste0("lab_", language)) %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lab_operating_system.csv", row.names = F)
+
+p.df %>% 
+  group_by(language, ua.family) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  mutate(language = paste0("lab_", language)) %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lab_web_browser.csv", row.names = F)
+
+p.df %>% 
+  group_by(language, browser_language) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  mutate(language = paste0("lab_", language)) %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lab_lang_locale.csv", row.names = F)
+  
 ```
 
 ## Data by Language
 
-```{r}
+Please see summary report located at: <https://osf.io/ztkfg>. This summary includes gender, education, and age information by language.
 
+Native Language by Language:
+
+Operating System by Language:
+
+Web Browser by Language:
+
+Language Locale by Language:
+
+```{r separate-by-lang}
+p.df %>% 
+  group_by(language, native_language_translated) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lang_native_language.csv", row.names = F)
+
+p.df %>% 
+  group_by(language, meta_platform) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lang_operating_system.csv", row.names = F)
+
+p.df %>% 
+  group_by(language, ua.family) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lang_web_browser.csv", row.names = F)
+
+p.df %>% 
+  group_by(language, browser_language) %>% 
+  summarize(frequency = n(), .groups = "keep") %>% 
+  pivot_wider(data = ., 
+              names_from = language, 
+              values_from = frequency,
+              values_fill = 0) %>% 
+  export(., "supplemental/lang_lang_locale.csv", row.names = F)
 ```
 
-```{r overall-percents}
-# overall version
-
-p.overall.education <- p.df %>% 
-  group_by(please_tell_us_your_education_level, keep) %>% 
-  summarize(freq.edu = n() / nrow(.) * 100,
-            .groups = "keep") 
-p.overall.native <- p.df %>% 
-  group_by(native_language_translated, keep) %>% 
-  summarize(freq.lang = n() / nrow(.) * 100,
-            .groups = "keep")  
-p.overall.age <- p.df %>% 
-  group_by(keep) %>% 
-  summarize(m.age = mean(age, na.rm = T),
-            sd.age = sd(age, na.rm = T),
-            .groups = "keep") 
-p.overall.os <- p.df %>% 
-  group_by(meta_platform, keep) %>% 
-  summarize(freq.os = n() / nrow(.) * 100,
-            .groups = "keep") 
-p.overall.web <- p.df %>% 
-  group_by(ua.family, keep) %>% 
-  summarize(freq.browser = n() / nrow(.) * 100,
-            .groups = "keep") 
-p.overall.lang.locale <- p.df %>% 
-  group_by(browser_language, keep) %>% 
-  summarize(freq.locale = n() / nrow(.) * 100,
-            .groups = "keep") 
-
-p.overall.gender
-p.overall.education
-p.overall.native
-p.overall.age
-p.overall.os
-p.overall.web
-p.overall.lang.locale
-
-# match no match native language (in the paper)
-# combine all the multiples (in the supplement)
-# all split by language in excel docs with a description of where they are at 
-```
-
-```{r language-percents}
-# language version
-p.summary.demos <- p.df %>% 
-  group_by(language) %>% 
-  summarize(n = n()) %>% 
-  # gender 
-  left_join (
-    p.df %>% 
-      group_by(language, please_tell_us_your_gender) %>% 
-      summarize(freq.gender = n(), 
-                .groups = "keep") %>% 
-      pivot_wider(names_from = please_tell_us_your_gender, 
-                  values_from = freq.gender,
-                  id_cols = language),
-    by = "language"
-    ) %>% 
-  dplyr::rename("missing_gender" = "Missing") %>% 
-  # education
-  left_join (
-  p.df %>% 
-    group_by(language, please_tell_us_your_education_level) %>% 
-    summarize(freq.edu = n(), 
-              .groups = "keep") %>% 
-    pivot_wider(names_from = please_tell_us_your_education_level, 
-                values_from = freq.edu,
-                id_cols = language),
-  by = "language"
-  ) %>% 
-dplyr::rename("missing_lang" = "Missing") %>% 
-  # age
-  left_join(
-    p.df %>% 
-      group_by(language) %>% 
-      summarize(m.age = mean(age, na.rm = T),
-            sd.age = sd(age, na.rm = T), 
-            .groups = "keep"),
-    by = "language"
-  )
-
-export(p.summary.demos, "", row.names = F)
-
-p.summary.native <- 
-    p.df %>% 
-      group_by(language, native_language_translated) %>% 
-      summarize(freq.lang = n(), 
-                .groups = "keep")
-
-p.summary.computer <- 
-    p.df %>% 
-      group_by(language, meta_platform) %>% 
-      summarize(freq.os = n(), 
-                .groups = "keep") %>% 
-      pivot_wider(names_from = meta_platform, 
-                  values_from = freq.os,
-                  id_cols = language) %>% 
-  dplyr::rename("missing_os" = "Missing") %>% 
-  left_join (
-    p.df %>% 
-      group_by(language, ua.family) %>% 
-      summarize(freq.browser = n(), 
-                .groups = "keep") %>% 
-      pivot_wider(names_from = ua.family, 
-                  values_from = freq.browser,
-                  id_cols = language),
-    by = "language"
-    ) 
-
-p.summary.locale <- 
-    p.df %>% 
-      group_by(language, browser_language) %>% 
-      summarize(freq.locale = n(), 
-                .groups = "keep") 
-
-# look up meta language, meta locale 
-```
+We will present descriptive statistics on the participants involved in the study including percentages of gender, education levels, native language, and average age. Information about the device used to complete the study will include percentages of computer operating system, the web browser, and the language locale (i.e., the language the browser defaults to using).
 
 make a map picture by where labs were recruiting - figure out how to deal with prolific, mturk, qualtrics, bilendi
 
 # Trial level data
 
-Each language is saved in a separate file with an item specific trial identification number to allow for matching concepts across languages (i.e., CAT [English] → KATZE [German] → GATTA [Italian]).
-
--   you would need to do this somehow ... merge with trial data codes?
-
-If a participant left the study early (e.g., Internet disconnection, computer crash, closes the study), the data past this point in the study is not recorded, and therefore, the trial level data represents all trials displayed during the experiment. Participants were expected to incorrectly answer trials, and these trials are be marked for exclusion. All timeout trials are marked as missing values in the final data. No missing values will be imputed.
+Each language is saved in separate files, and supplemental files and code are provided to merge trials across concepts and pairings (i.e., CAT [English] → KATZE [German] → GATTA [Italian]). If a participant left the study early (e.g., Internet disconnection, computer crash, closes the study), the data past this point in the study is not recorded, and therefore, the trial level data represents all trials displayed during the experiment. Participants were expected to incorrectly answer trials, and these trials were marked for exclusion. All timeout trials were marked as missing values in the final data. No missing values were imputed.
 
 Trials were marked for exclusion if they were under the minimum response latency of less than 160 ms (i.e., all trials will be presented in the trial level data for openness, but these will be excluded for analysis and calculations listed below). Further, labjs automatically codes timeout data with a special marker (i.e., data ended on response or timeout as a column), which excludes trials over 3000 ms as our maximum response latency. However, due to differences in browser/screen refresh rates, some trials were answered with response latencies over 3000 ms when a participant made a key press at the very end of the trial before timeout. Given our pre-registered exclusion rules, these were also marked for exclusion.
 
-The response latencies from each participant’s session were then *z*-scored in line with recommendations from Faust et al.[CITE]. We did not collect enough data to note if a person took the experiment multiple times for privacy reasons, but as these are considered different sessions, the recommended *z*-score procedure should control for participant variability at this level. Therefore, repeated participation was not be detrimental to data collection. Finally, participants' overall proportion of correct answers was be calculated, and participants who did not correctly answer at least 80% of 100 minimum trials were marked for exclusion for item data, priming data, and analysis. The average error in the Semantic Priming Project ranged from 4% to 5%, and this criterion was chosen to include participants who were focused on the task.
+The response latencies from each participant’s session were then *z*-scored in line with recommendations from Faust et al.[@faust1999]. We did not collect enough data to note if a person took the experiment multiple times for privacy reasons, but as these are considered different sessions, the recommended *z*-score procedure should control for participant variability at this level. Therefore, repeated participation was not be detrimental to data collection. Finally, participants' overall proportion of correct answers was calculated, and participants who did not correctly answer at least 80% of 100 minimum trials were marked for exclusion for item data, priming data, and analysis. The average error in the Semantic Priming Project ranged from 4% to 5%, and this criterion was chosen to include participants who were focused on the task. Please see summary of exclusion criteria for all exclusions, which are marked separately in the provided data files. Additionally, as noted above, accuracy was defined multiple ways by the lead team, and therefore, both criteria are provided.
 
 We will provide descriptive statistics on the average time to complete the study, the number of trials by word type (word, nonword), the accuracy by word type, and average z-scored response latencies by word type (overall, excluding Z \> 2.5, excluding Z \> 3.0; see below). These values will be provided for overall results and separated by language.
 
 ```{r}
-# DO THIS PART
+
 ```
 
 # Item level data

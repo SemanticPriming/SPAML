@@ -31,6 +31,9 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 - Deviation Guide: 
 - Translation Information (link to readme): 
 
+
+MOVE SUMMARY TABLES TO SUPPLEMENTAL 
+
 ### Data
 
 - Zenodo: https://zenodo.org/records/10888833
@@ -42,6 +45,7 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 ### Analyses 
 
 - Scripts: 
+- 
 
 ### Manuscript
 

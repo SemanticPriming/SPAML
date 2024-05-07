@@ -69,7 +69,7 @@ rmarkdown::render("data_processing_zh_hk.Rmd") # current
 
 ```{r}
 # get all the files
-participant_files <- list.files("data_processing/output_data/participant_data",
+participant_files <- list.files("../../05_Data/data_processing/output_data/participant_data",
                        pattern = "_participant_data.csv",
                        full.names = TRUE,
                        recursive = TRUE)
@@ -87,7 +87,7 @@ for (i in 1:length(participant_files)){
     mutate(across(any_of("url_special_code"), as.character))
 
     participant_data[[i]]$lang <- 
-      gsub("data_processing/output_data/participant_data/|_participant_data.csv|_combo", 
+      gsub("../../05_Data/data_processing/output_data/participant_data/|_participant_data.csv|_combo", 
            "", 
            participant_files[i])
   }
@@ -120,7 +120,7 @@ participant_data$please_tell_us_your_education_level[participant_data$please_tel
 
 ```{r}
 # get all the files
-prime_files <- list.files("data_processing/output_data/priming_data",
+prime_files <- list.files("../../05_Data/data_processing/output_data/priming_data",
                        pattern = "_prime_summary.csv",
                        full.names = TRUE,
                        recursive = TRUE)
@@ -134,7 +134,7 @@ prime_data <- bind_rows(prime_data)
 prime_data$lang <- rep(x = prime_files, times = num_rows)
 
 # deal with language spelling
-prime_data$lang <- gsub("data_processing/output_data/priming_data/", "", prime_data$lang)
+prime_data$lang <- gsub("../../05_Data/data_processing/output_data/priming_data/", "", prime_data$lang)
 prime_data$lang <- gsub("_prime_summary.csv", "", prime_data$lang)
 ```
 
@@ -299,7 +299,7 @@ lang_DF <- lang_DF %>% select(
 
 flextable(lang_DF)
 
-export(lang_DF, "summary_tables/language_summary.csv", row.names = F)
+export(lang_DF, "supplemental/language_summary.csv", row.names = F)
 ```
 
 ### Write to Google Sheets
@@ -412,7 +412,7 @@ flextable(lab_DF)
 
 ### Write to Google Sheets
 
-```{r}
+```{r eval = F}
 # read in google sheet
 lab_sheet <- read_sheet("https://docs.google.com/spreadsheets/d/1v5e97stFqKSvVZdgowTOnN40hhB1QGGUbANnSNYCCB4/edit#gid=577705755", 
                         sheet = 3)
@@ -432,7 +432,7 @@ write_sheet(data = lab_sheet,
 
 ## Write Summary Table
 
-```{r}
+```{r eval = F}
 IRB_sheet <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1v5e97stFqKSvVZdgowTOnN40hhB1QGGUbANnSNYCCB4/edit#gid=577705755", 
   sheet = 1)
 
@@ -448,7 +448,7 @@ IRB_lab <- IRB_sheet %>%
   ) %>% 
   filter(PSA_ID != "NULL")
 
-export(IRB_lab, "summary_tables/irb_lab_summary.csv", row.names = F)
+export(IRB_lab, "supplemental/irb_lab_summary.csv", row.names = F)
 ```
 
 
