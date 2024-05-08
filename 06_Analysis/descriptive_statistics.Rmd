@@ -7,7 +7,7 @@ bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
-knitr::opts_chunk$set(echo = FALSE, size="scriptsize")
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
 def.chunk.hook <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -51,7 +51,7 @@ names(p.files) <- gsub("../05_Data/data_processing/output_data/participant_data/
 
 # deal with mismatches
 for (i in 1:length(p.files)){
-  p.files[[i]]$language <- as.character(p.files[[i]]$language)
+  p.files[[i]]$url_lab <- as.character(p.files[[i]]$url_lab)
 }
 
 # merge them together
@@ -105,7 +105,7 @@ p.df <- p.df %>%
       dplyr::rename("browser_language" = "Language") %>% 
       unique(),
     by = c("meta_locale" = "Code")
-  )
+  ) 
 
 # ones to fix
 temp <- 
@@ -200,7 +200,7 @@ Participants were generally female (`r apa_num(p.overall.gender %>% filter(pleas
 
 ### Overall Gender
 
-```{r}
+```{r overall-gender}
 flextable(p.overall.gender) %>% 
   set_header_labels(x = ., 
                     values = c("Gender", "Percent")) %>% 
@@ -212,7 +212,7 @@ flextable(p.overall.gender) %>%
 
 ### Gender for Original Accuracy Participants
 
-```{r}
+```{r keep-gender}
 flextable(p.keep.gender) %>% 
   set_header_labels(x = ., 
                     values = c("Gender", "Percent")) %>% 
@@ -224,7 +224,7 @@ flextable(p.keep.gender) %>%
 
 ### Gender for Rescored Accuracy Participants
 
-```{r}
+```{r answered-gender}
 flextable(p.keepanswered.gender) %>% 
   set_header_labels(x = ., 
                     values = c("Gender", "Percent")) %>% 
@@ -259,7 +259,7 @@ Participants indicated they had completed high school (`r apa_num(p.overall.educ
 
 ### Overall Education
 
-```{r}
+```{r overall-education}
 flextable(p.overall.education) %>% 
   set_header_labels(x = ., 
                     values = c("Education", "Percent")) %>% 
@@ -271,7 +271,7 @@ flextable(p.overall.education) %>%
 
 ### Education for Original Accuracy Participants
 
-```{r}
+```{r keep-education}
 flextable(p.keep.education) %>% 
   set_header_labels(x = ., 
                     values = c("Education", "Percent")) %>% 
@@ -283,7 +283,7 @@ flextable(p.keep.education) %>%
 
 ### Education for Rescored Accuracy Participants
 
-```{r}
+```{r answered-education}
 flextable(p.keepanswered.education) %>% 
   set_header_labels(x = ., 
                     values = c("Education", "Percent")) %>% 
@@ -332,7 +332,7 @@ p.toptwenty.n_lang <- p.overall.n_lang %>%
 
 The top twenty native languages represented in the data are shown in Table X. Full language percent tables can be found in the supplemental data. The data indicates that the pattern of native languages are similar in the full data and data used for analysis.
 
-```{r}
+```{r overall-n_lang-table}
 flextable(p.toptwenty.n_lang) %>% 
   set_header_labels(x = ., 
                     values = c("Native Language", "Overall Percent", 
@@ -345,25 +345,25 @@ flextable(p.toptwenty.n_lang) %>%
 
 ### Overall Native Language
 
-Please see XX LINK XX for a summarized list of all native languages.
+Please see https://osf.io/ta6wf for a summarized list of all native languages.
 
-```{r}
+```{r overall-n_lang}
 export(p.overall.n_lang, "supplemental/overall_native_language.csv", row.names = F)
 ```
 
 ### Native Language for Original Accuracy Participants
 
-Please see XX LINK XX for a summarized list of all native languages for participants used in analysis.
+Please see https://osf.io/652h8 for a summarized list of all native languages for participants used in analysis.
 
-```{r}
+```{r keep-n_lang}
 export(p.keep.n_lang, "supplemental/keep_native_language.csv", row.names = F)
 ```
 
 ### Native Language for Rescored Accuracy Participants
 
-Please see XX LINK XX for a summarized list of all native languages for rescored accuracy in native language.
+Please see https://osf.io/b3y6r for a summarized list of all native languages for rescored accuracy in native language.
 
-```{r}
+```{r answered-n_lang}
 export(p.keepanswered.n_lang, "supplemental/keep_answered_native_language.csv", row.names = F)
 ```
 
@@ -384,14 +384,227 @@ The rescored accuracy participants showed the following age pattern: $M$ = `r ap
 ## Operating System
 
 ```{r overall-os}
-p.df %>% 
-  group_by(language, meta_platform) %>% 
-  summarize(frequency = n(), .groups = "keep")
+p.df <- p.df %>% 
+  mutate(meta_platform_recode = ifelse(
+    grepl("Win", meta_platform), "Windows", ifelse(
+      grepl("Linux", meta_platform), "Linux", ifelse(
+        grepl("Mac", meta_platform), "Mac", meta_platform
+      )
+    )
+  )
+)
+
+p.overall.os <- p.df %>% 
+  group_by(meta_platform_recode) %>% 
+  summarize(freq.os = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keep.os <- p.df %>% 
+  filter(keep == "keep") %>% 
+  group_by(meta_platform_recode) %>% 
+  summarize(freq.os = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keepanswered.os <- p.df %>% 
+  filter(keep_answered == "keep") %>% 
+  group_by(meta_platform_recode) %>% 
+  summarize(freq.os = n() / nrow(.) * 100,
+            .groups = "keep") 
+```
+
+The majority of participants used a Windows based operating system (`r apa_num(p.overall.os %>% filter(meta_platform_recode == "Windows") %>% pull(freq.os))`%) followed by Mac OS (`r apa_num(p.overall.os %>% filter(meta_platform_recode == "Mac") %>% pull(freq.os))`%), and Linux (`r apa_num(p.overall.os %>% filter(meta_platform_recode == "Linux") %>% pull(freq.os))`%), with some missing data (`r apa_num(p.overall.os %>% filter(meta_platform_recode == "Missing") %>% pull(freq.os))`%). The operating systems were the same for the participants used in analysis: Windows (`r apa_num(p.keep.os %>% filter(meta_platform_recode == "Windows") %>% pull(freq.os))`%), Mac (`r apa_num(p.keep.os %>% filter(meta_platform_recode == "Mac") %>% pull(freq.os))`%), Linux (`r apa_num(p.keep.os %>% filter(meta_platform_recode == "Linux") %>% pull(freq.os))`%), and Missing (`r apa_num(p.keep.os %>% filter(meta_platform_recode == "Missing") %>% pull(freq.os))`%).
+
+### Overall Operating System
+
+```{r overall-os}
+flextable(p.overall.os) %>% 
+  set_header_labels(x = ., 
+                    values = c("Operating System", "Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Operating System for Original Accuracy Participants
+
+```{r keep-os}
+flextable(p.keep.os) %>% 
+  set_header_labels(x = ., 
+                    values = c("Operating System", "Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Operating System for Rescored Accuracy Participants
+
+```{r answered-os}
+flextable(p.keepanswered.os) %>% 
+  set_header_labels(x = ., 
+                    values = c("Operating System", "Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
 ```
 
 ## Web Browser
 
+```{r overall-web}
+p.df <- p.df %>% 
+  mutate(ua.family_recode = ifelse(
+    grepl("Chrome", ua.family), "Chrome", ifelse(
+      grepl("Edge", ua.family), "Edge", ifelse(
+        grepl("Firefox", ua.family), "Firefox", ifelse(
+          grepl("Opera", ua.family), "Opera", ifelse(
+            grepl("Safari", ua.family), "Safari", ifelse(
+              grepl("Yandex", ua.family), "Yandex", "Other"
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+p.overall.web <- p.df %>% 
+  group_by(ua.family_recode) %>% 
+  summarize(freq.web = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keep.web <- p.df %>% 
+  filter(keep == "keep") %>% 
+  group_by(ua.family_recode) %>% 
+  summarize(freq.web = n() / nrow(.) * 100,
+            .groups = "keep") 
+
+p.keepanswered.web <- p.df %>% 
+  filter(keep_answered == "keep") %>% 
+  group_by(ua.family_recode) %>% 
+  summarize(freq.web = n() / nrow(.) * 100,
+            .groups = "keep") 
+```
+
+Web browsers were grouped into the largest categories for reporting. The large majority of participants used Chrome (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Chrome") %>% pull(freq.web))`%), followed by Edge (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Edge") %>% pull(freq.web))`%), Firefox (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Firefox") %>% pull(freq.web))`%), Safari (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Safari") %>% pull(freq.web))`%), and Opera (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Opera") %>% pull(freq.web))`%) A surprise result was that the Russian browser Yandex contributed a small (but not extremely small) percent of the browser usage: (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Yandex") %>% pull(freq.web))`%), followed by other web browsers (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Other") %>% pull(freq.web))`%) The results were the same when examining participants who were kept for analysis: Chrome (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Chrome") %>% pull(freq.web))`%), Edge (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Edge") %>% pull(freq.web))`%), Firefox (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Firefox") %>% pull(freq.web))`%), Safari (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Safari") %>% pull(freq.web))`%), Opera (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Opera") %>% pull(freq.web))`%), Yandex (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Yandex") %>% pull(freq.web))`%), and Other (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Other") %>% pull(freq.web))`%). 
+
+### Overall Web Browser
+
+```{r overall-web}
+flextable(p.overall.web) %>% 
+  set_header_labels(x = ., 
+                    values = c("Web Browser", "Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Web Browser for Original Accuracy Participants
+
+```{r keep-web}
+flextable(p.keep.web) %>% 
+  set_header_labels(x = ., 
+                    values = c("Web Browser", "Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Web Browser for Rescored Accuracy Participants
+
+```{r answered-web}
+flextable(p.keepanswered.web) %>% 
+  set_header_labels(x = ., 
+                    values = c("Web Browser", "Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
 ## Language Locale
+
+```{r overall-locale}
+p.df <- p.df %>% 
+  mutate(browser_language = ifelse(
+      is.na(browser_language), "Missing", browser_language
+    )
+  )
+
+p.overall.locale <- p.df %>% 
+  group_by(browser_language) %>% 
+  summarize(freq.locale = n() / nrow(.) * 100,
+            .groups = "keep") %>% 
+  ungroup() %>% 
+  dplyr::arrange(desc(freq.locale))
+
+p.keep.locale <- p.df %>% 
+  filter(keep == "keep") %>% 
+  group_by(browser_language) %>% 
+  summarize(freq.locale = n() / nrow(.) * 100,
+            .groups = "keep") %>% 
+  ungroup() %>% 
+  dplyr::arrange(desc(freq.locale))
+
+p.keepanswered.locale <- p.df %>% 
+  filter(keep_answered == "keep") %>% 
+  group_by(browser_language) %>% 
+  summarize(freq.locale = n() / nrow(.) * 100,
+            .groups = "keep") %>% 
+  ungroup() %>% 
+  dplyr::arrange(desc(freq.locale))
+
+p.toptwenty.locale <- p.overall.locale %>% 
+  slice(1:20) %>% 
+  full_join(p.keep.locale %>% 
+  slice(1:20), 
+  by = c("browser_language")) %>% 
+  dplyr::rename(
+    "Overall Percent" = freq.locale.x,
+    "Keep Percent" = freq.locale.y
+  )
+```
+
+The top twenty browser languages represented in the data are shown in Table X, with full tables of browser languages in the supplemental online data. Generally, this pattern matched the demographics of the study, as well as the targeted languages. More participants had their browser set in English compared to the indicated native language, see Table X. 
+
+```{r overall-locale-table}
+flextable(p.toptwenty.locale) %>% 
+  set_header_labels(x = ., 
+                    values = c("Browser Language", "Overall Percent", 
+                               "Keep Percent")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Overall Browser Language
+
+Please see for a summarized list of all native languages.
+
+```{r overall-locale}
+export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names = F)
+```
+
+### Browser Language for Original Accuracy Participants
+
+Please see for a summarized list of all native languages for participants used in analysis.
+
+```{r keep-locale}
+export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
+```
+
+### Native Language for Rescored Accuracy Participants
+
+Please see  for a summarized list of all native languages for rescored accuracy in native language.
+
+```{r answered-locale}
+export(p.keepanswered.locale, "supplemental/keep_answered_browser_language.csv", row.names = F)
+```
+
 
 ## Data by Lab
 
@@ -407,41 +620,41 @@ Language Locale by Lab:
 
 ```{r separate-by-lab}
 p.df %>% 
-  group_by(language, native_language_translated) %>% 
+  group_by(url_lab, native_language_translated) %>% 
   summarize(frequency = n(), .groups = "keep") %>% 
-  mutate(language = paste0("lab_", language)) %>% 
+  mutate(url_lab = paste0("lab_", url_lab)) %>% 
   pivot_wider(data = ., 
-              names_from = language, 
+              names_from = url_lab, 
               values_from = frequency,
               values_fill = 0) %>% 
   export(., "supplemental/lab_native_language.csv", row.names = F)
 
 p.df %>% 
-  group_by(language, meta_platform) %>% 
+  group_by(url_lab, meta_platform) %>% 
   summarize(frequency = n(), .groups = "keep") %>% 
-  mutate(language = paste0("lab_", language)) %>% 
+  mutate(url_lab = paste0("lab_", url_lab)) %>% 
   pivot_wider(data = ., 
-              names_from = language, 
+              names_from = url_lab, 
               values_from = frequency,
               values_fill = 0) %>% 
   export(., "supplemental/lab_operating_system.csv", row.names = F)
 
 p.df %>% 
-  group_by(language, ua.family) %>% 
+  group_by(url_lab, ua.family) %>% 
   summarize(frequency = n(), .groups = "keep") %>% 
-  mutate(language = paste0("lab_", language)) %>% 
+  mutate(url_lab = paste0("lab_", url_lab)) %>% 
   pivot_wider(data = ., 
-              names_from = language, 
+              names_from = url_lab, 
               values_from = frequency,
               values_fill = 0) %>% 
   export(., "supplemental/lab_web_browser.csv", row.names = F)
 
 p.df %>% 
-  group_by(language, browser_language) %>% 
+  group_by(url_lab, browser_language) %>% 
   summarize(frequency = n(), .groups = "keep") %>% 
-  mutate(language = paste0("lab_", language)) %>% 
+  mutate(url_lab = paste0("lab_", url_lab)) %>% 
   pivot_wider(data = ., 
-              names_from = language, 
+              names_from = url_lab, 
               values_from = frequency,
               values_fill = 0) %>% 
   export(., "supplemental/lab_lang_locale.csv", row.names = F)

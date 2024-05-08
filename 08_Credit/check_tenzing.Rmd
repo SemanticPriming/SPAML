@@ -1,0 +1,298 @@
+---
+title: "Check_Tenzing"
+author: "Erin Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(rio)
+library(flextable)
+library(tidyverse)
+library(googlesheets4)
+library(rcanvas)
+set_canvas_domain("https://canvas.psysciacc.org")
+```
+
+## Canvas Gradebook
+
+```{r}
+# gradebook
+gradebook <- get_course_gradebook(course_id = 4, progress = TRUE)
+gradebook <- gradebook %>% filter(!is.na(assignment_name)) %>% 
+  select(user.name, user_id, sis_user_id, user.login_id, 
+         assignment_name, grades.final_score, score) %>% 
+  pivot_wider(data = .,
+              id_cols = c(user.name, user_id, sis_user_id, user.login_id, grades.final_score), 
+              names_from = assignment_name,
+              values_from = score, 
+              values_fill = NA)
+
+# make canvas id separate from PSA_ID
+gradebook <- gradebook %>% 
+  dplyr::rename(canvas_id = user_id, 
+         PSA_ID = sis_user_id)
+```
+
+## Canvas Teams
+
+```{r}
+# teams
+teams <- get_course_user_groups(course_id = 4)
+teams <- teams %>% 
+  rename(canvas_id = id) %>% 
+  select(-group_id) %>% 
+  unique() %>% 
+  filter(canvas_id != "3094") # test student
+  
+# eliminate duplicates
+teams <- teams[!duplicated(teams$canvas_id), ]
+
+# join teams with gradebook
+group_overall <- teams %>% 
+  full_join(gradebook, by = c("canvas_id" = "canvas_id")) %>% 
+  unique() %>% 
+  arrange(group_name, PSA_ID)
+```
+
+## Participant Data 
+
+```{r}
+# get all the files
+participant_files <- list.files("../05_Data/data_processing/output_data/participant_data",
+                       pattern = "_participant_data.csv",
+                       full.names = TRUE,
+                       recursive = TRUE)
+
+participant_data <- list()
+
+# open all files
+for (i in 1:length(participant_files)){
+  if (nrow(import(participant_files[i]) > 0)) { 
+  participant_data[[i]] <- import(participant_files[i])
+  
+  participant_data[[i]]$url_lab <- as.character(participant_data[[i]]$url_lab)
+  
+  participant_data[[i]] <- participant_data[[i]] %>% 
+    mutate(across(any_of("url_special_code"), as.character))
+
+    participant_data[[i]]$lang <- 
+      gsub("../05_Data/data_processing/output_data/participant_data/|_participant_data.csv|_combo", 
+           "", 
+           participant_files[i])
+  }
+}
+
+# convert to data frame and make unique
+participant_data <- bind_rows(participant_data) 
+
+# print out which you need to rerun
+participant_data %>% 
+  arrange(desc(timestamp_consent)) %>% 
+  group_by(lang) %>% 
+  slice_head() %>% 
+  select(timestamp_consent, lang) %>% 
+  ungroup() %>% 
+  arrange(desc(timestamp_consent))
+# last run july 19, aug 2, sept 19, october 19, nov 11, dec 7
+
+# deal with blank gender, education
+participant_data$please_tell_us_your_gender[participant_data$please_tell_us_your_gender == ""] <- NA
+participant_data$please_tell_us_your_education_level[participant_data$please_tell_us_your_education_level == ""] <- NA
+
+participant_data$age <- as.numeric(substr(participant_data$timestamp_consent, 1, 4)) - participant_data$which_year_were_you_born
+
+# View(table(participant_data$url_lab))
+
+lab_DF <- 
+  participant_data %>% 
+  group_by(url_lab, keep) %>% 
+  count() %>% 
+  pivot_wider(id_cols = url_lab, names_from = keep, values_from = n) %>% 
+  
+  # keep answered
+  left_join(
+    (participant_data %>% 
+  group_by(url_lab, keep_answered) %>% 
+  count() %>% 
+  pivot_wider(id_cols = url_lab, names_from = keep_answered, values_from = n)), 
+  by = "url_lab"
+  ) %>% 
+  
+  # gender
+  left_join(
+    (participant_data %>% 
+      group_by(url_lab, please_tell_us_your_gender) %>% 
+      count() %>% 
+      pivot_wider(id_cols = url_lab, names_from = please_tell_us_your_gender, values_from = n)), 
+    by = "url_lab"
+  ) %>% 
+  
+  # education
+  left_join(
+    (participant_data %>% 
+      group_by(url_lab, please_tell_us_your_education_level) %>% 
+      count() %>% 
+      pivot_wider(id_cols = url_lab, names_from = please_tell_us_your_education_level, values_from = n)), 
+    by = "url_lab"
+  ) %>% 
+  
+  # age
+  left_join(
+    (participant_data %>% 
+      group_by(url_lab) %>% 
+      summarize(mean_age = round(mean(age, na.rm = T), 2), 
+                sd_age = round(sd(age, na.rm = T), 2), 
+                min_age = min(age, na.rm = T), 
+                max_age = max(age, na.rm = T))), 
+    by = "url_lab"
+  ) %>% 
+  
+    # age
+  left_join(
+    (participant_data %>% 
+       filter(keep == "keep") %>% 
+      group_by(url_lab) %>% 
+      summarize(mean_age_keep = round(mean(age, na.rm = T), 2), 
+                sd_age_keep = round(sd(age, na.rm = T), 2), 
+                min_age_keep = min(age, na.rm = T), 
+                max_age_keep = max(age, na.rm = T))), 
+    by = "url_lab"
+  ) %>% 
+  
+  # other timing
+  left_join(
+   (participant_data %>% 
+  filter(keep == "keep") %>% 
+    group_by(url_lab) %>% 
+  summarize(mean_trials = round(mean(n_trials, na.rm = T), 2),
+            mean_answered = round(mean(n_answered, na.rm = T), 2), 
+            mean_correct = round(mean(p_correct, na.rm = T), 2), 
+            mean_timing = round(mean(study_length/n_trials*800, na.rm = T), 2), 
+            med_timing = round(median(study_length/n_trials*800, na.rm = T), 2))),
+  by = "url_lab"
+  ) %>% 
+  mutate(min_age = ifelse(abs(min_age) == Inf, NA, min_age),
+         max_age = ifelse(abs(max_age) == Inf, NA, max_age))
+
+colnames(lab_DF) <- c("PSA_ID", "Exclude", "Keep", "Exclude_Rescored", 
+                         "Keep_Rescored", "Female", "Male", "Not_Say", "Other", 
+                         "Gender_Missing", "College", "Doctorate", "High_School", 
+                         "Less_High_School", "Some_College", 
+                      "Masters", "Education_Missing", "Elementary",
+                      "M_Age", "SD_Age", "Min_Age", "Max_Age",
+                      "M_Age_Keep", "SD_Age_Keep", "Min_Age_Keep", "Max_Age_Keep",
+                      "M_Trials", "M_Answered", "M_Correct", "M_Time", "Med_Time") 
+
+lab_DF$Total_N <- apply(lab_DF[ , c("Keep", "Exclude")], 1, sum, na.rm = T)
+
+lab_DF <- lab_DF %>% select(
+  "PSA_ID", "Total_N", "Keep", "Exclude", "Keep_Rescored",
+  "Exclude_Rescored", "Female", "Male",  "Other", "Not_Say",
+  "Gender_Missing", "Less_High_School", "High_School", 
+  "Some_College", "College", "Masters", "Doctorate", 
+  "Education_Missing", "Elementary", "M_Age", "SD_Age", "Min_Age", "Max_Age",
+  "M_Age_Keep", "SD_Age_Keep", "Min_Age_Keep", "Max_Age_Keep",
+  "M_Trials", "M_Answered", "M_Correct", "M_Time", "Med_Time"
+)
+```
+
+## Pull Together
+
+```{r}
+lab_DF <- lab_DF %>% 
+  left_join(
+    group_overall %>% 
+  select(PSA_ID, group_name),
+  by = "PSA_ID"
+  )
+  
+
+group_overall <- group_overall %>% 
+  left_join(
+    lab_DF %>% 
+      select(group_name, Total_N),
+    by = "group_name",
+    relationship = "many-to-many"
+  )
+
+group_overall <- group_overall %>% 
+  select(sortable_name, group_name, user.name, PSA_ID.x, 
+         user.login_id, `Collaborator Agreement`, 
+         `Data Collection Tracking`, `Translation Tracking`,
+         `Code Review, Coding, Software Credit`,
+         `Resources Credit`, Total_N)
+```
+
+```{r}
+group_overall <- group_overall %>% 
+  filter(!(duplicated(group_overall %>% select(sortable_name, group_name)))) %>% filter(sortable_name != "Student, Test") %>% 
+  mutate(Total_N = ifelse(
+    is.na(group_name), NA, Total_N
+  ))
+
+group_overall <- group_overall %>% 
+  mutate(data_collect_yes = as.numeric(Total_N > 10), 
+         data_collect_match = data_collect_yes == `Data Collection Tracking`)
+```
+
+## Check Data Collection Marked 
+
+```{r}
+group_overall %>% 
+  filter(data_collect_match == FALSE)
+
+group_overall %>% 
+  filter(is.na(data_collect_match)) %>% 
+  filter(data_collect_yes == 1)
+```
+
+## Pull Together with Online
+
+```{r}
+online <- read_sheet("https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
+                     sheet = "original")
+
+online <- online %>% 
+  mutate(Tier = as.character(unlist(Tier)),
+         PSA_ID = unlist(PSA_ID))
+
+final_tenzing <- group_overall %>% 
+  full_join(online, by = c("PSA_ID.x" = "PSA_ID"))
+```
+
+## Output
+
+```{r}
+final_tenzing <- final_tenzing %>% 
+  
+  select(Tier, FirstName, `Middle name`, LastName, user.name, )
+
+
+
+final_tenzing <- final_tenzing %>% 
+  mutate(
+    investigation = ifelse(`Data Collection Tracking` == 1, TRUE, FALSE),
+    resources = ifelse(`Resources Credit` == 1 | `Translation Tracking` == 1, TRUE, FALSE), 
+    software = ifelse(`Code Review, Coding, Software Credit` == 1, TRUE, FALSE),
+    collaboration = ifelse(`Collaborator Agreement` == 1, TRUE, FALSE)) %>% 
+  tidyr::separate_wider_delim(data = ., 
+                 cols = sortable_name, 
+                 delim = ", ", 
+                 names = c("LastName", "FirstName")) %>% 
+  select(FirstName, LastName, user.name, collaboration, investigation, resources, software) 
+
+export(group_overall, "tenzing_canvas.xlsx", row.names = F)
+
+```
+
+- investigation: lab tracking sheet -- match to canvas
+- resources: a tab in canvas (translation + resources)
+- completed collaborator agreement

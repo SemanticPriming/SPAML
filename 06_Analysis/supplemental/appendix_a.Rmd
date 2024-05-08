@@ -9,45 +9,70 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Important Links 
+## Important Links
 
-Please note: all files are synced to OSF through GitHub. We have also included the folder you can find files in if the GitHub add-on is not working on OSF. 
+Please note: all files are synced to OSF through GitHub. We have also included the folder you can find files in if the GitHub add-on is not working on OSF. Since you cannot link directly to a folder on OSF storage, we also indicated where on OSF to find the folder
 
-### Complete Files 
+### Complete Files
 
-- Open Science Framework: https://osf.io/wrpj4/
-- GitHub: https://github.com/SemanticPriming/SPAML
-- Zenodo: https://zenodo.org/records/10888833
+-   Open Science Framework: <https://osf.io/wrpj4/>
+-   GitHub: <https://github.com/SemanticPriming/SPAML>
+-   Zenodo: <https://zenodo.org/records/10888833>
+
+### Ethics
+
+-   Ethics Component OSF Link: <https://osf.io/ycn7z/>
+-   Ethics/Lab Table Summary: <https://osf.io/ty4hp>
+    -   GitHub: 06_Analysis \> supplemental
+
+### Power Analysis
+
+-   Power analysis code: <https://osf.io/v2y9e>
+    -   Github: 02_Power
 
 ### Method
 
-- Language Table Information: https://osf.io/ztkfg
-  - GitHub: 05_Data > summary_tables
-- Ethics Component OSF Link: https://osf.io/ycn7z/ 
-- IRB/Lab Table Summary: https://osf.io/mh9ny
-  - GitHub: 05_Data > summary_tables
-- labjs Scripts (Procedure Folder):  https://github.com/SemanticPriming/SPAML/tree/master/04_Procedure
-  - OSF: 04_Procedure
-- Deviation Guide: 
-- Translation Information (link to readme): 
-
-
-MOVE SUMMARY TABLES TO SUPPLEMENTAL 
+-   Materials separated by language:
+    -   OSF: 03_Materials
+    -   Github: 03_Materials
+-   labjs Scripts to recreate the experiment:
+    -   OSF: 04_Procedure
+    -   Github: 04_Procedure
+-   Language Table Information: <https://osf.io/y3dk7>
+    -   GitHub: 06_Analysis \> supplemental
+-   Deviation Guide: <https://osf.io/mwuv3>
+    -   GitHub: 06_Analysis \> supplemental
+-   Translation Information: <https://osf.io/vdme5>
+    -   Github: 03_Materials readme
 
 ### Data
 
-- Zenodo: https://zenodo.org/records/10888833
-- Data Release: 
-- Data Processing Scripts:
-- Data Processing Checks/Summary:
-- Codebooks: 
+-   Zenodo: <https://zenodo.org/records/10888833>
+-   Data Release: <https://github.com/SemanticPriming/SPAML/releases>
+-   Data Processing Scripts:
+    -   OSF: 05_Data \> data_processing
+    -   Github: 05_Data \> data_processing
+-   Data Processing Checks/Summary: <https://osf.io/zye59>
+    -   Github: 05_Data
+-   Codebooks:
+    -   OSF: 05_Data \> codebooks
+    -   Github: 05_Data \> codebooks
 
-### Analyses 
+### Analyses
 
-- Scripts: 
-- 
+-   Scripts:
+    -   OSF: 06_Analysis
+    -   Github: 06_Analysis
+-   Supplemental Tables/Summaries:
+    -   Note: summary of labs and languages also in this folder, but linked above
+    -   Github \> 06_Analysis \> supplemental
+    -   Native Language:
+        -   Overall Native Language Frequency: <https://osf.io/ta6wf>
+        -   Analysis Participants Native Language Frequency: <https://osf.io/652h8>
+        -   Rescored Analysis Participants Native Language Frequency: <https://osf.io/b3y6r>
+    -   
 
 ### Manuscript
 
-- Pre-registration: https://osf.io/u5bp6
-- Registered Report: https://osf.io/preprints/osf/q4fjy 
+-   Pre-registration: <https://osf.io/u5bp6>
+-   Registered Report: <https://osf.io/preprints/osf/q4fjy>

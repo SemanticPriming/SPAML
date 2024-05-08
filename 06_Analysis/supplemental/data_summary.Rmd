@@ -178,7 +178,7 @@ participant_data %>%
 ## Report by Language
 
 ```{r}
-participant_data$age <- as.numeric(substr(participant_data$timestamp_consent, 1, 4)) - participant_data$which_year_were_you_bor
+participant_data$age <- as.numeric(substr(participant_data$timestamp_consent, 1, 4)) - participant_data$which_year_were_you_born
 
 lang_DF <- 
   participant_data %>% 

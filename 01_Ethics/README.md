@@ -2,7 +2,7 @@
 
 Individual ethics requirements for each lab can be found here: <https://osf.io/ycn7z/>
 
-Here is a link to an overall document that shows the PI, teams, and summarized ethics documents here: [Lab Summary](https://github.com/SemanticPriming/SPAML/blob/master/05_Data/summary_tables/irb_lab_summary.csv)
+Here is a link to an overall document that shows the links to each document, and other method information summarized here: [Lab Summary](https://osf.io/ty4hp).
 
 File information:
 
