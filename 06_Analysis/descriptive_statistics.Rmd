@@ -583,7 +583,7 @@ flextable(p.toptwenty.locale) %>%
 
 ### Overall Browser Language
 
-Please see for a summarized list of all native languages.
+Please see https://osf.io/93kep for a summarized list of all browser languages.
 
 ```{r overall-locale}
 export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names = F)
@@ -591,7 +591,7 @@ export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names 
 
 ### Browser Language for Original Accuracy Participants
 
-Please see for a summarized list of all native languages for participants used in analysis.
+Please see https://osf.io/3yab7 for a summarized list of all browser languages for participants used in analysis.
 
 ```{r keep-locale}
 export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
@@ -599,16 +599,15 @@ export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
 
 ### Native Language for Rescored Accuracy Participants
 
-Please see  for a summarized list of all native languages for rescored accuracy in native language.
+Please see https://osf.io/adhbe for a summarized list of all browser languages for rescored accuracy in native language.
 
 ```{r answered-locale}
 export(p.keepanswered.locale, "supplemental/keep_answered_browser_language.csv", row.names = F)
 ```
 
-
 ## Data by Lab
 
-Please see summary report located at: <https://osf.io/mh9ny> which includes gender, education, age, and sample size counts for a summary. This table also includes information about the ethics submissions and data collection procedures for each lab.
+Please see summary report located at: https://osf.io/ty4hp which includes gender, education, age, and sample size counts for a summary. This table also includes information about the ethics submissions and data collection procedures for each lab.
 
 Native Language by Lab:
 

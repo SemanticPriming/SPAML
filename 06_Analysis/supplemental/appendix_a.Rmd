@@ -70,7 +70,10 @@ Please note: all files are synced to OSF through GitHub. We have also included t
         -   Overall Native Language Frequency: <https://osf.io/ta6wf>
         -   Analysis Participants Native Language Frequency: <https://osf.io/652h8>
         -   Rescored Analysis Participants Native Language Frequency: <https://osf.io/b3y6r>
-    -   
+    -   Browser Language:
+        -   Overall Browser Language Frequency: <https://osf.io/93kep>
+        -   Analysis Participants Browser Language Frequency: <https://osf.io/3yab7>
+        -   Rescored Analysis Participants Browser Language Frequency: <https://osf.io/adhbe>
 
 ### Manuscript
 
