@@ -609,13 +609,10 @@ export(p.keepanswered.locale, "supplemental/keep_answered_browser_language.csv",
 
 Please see summary report located at: https://osf.io/ty4hp which includes gender, education, age, and sample size counts for a summary. This table also includes information about the ethics submissions and data collection procedures for each lab.
 
-Native Language by Lab:
-
-Operating System by Lab:
-
-Web Browser by Lab:
-
-Language Locale by Lab:
+- Native Language by Lab: https://osf.io/hnrgk
+- Operating System by Lab: https://osf.io/gud6v
+- Web Browser by Lab: https://osf.io/egk9w
+- Language Locale by Lab: https://osf.io/wt3xn
 
 ```{r separate-by-lab}
 p.df %>% 
@@ -662,15 +659,12 @@ p.df %>%
 
 ## Data by Language
 
-Please see summary report located at: <https://osf.io/ztkfg>. This summary includes gender, education, and age information by language.
+Please see summary report located at: https://osf.io/y3dk7. This summary includes gender, education, and age information by language.
 
-Native Language by Language:
-
-Operating System by Language:
-
-Web Browser by Language:
-
-Language Locale by Language:
+- Native Language by Language:
+- Operating System by Language:
+- Web Browser by Language:
+- Language Locale by Language:
 
 ```{r separate-by-lang}
 p.df %>% 

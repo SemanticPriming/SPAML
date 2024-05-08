@@ -74,6 +74,13 @@ Please note: all files are synced to OSF through GitHub. We have also included t
         -   Overall Browser Language Frequency: <https://osf.io/93kep>
         -   Analysis Participants Browser Language Frequency: <https://osf.io/3yab7>
         -   Rescored Analysis Participants Browser Language Frequency: <https://osf.io/adhbe>
+    -   Lab Reports:
+        -   Native Language by Lab: <https://osf.io/hnrgk>
+        -   Operating System by Lab: <https://osf.io/gud6v>
+        -   Web Browser by Lab: <https://osf.io/egk9w>
+        -   Language Locale by Lab: <https://osf.io/wt3xn>
+    -   Language Reports:
+        -   
 
 ### Manuscript
 
