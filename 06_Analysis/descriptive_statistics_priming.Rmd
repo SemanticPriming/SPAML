@@ -1,0 +1,561 @@
+---
+title: "Descriptive Statistics"
+author: "Erin Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+```{r libraries, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+library(rio)
+library(dplyr)
+library(ggplot2)
+library(maps)
+library(tidyverse)
+library(uaparserjs)
+library(papaja)
+library(flextable)
+library(psych)
+library(countrycode)
+```
+
+The links to the language files can be found in our supplemental materials. The paper is presented with an upcoming *R* package `semanticprimeR` that allows one to open data files directly in *R* and a Shiny application to download a specific set of language files [@shiny; @thedoomlab2024]. The data can be cited using our Zenodo doi [@buchanan2024] which will indicate which version of the data was examined.
+
+# Priming data
+
+In a separate file, we prepared information about priming results which includes the target word, average response latencies, averaged *Z*-scored response latencies, sample sizes, standard errors, and priming response latency. For each item, priming is defined as the average *Z*-scored response latency when presented in the unrelated minus the related condition. Therefore, the timing for DOG-CAT would be subtracted from BUS-CAT to indicate priming for the word CAT. The similarity scores calculated during stimuli selection will be provided for merging, as well as other popular measures of similarity if they are available in that language. For example, semantic feature overlap norms are also available in Italian [@montefinese2013], German [@kremer2011], Spanish [@aguasvivas2018], and Dutch [@ruts2004].
+
+## Original Accuracy Priming Scores
+
+```{r keep-get-priming}
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_combo", "br_pt_combo",
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_prime_summary.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df <- bind_rows(prime.files)
+prime.df$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df$z_type <- "All"
+```
+
+```{r keep-get-priming2}
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary_no2.5.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_prime_summary_no2.5.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df2 <- bind_rows(prime.files)
+prime.df2$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df2$z_type <- "2.5"
+```
+
+```{r keep-get-priming3}
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary_no3.0.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_prime_summary_no3.0.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df3 <- bind_rows(prime.files)
+prime.df3$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df3$z_type <- "3.0"
+```
+
+```{r keep-calc-priming}
+# z priming, z unrelated, z related, sample unrelated, sample related
+prime.df.all <- bind_rows(
+  prime.df,
+  prime.df2,
+  prime.df3
+)
+
+prime.overall <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = mean(avgZ_prime, na.rm = T),
+            m_unrel = mean(avgZ_RT_unrelated, na.rm = T),
+            m_rel = mean(avgZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = mean(avgZ_prime, na.rm = T),
+            m_unrel = mean(avgZ_RT_unrelated, na.rm = T),
+            m_rel = mean(avgZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keep}
+flextable(prime.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "M Z", "M Z2.5", "M Z3.0",
+                               "M UR Z", "M UR Z2.5", "M UR Z3.0", 
+                               "M R Z", "M R Z2.5", "M R Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, M = mean Z-scored response latency, N = mean number of trials.")
+```
+
+## Rescored Acccuracy Priming Scores 
+
+```{r keep-get-priming-keepanswered}
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_answered_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_answered_prime_summary.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df <- bind_rows(prime.files)
+prime.df$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df$z_type <- "All"
+```
+
+```{r keep-get-priming2-keepanswered}
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary_no2.5.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_answered_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_answered_prime_summary_no2.5.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df2 <- bind_rows(prime.files)
+prime.df2$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df2$z_type <- "2.5"
+```
+
+```{r keep-get-priming3-keepanswered}
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary_no3.0.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_answered_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_answered_prime_summary_no3.0.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df3 <- bind_rows(prime.files)
+prime.df3$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df3$z_type <- "3.0"
+```
+
+```{r keep-calc-priming-keepanswered}
+# z priming, z unrelated, z related, sample unrelated, sample related
+prime.df.all <- bind_rows(
+  prime.df,
+  prime.df2,
+  prime.df3
+)
+
+prime.overall <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = mean(avgZ_prime, na.rm = T),
+            m_unrel = mean(avgZ_RT_unrelated, na.rm = T),
+            m_rel = mean(avgZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = mean(avgZ_prime, na.rm = T),
+            m_unrel = mean(avgZ_RT_unrelated, na.rm = T),
+            m_rel = mean(avgZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keepanswered}
+flextable(prime.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "M Z", "M Z2.5", "M Z3.0",
+                               "M UR Z", "M UR Z2.5", "M UR Z3.0", 
+                               "M R Z", "M R Z2.5", "M R Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, M = mean Z-scored response latency, N = mean number of trials.")
+```
+
+## Reliability 
+
+```{r get-reliability-data, eval = F}
+# open all priming trial data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_trials"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_prime_trials.csv|_combo", "", prime.list)
+
+# merge them together
+prime.trials <- bind_rows(prime.files)
+prime.trials$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+
+# only people with at least 10 priming trials
+prime.people <- prime.trials %>% 
+  group_by(observation) %>% 
+  summarize(n = n()) %>% 
+  filter(n >= 10) %>% 
+  pull(observation)
+
+prime.items <- prime.trials %>% 
+  group_by(word_combo) %>% 
+  summarize(n = n()) %>% 
+  filter(n >= 10) %>% 
+  pull(word_combo)
+
+prime.trials.keep <- prime.trials %>% 
+  filter(keep_participant == "keep") %>% 
+  filter(keep_target == "keep") %>% 
+  filter(observation %in% prime.people)
+
+prime.items.keep <- prime.trials %>% 
+  filter(keep_participant == "keep") %>% 
+  filter(keep_target == "keep") %>% 
+  filter(word_combo %in% prime.items)
+
+prime.trials.keepanswered <- prime.trials %>% 
+  filter(keep_participant_answered == "keep") %>% 
+  filter(keep_target == "keep") %>% 
+  filter(observation %in% prime.people)
+
+prime.items.keepanswered <- prime.trials %>% 
+  filter(keep_participant_answered == "keep") %>% 
+  filter(keep_target == "keep") %>% 
+  filter(word_combo %in% prime.items)
+
+sb <- function(cor) { (2 * cor) / (1 + cor) }
+```
+
+```{r rel-item, eval = F}
+save.cor.item <- rep(NA, 100)
+save.cor.item.lang <- list()
+save.cor.item.keepanswered <- rep(NA, 100)
+save.cor.item.keepanswered.lang <- list()
+
+for (i in 1:100){
+  
+  # keep trials by item 
+  prime.items.keep$split <- sample(1:2, nrow(prime.items.keep), 
+                                  replace = T) 
+  
+  # summarize the data 
+  person_summary <- prime.items.keep %>% 
+    group_by(target_word, type, split, language) %>% #calculate by item, relation, split
+    summarize(meanZ_RT = mean(target_Z_RT),
+              .groups = "keep") %>% 
+    pivot_wider(id_cols = c(target_word, language), 
+                names_from = c(type, split),
+                values_from = meanZ_RT) %>%  
+    mutate(prime_1 = unrelated_1 - related_1, 
+           prime_2 = unrelated_2 - related_2)
+  
+  # overall correlation
+  save.cor.item[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
+  
+  # language correlations
+  save.cor.item.lang[[i]] <- person_summary %>% 
+    group_by(language) %>% 
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
+  
+  
+  # keep answered trials by item 
+  prime.items.keepanswered$split <- sample(1:2, nrow(prime.items.keepanswered), 
+                                  replace = T) 
+  
+  # summarize the data 
+  person_summary <- prime.items.keepanswered %>% 
+    group_by(target_word, type, split, language) %>% #calculate by item, relation, split
+    summarize(meanZ_RT = mean(target_Z_RT),
+              .groups = "keep") %>% 
+    pivot_wider(id_cols = c(target_word, language), 
+                names_from = c(type, split),
+                values_from = meanZ_RT) %>%  
+    mutate(prime_1 = unrelated_1 - related_1, 
+           prime_2 = unrelated_2 - related_2)
+  
+  # overall correlation
+  save.cor.item.keepanswered[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
+  
+  # language correlations
+  save.cor.item.keepanswered.lang[[i]] <- person_summary %>% 
+    group_by(language) %>% 
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
+  
+}
+
+rel_item <- list(
+  "save.cor.item" = save.cor.item, 
+  "save.cor.item.lang" = save.cor.item.lang,
+  "save.cor.item.keepanswered" = save.cor.item.keepanswered,
+  "save.cor.item.keepanswered.lang" = save.cor.item.keepanswered.lang
+  )
+
+save(rel_item, file = "supplemental/reliability_item.RData")
+```
+
+```{r rel-person, eval = F}
+save.cor.trial <- rep(NA, 100)
+save.cor.trial.lang <- list()
+save.cor.trial.keepanswered <- rep(NA, 100)
+save.cor.trial.keepanswered.lang <- list()
+
+for (i in 1:100){
+  
+  # keep trials by trial 
+  prime.trials.keep$split <- sample(1:2, nrow(prime.trials.keep), 
+                                  replace = T) 
+  
+  # summarize the data 
+  person_summary <- prime.trials.keep %>% 
+    group_by(observation, type, split, language) %>% #calculate by trial, relation, split
+    summarize(meanZ_RT = mean(target_Z_RT),
+              .groups = "keep") %>% 
+    pivot_wider(id_cols = c(observation, language), 
+                names_from = c(type, split),
+                values_from = meanZ_RT) %>%  
+    mutate(prime_1 = unrelated_1 - related_1, 
+           prime_2 = unrelated_2 - related_2)
+  
+  # overall correlation
+  save.cor.trial[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
+  
+  # language correlations
+  save.cor.trial.lang[[i]] <- person_summary %>% 
+    group_by(language) %>% 
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
+  
+  
+  # keep answered trials by trial 
+  prime.trials.keepanswered$split <- sample(1:2, nrow(prime.trials.keepanswered), 
+                                  replace = T) 
+  
+  # summarize the data 
+  person_summary <- prime.trials.keepanswered %>% 
+    group_by(observation, type, split, language) %>% #calculate by trial, relation, split
+    summarize(meanZ_RT = mean(target_Z_RT),
+              .groups = "keep") %>% 
+    pivot_wider(id_cols = c(observation, language), 
+                names_from = c(type, split),
+                values_from = meanZ_RT) %>%  
+    mutate(prime_1 = unrelated_1 - related_1, 
+           prime_2 = unrelated_2 - related_2)
+  
+  # overall correlation
+  save.cor.trial.keepanswered[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
+  
+  # language correlations
+  save.cor.trial.keepanswered.lang[[i]] <- person_summary %>% 
+    group_by(language) %>% 
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
+  
+}
+
+rel_trial <- list(
+  "save.cor.trial" = save.cor.trial, 
+  "save.cor.trial.lang" = save.cor.trial.lang,
+  "save.cor.trial.keepanswered" = save.cor.trial.keepanswered,
+  "save.cor.trial.keepanswered.lang" = save.cor.trial.keepanswered.lang
+  )
+
+save(rel_trial, file = "supplemental/reliability_trial.RData")
+```
+
+```{r rel-item-results}
+# see code above 
+load(file = "supplemental/reliability_item.RData")
+load(file = "supplemental/reliability_trial.RData")
+# rel_item
+# rel_trial
+```
+
+Item reliability was calculated by randomly splitting priming trials into two halves, calculating *Z*-score priming for each half, and correlating those scores by item. Person level reliability was calculated in a similar fashion by splitting participant related-unrelated trials in half and calculating priming as the average unrelated *Z*-scored response latency minus the related *Z*-scored response latency, and correlating the two priming scores. The Spearman-Brown prophecy formula was applied to these correlations to calculate total reliability. This procedure was repeated 100 times, and average scores were calculated. Table X shows the reliability scores for person and items. The average reliability for items was `r apa_num(mean(rel_item$save.cor.item), gt1 = FALSE)` and for people was `r apa_num(mean(rel_trial$save.cor.trial), gt1 = FALSE)`. 
+
+```{r reliability-table-keep}
+rel.lang <- bind_rows(rel_item$save.cor.item.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep") %>% 
+  full_join(
+     bind_rows(rel_trial$save.cor.trial.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep"), 
+  by = "language"
+  )
+
+flextable(rel.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "Item Reliability", "Person Reliability")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) 
+
+```
+
+For rescored accuracy participants the average reliability for items was `r apa_num(mean(rel_item$save.cor.item.keepanswered), gt1 = FALSE)` and for people was `r apa_num(mean(rel_trial$save.cor.trial.keepanswered), gt1 = FALSE)`. Table X shows the same information split by language for rescored accuracy participants. 
+
+```{r reliability-table-keepanswered}
+rel.lang <- bind_rows(rel_item$save.cor.item.keepanswered.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep") %>% 
+  full_join(
+     bind_rows(rel_trial$save.cor.trial.keepanswered.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep"), 
+  by = "language"
+  )
+
+flextable(rel.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "Item Reliability", "Person Reliability")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) 
+```
+
+

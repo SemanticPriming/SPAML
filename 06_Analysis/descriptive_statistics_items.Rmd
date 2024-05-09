@@ -1,0 +1,412 @@
+---
+title: "Descriptive Statistics"
+author: "Erin Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+```{r libraries, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+library(rio)
+library(dplyr)
+library(ggplot2)
+library(maps)
+library(tidyverse)
+library(uaparserjs)
+library(papaja)
+library(flextable)
+library(psych)
+library(countrycode)
+```
+
+The links to the language files can be found in our supplemental materials. The paper is presented with an upcoming *R* package `semanticprimeR` that allows one to open data files directly in *R* and a Shiny application to download a specific set of language files [@shiny; @thedoomlab2024]. The data can be cited using our Zenodo doi [@buchanan2024] which will indicate which version of the data was examined.
+
+# Item level data
+
+The item data files can be matched with lexical information about all stimuli calculated from the OpenSubtitles [@lison2016] and subs2vec [@vanparidon2021] projects using the *semanticprimeR* package (see supplemental for tutorial). The descriptive statistics calculated from the trial level data is included separated by language for each item: mean response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. No data was excluded for being a potential outlier; however, we recommended a cut-off criterion for absolute value z-score outliers at 2.5 and 3.0, and we calculated these same statistics with those subsets of trials excluded. For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values can be merged with the item files. These values do not exist for non-words.
+
+Tables X-X show the item statistics for average item sample size, average *Z*-scored response time, average *SE* for the *Z*-scored response latencies separated by word type and language. These calculations exclude both participants and trials after first averaging over each item (see exclusions above).
+
+```{r get-items}
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_pt_combo", "br_pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+# open all participant data
+i.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*item_data"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_item"), collapse = "|")
+i.list <- i.list[grepl(langs_trial, i.list)]
+
+# import files
+i.files <- lapply(i.list, import)
+
+# give them names 
+names(i.files) <- gsub("../05_Data/data_processing/output_data/item_data/|_item_data.csv|_pt_combo", "", i.list)
+
+# merge them together
+i.df <- bind_rows(i.files)
+i.df$language <- rep(names(i.files), times = unlist(lapply(i.files, nrow)))
+```
+
+```{r items-overall}
+i.overall <- c("Overall",
+  nrow(i.df %>% filter(class == "nonword")),
+  nrow(i.df %>% filter(class == "word")),
+  i.df %>% 
+   filter(class == "nonword") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z2.5_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z3.0_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T)) %>%   
+  as.data.frame() %>% 
+  t()
+```
+
+```{r items-lang}
+# number of trials by word type
+i.lang <- i.df %>% 
+  group_by(language, class) %>% 
+  summarize(n_words = n(),
+            n_trials = mean(samplesize),
+            m_trials = mean(avgZ_RT, na.rm = T), 
+            se_trials = mean(seZ_RT, na.rm = T),
+            n_trials2 = mean(Z2.5_samplesize, na.rm = T),
+            m_trials2 = mean(Z2.5_avgZ_RT, na.rm = T), 
+            se_trials2 = mean(Z2.5_seRT, na.rm = T),
+            n_trials3 = mean(Z3.0_samplesize, na.rm = T),
+            m_trials3 = mean(Z3.0_avgZ_RT, na.rm = T), 
+            se_trials3 = mean(Z3.0_seRT, na.rm = T), 
+            .groups = "keep") %>% 
+  pivot_wider(
+    data = .,
+    id_cols = language,
+    names_from = class, 
+    values_from = c(n_words, n_trials, m_trials, se_trials, n_trials2, 
+                    m_trials2, se_trials2, n_trials3, 
+                    m_trials3, se_trials3)
+  )
+
+colnames(i.overall) <- colnames(i.lang)
+
+i.lang <- bind_rows(i.lang, 
+                    i.overall %>% 
+                      as.data.frame() %>% 
+                      mutate(across(n_words_nonword:se_trials3_word, as.numeric)))
+```
+
+## Participants for Analysis Items
+
+```{r table-overall-item-all}
+flextable(i.lang %>% 
+            select(language:se_trials_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-2}
+flextable(i.lang %>% 
+            select(language, n_trials2_nonword:se_trials2_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-3}
+flextable(i.lang %>% 
+            select(language, n_trials3_nonword:se_trials3_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r get-items-answered}
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_pt_combo", "br_pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+# open all participant data
+i.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*item_data"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_answered_item"), collapse = "|")
+i.list <- i.list[grepl(langs_trial, i.list)]
+
+# import files
+i.files <- lapply(i.list, import)
+
+# give them names 
+names(i.files) <- gsub("../05_Data/data_processing/output_data/item_data/|_answered_item_data.csv|_pt_combo", "", i.list)
+
+# merge them together
+i.df <- bind_rows(i.files)
+i.df$language <- rep(names(i.files), times = unlist(lapply(i.files, nrow)))
+```
+
+```{r items-overall-answered}
+i.overall <- c("Overall",
+  nrow(i.df %>% filter(class == "nonword")),
+  nrow(i.df %>% filter(class == "word")),
+  i.df %>% 
+   filter(class == "nonword") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z2.5_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z3.0_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T)) %>%   
+  as.data.frame() %>% 
+  t()
+```
+
+```{r items-lang-answered}
+# number of trials by word type
+i.lang <- i.df %>% 
+  group_by(language, class) %>% 
+  summarize(n_words = n(),
+            n_trials = mean(samplesize),
+            m_trials = mean(avgZ_RT, na.rm = T), 
+            se_trials = mean(seZ_RT, na.rm = T),
+            n_trials2 = mean(Z2.5_samplesize, na.rm = T),
+            m_trials2 = mean(Z2.5_avgZ_RT, na.rm = T), 
+            se_trials2 = mean(Z2.5_seRT, na.rm = T),
+            n_trials3 = mean(Z3.0_samplesize, na.rm = T),
+            m_trials3 = mean(Z3.0_avgZ_RT, na.rm = T), 
+            se_trials3 = mean(Z3.0_seRT, na.rm = T), 
+            .groups = "keep") %>% 
+  pivot_wider(
+    data = .,
+    id_cols = language,
+    names_from = class, 
+    values_from = c(n_words, n_trials, m_trials, se_trials, n_trials2, 
+                    m_trials2, se_trials2, n_trials3, 
+                    m_trials3, se_trials3)
+  )
+
+colnames(i.overall) <- colnames(i.lang)
+
+i.lang <- bind_rows(i.lang, 
+                    i.overall %>% 
+                      as.data.frame() %>% 
+                      mutate(across(n_words_nonword:se_trials3_word, as.numeric)))
+```
+
+## Rescored Accuracy Participants for Analysis Items
+
+```{r table-overall-item-all-answered}
+flextable(i.lang %>% 
+            select(language:se_trials_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-2-answered}
+flextable(i.lang %>% 
+            select(language, n_trials2_nonword:se_trials2_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-3-answered}
+flextable(i.lang %>% 
+            select(language, n_trials3_nonword:se_trials3_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
