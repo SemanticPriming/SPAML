@@ -80,7 +80,10 @@ Please note: all files are synced to OSF through GitHub. We have also included t
         -   Web Browser by Lab: <https://osf.io/egk9w>
         -   Language Locale by Lab: <https://osf.io/wt3xn>
     -   Language Reports:
-        -   
+        -   Native Language by Language: <https://osf.io/5b72x>
+        -   Operating System by Language: <https://osf.io/9dwqb>
+        -   Web Browser by Language: <https://osf.io/bn7uv>
+        -   Language Locale by Language: <https://osf.io/dyh4e>
 
 ### Manuscript
 
