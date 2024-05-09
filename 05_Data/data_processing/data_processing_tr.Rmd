@@ -674,7 +674,7 @@ For all real words, the age of acquisition, imageability, concreteness, valence,
 #                    all.x = T)
 
 ##write out item level data 
-write.csv(item_data_combo, "output_data/item_data/vtr_item_data.csv", row.names = F)
+write.csv(item_data_combo, "output_data/item_data/tr_item_data.csv", row.names = F)
 ```
 
 ### Using Redefined Scoring

@@ -347,7 +347,7 @@ flextable(p.toptwenty.n_lang) %>%
 
 ### Overall Native Language
 
-Please see https://osf.io/ta6wf for a summarized list of all native languages.
+Please see <https://osf.io/ta6wf> for a summarized list of all native languages.
 
 ```{r overall-n_lang}
 export(p.overall.n_lang, "supplemental/overall_native_language.csv", row.names = F)
@@ -355,7 +355,7 @@ export(p.overall.n_lang, "supplemental/overall_native_language.csv", row.names =
 
 ### Native Language for Original Accuracy Participants
 
-Please see https://osf.io/652h8 for a summarized list of all native languages for participants used in analysis.
+Please see <https://osf.io/652h8> for a summarized list of all native languages for participants used in analysis.
 
 ```{r keep-n_lang}
 export(p.keep.n_lang, "supplemental/keep_native_language.csv", row.names = F)
@@ -363,7 +363,7 @@ export(p.keep.n_lang, "supplemental/keep_native_language.csv", row.names = F)
 
 ### Native Language for Rescored Accuracy Participants
 
-Please see https://osf.io/b3y6r for a summarized list of all native languages for rescored accuracy in native language.
+Please see <https://osf.io/b3y6r> for a summarized list of all native languages for rescored accuracy in native language.
 
 ```{r answered-n_lang}
 export(p.keepanswered.n_lang, "supplemental/keep_answered_native_language.csv", row.names = F)
@@ -489,7 +489,7 @@ p.keepanswered.web <- p.df %>%
             .groups = "keep") 
 ```
 
-Web browsers were grouped into the largest categories for reporting. The large majority of participants used Chrome (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Chrome") %>% pull(freq.web))`%), followed by Edge (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Edge") %>% pull(freq.web))`%), Firefox (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Firefox") %>% pull(freq.web))`%), Safari (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Safari") %>% pull(freq.web))`%), and Opera (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Opera") %>% pull(freq.web))`%) A surprise result was that the Russian browser Yandex contributed a small (but not extremely small) percent of the browser usage: (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Yandex") %>% pull(freq.web))`%), followed by other web browsers (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Other") %>% pull(freq.web))`%) The results were the same when examining participants who were kept for analysis: Chrome (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Chrome") %>% pull(freq.web))`%), Edge (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Edge") %>% pull(freq.web))`%), Firefox (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Firefox") %>% pull(freq.web))`%), Safari (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Safari") %>% pull(freq.web))`%), Opera (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Opera") %>% pull(freq.web))`%), Yandex (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Yandex") %>% pull(freq.web))`%), and Other (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Other") %>% pull(freq.web))`%). 
+Web browsers were grouped into the largest categories for reporting. The large majority of participants used Chrome (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Chrome") %>% pull(freq.web))`%), followed by Edge (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Edge") %>% pull(freq.web))`%), Firefox (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Firefox") %>% pull(freq.web))`%), Safari (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Safari") %>% pull(freq.web))`%), and Opera (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Opera") %>% pull(freq.web))`%) A surprise result was that the Russian browser Yandex contributed a small (but not extremely small) percent of the browser usage: (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Yandex") %>% pull(freq.web))`%), followed by other web browsers (`r apa_num(p.overall.web %>% filter(ua.family_recode == "Other") %>% pull(freq.web))`%) The results were the same when examining participants who were kept for analysis: Chrome (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Chrome") %>% pull(freq.web))`%), Edge (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Edge") %>% pull(freq.web))`%), Firefox (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Firefox") %>% pull(freq.web))`%), Safari (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Safari") %>% pull(freq.web))`%), Opera (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Opera") %>% pull(freq.web))`%), Yandex (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Yandex") %>% pull(freq.web))`%), and Other (`r apa_num(p.keep.web %>% filter(ua.family_recode == "Other") %>% pull(freq.web))`%).
 
 ### Overall Web Browser
 
@@ -570,7 +570,7 @@ p.toptwenty.locale <- p.overall.locale %>%
   )
 ```
 
-The top twenty browser languages represented in the data are shown in Table X, with full tables of browser languages in the supplemental online data. Generally, this pattern matched the demographics of the study, as well as the targeted languages. More participants had their browser set in English compared to the indicated native language, see Table X. 
+The top twenty browser languages represented in the data are shown in Table X, with full tables of browser languages in the supplemental online data. Generally, this pattern matched the demographics of the study, as well as the targeted languages. More participants had their browser set in English compared to the indicated native language, see Table X.
 
 ```{r overall-locale-table}
 flextable(p.toptwenty.locale) %>% 
@@ -585,7 +585,7 @@ flextable(p.toptwenty.locale) %>%
 
 ### Overall Browser Language
 
-Please see https://osf.io/93kep for a summarized list of all browser languages.
+Please see <https://osf.io/93kep> for a summarized list of all browser languages.
 
 ```{r overall-locale}
 export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names = F)
@@ -593,7 +593,7 @@ export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names 
 
 ### Browser Language for Original Accuracy Participants
 
-Please see https://osf.io/3yab7 for a summarized list of all browser languages for participants used in analysis.
+Please see <https://osf.io/3yab7> for a summarized list of all browser languages for participants used in analysis.
 
 ```{r keep-locale}
 export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
@@ -601,7 +601,7 @@ export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
 
 ### Native Language for Rescored Accuracy Participants
 
-Please see https://osf.io/adhbe for a summarized list of all browser languages for rescored accuracy in native language.
+Please see <https://osf.io/adhbe> for a summarized list of all browser languages for rescored accuracy in native language.
 
 ```{r answered-locale}
 export(p.keepanswered.locale, "supplemental/keep_answered_browser_language.csv", row.names = F)
@@ -609,12 +609,12 @@ export(p.keepanswered.locale, "supplemental/keep_answered_browser_language.csv",
 
 ## Data by Lab
 
-Please see summary report located at: https://osf.io/ty4hp which includes gender, education, age, and sample size counts for a summary. This table also includes information about the ethics submissions and data collection procedures for each lab.
+Please see summary report located at: <https://osf.io/ty4hp> which includes gender, education, age, and sample size counts for a summary. This table also includes information about the ethics submissions and data collection procedures for each lab.
 
-- Native Language by Lab: https://osf.io/hnrgk
-- Operating System by Lab: https://osf.io/gud6v
-- Web Browser by Lab: https://osf.io/egk9w
-- Language Locale by Lab: https://osf.io/wt3xn
+-   Native Language by Lab: <https://osf.io/hnrgk>
+-   Operating System by Lab: <https://osf.io/gud6v>
+-   Web Browser by Lab: <https://osf.io/egk9w>
+-   Language Locale by Lab: <https://osf.io/wt3xn>
 
 ```{r separate-by-lab}
 p.df %>% 
@@ -661,12 +661,12 @@ p.df %>%
 
 ## Data by Language
 
-Please see summary report located at: https://osf.io/y3dk7. This summary includes gender, education, and age information by language.
+Please see summary report located at: <https://osf.io/y3dk7>. This summary includes gender, education, and age information by language.
 
-- Native Language by Language: https://osf.io/5b72x
-- Operating System by Language: https://osf.io/9dwqb
-- Web Browser by Language: https://osf.io/bn7uv
-- Language Locale by Language: https://osf.io/dyh4e
+-   Native Language by Language: <https://osf.io/5b72x>
+-   Operating System by Language: <https://osf.io/9dwqb>
+-   Web Browser by Language: <https://osf.io/bn7uv>
+-   Language Locale by Language: <https://osf.io/dyh4e>
 
 ```{r separate-by-lang}
 p.df %>% 
@@ -851,9 +851,20 @@ time.complete.keepanswered <- p.df %>%
   )
 ```
 
-The study took approximately $M$ = `r apa_num(time.complete.all$m_time)` ($SD$ = `r apa_num(time.complete.all$sd_time)`) minutes to complete. If a participant's computer went to sleep during the study, and then they returned (often to close) to the study, the last timestamp would include the final time the study was open. Therefore, the median of the study is likely more representative, $Mdn$ = `r apa_num(time.complete.all$med_time)` minutes. The participants used in analysis completed the study in $M$ = `r apa_num(time.complete.keep$m_time)` ($SD$ = `r apa_num(time.complete.keep$sd_time)`), $Mdn$ = `r apa_num(time.complete.keep$med_time)` minutes. 
+The study took approximately $M$ = `r apa_num(time.complete.all$m_time)` ($SD$ = `r apa_num(time.complete.all$sd_time)`) minutes to complete. If a participant's computer went to sleep during the study, and then they returned (often to close) to the study, the last timestamp would include the final time the study was open. Therefore, the median of the study is likely more representative, $Mdn$ = `r apa_num(time.complete.all$med_time)` minutes. The participants used in analysis completed the study in $M$ = `r apa_num(time.complete.keep$m_time)` ($SD$ = `r apa_num(time.complete.keep$sd_time)`), $Mdn$ = `r apa_num(time.complete.keep$med_time)` minutes. Tables X (all participants) and X (participants for analysis) include the number of trials, accuracy, and mean *Z*-scored response times for each language and total. These values are calculated on overall trials, regardless of item presented for both all participants and analysis participants. The mean response times do no include incorrect or time out answers, as *Z*-scores are only calculated on valid trials (see exclusions above). The analyses averaged over item statistics is presented below.
 
-```{r}
+The rescored accuracy participants completed the study in $M$ = `r apa_num(time.complete.keepanswered$m_time)` ($SD$ = `r apa_num(time.complete.keepanswered$sd_time)`), $Mdn$ = `r apa_num(time.complete.keepanswered$med_time)` minutes.
+
+```{r get-trials}
+rm(list = ls())
+gc()
+
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
 # open all participant data
 t.list <- list.files(
   path = "../05_Data/data_processing/output_data",
@@ -863,7 +874,7 @@ t.list <- list.files(
 )
 
 # only languages we need
-langs_trial <- paste(paste0("/", langs, "_"), collapse = "|")
+langs_trial <- paste(paste0("/", langs, "_trial"), collapse = "|")
 t.list <- t.list[grepl(langs_trial, t.list)]
 
 # import files
@@ -878,460 +889,759 @@ t.df$language <- rep(names(t.files), times = unlist(lapply(t.files, nrow)))
 ```
 
 ```{r num-overall}
-# number of trials by word type
-t.overall <- c(nrow(t.df), 
-             nrow(t.df %>% filter(class = "nonword")),
-             nrow(t.df %>% filter(class = "word")))
+t.overall <- c("Overall",
+  nrow(t.df %>% filter(class == "nonword")),
+  nrow(t.df %>% filter(class == "word")),
+  t.df %>% 
+   filter(class == "nonword") %>% 
+   pull(correct) %>% 
+   mean(., na.rm = T),
+  t.df %>% 
+   filter(class == "word") %>% 
+   pull(correct) %>% 
+   mean(., na.rm = T),
+  t.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+   t.df %>% 
+     filter(class == "word") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+  t.df %>% 
+     filter(Z_RT < 2.5) %>% 
+     filter(class == "nonword") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+   t.df %>% 
+     filter(Z_RT < 2.5) %>% 
+     filter(class == "word") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+  t.df %>% 
+     filter(Z_RT < 3) %>% 
+     filter(class == "nonword") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+   t.df %>% 
+     filter(Z_RT < 3) %>% 
+     filter(class == "word") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T)) %>% 
+  as.data.frame() %>% 
+  t()
 
-t.overall.keep <- c(nrow(t.df %>% 
-                         filter(keep_participant == "keep")), 
-             nrow(t.df %>% 
-                    filter(keep_participant == "keep") %>% 
-                    filter(class = "nonword")),
-             nrow(t.df %>% 
-                    filter(keep_participant == "keep") %>% 
-                    filter(class = "word")))
+t.overall.keep <- c("Overall",
+  nrow(t.df %>% 
+         filter(keep_participant == "keep") %>% 
+         filter(class == "nonword")),
+  nrow(t.df %>% 
+        filter(keep_participant == "keep") %>% 
+        filter(class == "word")),
+  t.df %>% 
+   filter(keep_participant == "keep") %>% 
+   filter(class == "nonword") %>% 
+   pull(correct) %>% 
+   mean(., na.rm = T),
+  t.df %>% 
+   filter(keep_participant == "keep") %>% 
+   filter(class == "word") %>% 
+   pull(correct) %>% 
+   mean(., na.rm = T),
+  t.df %>% 
+     filter(keep_participant == "keep") %>% 
+     filter(class == "nonword") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+   t.df %>% 
+     filter(keep_participant == "keep") %>% 
+     filter(class == "word") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+  t.df %>% 
+     filter(Z_RT < 2.5) %>% 
+     filter(keep_participant == "keep") %>% 
+     filter(class == "nonword") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+   t.df %>% 
+     filter(Z_RT < 2.5) %>% 
+     filter(keep_participant == "keep") %>% 
+     filter(class == "word") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+  t.df %>% 
+     filter(Z_RT < 3) %>% 
+     filter(keep_participant == "keep") %>% 
+     filter(class == "nonword") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T),
+   t.df %>% 
+     filter(Z_RT < 3) %>% 
+     filter(keep_participant == "keep") %>% 
+     filter(class == "word") %>% 
+     pull(Z_RT) %>% 
+     mean(., na.rm = T)) %>% 
+  as.data.frame() %>% 
+  t()
 
-t.overall.keepanswered <- c(nrow(t.df %>% 
-                                 filter(keep_participant_answered == "keep")), 
+t.overall.keepanswered <- c("Overall",
              nrow(t.df %>% 
                     filter(keep_participant_answered == "keep") %>% 
-                    filter(class = "nonword")),
+                    filter(class == "nonword")),
              nrow(t.df %>% 
                     filter(keep_participant_answered == "keep") %>% 
-                    filter(class = "word")))
-
-# accuracy by word type
-a.overall <- c(t.df %>% 
-                 pull(correct) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(class = "nonword") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(class = "word") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T))
-
-a.overall.keep <- c(t.df %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(correct) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T))
-
-a.overall.keep <- c(t.df %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(correct) %>% 
-                 mean(., na.rm = T), 
+                    filter(class == "word")), 
              t.df %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
+               filter(class == "nonword") %>% 
                pull(correct) %>% 
                mean(., na.rm = T),
              t.df %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
+               filter(class == "word") %>% 
                pull(correct) %>% 
-               mean(., na.rm = T))
-
-# average z-score response latencies
-z.overall <- c(t.df %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
                mean(., na.rm = T),
-             t.df %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z.overall.keep <- c(t.df %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z.overall.keep <- c(t.df %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
              t.df %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
+               filter(class == "nonword") %>% 
                pull(Z_RT) %>% 
                mean(., na.rm = T),
              t.df %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-# 2.5
-z2.overall <- c(t.df %>% 
-                filter(Z_RT < 2.5) %>%   
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z2.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 2.5) %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z2.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 2.5) %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
+               filter(class == "word") %>% 
                pull(Z_RT) %>% 
                mean(., na.rm = T),
              t.df %>% 
                filter(Z_RT < 2.5) %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-# 3.0
-z3.overall <- c(t.df %>% 
-                filter(Z_RT < 3) %>%   
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(class = "nonword") %>% 
+               filter(class == "nonword") %>% 
                pull(Z_RT) %>% 
                mean(., na.rm = T),
              t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z3.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 3) %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z3.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 3) %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
+               filter(Z_RT < 2.5) %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
+               filter(class == "word") %>% 
                pull(Z_RT) %>% 
                mean(., na.rm = T),
              t.df %>% 
                filter(Z_RT < 3) %>% 
                filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
+               filter(class == "nonword") %>% 
                pull(Z_RT) %>% 
-               mean(., na.rm = T))
+               mean(., na.rm = T),
+             t.df %>% 
+               filter(Z_RT < 3) %>% 
+               filter(keep_participant_answered == "keep") %>% 
+               filter(class == "word") %>% 
+               pull(Z_RT) %>% 
+               mean(., na.rm = T)) %>% 
+  as.data.frame() %>% 
+  t()
 ```
 
 ```{r num-lang}
 # number of trials by word type
 t.lang <- t.df %>% 
-  group_by(language) %>% 
-  summarize(n_trials = )
-t.overall <- c(nrow(t.df), 
-             nrow(t.df %>% filter(class = "nonword")),
-             nrow(t.df %>% filter(class = "word")))
+  group_by(language, class) %>% 
+  summarize(n_trials = n(),
+            acc_trials = mean(correct, na.rm = T), 
+            m_trials = mean(Z_RT, na.rm = T),
+            .groups = "keep") %>% 
+  left_join(
+    t.df %>% 
+      filter(Z_RT < 2.5) %>% 
+      group_by(language, class) %>% 
+      summarize(
+            m_trials2 = mean(Z_RT, na.rm = T),
+            .groups = "keep"),
+    by = c("language", "class")
+      
+  ) %>% 
+  left_join(
+    t.df %>% 
+      filter(Z_RT < 3) %>% 
+      group_by(language, class) %>% 
+      summarize(
+            m_trials3 = mean(Z_RT, na.rm = T),
+            .groups = "keep"),
+    by = c("language", "class")
+      
+  ) %>% 
+  pivot_wider(data = .,
+              id_cols = language, 
+              names_from = class, 
+              values_from = c(n_trials, acc_trials,
+                              m_trials, m_trials2, m_trials3)) 
 
-t.overall.keep <- c(nrow(t.df %>% 
-                         filter(keep_participant == "keep")), 
-             nrow(t.df %>% 
-                    filter(keep_participant == "keep") %>% 
-                    filter(class = "nonword")),
-             nrow(t.df %>% 
-                    filter(keep_participant == "keep") %>% 
-                    filter(class = "word")))
+colnames(t.overall) <- colnames(t.lang)
+colnames(t.overall.keep) <- colnames(t.lang)
+colnames(t.overall.keepanswered) <- colnames(t.lang)
 
-t.overall.keepanswered <- c(nrow(t.df %>% 
-                                 filter(keep_participant_answered == "keep")), 
-             nrow(t.df %>% 
-                    filter(keep_participant_answered == "keep") %>% 
-                    filter(class = "nonword")),
-             nrow(t.df %>% 
-                    filter(keep_participant_answered == "keep") %>% 
-                    filter(class = "word")))
+t.lang <- bind_rows(t.lang, 
+                    t.overall %>% 
+                      as.data.frame() %>% 
+                      mutate(across(n_trials_nonword:m_trials3_word, as.numeric)))
 
-# accuracy by word type
-a.overall <- c(t.df %>% 
-                 pull(correct) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(class = "nonword") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(class = "word") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T))
+t.lang.keep <- t.df %>% 
+  filter(keep_participant == "keep") %>% 
+  group_by(language, class) %>% 
+  summarize(n_trials = n(),
+            acc_trials = mean(correct, na.rm = T), 
+            m_trials = mean(Z_RT, na.rm = T),
+            .groups = "keep") %>% 
+    left_join(
+    t.df %>% 
+      filter(keep_participant == "keep") %>% 
+      filter(Z_RT < 2.5) %>% 
+      group_by(language, class) %>% 
+      summarize(
+            m_trials2 = mean(Z_RT, na.rm = T),
+            .groups = "keep"),
+    by = c("language", "class")
+      
+  ) %>% 
+  left_join(
+    t.df %>% 
+      filter(keep_participant == "keep") %>% 
+      filter(Z_RT < 3) %>% 
+      group_by(language, class) %>% 
+      summarize(
+            m_trials3 = mean(Z_RT, na.rm = T),
+            .groups = "keep"),
+    by = c("language", "class")
+      
+  ) %>% 
+  pivot_wider(data = .,
+              id_cols = language, 
+              names_from = class, 
+              values_from = c(n_trials, acc_trials, 
+                              m_trials, m_trials2, m_trials3)) %>% 
+  bind_rows(t.overall.keep %>%
+              as.data.frame() %>% 
+              mutate(across(n_trials_nonword:m_trials3_word, as.numeric)))
+  
+t.lang.keepanswered <- t.df %>% 
+  filter(keep_participant_answered == "keep") %>% 
+  group_by(language, class) %>% 
+  summarize(n_trials = n(),
+            acc_trials = mean(correct, na.rm = T), 
+            m_trials = mean(Z_RT, na.rm = T),
+            .groups = "keep") %>% 
+    left_join(
+    t.df %>% 
+      filter(keep_participant_answered == "keep") %>% 
+      filter(Z_RT < 2.5) %>% 
+      group_by(language, class) %>% 
+      summarize(
+            m_trials2 = mean(Z_RT, na.rm = T),
+            .groups = "keep"),
+    by = c("language", "class")
+      
+  ) %>% 
+  left_join(
+    t.df %>% 
+      filter(keep_participant_answered == "keep") %>% 
+      filter(Z_RT < 3) %>% 
+      group_by(language, class) %>% 
+      summarize(
+            m_trials3 = mean(Z_RT, na.rm = T),
+            .groups = "keep"),
+    by = c("language", "class")
+      
+  ) %>% 
+  pivot_wider(data = .,
+              id_cols = language, 
+              names_from = class, 
+              values_from = c(n_trials, acc_trials, 
+                              m_trials, m_trials2, m_trials3)) %>% 
+  bind_rows(t.overall.keepanswered %>%
+              as.data.frame() %>% 
+              mutate(across(n_trials_nonword:m_trials3_word, as.numeric)))
 
-a.overall.keep <- c(t.df %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(correct) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T))
-
-a.overall.keep <- c(t.df %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(correct) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(correct) %>% 
-               mean(., na.rm = T))
-
-# average z-score response latencies
-z.overall <- c(t.df %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z.overall.keep <- c(t.df %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z.overall.keep <- c(t.df %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-# 2.5
-z2.overall <- c(t.df %>% 
-                filter(Z_RT < 2.5) %>%   
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z2.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 2.5) %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z2.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 2.5) %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 2.5) %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-# 3.0
-z3.overall <- c(t.df %>% 
-                filter(Z_RT < 3) %>%   
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z3.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 3) %>% 
-                 filter(keep_participant == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(keep_participant == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
-
-z3.overall.keep <- c(t.df %>% 
-                       filter(Z_RT < 3) %>% 
-                 filter(keep_participant_answered == "keep") %>% 
-                 pull(Z_RT) %>% 
-                 mean(., na.rm = T), 
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "nonword") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T),
-             t.df %>% 
-               filter(Z_RT < 3) %>% 
-               filter(keep_participant_answered == "keep") %>% 
-               filter(class = "word") %>% 
-               pull(Z_RT) %>% 
-               mean(., na.rm = T))
 ```
 
-The rescored accuracy participants completed the study in $M$ = `r apa_num(time.complete.keepanswered$m_time)` ($SD$ = `r apa_num(time.complete.keepanswered$sd_time)`), $Mdn$ = `r apa_num(time.complete.keepanswered$med_time)` minutes. 
+### Overall Trials
 
- the number of trials by word type (word, nonword), the accuracy by word type, and average z-scored response latencies by word type (overall, excluding Z \> 2.5, excluding Z \> 3.0; see below). These values will be provided for overall results and separated by language.
+```{r table-overall-trials}
+flextable(t.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "Acc NW", 
+                               "Acc Word", "M NW", 
+                               "M Word", "M NW 2.5", 
+                               "M  Word 2.5", "M NW 3.0", 
+                               "M Word 3.0")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Participants for Analysis Trials
+
+```{r table-keep-trials}
+flextable(t.lang.keep) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "Acc NW", 
+                               "Acc Word", "M NW", 
+                               "M Word", "M NW 2.5", 
+                               "M  Word 2.5", "M NW 3.0", 
+                               "M Word 3.0")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+### Rescored Accuracy Participants for Analysis Trials
+
+```{r table-keepanswered-trials}
+flextable(t.lang.keepanswered) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "Acc NW", 
+                               "Acc Word", "M NW", 
+                               "M Word", "M NW 2.5", 
+                               "M  Word 2.5", "M NW 3.0", 
+                               "M Word 3.0")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
 
 # Item level data
 
-The item data files can be matched with lexical information about all stimuli calculated from the OpenSubtitles [CITE] and subs2vec [CITE] projects using the *semanticprimeR* package (see supplemental for tutorial). The descriptive statistics calculated from the trial level data is included separated by language for each item: mean response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. No data was excluded for being a potential outlier; however, we recommended a cut-off criterion for absolute value z-score outliers at 2.5 and 3.0, and we calculated these same statistics with those subsets of trials excluded. For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values can be merged with the item files. These values do not exist for non-words. 
+The item data files can be matched with lexical information about all stimuli calculated from the OpenSubtitles [@lison2016] and subs2vec [@vanparidon2021] projects using the *semanticprimeR* package (see supplemental for tutorial). The descriptive statistics calculated from the trial level data is included separated by language for each item: mean response latency, average standardized response latency, sample size, standard errors of response latencies, and accuracy rate. No data was excluded for being a potential outlier; however, we recommended a cut-off criterion for absolute value z-score outliers at 2.5 and 3.0, and we calculated these same statistics with those subsets of trials excluded. For all real words, the age of acquisition, imageability, concreteness, valence, dominance, arousal, and familiarity values can be merged with the item files. These values do not exist for non-words.
 
-We will provide descriptive statistics on the average sample size, average z-scored response latencies, and average SE for the z-scored response latencies by each word type (word, nonword). These values will be calculated for the overall data set, separated by language, and without each level of z-score outlier criterion.
+Tables X-X show the item statistics for average item sample size, average *Z*-scored response time, average *SE* for the *Z*-scored response latencies separated by word type and language. These calculations exclude both participants and trials after first averaging over each item (see exclusions above).
 
-```{r}
+```{r get-items}
+rm(list = ls())
+gc()
 
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_pt_combo", "br_pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+# open all participant data
+i.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*item_data"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_item"), collapse = "|")
+i.list <- i.list[grepl(langs_trial, i.list)]
+
+# import files
+i.files <- lapply(i.list, import)
+
+# give them names 
+names(i.files) <- gsub("../05_Data/data_processing/output_data/item_data/|_item_data.csv|_pt_combo", "", i.list)
+
+# merge them together
+i.df <- bind_rows(i.files)
+i.df$language <- rep(names(i.files), times = unlist(lapply(i.files, nrow)))
+```
+
+```{r items-overall}
+i.overall <- c("Overall",
+  nrow(i.df %>% filter(class == "nonword")),
+  nrow(i.df %>% filter(class == "word")),
+  i.df %>% 
+   filter(class == "nonword") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z2.5_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z3.0_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T)) %>%   
+  as.data.frame() %>% 
+  t()
+```
+
+```{r items-lang}
+# number of trials by word type
+i.lang <- i.df %>% 
+  group_by(language, class) %>% 
+  summarize(n_words = n(),
+            n_trials = mean(samplesize),
+            m_trials = mean(avgZ_RT, na.rm = T), 
+            se_trials = mean(seZ_RT, na.rm = T),
+            n_trials2 = mean(Z2.5_samplesize, na.rm = T),
+            m_trials2 = mean(Z2.5_avgZ_RT, na.rm = T), 
+            se_trials2 = mean(Z2.5_seRT, na.rm = T),
+            n_trials3 = mean(Z3.0_samplesize, na.rm = T),
+            m_trials3 = mean(Z3.0_avgZ_RT, na.rm = T), 
+            se_trials3 = mean(Z3.0_seRT, na.rm = T), 
+            .groups = "keep") %>% 
+  pivot_wider(
+    data = .,
+    id_cols = language,
+    names_from = class, 
+    values_from = c(n_words, n_trials, m_trials, se_trials, n_trials2, 
+                    m_trials2, se_trials2, n_trials3, 
+                    m_trials3, se_trials3)
+  )
+
+colnames(i.overall) <- colnames(i.lang)
+
+i.lang <- bind_rows(i.lang, 
+                    i.overall %>% 
+                      as.data.frame() %>% 
+                      mutate(across(n_words_nonword:se_trials3_word, as.numeric)))
+```
+
+### Participants for Analysis Items
+
+```{r table-overall-item-all}
+flextable(i.lang %>% 
+            select(language:se_trials_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-2}
+flextable(i.lang %>% 
+            select(language, n_trials2_nonword:se_trials2_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-3}
+flextable(i.lang %>% 
+            select(language, n_trials3_nonword:se_trials3_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r get-items-answered}
+rm(list = ls())
+gc()
+
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_pt_combo", "br_pt_combo", 
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+# open all participant data
+i.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*item_data"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_answered_item"), collapse = "|")
+i.list <- i.list[grepl(langs_trial, i.list)]
+
+# import files
+i.files <- lapply(i.list, import)
+
+# give them names 
+names(i.files) <- gsub("../05_Data/data_processing/output_data/item_data/|_answered_item_data.csv|_pt_combo", "", i.list)
+
+# merge them together
+i.df <- bind_rows(i.files)
+i.df$language <- rep(names(i.files), times = unlist(lapply(i.files, nrow)))
+```
+
+```{r items-overall-answered}
+i.overall <- c("Overall",
+  nrow(i.df %>% filter(class == "nonword")),
+  nrow(i.df %>% filter(class == "word")),
+  i.df %>% 
+   filter(class == "nonword") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z2.5_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z2.5_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_samplesize) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+   filter(class == "word") %>% 
+   pull(Z3.0_samplesize) %>% 
+   mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_avgZ_RT) %>% 
+     mean(., na.rm = T),
+  i.df %>% 
+     filter(class == "nonword") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T),
+   i.df %>% 
+     filter(class == "word") %>% 
+     pull(Z3.0_seZ_RT) %>% 
+     mean(., na.rm = T)) %>%   
+  as.data.frame() %>% 
+  t()
+```
+
+```{r items-lang-answered}
+# number of trials by word type
+i.lang <- i.df %>% 
+  group_by(language, class) %>% 
+  summarize(n_words = n(),
+            n_trials = mean(samplesize),
+            m_trials = mean(avgZ_RT, na.rm = T), 
+            se_trials = mean(seZ_RT, na.rm = T),
+            n_trials2 = mean(Z2.5_samplesize, na.rm = T),
+            m_trials2 = mean(Z2.5_avgZ_RT, na.rm = T), 
+            se_trials2 = mean(Z2.5_seRT, na.rm = T),
+            n_trials3 = mean(Z3.0_samplesize, na.rm = T),
+            m_trials3 = mean(Z3.0_avgZ_RT, na.rm = T), 
+            se_trials3 = mean(Z3.0_seRT, na.rm = T), 
+            .groups = "keep") %>% 
+  pivot_wider(
+    data = .,
+    id_cols = language,
+    names_from = class, 
+    values_from = c(n_words, n_trials, m_trials, se_trials, n_trials2, 
+                    m_trials2, se_trials2, n_trials3, 
+                    m_trials3, se_trials3)
+  )
+
+colnames(i.overall) <- colnames(i.lang)
+
+i.lang <- bind_rows(i.lang, 
+                    i.overall %>% 
+                      as.data.frame() %>% 
+                      mutate(across(n_words_nonword:se_trials3_word, as.numeric)))
+```
+
+### Rescored Accuracy Participants for Analysis Items
+
+```{r table-overall-item-all-answered}
+flextable(i.lang %>% 
+            select(language:se_trials_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-2-answered}
+flextable(i.lang %>% 
+            select(language, n_trials2_nonword:se_trials2_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
+```
+
+```{r table-overall-item-3-answered}
+flextable(i.lang %>% 
+            select(language, n_trials3_nonword:se_trials3_word)) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "N NW", 
+                               "N Word", "M Trials NW", 
+                               "M Trials Word", 
+                               "M Z NW", "M Z Word", 
+                               "SE Z NW", "SE Z Word")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A"
+)
 ```
 
 # Priming data
 
-add note about overall proportions of priming trials calculate transition probabilities
+In a separate file, we prepared information about priming results which includes the target word, average response latencies, averaged *Z*-scored response latencies, sample sizes, standard errors, and priming response latency. For each item, priming is defined as the average *Z*-scored response latency when presented in the unrelated minus the related condition. Therefore, the timing for DOG-CAT would be subtracted from BUS-CAT to indicate priming for the word CAT. The similarity scores calculated during stimuli selection will be provided for merging, as well as other popular measures of similarity if they are available in that language. For example, semantic feature overlap norms are also available in Italian [@montefinese2013], German [@kremer2011], Spanish [@aguasvivas2018], and Dutch [@ruts2004].
 
-In a separate file, we will also prepare information about priming results which includes the target word, average response latencies, averaged Z-scored response latencies, sample sizes, standard errors, and priming response latency. For each item, priming is defined as the average z-scored response latency when presented in the unrelated minus the related condition. Therefore, the timing for DOG-CAT would be subtracted from BUS-CAT to indicate priming for the word CAT. The similarity scores calculated during stimuli selection will be provided in this file, as well as other popular measures of similarity if they are available in that language. For example, semantic feature overlap norms are also available in Italian95, German96, Spanish26, and Dutch97.
+```{r get-priming}
+rm(list = ls())
+gc()
 
-We will provide the average statistics for z-score priming, z-score unrelated response latency, z-score related response latency, sample size for unrelated trials, and sample size for related trials. These values will be calculated overall, by language, and with/without z- score level exclusions. Last, we will calculate the participant level priming reliability98 and item-level priming reliability44.
+langs <- c("cs", "da", "de", 
+           "el", "en", "es", "fr", "hu", "it", "ja", 
+           "ko", "pl", "pt_combo", "br_pt",
+           "ro", "ru", "sr", "tr", 
+           "zh")
+
+# open all participant data
+t.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_prime"), collapse = "|")
+t.list <- t.list[grepl(langs_trial, t.list)]
+
+# import files
+t.files <- lapply(t.list, import)
+
+# give them names 
+names(t.files) <- gsub("../05_Data/data_processing/output_data/trial_data/|_prime_summary.csv|_combo", "", t.list)
+
+# merge them together
+t.df <- bind_rows(t.files)
+t.df$language <- rep(names(t.files), times = unlist(lapply(t.files, nrow)))
+```
 
 ```{r}
-
+# z priming, z unrelated, z related, sample unrelated, sample related
 ```
+
+
+We will provide the average statistics for z-score priming, z-score unrelated response latency, z-score related response latency, sample size for unrelated trials, and sample size for related trials. These values will be calculated overall, by language, and with/without z- score level exclusions. Last, we will calculate the participant level priming reliability98 and item-level priming reliability44.
