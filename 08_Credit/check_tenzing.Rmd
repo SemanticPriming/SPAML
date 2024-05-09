@@ -266,13 +266,15 @@ online <- online %>%
 
 final_tenzing <- group_overall %>% 
   full_join(online, by = c("PSA_ID.x" = "PSA_ID"))
+
+
 ```
 
 ## Output
 
 ```{r}
 final_tenzing <- final_tenzing %>% 
-  
+  # erin, kelly, admin alphabetic, proposing team, the big mess (organize by # credit category - alphabetic), sav 
   select(Tier, FirstName, `Middle name`, LastName, user.name, )
 
 

@@ -418,7 +418,7 @@ The majority of participants used a Windows based operating system (`r apa_num(p
 
 ### Overall Operating System
 
-```{r overall-os}
+```{r overall-os-table}
 flextable(p.overall.os) %>% 
   set_header_labels(x = ., 
                     values = c("Operating System", "Percent")) %>% 
@@ -493,7 +493,7 @@ Web browsers were grouped into the largest categories for reporting. The large m
 
 ### Overall Web Browser
 
-```{r overall-web}
+```{r overall-web-table}
 flextable(p.overall.web) %>% 
   set_header_labels(x = ., 
                     values = c("Web Browser", "Percent")) %>% 
@@ -587,7 +587,7 @@ flextable(p.toptwenty.locale) %>%
 
 Please see <https://osf.io/93kep> for a summarized list of all browser languages.
 
-```{r overall-locale}
+```{r overall-locale-export}
 export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names = F)
 ```
 
@@ -595,7 +595,7 @@ export(p.overall.locale, "supplemental/overall_browser_language.csv", row.names 
 
 Please see <https://osf.io/3yab7> for a summarized list of all browser languages for participants used in analysis.
 
-```{r keep-locale}
+```{r keep-locale-export}
 export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
 ```
 
@@ -603,7 +603,7 @@ export(p.keep.locale, "supplemental/keep_browser_language.csv", row.names = F)
 
 Please see <https://osf.io/adhbe> for a summarized list of all browser languages for rescored accuracy in native language.
 
-```{r answered-locale}
+```{r answered-locale-export}
 export(p.keepanswered.locale, "supplemental/keep_answered_browser_language.csv", row.names = F)
 ```
 
@@ -814,7 +814,8 @@ ggplot(country_summary) +
                        na.value = "white") +
   theme(legend.position = "bottom")
 
-ggsave("images/continuous_country.png", dpi = 300)
+####CHECK COLOR PALETTE#### (issue with the yellow)
+ggsave("images/binned_country.png", dpi = 300)
 ```
 
 # Trial level data
@@ -858,6 +859,13 @@ The rescored accuracy participants completed the study in $M$ = `r apa_num(time.
 ```{r get-trials}
 rm(list = ls())
 gc()
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 
 langs <- c("cs", "da", "de", 
            "el", "en", "es", "fr", "hu", "it", "ja", 
@@ -1161,7 +1169,7 @@ t.lang.keepanswered <- t.df %>%
 
 ```
 
-### Overall Trials
+## Overall Trials
 
 ```{r table-overall-trials}
 flextable(t.lang) %>% 
@@ -1178,7 +1186,7 @@ flextable(t.lang) %>%
 )
 ```
 
-### Participants for Analysis Trials
+## Participants for Analysis Trials
 
 ```{r table-keep-trials}
 flextable(t.lang.keep) %>% 
@@ -1195,7 +1203,7 @@ flextable(t.lang.keep) %>%
 )
 ```
 
-### Rescored Accuracy Participants for Analysis Trials
+## Rescored Accuracy Participants for Analysis Trials
 
 ```{r table-keepanswered-trials}
 flextable(t.lang.keepanswered) %>% 
@@ -1221,6 +1229,13 @@ Tables X-X show the item statistics for average item sample size, average *Z*-sc
 ```{r get-items}
 rm(list = ls())
 gc()
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 
 langs <- c("cs", "da", "de", 
            "el", "en", "es", "fr", "hu", "it", "ja", 
@@ -1363,7 +1378,7 @@ i.lang <- bind_rows(i.lang,
                       mutate(across(n_words_nonword:se_trials3_word, as.numeric)))
 ```
 
-### Participants for Analysis Items
+## Participants for Analysis Items
 
 ```{r table-overall-item-all}
 flextable(i.lang %>% 
@@ -1413,6 +1428,13 @@ flextable(i.lang %>%
 ```{r get-items-answered}
 rm(list = ls())
 gc()
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 
 langs <- c("cs", "da", "de", 
            "el", "en", "es", "fr", "hu", "it", "ja", 
@@ -1555,7 +1577,7 @@ i.lang <- bind_rows(i.lang,
                       mutate(across(n_words_nonword:se_trials3_word, as.numeric)))
 ```
 
-### Rescored Accuracy Participants for Analysis Items
+## Rescored Accuracy Participants for Analysis Items
 
 ```{r table-overall-item-all-answered}
 flextable(i.lang %>% 
@@ -1606,11 +1628,18 @@ flextable(i.lang %>%
 
 In a separate file, we prepared information about priming results which includes the target word, average response latencies, averaged *Z*-scored response latencies, sample sizes, standard errors, and priming response latency. For each item, priming is defined as the average *Z*-scored response latency when presented in the unrelated minus the related condition. Therefore, the timing for DOG-CAT would be subtracted from BUS-CAT to indicate priming for the word CAT. The similarity scores calculated during stimuli selection will be provided for merging, as well as other popular measures of similarity if they are available in that language. For example, semantic feature overlap norms are also available in Italian [@montefinese2013], German [@kremer2011], Spanish [@aguasvivas2018], and Dutch [@ruts2004].
 
-### Original Accuracy Priming Scores
+## Original Accuracy Priming Scores
 
 ```{r keep-get-priming}
 rm(list = ls())
 gc()
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, size="scriptsize")
+def.chunk.hook <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
 
 langs <- c("cs", "da", "de", 
            "el", "en", "es", "fr", "hu", "it", "ja", 
@@ -1707,7 +1736,12 @@ prime.overall <- prime.df.all %>%
             m_rel = mean(avgZ_RT_related, na.rm = T),
             n_unrel = mean(target_answeredN_unrelated, na.rm = T),
             n_rel = mean(target_answeredN_related, na.rm = T),
-            .groups = "keep")
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
 
 prime.lang <- prime.df.all %>% 
   group_by(language, z_type) %>% 
@@ -1721,10 +1755,31 @@ prime.lang <- prime.df.all %>%
               id_cols = "language",
               names_from = "z_type", 
               values_from = c(m_prime:n_rel)) %>% 
-  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0)
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
 ```
 
-### Rescored Acccuracy Priming Scores 
+```{r priming-table-keep}
+flextable(prime.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "M Z", "M Z2.5", "M Z3.0",
+                               "M UR Z", "M UR Z2.5", "M UR Z3.0", 
+                               "M R Z", "M R Z2.5", "M R Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  set_footnote("Note. UR = Unrelated trials, R = related trials, M = mean Z-scored response latency, N = mean number of trials.")
+```
+
+## Rescored Acccuracy Priming Scores 
 
 ```{r keep-get-priming-keepanswered}
 # open all participant data
@@ -1816,7 +1871,12 @@ prime.overall <- prime.df.all %>%
             m_rel = mean(avgZ_RT_related, na.rm = T),
             n_unrel = mean(target_answeredN_unrelated, na.rm = T),
             n_rel = mean(target_answeredN_related, na.rm = T),
-            .groups = "keep")
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
 
 prime.lang <- prime.df.all %>% 
   group_by(language, z_type) %>% 
@@ -1830,12 +1890,33 @@ prime.lang <- prime.df.all %>%
               id_cols = "language",
               names_from = "z_type", 
               values_from = c(m_prime:n_rel)) %>% 
-  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0)
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
 ```
 
-We will provide the average statistics for z-score priming, z-score unrelated response latency, z-score related response latency, sample size for unrelated trials, and sample size for related trials. These values will be calculated overall, by language, and with/without z- score level exclusions. Last, we will calculate the participant level priming reliability98 and item-level priming reliability44.
+```{r priming-table-keepanswered}
+flextable(prime.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "M Z", "M Z2.5", "M Z3.0",
+                               "M UR Z", "M UR Z2.5", "M UR Z3.0", 
+                               "M R Z", "M R Z2.5", "M R Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  set_footnote("Note. UR = Unrelated trials, R = related trials, M = mean Z-scored response latency, N = mean number of trials.")
+```
 
-```{r get-reliability-data}
+## Reliability 
+
+```{r get-reliability-data, eval = F}
 # open all priming trial data
 prime.list <- list.files(
   path = "../05_Data/data_processing/output_data",
@@ -1890,11 +1971,9 @@ prime.items.keepanswered <- prime.trials %>%
   filter(keep_participant_answered == "keep") %>% 
   filter(keep_target == "keep") %>% 
   filter(word_combo %in% prime.items)
+
+sb <- function(cor) { (2 * cor) / (1 + cor) }
 ```
-
-### Split Half Reliability (Item)
-
-We will split the data in half and correlate the items together. This procedure will be repeated 100 times to avoid random poor splits. We will perform this on the trial level data - here is an example calculated on the SPP data. 
 
 ```{r rel-item, eval = F}
 save.cor.item <- rep(NA, 100)
@@ -1920,12 +1999,12 @@ for (i in 1:100){
            prime_2 = unrelated_2 - related_2)
   
   # overall correlation
-  save.cor.item[i] <- cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs")
+  save.cor.item[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
   
   # language correlations
   save.cor.item.lang[[i]] <- person_summary %>% 
     group_by(language) %>% 
-    summarize(correl = cor(prime_1, prime_2, use = "pairwise.complete.obs"))
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
   
   
   # keep answered trials by item 
@@ -1944,12 +2023,12 @@ for (i in 1:100){
            prime_2 = unrelated_2 - related_2)
   
   # overall correlation
-  save.cor.item.keepanswered[i] <- cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs")
+  save.cor.item.keepanswered[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
   
   # language correlations
   save.cor.item.keepanswered.lang[[i]] <- person_summary %>% 
     group_by(language) %>% 
-    summarize(correl = cor(prime_1, prime_2, use = "pairwise.complete.obs"))
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
   
 }
 
@@ -1962,8 +2041,6 @@ rel_item <- list(
 
 save(rel_item, file = "supplemental/reliability_item.RData")
 ```
-
-### Split Half Reliability (Person)
 
 ```{r rel-person, eval = F}
 save.cor.trial <- rep(NA, 100)
@@ -1989,12 +2066,12 @@ for (i in 1:100){
            prime_2 = unrelated_2 - related_2)
   
   # overall correlation
-  save.cor.trial[i] <- cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs")
+  save.cor.trial[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
   
   # language correlations
   save.cor.trial.lang[[i]] <- person_summary %>% 
     group_by(language) %>% 
-    summarize(correl = cor(prime_1, prime_2, use = "pairwise.complete.obs"))
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
   
   
   # keep answered trials by trial 
@@ -2013,12 +2090,12 @@ for (i in 1:100){
            prime_2 = unrelated_2 - related_2)
   
   # overall correlation
-  save.cor.trial.keepanswered[i] <- cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs")
+  save.cor.trial.keepanswered[i] <- sb(cor(person_summary$prime_1, person_summary$prime_2, use = "pairwise.complete.obs"))
   
   # language correlations
   save.cor.trial.keepanswered.lang[[i]] <- person_summary %>% 
     group_by(language) %>% 
-    summarize(correl = cor(prime_1, prime_2, use = "pairwise.complete.obs"))
+    summarize(correl = sb(cor(prime_1, prime_2, use = "pairwise.complete.obs")))
   
 }
 
@@ -2032,5 +2109,58 @@ rel_trial <- list(
 save(rel_trial, file = "supplemental/reliability_trial.RData")
 ```
 
+```{r rel-item-results}
+# see code above 
+load(file = "supplemental/reliability_item.RData")
+load(file = "supplemental/reliability_trial.RData")
+# rel_item
+# rel_trial
+```
+
+Item reliability was calculated by randomly splitting priming trials into two halves, calculating *Z*-score priming for each half, and correlating those scores by item. Person level reliability was calculated in a similar fashion by splitting participant related-unrelated trials in half and calculating priming as the average unrelated *Z*-scored response latency minus the related *Z*-scored response latency, and correlating the two priming scores. The Spearman-Brown prophecy formula was applied to these correlations to calculate total reliability. This procedure was repeated 100 times, and average scores were calculated. Table X shows the reliability scores for person and items. The average reliability for items was `r apa_num(mean(rel_item$save.cor.item), gt1 = FALSE)` and for people was `r apa_num(mean(rel_trial$save.cor.trial), gt1 = FALSE)`. 
+
+```{r reliability-table-keep}
+rel.lang <- bind_rows(rel_item$save.cor.item.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep") %>% 
+  full_join(
+     bind_rows(rel_trial$save.cor.trial.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep"), 
+  by = "language"
+  )
+
+flextable(rel.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "Item Reliability", "Person Reliability")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) 
+
+```
+
+For rescored accuracy participants the average reliability for items was `r apa_num(mean(rel_item$save.cor.item.keepanswered), gt1 = FALSE)` and for people was `r apa_num(mean(rel_trial$save.cor.trial.keepanswered), gt1 = FALSE)`. Table X shows the same information split by language for rescored accuracy participants. 
+
+```{r reliability-table-keepanswered}
+rel.lang <- bind_rows(rel_item$save.cor.item.keepanswered.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep") %>% 
+  full_join(
+     bind_rows(rel_trial$save.cor.trial.keepanswered.lang) %>% 
+  group_by(language) %>% 
+  summarize(correl = mean(correl), .groups = "keep"), 
+  by = "language"
+  )
+
+flextable(rel.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", "Item Reliability", "Person Reliability")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) 
+
+```
 
 
