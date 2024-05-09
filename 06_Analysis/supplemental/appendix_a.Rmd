@@ -92,5 +92,5 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 
 -   Pre-registration: <https://osf.io/u5bp6>
 -   Registered Report: <https://osf.io/preprints/osf/q4fjy>
--   Tenzing chart:
+-   Tenzing chart: <https://osf.io/uv27t>
     -   Github: 08_Credit
