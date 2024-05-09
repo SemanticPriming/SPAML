@@ -63,6 +63,8 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 -   Scripts:
     -   OSF: 06_Analysis
     -   Github: 06_Analysis
+    -   Methods: <https://osf.io/bqpk2>
+    -   
 -   Supplemental Tables/Summaries:
     -   Note: summary of labs and languages also in this folder, but linked above
     -   Github \> 06_Analysis \> supplemental
