@@ -84,11 +84,13 @@ Please note: all files are synced to OSF through GitHub. We have also included t
         -   Operating System by Language: <https://osf.io/9dwqb>
         -   Web Browser by Language: <https://osf.io/bn7uv>
         -   Language Locale by Language: <https://osf.io/dyh4e>
--   Reliability data files:
-    -   Item Reliability:
-    -   Person Reliability:
+    -   Reliability data files:
+        -   Item Reliability: <https://osf.io/r4fym>
+        -   Person Reliability: <https://osf.io/jf28q>
 
 ### Manuscript
 
 -   Pre-registration: <https://osf.io/u5bp6>
 -   Registered Report: <https://osf.io/preprints/osf/q4fjy>
+-   Tenzing chart:
+    -   Github: 08_Credit

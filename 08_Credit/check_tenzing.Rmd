@@ -291,7 +291,7 @@ final_tenzing <- final_tenzing %>%
                  names = c("LastName", "FirstName")) %>% 
   select(FirstName, LastName, user.name, collaboration, investigation, resources, software) 
 
-export(group_overall, "tenzing_canvas.xlsx", row.names = F)
+export(group_overall, "final_tenzing.xlsx", row.names = F)
 
 ```
 
