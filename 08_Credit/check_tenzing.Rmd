@@ -266,33 +266,84 @@ online <- online %>%
 
 final_tenzing <- group_overall %>% 
   full_join(online, by = c("PSA_ID.x" = "PSA_ID"))
-
-
 ```
 
 ## Output
 
 ```{r}
-final_tenzing <- final_tenzing %>% 
-  # erin, kelly, admin alphabetic, proposing team, the big mess (organize by # credit category - alphabetic), sav 
-  select(Tier, FirstName, `Middle name`, LastName, user.name, )
-
-
-
-final_tenzing <- final_tenzing %>% 
+final_tenzing_sheet <- final_tenzing %>% 
+  tidyr::separate_wider_delim(data = ., 
+                 cols = sortable_name, 
+                 delim = ", ", 
+                 names = c("LastName", "FirstName")) %>% 
+  # fix the people who are on the sheet but not in canvas
+  mutate(LastName = ifelse(is.na(LastName), Surname, LastName),
+         FirstName = ifelse(is.na(FirstName), Firstname, FirstName),
+         user.name = ifelse(is.na(user.name), 
+                            paste(FirstName, `Middle name`, LastName, sep = " "),
+                            user.name)) %>% 
+  # fix credit contributions
   mutate(
     investigation = ifelse(`Data Collection Tracking` == 1, TRUE, FALSE),
     resources = ifelse(`Resources Credit` == 1 | `Translation Tracking` == 1, TRUE, FALSE), 
     software = ifelse(`Code Review, Coding, Software Credit` == 1, TRUE, FALSE),
     collaboration = ifelse(`Collaborator Agreement` == 1, TRUE, FALSE)) %>% 
-  tidyr::separate_wider_delim(data = ., 
-                 cols = sortable_name, 
-                 delim = ", ", 
-                 names = c("LastName", "FirstName")) %>% 
-  select(FirstName, LastName, user.name, collaboration, investigation, resources, software) 
+  mutate(
+    investigation = ifelse(is.na(investigation), FALSE, investigation),
+    resources = ifelse(is.na(resources), FALSE, resources),
+    software = ifelse(is.na(software), FALSE, software),
+    collaboration = ifelse(is.na(collaboration), FALSE, collaboration)
+  ) %>% 
+  # placeholder columns
+  mutate(
+    completed_author = FALSE,
+    `Conflict of interest` = NA
+  ) %>% 
+  # select final columns
+  select(Tier, PSA_ID.x, FirstName, `Middle name`, LastName, user.name, 
+         Conceptualization, `Data curation`, `Formal analysis`, 
+         `Funding acquisition`, investigation, Methodology, `Project administration`, 
+         resources, software, Supervision, Validation, Visualization, 
+         `Writing - original draft`, `Writing - review & editing`, 
+         collaboration, completed_author, `Email address`, `Primary affiliation`, 
+         `Secondary affiliation`, Funding, `ORCID iD`, `Corresponding author?`, 
+         `Conflict of interest`
+         ) %>% 
+  dplyr::rename(
+    Firstname = FirstName,
+    Surname = LastName,
+    Investation = investigation, 
+    Resourcese = resources, 
+    Software = software,
+    PSA_ID = PSA_ID.x
+  ) %>% 
+  mutate(
+    Tier = ifelse(Tier == 2 | Tier == 2.1 | Tier == "new", 2, Tier),
+    across(c(Conceptualization:`Writing - review & editing`), as.logical))
 
-export(group_overall, "final_tenzing.xlsx", row.names = F)
+final_tenzing_sheet$number_credit <- apply(
+  final_tenzing_sheet %>% select(Conceptualization:`Writing - review & editing`),
+  1,
+  sum
+)
 
+# duplicates
+# View(final_tenzing_sheet %>% filter(duplicated(PSA_ID)))
+final_tenzing_sheet <- final_tenzing_sheet %>% 
+  filter(!duplicated(PSA_ID))
+
+final_tenzing_sheet <- final_tenzing_sheet %>% 
+  arrange(
+    Tier, desc(number_credit), Surname
+  )
+  
+# erin, kelly, admin alphabetic, proposing team, the big mess (organize by # credit category - alphabetic), sav 
+
+export(final_tenzing_sheet, "final_tenzing.xlsx", row.names = F)
+
+write_sheet(final_tenzing_sheet, 
+            ss = "https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
+            sheet = "code_updated")
 ```
 
 - investigation: lab tracking sheet -- match to canvas
