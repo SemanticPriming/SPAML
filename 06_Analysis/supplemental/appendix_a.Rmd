@@ -63,6 +63,7 @@ Please note: all files are synced to OSF through GitHub. We have also included t
     -   Codebook participant data:
     -   Codebook priming trial level data:
     -   Codebook priming summarized level data:
+    -   Summary table of the sample size calculations:
     -   Codebook trial data:
 
 ### Analyses
