@@ -61,7 +61,8 @@ Please note: all files are synced to OSF through GitHub. We have also included t
     -   Codebook full data:
     -   Codebook item data:
     -   Codebook participant data:
-    -   Codebook priming data:
+    -   Codebook priming trial level data:
+    -   Codebook priming summarized level data:
     -   Codebook trial data:
 
 ### Analyses

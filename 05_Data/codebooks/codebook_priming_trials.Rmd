@@ -1,0 +1,79 @@
+---
+title: "SPAML Priming Trial Level Data Outputs"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    code_folding: 'hide'
+    self_contained: true
+  pdf_document:
+    toc: yes
+    toc_depth: 4
+    latex_engine: xelatex
+---
+
+# Set Options
+
+```{r setup}
+knitr::opts_chunk$set(
+  warning = TRUE, # show warnings during codebook generation
+  message = TRUE, # show messages during codebook generation
+  error = TRUE, # do not interrupt codebook generation in case of errors,
+                # usually better for debugging
+  echo = TRUE  # show R code
+)
+ggplot2::theme_set(ggplot2::theme_bw())
+
+library(rio)
+library(labelled)
+```
+
+# Prep Data
+
+```{r prepare_codebook}
+library(codebook)
+codebook_data <- import("../data_processing/output_data/priming_data/sr_prime_trials.csv")
+
+# cat(paste(names(codebook_data), collapse = " = '', \n"))
+
+var_label(codebook_data) <- list(
+  word_combo = 'The combination of the target word with the cue word - used to help combine information across trials.', 
+  unique_trial = 'Unique trial number for each participant - was used to help make sure the cue-target lined up correctly since they were presented sequentially.', 
+  observation = "Unique participant ID number.",
+  cue_word = 'The cue word shown in the priming trial. ', 
+  cue_type = 'The type of trial shown for the cue - should always be word for priming trials.', 
+  cue_correct = 'If the cue was answered correctly.', 
+  trial_order = 'What order the trials were shown in - used with the unique_trial to line up trials.', 
+  target_duration = "The duration in milliseconds of the entire trial from time shown to time end. This variable was set to NA if the trial was incorrectly answered, too long (3000+ms) or too short (<=160ms). The original duration is also preserved.",
+  target_word = 'The target word shown to the participant.', 
+  target_type = 'The type of trial shown for the target - should always be word for priming trials.', 
+  target_correct = 'If the target was answered correctly.', 
+  target_Z_RT = 'The z-scored RT for the ', 
+  keep_target = 'If the trial level data should be kept based on our exclusion rules (not too long < 3000 ms, not too short > 160ms, correctly answered).', 
+  keep_participant = 'If the participant should be kept based on our exclusion rules: must be 18 years old, saw at least 100 trials, correctly answered at least 80% of the trials SEEN.', 
+  keep_participant_answered = 'If the participant should be kept based on our exclusion rules: must be 18 years old, saw at least 100 trials, correctly answered at least 80% of the trials ANSWERED.',
+  cue_end_of_trial = 'How the trial ended as response or timeout.', 
+  target_end_of_trial = 'How the trial ended as response or timeout.', 
+  target_original_duration = "The duration in milliseconds of the entire trial from time shown to time end without our exclusions applied (i.e., all data).",
+  type = 'If the trial type was related or unrelated. '
+)
+
+metadata(codebook_data)$name <- "Semantic Priming Across Many Languages Priming Level Trials"
+metadata(codebook_data)$description <- "This dataset includes the paired trial level data for the priming trials in the SPAML study. The data has been taken from long format where each trial is one row of data, to semi-long format, wherein each paired trial is one line of data. For example if a cue was CAT and the target was DOG, the full trial data includes each as a separate row. This dataset pairs them together to denote which combinations were related and unrelated, as well as which words were targets and cues. 
+
+Semantic priming has been studied for nearly 50 years across various experimental manipulations and theoretical frameworks. These studies provide insight into the cognitive underpinnings of semantic representations in both healthy and clinical populations; however, they have suffered from several issues including generally low sample sizes and a lack of diversity in linguistic implementations. Here, we will test the size and the variability of the semantic priming effect across ten languages by creating a large database of semantic priming values, based on an adaptive sampling procedure. Differences in response latencies between related word-pair conditions and unrelated word-pair conditions (i.e., difference score confidence interval is greater than zero) will allow quantifying evidence for semantic priming, whereas improvements in model fit with the addition of a random intercept for language will provide support for variability in semantic priming across languages."
+metadata(codebook_data)$identifier <- "https://doi.org/10.5281/zenodo.10888833"
+metadata(codebook_data)$creator <- "Erin M. Buchanan"
+metadata(codebook_data)$citation <- "Buchanan, E., Cuccolo, K., Heyman, T., Iyer, A., Coles, N., Lewis Jr, N., Peters, K., van Berkel, N., Taylor, J., Van't Veer, A. E., Montefinese, M., Valentine, K. D., Maxwell, N., Türkan, B. N., Williams, G., Oliveros-Chacana, J. C., Röer, J., Fini, C., Acar, O., … Lewis, S. C. (2024). SemanticPriming/SPAML: SPAML v1 Data Release (v1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.10888833"
+metadata(codebook_data)$url <- "https://github.com/SemanticPriming/SPAML/releases/"
+metadata(codebook_data)$datePublished <- "2024-05-01"
+metadata(codebook_data)$temporalCoverage <- "2022-2024" 
+metadata(codebook_data)$spatialCoverage <- "Online" 
+```
+
+# Create codebook
+
+```{r codebook}
+codebook(codebook_data)
+```
