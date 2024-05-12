@@ -1,5 +1,5 @@
 ---
-title: "SPAML Turkish Data Outputs"
+title: "SPAML Priming Data Outputs"
 output:
   html_document:
     toc: true

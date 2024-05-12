@@ -1,5 +1,5 @@
 ---
-title: "SPAML Turkish Data Outputs"
+title: "SPAML Trial Data Outputs"
 output:
   html_document:
     toc: true
