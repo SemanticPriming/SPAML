@@ -15,5 +15,5 @@ Files that were created in support of those markdowns:
 - `pre_registered`: this folder contains the original files we submitted as examples for our submission of the registered report. 
 - `recoding_files`: these files were used to help us translate native language and browser codes for reporting purposes. 
 - `references.bib`: this file includes the references for each of these sections. 
-- `supplemental`: this folder includes the output supplemental documents that are included in appendix a of the manuscript. 
+- `supplemental`: this folder includes the output supplemental documents that are included in the appendix of the manuscript linked with explanation of the files. This folder includes our supplemental meta-analysis that uses the sample size of the item as the weight in the analysis.  
 - `zpid_summary`: ZPID requested an analysis of our primary hypotheses on the data that was provided by their funding. These reports and results are included in this folder. 

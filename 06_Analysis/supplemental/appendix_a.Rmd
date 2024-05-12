@@ -58,13 +58,14 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 -   Codebooks:
     -   OSF: 05_Data \> codebooks
     -   Github: 05_Data \> codebooks
-    -   Codebook full data:
-    -   Codebook item data:
-    -   Codebook participant data:
-    -   Codebook priming trial level data:
-    -   Codebook priming summarized level data:
-    -   Summary table of the sample size calculations:
-    -   Codebook trial data:
+    -   Codebook full data: <https://osf.io/xz6nk>
+    -   Codebook item data: <https://osf.io/5u9t6>
+    -   Codebook participant data: <https://osf.io/9a368>
+    -   Codebook priming trial level data: <https://osf.io/49nzq>
+    -   Codebook priming summarized level data: <https://osf.io/sx26p>
+        -   Summary table of the sample size calculations: <https://osf.io/kv6am>
+    -   Codebook trial data: <https://osf.io/s2kqd>
+-   `semanticprimeR` tutorial:
 
 ### Analyses
 
@@ -78,9 +79,11 @@ Please note: all files are synced to OSF through GitHub. We have also included t
         -   Items: <https://osf.io/rvt8f>
         -   Priming: <https://osf.io/m8kjv>
     -   Hypothesis testing: <https://osf.io/rmkag>
+    -   Supplemental Meta Analysis:
+        -   Github: 06_Analysis \> supplemental
 -   Supplemental Tables/Summaries:
     -   Note: summary of labs and languages also in this folder, but linked above
-    -   Github \> 06_Analysis \> supplemental
+    -   Github: 06_Analysis \> supplemental
     -   Native Language:
         -   Overall Native Language Frequency: <https://osf.io/ta6wf>
         -   Analysis Participants Native Language Frequency: <https://osf.io/652h8>
