@@ -1,5 +1,5 @@
 ---
-title: "SPAML Turkish Data Outputs"
+title: "SPAML Full Data Codebook"
 output:
   html_document:
     toc: true
@@ -33,7 +33,7 @@ library(labelled)
 
 ```{r prepare_codebook}
 library(codebook)
-codebook_data <- import("output_data/tr_full_data.csv.gz")
+codebook_data <- import("../data_processing/output_data/full_data/sr_full_data.csv.gz")
 
 var_label(codebook_data) <- list(
         observation = "Unique participant ID number.",
@@ -81,16 +81,16 @@ var_label(codebook_data) <- list(
         fix_sender = "The sender_id column in a sortable format. You can sort the data by observation and this column to ensure it is in trial order."
 )
 
-metadata(codebook_data)$name <- "Semantic Priming Across Many Languages Turkish"
-metadata(codebook_data)$description <- "This dataset contains the raw trial data of the Turkish data collection from the SPAML project with funding from ZPID and a Bilendi data collection team. The data is presented here in long format, with each trial representing one row in the data. Please note that the information about the build of the study will only display on the first trial, and the demographic information will only display on the trial that collected this information. You can assume all other rows with the same observation ID are those same build and demographics. Other 'missing' data occurs when a column is not relevant for that trial (i.e., correct will not show for non-word trial pages). 
+metadata(codebook_data)$name <- "Semantic Priming Across Many Languages (Example using Serbian data)"
+metadata(codebook_data)$description <- "This dataset contains the raw trial data of the (Example Serbian but applies to any) data collection from the SPAML project. The data is presented here in long format, with each trial representing one row in the data. Please note that the information about the build of the study will only display on the first trial, and the demographic information will only display on the trial that collected this information. You can assume all other rows with the same observation ID are those same build and demographics. Other 'missing' data occurs when a column is not relevant for that trial (i.e., correct will not show for non-word trial pages). 
 
 Semantic priming has been studied for nearly 50 years across various experimental manipulations and theoretical frameworks. These studies provide insight into the cognitive underpinnings of semantic representations in both healthy and clinical populations; however, they have suffered from several issues including generally low sample sizes and a lack of diversity in linguistic implementations. Here, we will test the size and the variability of the semantic priming effect across ten languages by creating a large database of semantic priming values, based on an adaptive sampling procedure. Differences in response latencies between related word-pair conditions and unrelated word-pair conditions (i.e., difference score confidence interval is greater than zero) will allow quantifying evidence for semantic priming, whereas improvements in model fit with the addition of a random intercept for language will provide support for variability in semantic priming across languages."
-metadata(codebook_data)$identifier <- "https://doi.org/10.23668/psycharchives.7074"
+metadata(codebook_data)$identifier <- "https://doi.org/10.5281/zenodo.10888833"
 metadata(codebook_data)$creator <- "Erin M. Buchanan"
-metadata(codebook_data)$citation <- "Buchanan, E. M., Cuccolo, K., Coles, N. A., Heyman, T., Iyer, A., Lewis, N. A., Jr., … Lewis, S. C. (2021, December 7). Measuring the Semantic Priming Effect Across Many Languages. https://doi.org/10.31219/osf.io/q4fjy"
-metadata(codebook_data)$url <- "https://osf.io/wrpj4/"
-metadata(codebook_data)$datePublished <- "2023-02-10"
-metadata(codebook_data)$temporalCoverage <- "2022-2023" 
+metadata(codebook_data)$citation <- "Buchanan, E., Cuccolo, K., Heyman, T., Iyer, A., Coles, N., Lewis Jr, N., Peters, K., van Berkel, N., Taylor, J., Van't Veer, A. E., Montefinese, M., Valentine, K. D., Maxwell, N., Türkan, B. N., Williams, G., Oliveros-Chacana, J. C., Röer, J., Fini, C., Acar, O., … Lewis, S. C. (2024). SemanticPriming/SPAML: SPAML v1 Data Release (v1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.10888833"
+metadata(codebook_data)$url <- "https://github.com/SemanticPriming/SPAML/releases/"
+metadata(codebook_data)$datePublished <- "2024-05-01"
+metadata(codebook_data)$temporalCoverage <- "2022-2024" 
 metadata(codebook_data)$spatialCoverage <- "Online" 
 ```
 

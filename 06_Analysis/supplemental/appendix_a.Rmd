@@ -35,6 +35,7 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 -   Materials separated by language:
     -   OSF: 03_Materials
     -   Github: 03_Materials
+    -   The readme explains the stimuli selection and creation procedure: <https://osf.io/mz7p4>
 -   labjs Scripts to recreate the experiment:
     -   OSF: 04_Procedure
     -   Github: 04_Procedure
@@ -57,14 +58,24 @@ Please note: all files are synced to OSF through GitHub. We have also included t
 -   Codebooks:
     -   OSF: 05_Data \> codebooks
     -   Github: 05_Data \> codebooks
+    -   Codebook full data:
+    -   Codebook item data:
+    -   Codebook participant data:
+    -   Codebook priming data:
+    -   Codebook trial data:
 
 ### Analyses
 
 -   Scripts:
     -   OSF: 06_Analysis
     -   Github: 06_Analysis
-    -   Methods: <https://osf.io/bqpk2>
-    -   
+    -   Method: <https://osf.io/bqpk2>
+    -   Descriptive Statistics
+        -   Participants: <https://osf.io/vdgkr>
+        -   Trials: <https://osf.io/baem5>
+        -   Items: <https://osf.io/rvt8f>
+        -   Priming: <https://osf.io/m8kjv>
+    -   Hypothesis testing: <https://osf.io/rmkag>
 -   Supplemental Tables/Summaries:
     -   Note: summary of labs and languages also in this folder, but linked above
     -   Github \> 06_Analysis \> supplemental
