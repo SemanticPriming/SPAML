@@ -156,10 +156,10 @@ i.lang <- i.df %>%
             se_trials = mean(seZ_RT, na.rm = T),
             n_trials2 = mean(Z2.5_samplesize, na.rm = T),
             m_trials2 = mean(Z2.5_avgZ_RT, na.rm = T), 
-            se_trials2 = mean(Z2.5_seRT, na.rm = T),
+            se_trials2 = mean(Z2.5_seZ_RT, na.rm = T),
             n_trials3 = mean(Z3.0_samplesize, na.rm = T),
             m_trials3 = mean(Z3.0_avgZ_RT, na.rm = T), 
-            se_trials3 = mean(Z3.0_seRT, na.rm = T), 
+            se_trials3 = mean(Z3.0_seZ_RT, na.rm = T), 
             .groups = "keep") %>% 
   pivot_wider(
     data = .,
