@@ -875,6 +875,8 @@ Priming is defined as the subtraction of average z-scored related response laten
   nrow(priming_focus)
   table(priming_focus$type, useNA = "ifany")
   
+  export(priming_focus, "output_data/priming_data/ur_prime_trials.csv", row.names = F)
+  
   temp <- priming_focus %>% 
     group_by(observation, type) %>% 
     summarize(person_n = n(), .groups = "keep") %>% 
@@ -930,8 +932,6 @@ Priming is defined as the subtraction of average z-scored related response laten
   
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-  
-  export(priming_Z, "output_data/priming_data/ur_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1149,6 +1149,11 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ur_prime_summary_no
   # subset out NAs at some point they will be practice trials
   priming_focus <- subset(priming_focus, !is.na(type))
   
+  nrow(priming_focus)
+  table(priming_focus$type, useNA = "ifany")
+  
+  export(priming_focus, "output_data/priming_data/ur_answered_prime_trials.csv", row.names = F)
+  
   # calculate the total N versus timeout N
   ur_num_trials <- priming_focus %>% 
     group_by(word_combo) %>% 
@@ -1187,10 +1192,8 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/ur_prime_summary_no
     filter(target_correct == TRUE) %>% # to make sure only correct trials 
     filter(keep_participant_answered == "keep") # participants to keep
   
-nrow(priming_Z)
+  nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-  
-  export(priming_Z, "output_data/priming_data/ur_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
