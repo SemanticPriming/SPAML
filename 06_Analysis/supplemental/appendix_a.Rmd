@@ -65,7 +65,7 @@ Please note: all files are synced to OSF through GitHub. We have also included t
     -   Codebook priming summarized level data: <https://osf.io/sx26p>
         -   Summary table of the sample size calculations: <https://osf.io/kv6am>
     -   Codebook trial data: <https://osf.io/s2kqd>
--   `semanticprimeR` tutorial:
+-   `semanticprimeR` tutorial: <https://osf.io/yd8u4>
 
 ### Analyses
 
@@ -79,7 +79,7 @@ Please note: all files are synced to OSF through GitHub. We have also included t
         -   Items: <https://osf.io/rvt8f>
         -   Priming: <https://osf.io/m8kjv>
     -   Hypothesis testing: <https://osf.io/rmkag>
-    -   Supplemental Meta Analysis:
+    -   Supplemental Meta Analysis: <https://osf.io/rke82>
         -   Github: 06_Analysis \> supplemental
 -   Supplemental Tables/Summaries:
     -   Note: summary of labs and languages also in this folder, but linked above
