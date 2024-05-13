@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Simplified Chinese</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-04-25</h4>
+<h4 class="date">Last Update 2024-05-13</h4>
 
 </div>
 
@@ -2811,7 +2811,9 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     61684     61541</code></pre>
-<pre class="r"><code>  temp &lt;- priming_focus %&gt;% 
+<pre class="r"><code>  export(priming_focus, &quot;output_data/priming_data/zh_prime_trials.csv&quot;, row.names = F)
+  
+  temp &lt;- priming_focus %&gt;% 
     group_by(observation, type) %&gt;% 
     summarize(person_n = n(), .groups = &quot;keep&quot;) %&gt;% 
     left_join(
@@ -2876,9 +2878,7 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     50209     49157</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/zh_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_find_four &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
@@ -3175,7 +3175,9 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/zh_prime_summa
 <pre><code>## 
 ##   related unrelated 
 ##     61684     61541</code></pre>
-<pre class="r"><code>  # calculate the total N versus timeout N
+<pre class="r"><code>  export(priming_focus, &quot;output_data/priming_data/zh_answered_prime_trials.csv&quot;, row.names = F)
+  
+  # calculate the total N versus timeout N
   zh_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
     summarize(
@@ -3219,9 +3221,7 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/zh_prime_summa
 <pre><code>## 
 ##   related unrelated 
 ##     51942     50841</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/zh_answered_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_find_four &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
