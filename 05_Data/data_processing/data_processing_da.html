@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Danish</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-04-26</h4>
+<h4 class="date">Last Update 2024-05-13</h4>
 
 </div>
 
@@ -2741,7 +2741,9 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     64656     64662</code></pre>
-<pre class="r"><code>  temp &lt;- priming_focus %&gt;% 
+<pre class="r"><code>  export(priming_focus, &quot;output_data/priming_data/da_prime_trials.csv&quot;, row.names = F)
+  
+  temp &lt;- priming_focus %&gt;% 
     group_by(observation, type) %&gt;% 
     summarize(person_n = n(), .groups = &quot;keep&quot;) %&gt;% 
     left_join(
@@ -2805,9 +2807,7 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     56802     56156</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/da_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
@@ -3024,6 +3024,8 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/da_prime_summa
   # subset out NAs at some point they will be practice trials
   priming_focus &lt;- subset(priming_focus, !is.na(type))
   
+  export(priming_focus, &quot;output_data/priming_data/da_answered_prime_trials.csv&quot;, row.names = F)
+  
   # calculate the total N versus timeout N
   da_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
@@ -3068,9 +3070,7 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/da_prime_summa
 <pre><code>## 
 ##   related unrelated 
 ##     57691     57071</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/da_answered_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
