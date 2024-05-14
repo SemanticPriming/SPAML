@@ -3022,6 +3022,8 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/ar_prime_summa
   # subset out NAs at some point they will be practice trials
   priming_focus &lt;- subset(priming_focus, !is.na(type))
   
+  export(priming_focus, &quot;output_data/priming_data/ar_answered_prime_trials.csv&quot;, row.names = F)
+  
   # calculate the total N versus timeout N
   ar_num_trials &lt;- priming_focus %&gt;% 
     group_by(word_combo) %&gt;% 
@@ -3066,9 +3068,7 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/ar_prime_summa
 <pre><code>## 
 ##   related unrelated 
 ##      7238      7208</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/ar_answered_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
