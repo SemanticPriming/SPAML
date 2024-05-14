@@ -1622,7 +1622,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Processing - Combined Portuguese</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">Last Update 2024-04-27</h4>
+<h4 class="date">Last Update 2024-05-14</h4>
 
 </div>
 
@@ -2200,7 +2200,7 @@ nrow(pt_data_all)</code></pre>
 export(participant_DF, &quot;output_data/participant_data/pt_combo_participant_data.csv&quot;, row.names = F)
 
 write.csv(pt_data_all, 
-       gzfile(&quot;output_data/full_data/pt_full_data.csv.gz&quot;),
+       gzfile(&quot;output_data/full_data/pt_combo_full_data.csv.gz&quot;),
        row.names = F)</code></pre>
 <p></p>
 </div>
@@ -2891,7 +2891,10 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     79099     70231</code></pre>
-<pre class="r"><code>  temp &lt;- priming_focus_pt %&gt;% 
+<pre class="r"><code>  export(priming_focus_br_pt, &quot;output_data/priming_data/br_pt_combo_prime_trials.csv&quot;, row.names = F)
+  export(priming_focus_pt, &quot;output_data/priming_data/pt_combo_prime_trials.csv&quot;, row.names = F)
+  
+  temp &lt;- priming_focus_pt %&gt;% 
     group_by(observation, type) %&gt;% 
     summarize(person_n = n(), .groups = &quot;keep&quot;) %&gt;% 
     left_join(
@@ -2982,9 +2985,7 @@ data, but the z-score calculation is recommended.</p>
 <pre><code>## 
 ##   related unrelated 
 ##     71494     62963</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/pt_combo_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
@@ -3179,9 +3180,7 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/pt_combo_prime
 <pre><code>## 
 ##   related unrelated 
 ##     71790     62617</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/br_pt_combo_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
@@ -3415,6 +3414,8 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/br_pt_combo_pr
 <pre><code>## 
 ##   related unrelated 
 ##     79294     69677</code></pre>
+<pre class="r"><code>  export(priming_focus_br_pt, &quot;output_data/priming_data/br_pt_combo_answered_prime_trials.csv&quot;, row.names = F)
+  export(priming_focus_pt, &quot;output_data/priming_data/pt_combo_answered_prime_trials.csv&quot;, row.names = F)</code></pre>
 <p></p>
 <div id="calculate-pt-only-redefined" class="section level4">
 <h4>Calculate PT Only Redefined</h4>
@@ -3462,9 +3463,7 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/br_pt_combo_pr
 <pre><code>## 
 ##   related unrelated 
 ##     72642     64035</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/pt_answered_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated
@@ -3659,9 +3658,7 @@ write.csv(priming_Z_summary_no3.0, &quot;output_data/priming_data/pt_combo_answe
 <pre><code>## 
 ##   related unrelated 
 ##     72973     63699</code></pre>
-<pre class="r"><code>  export(priming_Z, &quot;output_data/priming_data/br_pt_answered_prime_trials.csv&quot;, row.names = F)
-
-# Calculate Statistics ----------------------------------------------------
+<pre class="r"><code># Calculate Statistics ----------------------------------------------------
   
   priming_Z_summary &lt;- priming_Z %&gt;% 
   ##group them by target word and condition related/unrelated

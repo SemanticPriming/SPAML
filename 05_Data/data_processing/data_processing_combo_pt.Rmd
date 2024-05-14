@@ -1020,6 +1020,9 @@ Priming is defined as the subtraction of average z-scored related response laten
   nrow(priming_focus_pt)
   table(priming_focus_pt$type, useNA = "ifany")
   
+  export(priming_focus_br_pt, "output_data/priming_data/br_pt_combo_prime_trials.csv", row.names = F)
+  export(priming_focus_pt, "output_data/priming_data/pt_combo_prime_trials.csv", row.names = F)
+  
   temp <- priming_focus_pt %>% 
     group_by(observation, type) %>% 
     summarize(person_n = n(), .groups = "keep") %>% 
@@ -1097,8 +1100,6 @@ Priming is defined as the subtraction of average z-scored related response laten
 
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-  
-  export(priming_Z, "output_data/priming_data/pt_combo_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1288,8 +1289,6 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pt_combo_prime_summ
   
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-  
-  export(priming_Z, "output_data/priming_data/br_pt_combo_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1514,6 +1513,9 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/br_pt_combo_prime_s
   priming_focus_br_pt <- subset(priming_focus_br_pt, !is.na(type))
   nrow(priming_focus_br_pt)
   table(priming_focus_br_pt$type, useNA = "ifany")
+  
+  export(priming_focus_br_pt, "output_data/priming_data/br_pt_combo_answered_prime_trials.csv", row.names = F)
+  export(priming_focus_pt, "output_data/priming_data/pt_combo_answered_prime_trials.csv", row.names = F)
 ```
 
 #### Calculate PT Only Redefined
@@ -1559,8 +1561,6 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/br_pt_combo_prime_s
   
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-  
-  export(priming_Z, "output_data/priming_data/pt_combo_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1750,8 +1750,6 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/pt_combo_answered_p
   
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-  
-  export(priming_Z, "output_data/priming_data/br_pt_combo_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
