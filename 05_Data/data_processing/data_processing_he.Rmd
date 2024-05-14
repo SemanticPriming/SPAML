@@ -880,6 +880,8 @@ Priming is defined as the subtraction of average z-scored related response laten
   nrow(priming_focus)
   table(priming_focus$type, useNA = "ifany")
   
+  export(priming_focus, "output_data/priming_data/he_prime_trials.csv", row.names = F)
+  
   temp <- priming_focus %>% 
     group_by(observation, type) %>% 
     summarize(person_n = n(), .groups = "keep") %>% 
@@ -935,8 +937,6 @@ Priming is defined as the subtraction of average z-scored related response laten
   
   nrow(priming_Z)
   table(priming_Z$type, useNA = "ifany")
-
-  export(priming_Z, "output_data/priming_data/he_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
@@ -1152,6 +1152,8 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/he_prime_summary_no
   # subset out NAs at some point they will be practice trials
   priming_focus <- subset(priming_focus, !is.na(type))
   
+  export(priming_focus, "output_data/priming_data/he_answered_prime_trials.csv", row.names = F)
+  
   # calculate the total N versus timeout N
   he_num_trials <- priming_focus %>% 
     group_by(word_combo) %>% 
@@ -1192,8 +1194,6 @@ write.csv(priming_Z_summary_no3.0, "output_data/priming_data/he_prime_summary_no
   
     nrow(priming_Z)
     table(priming_Z$type, useNA = "ifany")
-  
-    export(priming_Z, "output_data/priming_data/he_answered_prime_trials.csv", row.names = F)
 
 # Calculate Statistics ----------------------------------------------------
   
