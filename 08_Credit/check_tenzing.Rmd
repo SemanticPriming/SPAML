@@ -254,6 +254,10 @@ group_overall %>%
   filter(data_collect_yes == 1)
 ```
 
+- add email to the code version of the sheet
+
+
+
 ## Pull Together with Online
 
 ```{r}
@@ -307,7 +311,7 @@ final_tenzing_sheet <- final_tenzing %>%
          `Writing - original draft`, `Writing - review & editing`, 
          collaboration, completed_author, `Email address`, `Primary affiliation`, 
          `Secondary affiliation`, Funding, `ORCID iD`, `Corresponding author?`, 
-         `Conflict of interest`
+         `Conflict of interest`, user.login_id
          ) %>% 
   dplyr::rename(
     Firstname = FirstName,
