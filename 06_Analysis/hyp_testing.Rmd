@@ -387,7 +387,7 @@ ggplot(combo.original, aes(Language, avgZ_prime, color = cutoff, shape = Languag
                geom = "point", 
                size = 3) + 
   xlab("Language") + 
-  ylab("Z Score Priming") +
+  ylab("Z-Score Priming") +
   theme_classic(base_size = 18) + 
   #geom_hline(yintercept = avg_prime) + 
   coord_flip() + 
@@ -489,7 +489,7 @@ ggplot(combo.original.answered, aes(Language, avgZ_prime, color = cutoff, shape 
                geom = "point", 
                size = 3) + 
   xlab("Language") + 
-  ylab("Z Score Priming") +
+  ylab("Z-Score Priming") +
   theme_classic(base_size = 18) + 
   #geom_hline(yintercept = avg_prime) + 
   coord_flip() + 
