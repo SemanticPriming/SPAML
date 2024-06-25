@@ -283,7 +283,8 @@ list_responses <- get_submissions(course_id = 4,
                                   type_id = 258)
 
 list_responses <- list_responses$quiz_submissions %>% 
-  filter(workflow_state == "complete") %>% 
+  #filter(workflow_state == "complete") %>% 
+  filter(kept_score > 0) %>% 
   rename(canvas_id = user_id)
 
 if (nrow(list_responses) > 0) {
