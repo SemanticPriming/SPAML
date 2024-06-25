@@ -17,9 +17,11 @@ library(rio)
 library(flextable)
 library(tidyverse)
 library(googlesheets4)
-library(rcanvas)
+library(rcanvas) #install_github("doomlab/rcanvas")
 set_canvas_domain("https://canvas.psysciacc.org")
 ```
+
+molly mathews forgot orcid 0009-0003-3081-8954
 
 ## Canvas Gradebook
 
@@ -214,7 +216,6 @@ lab_DF <- lab_DF %>%
   by = "PSA_ID"
   )
   
-
 group_overall <- group_overall %>% 
   left_join(
     lab_DF %>% 
@@ -225,10 +226,9 @@ group_overall <- group_overall %>%
 
 group_overall <- group_overall %>% 
   select(sortable_name, group_name, user.name, PSA_ID.x, 
-         user.login_id, `Collaborator Agreement`, 
-         `Data Collection Tracking`, `Translation Tracking`,
-         `Code Review, Coding, Software Credit`,
-         `Resources Credit`, Total_N)
+         canvas_id, `Collaborator Agreement`,
+         user.login_id, `SPAML Final Authorship Quiz`, 
+         `SPAML Conceptualization`:`SPAML Writing (Original)`, Total_N)
 ```
 
 ```{r}
@@ -240,7 +240,7 @@ group_overall <- group_overall %>%
 
 group_overall <- group_overall %>% 
   mutate(data_collect_yes = as.numeric(Total_N > 10), 
-         data_collect_match = data_collect_yes == `Data Collection Tracking`)
+         data_collect_match = data_collect_yes == `SPAML Investigation`)
 ```
 
 ## Check Data Collection Marked 
@@ -254,82 +254,139 @@ group_overall %>%
   filter(data_collect_yes == 1)
 ```
 
-- add email to the code version of the sheet
-
-
-
-## Pull Together with Online
+## Put in Tiers
 
 ```{r}
-online <- read_sheet("https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
-                     sheet = "original")
+tier1 <- c(14, 1557)
+tier1.1 <- c(2108, 1662, 15, 1379, 375, 306)
+tier1.2 <- c(169, 1550, 1524, 1538)
+tier3 <- c(22)
 
-online <- online %>% 
-  mutate(Tier = as.character(unlist(Tier)),
-         PSA_ID = unlist(PSA_ID))
+group_overall <- group_overall %>% 
+  mutate(Tier = ifelse(
+    PSA_ID.x %in% tier1, 1, ifelse(
+      PSA_ID.x %in% tier1.1, 1.1, ifelse(
+        PSA_ID.x %in% tier1.2, 1.2, ifelse(
+          PSA_ID.x %in% tier3, 3, 2
+        )
+      )
+    )
+  ))
+```
 
+## Get the Final Quiz
+
+```{r}
+# get quiz answers
+list_responses <- get_submissions(course_id = 4,
+                                  type = "quizzes",
+                                  type_id = 258)
+
+list_responses <- list_responses$quiz_submissions %>% 
+  filter(workflow_state == "complete") %>% 
+  rename(canvas_id = user_id)
+
+if (nrow(list_responses) > 0) {
+  dc_answers <- list()
+  ids <- unique(list_responses$id)
+  for (id in 1:length(ids)){
+    
+    dc_answers[[id]] <- get_submission_single(course_id = 4,
+                          type_id = 258,
+                          user_id = list_responses$canvas_id[id], 
+                          assignment_id = 397) 
+    
+    dc_answers[[id]]$quiz_id <- ids[id]
+      
+  }
+  
+  dc_survey <- bind_rows(dc_answers) %>% 
+    select(quiz_id, Question_1:Question_17) %>% 
+    left_join(list_responses %>% select(id, canvas_id),
+              by = c("quiz_id" = "id")) %>% 
+    rename(FirstName = Question_1, 
+           MiddleInitial = Question_2, 
+           LastName = Question_3, 
+           FirstInst = Question_4, 
+           FirstDept = Question_5, 
+           FirstCity = Question_6, 
+           FirstGeo = Question_7,
+           SecondInst = Question_8,
+           SecondDept = Question_9, 
+           SecondCity = Question_10,
+           SecondGeo = Question_11, 
+           email = Question_12,
+           ORCID = Question_13,
+           funding = Question_14, 
+           lab_students = Question_15, 
+           credit = Question_16,
+           coi = Question_17)
+}
+
+```
+
+## Combine for Final Stuff
+
+```{r}
 final_tenzing <- group_overall %>% 
-  full_join(online, by = c("PSA_ID.x" = "PSA_ID"))
+  full_join(dc_survey, by = "canvas_id") %>% 
+  mutate(across(everything(),~ gsub("<[^>]+>","", .)))
 ```
 
 ## Output
 
 ```{r}
 final_tenzing_sheet <- final_tenzing %>% 
-  tidyr::separate_wider_delim(data = ., 
-                 cols = sortable_name, 
-                 delim = ", ", 
-                 names = c("LastName", "FirstName")) %>% 
-  # fix the people who are on the sheet but not in canvas
-  mutate(LastName = ifelse(is.na(LastName), Surname, LastName),
-         FirstName = ifelse(is.na(FirstName), Firstname, FirstName),
-         user.name = ifelse(is.na(user.name), 
-                            paste(FirstName, `Middle name`, LastName, sep = " "),
-                            user.name)) %>% 
-  # fix credit contributions
-  mutate(
-    investigation = ifelse(`Data Collection Tracking` == 1, TRUE, FALSE),
-    resources = ifelse(`Resources Credit` == 1 | `Translation Tracking` == 1, TRUE, FALSE), 
-    software = ifelse(`Code Review, Coding, Software Credit` == 1, TRUE, FALSE),
-    collaboration = ifelse(`Collaborator Agreement` == 1, TRUE, FALSE)) %>% 
-  mutate(
-    investigation = ifelse(is.na(investigation), FALSE, investigation),
-    resources = ifelse(is.na(resources), FALSE, resources),
-    software = ifelse(is.na(software), FALSE, software),
-    collaboration = ifelse(is.na(collaboration), FALSE, collaboration)
-  ) %>% 
-  # placeholder columns
-  mutate(
-    completed_author = FALSE,
-    `Conflict of interest` = NA
-  ) %>% 
-  # select final columns
-  select(Tier, PSA_ID.x, FirstName, `Middle name`, LastName, user.name, 
-         Conceptualization, `Data curation`, `Formal analysis`, 
-         `Funding acquisition`, investigation, Methodology, `Project administration`, 
-         resources, software, Supervision, Validation, Visualization, 
-         `Writing - original draft`, `Writing - review & editing`, 
-         collaboration, completed_author, `Email address`, `Primary affiliation`, 
-         `Secondary affiliation`, Funding, `ORCID iD`, `Corresponding author?`, 
-         `Conflict of interest`, user.login_id
-         ) %>% 
-  dplyr::rename(
-    Firstname = FirstName,
-    Surname = LastName,
-    Investation = investigation, 
-    Resourcese = resources, 
-    Software = software,
-    PSA_ID = PSA_ID.x
-  ) %>% 
-  mutate(
-    Tier = ifelse(Tier == 2 | Tier == 2.1 | Tier == "new", 2, Tier),
-    across(c(Conceptualization:`Writing - review & editing`), as.logical))
-
+  mutate(resources = ifelse(`SPAML Translation (Resources)` == 1 | `SPAML Resources (Other)` == 1, TRUE, FALSE),
+         `Writing - review & editing` = NA,
+         `Primary affiliation` = paste(FirstDept, FirstInst, FirstCity, FirstGeo, sep = ", "),	
+         `Secondary affiliation` = paste(SecondDept, SecondInst, SecondCity, SecondGeo, sep = ", "),
+         `Corresponding author?` = NA) %>% 
+  rename(PSA_ID = PSA_ID.x,
+         Conceptualization = `SPAML Conceptualization`,
+         `Data curation` = `SPAML Data Curation`,
+         `Formal analysis` = `SPAML Analysis`, 
+         `Funding acquisition` = `SPAML Funding`, 
+         Investation = `SPAML Investigation`, 
+         Methodology = `SPAML Methodology `,	
+         `Project administration` = `SPAML Project Admin`,
+         Resources = resources,
+         Software = `SPAML Software`,	
+         Supervision = `SPAML Supervision`,	
+         Validation = `SPAML Validation`,	
+         Visualization = `SPAML Visualization`,	
+         `Writing - original draft` = `SPAML Writing (Original)`,
+         `Email address` = `email`,
+         Funding = funding,	
+         `ORCID iD` = `ORCID`,	
+         `Conflict of interest`  = `coi`,	
+          collaboration_agreement = `Collaborator Agreement`,
+         Firstname = FirstName, 
+         `Middle name` = MiddleInitial, 
+         Surname = LastName) %>% 
+  select(Tier, PSA_ID, Firstname, `Middle name`,
+         Surname, Conceptualization,	`Data curation`,
+         `Formal analysis`,
+         `Funding acquisition`,
+         Investation,	Methodology,	`Project administration`,
+         Resources,	Software,	Supervision,	Validation,
+         Visualization,	`Writing - original draft`,
+         `Writing - review & editing`, 
+         `Email address`,
+         `Primary affiliation`,
+         `Secondary affiliation`,
+         Funding,	`ORCID iD`,
+         `Corresponding author?`,
+         `Conflict of interest`, collaboration_agreement, 
+         user.name, sortable_name, user.login_id) %>% 
+  mutate(across(Conceptualization:`Writing - original draft`, 
+                ~ifelse(. == 1, TRUE, FALSE))) %>% 
+  mutate(across(Conceptualization:`Writing - original draft`, 
+                ~replace(., is.na(.), FALSE)))
+  
+  
 final_tenzing_sheet$number_credit <- apply(
-  final_tenzing_sheet %>% select(Conceptualization:`Writing - review & editing`),
-  1,
-  sum
-)
+  final_tenzing_sheet %>% select(Conceptualization:`Writing - original draft`), 1, sum, na.rm = T)
 
 # duplicates
 # View(final_tenzing_sheet %>% filter(duplicated(PSA_ID)))
@@ -343,13 +400,30 @@ final_tenzing_sheet <- final_tenzing_sheet %>%
   
 # erin, kelly, admin alphabetic, proposing team, the big mess (organize by # credit category - alphabetic), sav 
 
-export(final_tenzing_sheet, "final_tenzing.xlsx", row.names = F)
+export(final_tenzing_sheet %>% 
+         filter(number_credit > 0) %>% 
+         filter(collaboration_agreement == 1) %>% 
+         filter(!is.na(Firstname)) %>% 
+         mutate(`Writing - review & editing` = TRUE), "final_tenzing.xlsx", row.names = F)
 
 write_sheet(final_tenzing_sheet, 
             ss = "https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
-            sheet = "code_updated")
-```
+            sheet = "final_code_all")
 
-- investigation: lab tracking sheet -- match to canvas
-- resources: a tab in canvas (translation + resources)
-- completed collaborator agreement
+write_sheet(
+  final_tenzing_sheet %>% 
+         filter(number_credit > 0) %>% 
+         filter(collaboration_agreement == 1) %>% 
+         filter(!is.na(Firstname)) %>% 
+         mutate(`Writing - review & editing` = TRUE),
+  ss = "https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
+            sheet = "final_code_include")
+
+write_sheet(final_tenzing %>% 
+              select(sortable_name, group_name, 
+                     user.name, PSA_ID.x, 
+                     user.login_id, lab_students, 
+                     credit, coi),
+  ss = "https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
+            sheet = "check_information")
+```

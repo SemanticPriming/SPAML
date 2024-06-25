@@ -77,13 +77,6 @@ flextable(
 We did not collect any identifiable private or personal data as part of the experiment. This project was approved by Harrisburg University of Science and Technology conforming to all relevant ethical guidelines and the Declaration of Helsinki, with special care to conform to the General Data Protection Regulation (GDPR; eugdpr.org). No global exclusion criteria for participating in the study were used, except for a minimum age requirement of 18 years. Please see the analysis section below for other participant and trial level exclusion criteria related to analyses.
 
 ```{r lab-data}
-lab.data$link_IRB[lab.data$link_IRB == ""] <- "https://osf.io/download/sg5ac"
-# 14 ZPID were covered under erin
-# all people saw HU IRB, so No Labs also covered
-lab.data$type_IRB[lab.data$type_IRB == ""] <- "Local IRB"
-lab.data$submit_date_IRB[lab.data$submit_date_IRB == ""] <- "June 25th, 2021"
-
-
 geo <- lab.data$country
 geo <- strsplit(geo, ",")
 geo <- unlist(geo)

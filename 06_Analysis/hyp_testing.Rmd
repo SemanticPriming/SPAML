@@ -262,9 +262,19 @@ ggplot(combo.original.answered %>%
   #facet_wrap(~cutoff) + 
   xlab("Z-Score Priming") +
   theme(legend.position = "bottom") + 
-  scale_fill_discrete(name = "Language Type") 
+  scale_fill_discrete(name = "Language Script") 
 
 ggsave("images/redefined.distributions.png", dpi = 300, width = 8, units = "in")
+
+ggplot(combo.original.answered %>% 
+         filter(cutoff == "None"), 
+       aes(avgZ_prime, Language, fill = Language_type)) + 
+  geom_boxplot() + 
+  theme_bw() + 
+  #facet_wrap(~cutoff) + 
+  xlab("Z-Score Priming") +
+  theme(legend.position = "bottom") + 
+  scale_fill_discrete(name = "Language Script") 
 ```
 
 ## Hypothesis 2
@@ -350,24 +360,25 @@ Figure \@ref(fig:forest-original) portrays the forest plot for the average primi
 avg_prime <- hyp2.parameters$Coefficient[1]
 
 # forest plot
-ggplot(combo.original, aes(Language, avgZ_prime, color = Language_type)) +
+# spacing , jitter , shape
+ggplot(combo.original, aes(Language, avgZ_prime, color = Language_type, shape = cutoff)) +
   stat_summary(fun.data = mean_cl_normal, 
                geom = "errorbar", 
                width = .2, 
                position = position_dodge(width = .2)) + 
   stat_summary(fun = mean,
                geom = "point", 
-               position = position_dodge()) + 
+               position = position_dodge(),
+               size = 3) + 
   xlab("Language") + 
   ylab("Z Score Priming") +
   theme_classic() + 
-  geom_hline(yintercept = avg_prime) + 
+  #geom_hline(yintercept = avg_prime) + 
   coord_flip() + 
-  facet_wrap(~cutoff) + 
+  #facet_wrap(~cutoff) + 
   scale_color_discrete(name = "Language Type") + 
-  theme(legend.position = "bottom")
-
-ggsave("images/original.forest.png", dpi = 300, width = 8, units = "in")
+  theme(legend.position = "bottom") 
+ggsave("images/original.forest.png", dpi = 300, width = 8, height = 10, units = "in")
 ```
 
 ## Hypothesis 2 - Redefined

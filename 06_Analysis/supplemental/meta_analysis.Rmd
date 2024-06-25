@@ -6,8 +6,7 @@ output: html_document
 bibliography: ../references.bib
 ---
 
-
-THIS FILE IS A PLACE HOLDER, ANALYSIS COMING SOON. Meta analysis using each prime pair as an effect size, with the smaller sample size as the weight, calculate overall effect for Hyp 1 and separate language effects / look at language heterogeneity by adding language random intercept - print out both overall and by language 
+Related/unrelated trials were considered complete when *n* answered \>= 50 for minimum data collection. Often, we were able to get *n* correct \>= 50. When examining some of the “weird” words, it was clear that they had a low percent correct rate and would not reach correct rates at *n* \>= 50. In order to account for potential differences in correct sample sizes, we have analyzed an exploratory meta-analysis for the same two questions in the original pre-registration, using a random effects analysis to calculate the overall priming effect for everything and each language. We will use the same criteria as listed to determine the sensitivity of the original effects using weighted scores to account for differences in item sample sizes. Given that no differences in scoring accuracy was found, we will only examine this model for the original, more conservative, accuracy scoring to determine if the same conclusions would be found using a different analysis approach.
 
 ```{r setup, include=FALSE, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = FALSE, size="scriptsize")
@@ -32,6 +31,7 @@ library(performance)
 library(parameters)
 library(ggridges)
 library(papaja)
+library(metafor)
 ```
 
 ```{r import-data, message = F}
@@ -163,315 +163,75 @@ original.data$Language_type <-
 ## Hypothesis 1
 
 ```{r hyp1-original, message = F, echo = F}
-# run the analysis
-hyp1 <- lm(avgZ_prime ~ 1, data = original.data)
-hyp1.summary <- summary(hyp1)
-hyp1.parameters <- parameters(hyp1)
-hyp1.performance <- model_performance(hyp1)
+# calculate vi
+original.data <- escalc(
+  data = original.data %>% 
+    filter(!is.na(avgZ_prime)),
+  measure = "MD",
+  n1i = target_correct_keep_unrelated,
+  n2i = target_correct_keep_related, 
+  m1i = avgZ_RT_unrelated,
+  m2i = avgZ_RT_related, 
+  sd1i = seZ_RT_unrelated * sqrt(target_correct_keep_unrelated), 
+  sd2i = seZ_RT_unrelated * sqrt(target_correct_keep_related), 
+)
 
-hyp1.Z2 <- lm(avgZ_prime ~ 1, data = original2.data)
-hyp1.Z2.summary <- summary(hyp1.Z2)
-hyp1.Z2.parameters <- parameters(hyp1.Z2)
-hyp1.Z2.performance <- model_performance(hyp1.Z2)
-
-hyp1.Z3 <- lm(avgZ_prime ~ 1, data = original3.data)
-hyp1.Z3.summary <- summary(hyp1.Z3)
-hyp1.Z3.parameters <- parameters(hyp1.Z3)
-hyp1.Z3.performance <- model_performance(hyp1.Z3)
+# fit random-effects model
+original.results <- rma(yi, vi, 
+                        data = original.data, 
+                        test="knha", method="DL")
+# original.results
 ```
 
-Hypothesis 1 predicted finding semantic facilitation wherein the response latencies for related targets would be faster than unrelated targets. Hypothesis 1 was tested by fitting an intercept-only regression model using the *z*-scored priming response latency as the dependent variable. The priming response latency was calculated by taking the average of the unrelated pair *z*-scored response latency minus the average related pair response latency within each item by language. Therefore, values that are positive and greater than zero (e.g., \> 0.0001) indicate priming because the related pair had a faster response latency than the unrelated pair. The intercept and its 95% confidence interval represent the grand mean of the priming effect across all languages. 
-
-*Deviations*. In cases in which the target word is repeated due to language translation, we created pairs of translations (i.e., cue-target-related1, cue-target-unrelated1, cue-target-related2, cue-target-unrelated2) to ensure each pair only gets subtracted once. For example, if SPOON-CHEESE and TREE-CHEESE (unrelated) needed to be paired with MOUSE-CHEESE and CHEDDAR-CHEESE (related), we ensured each version was only combined once: SPOON-CHEESE minus MOUSE-CHEESE and TREE-CHEESE minus CHEDDER-CHEESE. 
-
-For Korean, the extra unrelated pairs accidentally implemented were excluded in the priming calculation. When the unrelated target was repeated multiple times with no matching related target (i.e., 1 related target, 3 unrelated targets), we picked the lowest cosine unrelated target pair to be the comparison condition and discarded the rest of the unrelated pairs. This procedure also allowed us to control the slightly higher cosine values found (and noted above) for unrelated pairs in Korean.
-
-Overall priming was $b_0$ = `r apa_num(hyp1.parameters$Coefficient, digits = 3)`, $SE$ = `r apa_num(hyp1.parameters$SE, digits = 3)`, 95%CI[`r apa_num(hyp1.parameters$CI_low, digits = 3)`, `r apa_num(hyp1.parameters$CI_high, digits = 3)`]. Hypothesis 1 from our pre-registration as the lower limit of the confidence interval is greater than zero (i.e., a directional comparison). This process was repeated for average priming scores calculated without trials that were marked as 2.50 z-score outliers and 3.00 z-score outliers separately. These results were consistent with overall priming: $b_{0 Z2.5}$ = `r apa_num(hyp1.Z2.parameters$Coefficient, digits = 3)`, $SE$ = `r apa_num(hyp1.Z2.parameters$SE, digits = 3)`, 95%CI[`r apa_num(hyp1.Z2.parameters$CI_low, digits = 3)`, `r apa_num(hyp1.Z2.parameters$CI_high, digits = 3)`], and $b_{0 Z3.0}$ = `r apa_num(hyp1.Z3.parameters$Coefficient, digits = 3)`, $SE$ = `r apa_num(hyp1.Z3.parameters$SE, digits = 3)`, 95%CI[`r apa_num(hyp1.Z3.parameters$CI_low, digits = 3)`, `r apa_num(hyp1.Z3.parameters$CI_high, digits = 3)`]. Figure \@ref(fig:figure-ridges-original) denotes the distribution of the average item *z*-score effects, ordered by the size of the overall priming effect for each language. The distributions of the priming scores are very similar with long tails and roughly similar shapes (albeit more variance in some languages). 
-
-```{r figure-ridges-original, echo = F, include = T, message = F, warning = F, fig.cap = "Distribution of average priming effects for languages that met the minimum sample size criteria. Order of languages based on their average priming effect.", fig.width=8}
-# re org the data
-order <- original.data %>% 
-  ungroup() %>% 
-  group_by(Language) %>% 
-  summarize(avgZ_prime = mean(avgZ_prime, na.rm = T)) %>% 
-  arrange(avgZ_prime) %>% 
-  pull(Language)
-
-combo.original <- bind_rows(
-  original.data %>% mutate(cutoff = "None"),
-  original2.data %>% mutate(cutoff = "Z = 2.5"),
-  original3.data %>% mutate(cutoff = "Z = 3.0")
-) %>% 
-  mutate(Language = factor(Language, 
-                           levels = order))
-
-ggplot(combo.original %>% 
-         filter(cutoff == "None"), 
-       aes(avgZ_prime, Language, fill = Language_type)) + 
-  geom_density_ridges(scale = 3, alpha = .5) + 
-  theme_bw() + 
-  #facet_wrap(~cutoff) + 
-  xlab("Z-Score Priming") +
-  theme(legend.position = "bottom") + 
-  scale_fill_discrete(name = "Language Type") 
-
-#ggsave("../images/original.distributions.png", dpi = 300, width = 8, units = "in")
-```
-
-## Hypothesis 1 - Redefined Accuracy
-
-```{r hyp1-redefined, message = F, echo = F}
-# run the analysis
-hyp1a <- lm(avgZ_prime ~ 1, data = original.answered.data)
-hyp1a.summary <- summary(hyp1a)
-hyp1a.parameters <- parameters(hyp1a)
-hyp1a.performance <- model_performance(hyp1a)
-
-hyp1a.Z2 <- lm(avgZ_prime ~ 1, data = original.answered2.data)
-hyp1a.Z2.summary <- summary(hyp1a.Z2)
-hyp1a.Z2.parameters <- parameters(hyp1a.Z2)
-hyp1a.Z2.performance <- model_performance(hyp1a.Z2)
-
-hyp1a.Z3 <- lm(avgZ_prime ~ 1, data = original.answered3.data)
-hyp1a.Z3.summary <- summary(hyp1a.Z3)
-hyp1a.Z3.parameters <- parameters(hyp1a.Z3)
-hyp1a.Z3.performance <- model_performance(hyp1a.Z3)
-```
-
-If we use redefined accuracy as $\frac{n_{correct}}{n_{answered}}$, the results are nearly identical: $b_0$ = `r apa_num(hyp1a.parameters$Coefficient, digits = 3)`, $SE$ = `r apa_num(hyp1a.parameters$SE, digits = 3)`, 95%CI[`r apa_num(hyp1a.parameters$CI_low, digits = 3)`, `r apa_num(hyp1a.parameters$CI_high, digits = 3)`]. This process was repeated for average priming scores calculated without trials that were marked as 2.50 z-score outliers and 3.00 z-score outliers separately. These results were consistent with overall priming: $b_{0 Z2.5}$ = `r apa_num(hyp1a.Z2.parameters$Coefficient, digits = 3)`, $SE$ = `r apa_num(hyp1a.Z2.parameters$SE, digits = 3)`, 95%CI[`r apa_num(hyp1a.Z2.parameters$CI_low, digits = 3)`, `r apa_num(hyp1a.Z2.parameters$CI_high, digits = 3)`], and $b_{0 Z3.0}$ = `r apa_num(hyp1a.Z3.parameters$Coefficient, digits = 3)`, $SE$ = `r apa_num(hyp1a.Z3.parameters$SE, digits = 3)`, 95%CI[`r apa_num(hyp1a.Z3.parameters$CI_low, digits = 3)`, `r apa_num(hyp1a.Z3.parameters$CI_high, digits = 3)`]. Figure \@ref(fig:figure-ridges-redefined) denotes the distribution of the average item *z*-score effects, ordered by the size of the overall priming effect for each language for the redefined accuracy. 
-
-```{r figure-ridges-redefined, echo = F, include = T, message = F, warning = F, fig.cap = "Distribution of average priming effects for languages that met the minimum sample size criteria. Order of languages based on their average priming effect given the redefined accuracy criteria.", fig.width=8}
-# re org the data
-order <- original.answered.data %>% 
-  ungroup() %>% 
-  group_by(Language) %>% 
-  summarize(avgZ_prime = mean(avgZ_prime, na.rm = T)) %>% 
-  arrange(avgZ_prime) %>% 
-  pull(Language)
-
-combo.original.answered <- bind_rows(
-  original.answered.data %>% mutate(cutoff = "None"),
-  original.answered2.data %>% mutate(cutoff = "Z = 2.5"),
-  original.answered3.data %>% mutate(cutoff = "Z = 3.0")
-) %>% 
-  mutate(Language = factor(Language, 
-                           levels = order))
-
-ggplot(combo.original.answered %>% 
-         filter(cutoff == "None"), 
-       aes(avgZ_prime, Language, fill = Language_type)) + 
-  geom_density_ridges(scale = 3, alpha = .5) + 
-  theme_bw() + 
-  #facet_wrap(~cutoff) + 
-  xlab("Z-Score Priming") +
-  theme(legend.position = "bottom") + 
-  scale_fill_discrete(name = "Language Type") 
-
-# ggsave("../images/redefined.distributions.png", dpi = 300, width = 8, units = "in")
-```
+For this supplemental analysis, we used the `metafor` package [@viechtbauer2010] to calculate the "raw" mean difference between average *Z*-scores unrelated minus average *Z*-scores related separately for each item. The standard deviations of the average *Z*-scores and sample sizes for condition by item were used to calculate the variance of the effect size necessary for meta-analysis. A random-effects meta-analysis was analyzed on the `r nrow(original.data %>% filter(!is.na(avgZ_prime)))` items with a non-zero sample size in both related and unrelated conditions using the DerSimonian-Laird estimator [@dersimonian1986]. The results suggest that the overall effect size was `r print_num(original.results$beta[1], digits = 3)` 95% *CI* [`r print_num(original.results$ci.lb, digits = 3)`, `r print_num(original.results$ci.ub, digits = 3)`]. This results supports Hypothesis 1.
 
 ## Hypothesis 2
 
-```{r hyp2-original, message = F, echo = F, warning = FALSE}
+```{r hyp2-original, message = F, echo = F, eval = F, warning = FALSE}
 # run the model
-hyp2 <- lme(avgZ_prime ~ 1, 
-            data = original.data, 
-            method = "REML", 
-            na.action = "na.omit",
-            random = ~1|Language)
+original.results.h2 <- rma.mv(yi, vi, 
+                              model = ~ 1 | Language, 
+                              data = original.data)
 
-# model assumptions
-# performance::check_model(hyp2)
+original.results.h2
+save(original.results.h2, file = "rma_mv.RData")
+getwd()
 
-# print the results
-hyp2.summary <- summary(hyp2)
-hyp2.parameters <- parameters(hyp2)
-hyp2.performance <- model_performance(hyp2)
-hyp2.intervals <- intervals(hyp2)
-
-# compare models
-hyp1.aic <- apa_num(AIC(hyp1), digits = 3)
-hyp2.aic <- apa_num(AIC(hyp2), digits = 3)
-
-# effect size
-hyp2.r <- r.squaredGLMM(hyp2)
-
-
-# run the model
-hyp2.Z2 <- lme(avgZ_prime ~ 1, 
-            data = original2.data, 
-            method = "REML", 
-            na.action = "na.omit",
-            random = ~1|Language)
-
-# model assumptions
-# performance::check_model(hyp2.Z2)
-
-# print the results
-hyp2.Z2.summary <- summary(hyp2.Z2)
-hyp2.Z2.parameters <- parameters(hyp2.Z2)
-hyp2.Z2.performance <- model_performance(hyp2.Z2)
-hyp2.Z2.intervals <- intervals(hyp2.Z2)
-
-# compare models
-hyp1.Z2.aic <- apa_num(AIC(hyp1.Z2), digits = 3)
-hyp2.Z2.aic <- apa_num(AIC(hyp2.Z2), digits = 3)
-
-# effect size
-hyp2.Z2.r <- r.squaredGLMM(hyp2.Z2)
-
-
-# run the model
-hyp2.Z3 <- lme(avgZ_prime ~ 1, 
-            data = original3.data, 
-            method = "REML", 
-            na.action = "na.omit",
-            random = ~1|Language)
-
-# model assumptions
-# performance::check_model(hyp2.Z3)
-
-# print the results
-hyp2.Z3.summary <- summary(hyp2.Z3)
-hyp2.Z3.parameters <- parameters(hyp2.Z3)
-hyp2.Z3.performance <- model_performance(hyp2.Z3)
-hyp2.Z3.intervals <- intervals(hyp2.Z3)
-
-# compare models
-hyp1.Z3.aic <- apa_num(AIC(hyp1.Z3), digits = 3)
-hyp2.Z3.aic <- apa_num(AIC(hyp2.Z3), digits = 3)
-
-# effect size
-hyp2.Z3.r <- r.squaredGLMM(hyp2.Z3)
+# Multivariate Meta-Analysis Model (k = 18999; method: REML)
+# 
+# Variance Components: none
+# 
+# Test for Heterogeneity:
+# Q(df = 18998) = 62842.4774, p-val < .0001
+# 
+# Model Results:
+# 
+# estimate      se     zval    pval   ci.lb   ci.ub      
+#   0.0647  0.0007  89.7717  <.0001  0.0633  0.0661  *** 
+# 
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-Hypothesis 2 explored the extent to which these semantic priming effects vary across languages. Therefore, we calculated a random effects model using the *nlme* [@pinheiro2017] package in *R* wherein the random intercept of language was added to the overall intercept only model for Hypothesis 1. The addition of this parameter improved model fit from $AIC_{Hyp 1}$ = `r hyp1.aic` to $AIC_{Hyp 2}$ = `r hyp2.aic`, supporting significant heterogeneity as the AIC for the random effects model is two points or more less than the AIC for the intercept-only model [@burnham1998]. The standard deviation of the random effect was `r apa_num(hyp2.parameters$Coefficient[2], digits = 3)`, 95% CI[`r apa_num(hyp2.intervals$reStruct$Language$lower, digits = 3)`, `r apa_num(hyp2.intervals$reStruct$Language$upper, digits = 3)`]. The pseudo-$R^2$ for the model was `r print_p(hyp2.r[2])` [@barton2020]. The random effect was useful in both *z*-score 2.5 and 3.0 models: $AIC_{Hyp 1 Z2.5}$ = `r hyp1.Z2.aic` versus $AIC_{Hyp 2 Z2.5}$ = `r hyp2.Z2.aic` and $AIC_{Hyp 1 Z3.0}$ = `r hyp1.Z3.aic` versus $AIC_{Hyp 2 Z3.0}$ = `r hyp2.Z3.aic`. The random effect sizes were similar to the overall model: Z2.5 = `r apa_num(hyp2.Z2.parameters$Coefficient[2], digits = 3)`, 95% CI[`r apa_num(hyp2.Z2.intervals$reStruct$Language$lower, digits = 3)`, `r apa_num(hyp2.Z2.intervals$reStruct$Language$upper, digits = 3)`], Z3.0 = `r apa_num(hyp2.Z3.parameters$Coefficient[2], digits = 3)`, 95% CI[`r apa_num(hyp2.Z3.intervals$reStruct$Language$lower, digits = 3)`, `r apa_num(hyp2.Z3.intervals$reStruct$Language$upper, digits = 3)`].
 
-Figure \@ref(fig:forest-original) portrays the forest plot for the average priming effects by language, ordered by the size of the effect without removal of outliers. The global priming average is presented on each facet to show how the priming effect changes based on the removal of outliers. In nearly all languages, the priming effect decreases slightly with the removal of outliers with the exception of Serbian. This figure also shows that the priming effect does vary by language, as supported by the results from Hypothesis 2, but that the effect is likely small, given pseudo-$R^2$ was < .01.  
-
-```{r forest-original, echo = F, message = F, warning = F, include = T, fig.cap = "Forest plot of average priming effects for each language ordered by priming average when no outliers are removed. The vertical line indicates the global average priming effect with no outliers removed.", fig.width=8}
-avg_prime <- hyp2.parameters$Coefficient[1]
-
-# forest plot
-ggplot(combo.original, aes(Language, avgZ_prime, color = Language_type)) +
-  stat_summary(fun.data = mean_cl_normal, 
-               geom = "errorbar", 
-               width = .2, 
-               position = position_dodge(width = .2)) + 
-  stat_summary(fun = mean,
-               geom = "point", 
-               position = position_dodge()) + 
-  xlab("Language") + 
-  ylab("Z Score Priming") +
-  theme_classic() + 
-  geom_hline(yintercept = avg_prime) + 
-  coord_flip() + 
-  facet_wrap(~cutoff) + 
-  scale_color_discrete(name = "Language Type") + 
-  theme(legend.position = "bottom")
-
-#ggsave("../images/original.forest.png", dpi = 300, width = 8, units = "in")
+```{r hyp2-load, message = F, echo = F, warning = FALSE}
+load(file = "rma_mv.RData")
+# Multivariate Meta-Analysis Model (k = 18999; method: REML)
+# 
+# Variance Components: none
+# 
+# Test for Heterogeneity:
+# Q(df = 18998) = 62842.4774, p-val < .0001
+# 
+# Model Results:
+# 
+# estimate      se     zval    pval   ci.lb   ci.ub      
+#   0.0647  0.0007  89.7717  <.0001  0.0633  0.0661  *** 
+# 
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-## Hypothesis 2 - Redefined
-
-```{r hyp2-redefined, message = F, echo = F, warning = FALSE}
-# run the model
-hyp2a <- lme(avgZ_prime ~ 1, 
-            data = original.answered.data, 
-            method = "REML", 
-            na.action = "na.omit",
-            random = ~1|Language)
-
-# model assumptions
-# performance::check_model(hyp2a)
-
-# print the results
-hyp2a.summary <- summary(hyp2a)
-hyp2a.parameters <- parameters(hyp2a)
-hyp2a.performance <- model_performance(hyp2a)
-hyp2a.intervals <- intervals(hyp2a)
-
-# compare models
-hyp1a.aic <- apa_num(AIC(hyp1a), digits = 3)
-hyp2a.aic <- apa_num(AIC(hyp2a), digits = 3)
-
-# effect size
-hyp2a.r <- r.squaredGLMM(hyp2a)
-
-
-# run the model
-hyp2a.Z2 <- lme(avgZ_prime ~ 1, 
-            data = original.answered2.data, 
-            method = "REML", 
-            na.action = "na.omit",
-            random = ~1|Language)
-
-# model assumptions
-# performance::check_model(hyp2a.Z2)
-
-# print the results
-hyp2a.Z2.summary <- summary(hyp2a.Z2)
-hyp2a.Z2.parameters <- parameters(hyp2a.Z2)
-hyp2a.Z2.performance <- model_performance(hyp2a.Z2)
-hyp2a.Z2.intervals <- intervals(hyp2a.Z2)
-
-# compare models
-hyp1a.Z2.aic <- apa_num(AIC(hyp1a.Z2), digits = 3)
-hyp2a.Z2.aic <- apa_num(AIC(hyp2a.Z2), digits = 3)
-
-# effect size
-hyp2a.Z2.r <- r.squaredGLMM(hyp2a.Z2)
-
-
-# run the model
-hyp2a.Z3 <- lme(avgZ_prime ~ 1, 
-            data = original.answered3.data, 
-            method = "REML", 
-            na.action = "na.omit",
-            random = ~1|Language)
-
-# model assumptions
-# performance::check_model(hyp2a.Z3)
-
-# print the results
-hyp2a.Z3.summary <- summary(hyp2a.Z3)
-hyp2a.Z3.parameters <- parameters(hyp2a.Z3)
-hyp2a.Z3.performance <- model_performance(hyp2a.Z3)
-hyp2a.Z3.intervals <- intervals(hyp2a.Z3)
-
-# compare models
-hyp1a.Z3.aic <- apa_num(AIC(hyp1a.Z3), digits = 3)
-hyp2a.Z3.aic <- apa_num(AIC(hyp2a.Z3), digits = 3)
-
-# effect size
-hyp2a.Z3.r <- r.squaredGLMM(hyp2a.Z3)
-```
-
-Using the redefined accuracy, we find very similar results: the addition of the random intercept of language improved model fit from $AIC_{Hyp 1}$ = `r hyp1a.aic` to $AIC_{Hyp 2}$ = `r hyp2a.aic`. The standard deviation of the random effect was `r apa_num(hyp2a.parameters$Coefficient[2], digits = 3)`, 95% CI[`r apa_num(hyp2a.intervals$reStruct$Language$lower, digits = 3)`, `r apa_num(hyp2a.intervals$reStruct$Language$upper, digits = 3)`]. The pseudo-$R^2$ for the model was `r print_p(hyp2a.r[2])`. The random effect was useful in both *z*-score 2.5 and 3.0 models: $AIC_{Hyp 1 Z2.5}$ = `r hyp1a.Z2.aic` versus $AIC_{Hyp 2 Z2.5}$ = `r hyp2a.Z2.aic` and $AIC_{Hyp 1 Z3.0}$ = `r hyp1a.Z3.aic` versus $AIC_{Hyp 2 Z3.0}$ = `r hyp2a.Z3.aic`. The random effect sizes were similar to the overall model: Z2.5 = `r apa_num(hyp2a.Z2.parameters$Coefficient[2], digits = 3)`, 95% CI[`r apa_num(hyp2a.Z2.intervals$reStruct$Language$lower, digits = 3)`, `r apa_num(hyp2a.Z2.intervals$reStruct$Language$upper, digits = 3)`], Z3.0 = `r apa_num(hyp2a.Z3.parameters$Coefficient[2], digits = 3)`, 95% CI[`r apa_num(hyp2a.Z3.intervals$reStruct$Language$lower, digits = 3)`, `r apa_num(hyp2a.Z3.intervals$reStruct$Language$upper, digits = 3)`]. Figure \@ref(fig:forest-redefined) portrays the forest plot for the average priming effects by language, ordered by the size of the effect without removal of outliers for the redefined effect. 
-
-```{r forest-redefined, echo = F, message = F, warning = F, include = T, fig.cap = "Forest plot of average priming effects for each language ordered by priming average when no outliers are removed for the redefined accuracy results. The vertical line indicates the global average priming effect with no outliers removed.", fig.width=8}
-avg_prime <- hyp2a.parameters$Coefficient[1]
-
-# forest plot
-ggplot(combo.original.answered, aes(Language, avgZ_prime, color = Language_type)) +
-  stat_summary(fun.data = mean_cl_normal, 
-               geom = "errorbar", 
-               width = .2, 
-               position = position_dodge(width = .2)) + 
-  stat_summary(fun = mean,
-               geom = "point", 
-               position = position_dodge()) + 
-  xlab("Language") + 
-  ylab("Z Score Priming") +
-  theme_classic() + 
-  geom_hline(yintercept = avg_prime) + 
-  coord_flip() + 
-  facet_wrap(~cutoff) + 
-  scale_color_discrete(name = "Language Type") + 
-  theme(legend.position = "bottom")
-
-#ggsave("../images/redefined.forest.png", dpi = 300, width = 8, units = "in")
-```
+For Hypothesis 2, we added a random intercept of language to the random effects model used in Hypothesis 1. The results suggest that the overall effect size was `r print_num(original.results.h2$beta[1], digits = 3)` 95% *CI* [`r print_num(original.results.h2$ci.lb, digits = 3)`, `r print_num(original.results.h2$ci.ub, digits = 3)`] after controlling for the random intercept of language. The test for heterogeneity was significant *Q*(*df* = 18998) = 62842.4774, *p* < .0001, thus, supporting hypothesis 2. 
 
 ## References

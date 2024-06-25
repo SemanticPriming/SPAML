@@ -448,6 +448,12 @@ IRB_lab <- IRB_sheet %>%
   ) %>% 
   filter(PSA_ID != "NULL")
 
+IRB_lab$link_IRB[is.na(IRB_lab$link_IRB)] <- "https://osf.io/download/sg5ac/"
+# 14 ZPID were covered under erin
+# all people saw HU IRB, so No Labs also covered
+IRB_lab$type_IRB[is.na(IRB_lab$type_IRB)] <- "Local IRB"
+IRB_lab$submit_date_IRB[is.na(IRB_lab$submit_date_IRB)] <- "June 25th, 2021"
+
 export(IRB_lab, "supplemental/irb_lab_summary.csv", row.names = F)
 ```
 

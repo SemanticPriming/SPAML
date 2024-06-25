@@ -381,7 +381,9 @@ p.keepanswered.age <- describe(p.df$age[p.df$keep_answered == "keep"], na.rm = T
 
 The average age for all participants was $M$ = `r apa_num(p.overall.age$mean)` ($SD$ = `r apa_num(p.overall.age$sd)`) ranging from `r apa_num(p.overall.age$min)` to `r apa_num(p.overall.age$max)`. The demographic question asked participants to enter their year of birth, and the high maximum values were likely participants who entered the minimum possible year allowable in the data collection form. The participants kept for analysis showed the same pattern of ages: $M$ = `r apa_num(p.keep.age$mean)` ($SD$ = `r apa_num(p.keep.age$sd)`) ranging from `r apa_num(p.keep.age$min)` to `r apa_num(p.keep.age$max)`.
 
-The rescored accuracy participants showed the following age pattern: $M$ = `r apa_num(p.keepanswered.age$mean)` ($SD$ = `r apa_num(p.keepanswered.age$sd)`) ranging from `r apa_num(p.keepanswered.age$min)` to `r apa_num(p.keepanswered.age$max)`.
+The median age was `r apa_num(p.overall.age$median)` with an IQR of `r apa_num(quantile(p.df$age, na.rm = T)[2])` to `r apa_num(quantile(p.df$age, na.rm = T)[4])`. The median age for analyzed participants was `r apa_num(p.keep.age$median)` with an IQR of `r apa_num(quantile(p.df$age[p.df$keep == "keep"], na.rm = T)[2])` to `r apa_num(quantile(p.df$age[p.df$keep == "keep"], na.rm = T)[4])`.
+
+The rescored accuracy participants showed the following age pattern: $M$ = `r apa_num(p.keepanswered.age$mean)` ($SD$ = `r apa_num(p.keepanswered.age$sd)`) ranging from `r apa_num(p.keepanswered.age$min)` to `r apa_num(p.keepanswered.age$max)`. The median age for rescored participants was `r apa_num(p.keepanswered.age$median)` with an IQR of `r apa_num(quantile(p.df$age[p.df$keep_answered == "keep"], na.rm = T)[2])` to `r apa_num(quantile(p.df$age[p.df$keep_answered == "keep"], na.rm = T)[4])`.
 
 ## Operating System
 
@@ -809,12 +811,15 @@ ggplot(country_summary) +
                aes(x = long, y = lat, group = group), 
                colour = 'black', fill = NA) + 
   theme_void() + 
-  scale_fill_brewer(name = "Sample Size",
-                       palette = "Spectral",
-                       na.value = "white") +
+  scale_fill_manual(values = viridis::viridis(5),
+                    name = "Sample Size") + 
+  #scale_fill_brewer(name = "Sample Size",
+  #                     palette = "Virdis",
+  #                     na.value = "white") +
   theme(legend.position = "bottom")
 
 ####CHECK COLOR PALETTE#### (issue with the yellow)
-ggsave("images/binned_country.png", dpi = 300)
+ggsave("images/binned_country.png", dpi = 300, width = 7, 
+       height = 4, units = "in")
 ```
 
