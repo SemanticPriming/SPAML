@@ -392,7 +392,7 @@ ggplot(combo.original, aes(Language, avgZ_prime, color = cutoff, shape = Languag
   #geom_hline(yintercept = avg_prime) + 
   coord_flip() + 
   #facet_wrap(~cutoff) + 
-  scale_color_manual(name = "Language Script",
+  scale_color_manual(name = "Z-Score Exclusion",
                        values = viridis::turbo(10)[c(1,8,10)]) + 
   theme(legend.position = "bottom") + 
   scale_shape(guide = "none")
@@ -494,7 +494,7 @@ ggplot(combo.original.answered, aes(Language, avgZ_prime, color = cutoff, shape 
   #geom_hline(yintercept = avg_prime) + 
   coord_flip() + 
   #facet_wrap(~cutoff) + 
-  scale_color_manual(name = "Language Script",
+  scale_color_manual(name = "Z-Score Exclusion",
                        values = viridis::turbo(10)[c(1,8,10)]) + 
   theme(legend.position = "bottom") + 
   scale_shape(guide = "none")
