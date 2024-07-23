@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Libraries
 
 ```{r}
+library(dplyr)
 library(semanticprimeR)
 library(udpipe)
 library(stopwords)
@@ -22,7 +23,7 @@ library(tibble)
 
 During the process of this project, we proposed a new way to calculate "power" for adaptive sampling of items using accuracy in parameter estimation and bootstrapping/simulation methods. You can review the preprint here: https://osf.io/preprints/osf/e3afx
 
-This package has many vignettes for different types of data you can examine by using `vignette(package = "semanticprimeR")` to review what is avaliable and `vignette(topic = "montefinese_vignette", package = "semanticprimeR")` as a specific example to view a specific vignette. 
+This package has many vignettes for different types of data you can examine by using `vignette(package = "semanticprimeR")` to review what is available and `vignette(topic = "montefinese_vignette", package = "semanticprimeR")` as a specific example to view a specific vignette. 
 
 The information presented here is a shortened version of the paper to show off the functionality of the package. 
 
@@ -33,7 +34,7 @@ Let's say we want to run a priming study, but do not have previous data. We can 
 ```{r}
 df <- simulate_population(mu = 25, # mean priming in ms
                     mu_sigma = 5, # standard deviation of the item means
-                    sigma = 10, # population standard devation for items
+                    sigma = 10, # population standard deviation for items
                     sigma_sigma = 3, # standard deviation of the standard deviation of items
                     number_items = 75, # number of priming items 
                     number_scores = 100, # a population of values to simulate
@@ -63,7 +64,7 @@ cutoff$prop_var # proportion of possible variance
 
 ### Bootstrap/Simulate Samples
 
-Next, we use bootstrapping/simulate to pretend we have samples of a starting size (we suggest 20) up to a maximim size we are willing to collect. These samples will be used to determine the number of items that achieve our stopping rule to determine how many participants are needed to accurately measure most items.
+Next, we use bootstrapping/simulate to pretend we have samples of a starting size (we suggest 20) up to a maximum size we are willing to collect. These samples will be used to determine the number of items that achieve our stopping rule to determine how many participants are needed to accurately measure most items.
 
 ```{r eval = F}
 samples <- bootstrap_samples(start = 20, # starting sample size
@@ -249,7 +250,7 @@ cosines to then filter out the token-token combinations. Big thanks to Brenton W
 
 ```{r}
 # get the top 5 related words 
-af_top_sim <- top_n(af_cosine, 6)
+af_top_sim <- semanticprimeR::top_n(af_cosine, 6)
 af_top_sim <- subset(af_top_sim, cue!=target)
 
 head(af_top_sim)
@@ -297,7 +298,7 @@ head(tibble(af_wuggy))
 
 You can load one of the many files included in the SPAML release by using the `primeData` to see what we have available. The datasets are broken into a couple types:
 
-- `procedure_stimuli`: The stimuli from the study. Each dataset includes the ~5000 trials used in the study listed as cue-target paits with their `cue_type`/`target_type` (word/nonword) and trial `type` (related, unrelated, nonword). The cosine values from the subs2vec models are included when available for word pairs. If the value is blank or NA, you can assume one of the words did not exist in the subs2vec model or could not be matched. The subs2vec models were often filtered to only the top X words, and some stimuli selected may have be infrequent. 
+- `procedure_stimuli`: The stimuli from the study. Each dataset includes the ~5000 trials used in the study listed as cue-target pairs with their `cue_type`/`target_type` (word/nonword) and trial `type` (related, unrelated, nonword). The cosine values from the subs2vec models are included when available for word pairs. If the value is blank or NA, you can assume one of the words did not exist in the subs2vec model or could not be matched. The subs2vec models were often filtered to only the top X words, and some stimuli selected may have be infrequent. 
 - `matched_stimuli`: The matched stimuli datasets fall into two types: "matched" which matches the original language to English, and "unique" which includes the word pair combo found in the datasets that makes each trial unique. Some targets were repeated due to translation - therefore, the unique datasets allow you to unambiguously match things together. The `matched_stimuli.csv` files has these all matched together if you want all languages at once. The missing data is the Arabic pairs we were asked to remove due to their taboo nature in that culture. 
 
 Each of the following files have codebooks found at: 
@@ -309,14 +310,14 @@ https://github.com/SemanticPriming/SPAML/tree/master/05_Data/codebooks
 - `item_data`: The average results for each token/item, ignoring the condition presented. 
 - `priming_data`: The priming data in either `_trials` format (meaning these have been matched and labeled for trial type) or `_summary` format (meaning averages/summaries of the target trials matched by related and unrelated to create a priming score). 
 
-### Load Avaiable Data
+### Load Available Data
 
 ```{r}
 data("primeData")
 head(primeData)
 ```
 
-Once you decide what file you would like to download and import, you can use `import_prime()` to import that file. Note that some of the `full_data` datasets are quite large and may take a while download and/or import directly. You can also just use the direct links the primeData file to download them. Some files are heavily compressed in `.gz` format. I recommend 7-zip if you aren't familar with the command line to unzip these: https://www.wikihow.com/Extract-a-Gz-File
+Once you decide what file you would like to download and import, you can use `import_prime()` to import that file. Note that some of the `full_data` datasets are quite large and may take a while download and/or import directly. You can also just use the direct links the primeData file to download them. Some files are heavily compressed in `.gz` format. I recommend 7-zip if you aren't familiar with the command line to unzip these: https://www.wikihow.com/Extract-a-Gz-File
 
 You can also import them directly into *R* with the *rio* package (which is what this function does, but it does download the file each time, so I'd recommend one download and then put the import into your code directly with `rio::import("filepath")`).
 

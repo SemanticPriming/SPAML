@@ -11,7 +11,7 @@
 
 <meta name="author" content="Erin Buchanan" />
 
-<meta name="date" content="2024-07-22" />
+<meta name="date" content="2024-07-23" />
 
 <title>semanticprimeR Tutorial</title>
 
@@ -352,15 +352,29 @@ display: none;
 
 <h1 class="title toc-ignore"><code>semanticprimeR</code> Tutorial</h1>
 <h4 class="author">Erin Buchanan</h4>
-<h4 class="date">2024-07-22</h4>
+<h4 class="date">2024-07-23</h4>
 
 </div>
 
 
 <div id="libraries" class="section level2">
 <h2>Libraries</h2>
-<pre class="r"><code>library(semanticprimeR)
-library(udpipe)
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(semanticprimeR)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;semanticprimeR&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     top_n</code></pre>
+<pre class="r"><code>library(udpipe)
 library(stopwords)
 library(tibble)</code></pre>
 </div>
@@ -372,7 +386,7 @@ parameter estimation and bootstrapping/simulation methods. You can
 review the preprint here: <a href="https://osf.io/preprints/osf/e3afx" class="uri">https://osf.io/preprints/osf/e3afx</a></p>
 <p>This package has many vignettes for different types of data you can
 examine by using <code>vignette(package = &quot;semanticprimeR&quot;)</code> to
-review what is avaliable and
+review what is available and
 <code>vignette(topic = &quot;montefinese_vignette&quot;, package = &quot;semanticprimeR&quot;)</code>
 as a specific example to view a specific vignette.</p>
 <p>The information presented here is a shortened version of the paper to
@@ -385,7 +399,7 @@ sample data to use in for estimating sample size for adaptive testing
 and stopping rules.</p>
 <pre class="r"><code>df &lt;- simulate_population(mu = 25, # mean priming in ms
                     mu_sigma = 5, # standard deviation of the item means
-                    sigma = 10, # population standard devation for items
+                    sigma = 10, # population standard deviation for items
                     sigma_sigma = 3, # standard deviation of the standard deviation of items
                     number_items = 75, # number of priming items 
                     number_scores = 100, # a population of values to simulate
@@ -396,12 +410,12 @@ and stopping rules.</p>
 
 head(df)</code></pre>
 <pre><code>##   item  score
-## 1    1 20.785
-## 2    2 21.891
-## 3    3 28.589
-## 4    4 42.087
-## 5    5 34.377
-## 6    6 43.292</code></pre>
+## 1    1 20.293
+## 2    2  9.873
+## 3    3 17.855
+## 4    4 40.677
+## 5    5 33.239
+## 6    6 30.073</code></pre>
 </div>
 <div id="calculate-cutoff" class="section level3">
 <h3>Calculate Cutoff</h3>
@@ -418,29 +432,29 @@ items.</p>
   maximum = max(df$score)) # maximum possible/found score
                            
 cutoff$se_items # all standard errors of items</code></pre>
-<pre><code>##  [1] 0.9535295 1.1177239 0.4876727 1.1844135 0.9513724 1.0953773 0.5587995
-##  [8] 0.8040219 0.7119437 1.2588125 0.4580515 0.9869554 0.5896200 0.9298857
-## [15] 0.5124980 1.2054579 0.9017899 1.1893291 0.9986193 0.9545017 1.6658375
-## [22] 0.2662436 1.3755262 0.6590617 1.0247595 1.3435435 0.6253271 1.0714264
-## [29] 1.0014565 0.9723555 0.7684334 1.1272220 0.3999239 1.1092119 1.4284007
-## [36] 0.8843921 1.0350694 0.9700539 0.9592369 1.2322849 1.5826565 1.2408794
-## [43] 0.9151574 1.0142248 1.1484534 1.4169124 1.4500742 0.8531491 0.9694008
-## [50] 1.0492471 1.2834248 1.1270685 1.1245939 1.3606080 1.2506481 0.7939136
-## [57] 1.3474744 0.8718799 0.8561053 0.7871180 1.0044072 1.1809865 1.3914093
-## [64] 1.3185808 0.9931680 1.0691955 1.1904879 1.5706151 0.8443900 1.1979212
-## [71] 0.8131181 1.6269890 1.2418285 1.0495101 1.1699848</code></pre>
+<pre><code>##  [1] 1.1046508 1.1134348 0.1522382 1.4576604 1.0383494 0.7917046 0.9857647
+##  [8] 0.3412536 1.4766145 1.1774194 0.8136925 0.2385702 1.2655058 1.1921316
+## [15] 0.8877370 1.9840226 0.8861459 1.4657969 0.2015348 1.0358194 1.3893858
+## [22] 0.8118731 0.2916057 0.8494292 0.9737896 0.7934133 1.1260423 1.4061566
+## [29] 0.8126866 1.0626196 0.8536686 1.0723312 0.8051896 0.7348091 0.8674971
+## [36] 1.4513401 1.3107124 1.3042763 0.5418280 0.9199941 1.7930867 0.8686971
+## [43] 1.5860770 1.0950936 0.7671976 1.3972324 1.1166536 1.4502248 0.7659338
+## [50] 0.9075142 0.8250352 0.9604623 1.1612175 1.1143257 0.6014638 0.7489390
+## [57] 1.1181892 1.0933569 0.8020604 0.7180095 1.0298281 1.1899756 0.8752224
+## [64] 0.9824473 1.2830821 0.8213152 0.9676037 0.7840339 0.5659202 0.9966116
+## [71] 0.8011850 1.1926947 1.1290697 0.5930255 0.9843785</code></pre>
 <pre class="r"><code>cutoff$sd_items # standard deviation of the standard errors</code></pre>
-<pre><code>## [1] 0.2895927</code></pre>
+<pre><code>## [1] 0.3403351</code></pre>
 <pre class="r"><code>cutoff$cutoff # 40% decile score</code></pre>
 <pre><code>##       40% 
-## 0.9811155</code></pre>
+## 0.8817765</code></pre>
 <pre class="r"><code>cutoff$prop_var # proportion of possible variance </code></pre>
-<pre><code>## [1] 0.005598266</code></pre>
+<pre><code>## [1] 0.006200312</code></pre>
 </div>
 <div id="bootstrapsimulate-samples" class="section level3">
 <h3>Bootstrap/Simulate Samples</h3>
 <p>Next, we use bootstrapping/simulate to pretend we have samples of a
-starting size (we suggest 20) up to a maximim size we are willing to
+starting size (we suggest 20) up to a maximum size we are willing to
 collect. These samples will be used to determine the number of items
 that achieve our stopping rule to determine how many participants are
 needed to accurately measure most items.</p>
@@ -483,9 +497,9 @@ head(proportion_summary)</code></pre>
 ## 1          20        0.04  
 ## 2          25        0.0667
 ## 3          30        0.08  
-## 4          35        0.0933
-## 5          40        0.133 
-## 6          45        0.173</code></pre>
+## 4          35        0.08  
+## 5          40        0.08  
+## 6          45        0.08</code></pre>
 </div>
 <div id="final-sample-size" class="section level3">
 <h3>Final Sample Size</h3>
@@ -509,10 +523,10 @@ corrected_summary</code></pre>
 <pre><code>## # A tibble: 4 × 3
 ##   percent_below sample_size corrected_sample_size
 ##           &lt;dbl&gt;       &lt;dbl&gt;                 &lt;dbl&gt;
-## 1          80           170                  92.5
-## 2          88           205                 112. 
-## 3          90.7         220                 121. 
-## 4          96           265                 145.</code></pre>
+## 1          80           200                  110.
+## 2          85.3         225                  123.
+## 3          92           280                  152.
+## 4          96           325                  175.</code></pre>
 </div>
 </div>
 <div id="create-stimuli-functions" class="section level2">
@@ -724,7 +738,7 @@ related to itself), so you should ask for n+1 number of cosines to then
 filter out the token-token combinations. Big thanks to Brenton Wiernik
 who figured out how to make this computational efficient.</p>
 <pre class="r"><code># get the top 5 related words 
-af_top_sim &lt;- top_n(af_cosine, 6)
+af_top_sim &lt;- semanticprimeR::top_n(af_cosine, 6)
 af_top_sim &lt;- subset(af_top_sim, cue!=target)
 
 head(af_top_sim)</code></pre>
@@ -746,12 +760,12 @@ replacement.</p>
 # you&#39;d want to also do this based on target depending on your study 
 head(af_top_sim)</code></pre>
 <pre><code>##    cue  target    cosine fake_cue
-## 2  nou     als 0.8654161      pou
-## 3  nou   nitto 0.8476698      noo
-## 4  nou    juis 0.8434761      nmu
-## 5  nou nicolas 0.8419336      nof
-## 6  nou jakkals 0.8278382      noo
-## 8 hier    bier 0.8086171     eier</code></pre>
+## 2  nou     als 0.8654161      niu
+## 3  nou   nitto 0.8476698      aou
+## 4  nou    juis 0.8434761      nog
+## 5  nou nicolas 0.8419336      hou
+## 6  nou jakkals 0.8278382      sou
+## 8 hier    bier 0.8086171     heer</code></pre>
 <p>You can also use the Wuggy algorithm using <code>fake_Wuggy()</code>.
 <em>This function is not fast. It is slower the larger the size of the
 words to create from.</em> It returns a dataframe of options to use for
@@ -807,7 +821,7 @@ datasets are broken into a couple types:</p>
 <ul>
 <li><code>procedure_stimuli</code>: The stimuli from the study. Each
 dataset includes the ~5000 trials used in the study listed as cue-target
-paits with their <code>cue_type</code>/<code>target_type</code>
+pairs with their <code>cue_type</code>/<code>target_type</code>
 (word/nonword) and trial <code>type</code> (related, unrelated,
 nonword). The cosine values from the subs2vec models are included when
 available for word pairs. If the value is blank or NA, you can assume
@@ -841,8 +855,8 @@ for trial type) or <code>_summary</code> format (meaning
 averages/summaries of the target trials matched by related and unrelated
 to create a priming score).</li>
 </ul>
-<div id="load-avaiable-data" class="section level3">
-<h3>Load Avaiable Data</h3>
+<div id="load-available-data" class="section level3">
+<h3>Load Available Data</h3>
 <pre class="r"><code>data(&quot;primeData&quot;)
 head(primeData)</code></pre>
 <pre><code>##           type                            filename language
@@ -865,7 +879,7 @@ of the <code>full_data</code> datasets are quite large and may take a
 while download and/or import directly. You can also just use the direct
 links the primeData file to download them. Some files are heavily
 compressed in <code>.gz</code> format. I recommend 7-zip if you aren’t
-familar with the command line to unzip these: <a href="https://www.wikihow.com/Extract-a-Gz-File" class="uri">https://www.wikihow.com/Extract-a-Gz-File</a></p>
+familiar with the command line to unzip these: <a href="https://www.wikihow.com/Extract-a-Gz-File" class="uri">https://www.wikihow.com/Extract-a-Gz-File</a></p>
 <p>You can also import them directly into <em>R</em> with the
 <em>rio</em> package (which is what this function does, but it does
 download the file each time, so I’d recommend one download and then put
@@ -890,7 +904,7 @@ head(es_words)</code></pre>
 </div>
 <div id="match-to-lab-data" class="section level2">
 <h2>Match to LAB Data</h2>
-<div id="load-available-data" class="section level3">
+<div id="load-available-data-1" class="section level3">
 <h3>Load Available Data</h3>
 <p>To review the available data from the Linguistic Annotated
 Bibliography, you can use <code>data(&quot;labData&quot;)</code>, which includes
@@ -925,19 +939,17 @@ head(tibble(labData))</code></pre>
 <pre class="r"><code>saved &lt;- import_lab(language = &quot;English&quot;, variables = c(&quot;aoa&quot;, &quot;freq&quot;))
 # possible datasets that are English, aoa, and frequency
 head(tibble(saved))</code></pre>
-<pre><code>## # A tibble: 2 × 1
-##   saved          
-##   &lt;named list&gt;   
-## 1 &lt;df [118 × 74]&gt;
-## 2 &lt;df [3 × 74]&gt;</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   saved        
+##   &lt;named list&gt; 
+## 1 &lt;df [3 × 74]&gt;</code></pre>
 <pre class="r"><code>saved &lt;- import_lab(language = &quot;Spanish&quot;, variables = c(&quot;aoa&quot;))
 
 head(tibble(saved))</code></pre>
-<pre><code>## # A tibble: 2 × 1
-##   saved          
-##   &lt;named list&gt;   
-## 1 &lt;df [118 × 74]&gt;
-## 2 &lt;df [8 × 74]&gt;</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   saved        
+##   &lt;named list&gt; 
+## 1 &lt;df [8 × 74]&gt;</code></pre>
 </div>
 <div id="load-specific-data" class="section level3">
 <h3>Load Specific Data</h3>
