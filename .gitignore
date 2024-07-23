@@ -63,3 +63,7 @@ vignettes/*.pdf
 *.knit.md
 07_Manuscript/NHB_Reviews_V2.docx
 /11_Grants/NSF_2024
+/05_Data/lab_data
+/05_Data/procedure_stimuli
+/05_Data/subs_count
+/05_Data/subs_vec

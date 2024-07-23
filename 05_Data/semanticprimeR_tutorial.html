@@ -11,7 +11,7 @@
 
 <meta name="author" content="Erin Buchanan" />
 
-<meta name="date" content="2024-05-12" />
+<meta name="date" content="2024-07-22" />
 
 <title>semanticprimeR Tutorial</title>
 
@@ -352,12 +352,675 @@ display: none;
 
 <h1 class="title toc-ignore"><code>semanticprimeR</code> Tutorial</h1>
 <h4 class="author">Erin Buchanan</h4>
-<h4 class="date">2024-05-12</h4>
+<h4 class="date">2024-07-22</h4>
 
 </div>
 
 
-<p>PLACEHOLDER FILE COMING SOON</p>
+<div id="libraries" class="section level2">
+<h2>Libraries</h2>
+<pre class="r"><code>library(semanticprimeR)
+library(udpipe)
+library(stopwords)
+library(tibble)</code></pre>
+</div>
+<div id="power-functions" class="section level2">
+<h2>Power Functions</h2>
+<p>During the process of this project, we proposed a new way to
+calculate “power” for adaptive sampling of items using accuracy in
+parameter estimation and bootstrapping/simulation methods. You can
+review the preprint here: <a href="https://osf.io/preprints/osf/e3afx" class="uri">https://osf.io/preprints/osf/e3afx</a></p>
+<p>This package has many vignettes for different types of data you can
+examine by using <code>vignette(package = &quot;semanticprimeR&quot;)</code> to
+review what is avaliable and
+<code>vignette(topic = &quot;montefinese_vignette&quot;, package = &quot;semanticprimeR&quot;)</code>
+as a specific example to view a specific vignette.</p>
+<p>The information presented here is a shortened version of the paper to
+show off the functionality of the package.</p>
+<div id="simulate-population" class="section level3">
+<h3>Simulate Population</h3>
+<p>Let’s say we want to run a priming study, but do not have previous
+data. We can use <code>simulate_population()</code> to create some
+sample data to use in for estimating sample size for adaptive testing
+and stopping rules.</p>
+<pre class="r"><code>df &lt;- simulate_population(mu = 25, # mean priming in ms
+                    mu_sigma = 5, # standard deviation of the item means
+                    sigma = 10, # population standard devation for items
+                    sigma_sigma = 3, # standard deviation of the standard deviation of items
+                    number_items = 75, # number of priming items 
+                    number_scores = 100, # a population of values to simulate
+                    smallest_sigma = 1, # smallest possible item standard deviation 
+                    min_score = -25, # min ms priming
+                    max_score = 100, # max ms priming 
+                    digits = 3)
+
+head(df)</code></pre>
+<pre><code>##   item  score
+## 1    1 20.785
+## 2    2 21.891
+## 3    3 28.589
+## 4    4 42.087
+## 5    5 34.377
+## 6    6 43.292</code></pre>
+</div>
+<div id="calculate-cutoff" class="section level3">
+<h3>Calculate Cutoff</h3>
+<p>From this dataframe, we can calculate the standard error of the
+items, which is used to determine if the item has reached the stopping
+rule (i.e., if the standard error reaches a defined value, it is
+considered accurately measured, and we can stop sampling it). To get the
+defined value, we use the 40% decile of the standard errors of the
+items.</p>
+<pre class="r"><code>cutoff &lt;- calculate_cutoff(population = df, # pilot data or simulated data
+  grouping_items = &quot;item&quot;, # name of the item indicator column
+  score = &quot;score&quot;, # name of the dependent variable column
+  minimum = min(df$score), # minimum possible/found score
+  maximum = max(df$score)) # maximum possible/found score
+                           
+cutoff$se_items # all standard errors of items</code></pre>
+<pre><code>##  [1] 0.9535295 1.1177239 0.4876727 1.1844135 0.9513724 1.0953773 0.5587995
+##  [8] 0.8040219 0.7119437 1.2588125 0.4580515 0.9869554 0.5896200 0.9298857
+## [15] 0.5124980 1.2054579 0.9017899 1.1893291 0.9986193 0.9545017 1.6658375
+## [22] 0.2662436 1.3755262 0.6590617 1.0247595 1.3435435 0.6253271 1.0714264
+## [29] 1.0014565 0.9723555 0.7684334 1.1272220 0.3999239 1.1092119 1.4284007
+## [36] 0.8843921 1.0350694 0.9700539 0.9592369 1.2322849 1.5826565 1.2408794
+## [43] 0.9151574 1.0142248 1.1484534 1.4169124 1.4500742 0.8531491 0.9694008
+## [50] 1.0492471 1.2834248 1.1270685 1.1245939 1.3606080 1.2506481 0.7939136
+## [57] 1.3474744 0.8718799 0.8561053 0.7871180 1.0044072 1.1809865 1.3914093
+## [64] 1.3185808 0.9931680 1.0691955 1.1904879 1.5706151 0.8443900 1.1979212
+## [71] 0.8131181 1.6269890 1.2418285 1.0495101 1.1699848</code></pre>
+<pre class="r"><code>cutoff$sd_items # standard deviation of the standard errors</code></pre>
+<pre><code>## [1] 0.2895927</code></pre>
+<pre class="r"><code>cutoff$cutoff # 40% decile score</code></pre>
+<pre><code>##       40% 
+## 0.9811155</code></pre>
+<pre class="r"><code>cutoff$prop_var # proportion of possible variance </code></pre>
+<pre><code>## [1] 0.005598266</code></pre>
+</div>
+<div id="bootstrapsimulate-samples" class="section level3">
+<h3>Bootstrap/Simulate Samples</h3>
+<p>Next, we use bootstrapping/simulate to pretend we have samples of a
+starting size (we suggest 20) up to a maximim size we are willing to
+collect. These samples will be used to determine the number of items
+that achieve our stopping rule to determine how many participants are
+needed to accurately measure most items.</p>
+<pre class="r"><code>samples &lt;- bootstrap_samples(start = 20, # starting sample size
+  stop = 400, # stopping sample size
+  increase = 5, # increase bootstrapped samples by this amount
+  population = df, # population or pilot data
+  replace = TRUE, # bootstrap with replacement? 
+  nsim = 500, # number of simulations to run
+  grouping_items = &quot;item&quot;) # item column label 
+
+save(samples, file = &quot;tutorial_data/simulatePriming.RData&quot;)</code></pre>
+<pre class="r"><code># since that&#39;s a slow function, we wrote out the data and read it back in
+load(&quot;tutorial_data/simulatePriming.Rdata&quot;)
+head(samples[[1]])</code></pre>
+<pre><code>## # A tibble: 6 × 2
+## # Groups:   item [1]
+##    item score
+##   &lt;int&gt; &lt;dbl&gt;
+## 1     1 15.8 
+## 2     1 19.6 
+## 3     1 17.7 
+## 4     1 25.6 
+## 5     1 31.0 
+## 6     1  5.53</code></pre>
+</div>
+<div id="calculate-proportions-of-items-measured" class="section level3">
+<h3>Calculate Proportions of Items Measured</h3>
+<p>From those samples and our estimated cutoff score, we can calculate
+the number of items below our suggested stopping rule.</p>
+<pre class="r"><code>proportion_summary &lt;- calculate_proportion(samples = samples, # samples list
+  cutoff = cutoff$cutoff, # cut off score 
+  grouping_items = &quot;item&quot;, # item column name
+  score = &quot;score&quot;) # dependent variable column name 
+
+head(proportion_summary)</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   sample_size percent_below
+##         &lt;dbl&gt;         &lt;dbl&gt;
+## 1          20        0.04  
+## 2          25        0.0667
+## 3          30        0.08  
+## 4          35        0.0933
+## 5          40        0.133 
+## 6          45        0.173</code></pre>
+</div>
+<div id="final-sample-size" class="section level3">
+<h3>Final Sample Size</h3>
+<p>As you will note in our paper, we determined that this simulation
+procedure needs a correction to approximate traditional interpretations
+of power. You can use “power” levels like 80 percent, 90 percent, etc.
+similarly to traditional power - use higher numbers if you want to be
+more stringent to make sure all items are “well measured” (and
+correspondingly you will get higher estimated sample sizes). We
+suggested using 80% as a “minimum” sample size, the cutoff stopping rule
+while running the study if you use adaptive sampling (or just overall to
+review the data), and a higher value like 90% for a maximum sample size
+to collect.</p>
+<pre class="r"><code>corrected_summary &lt;- calculate_correction(
+  proportion_summary = proportion_summary, # prop from above
+  pilot_sample_size = 100, # number of participants in the pilot data 
+  proportion_variability = cutoff$prop_var, # proportion variance from cutoff scores
+  power_levels = c(80, 85, 90, 95)) # what levels of power to calculate 
+
+corrected_summary</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   percent_below sample_size corrected_sample_size
+##           &lt;dbl&gt;       &lt;dbl&gt;                 &lt;dbl&gt;
+## 1          80           170                  92.5
+## 2          88           205                 112. 
+## 3          90.7         220                 121. 
+## 4          96           265                 145.</code></pre>
+</div>
+</div>
+<div id="create-stimuli-functions" class="section level2">
+<h2>Create Stimuli Functions</h2>
+<p>Once you’ve determine your sample sizes, you will want to create
+stimuli. These functions show you how we created stimuli from the
+<code>OpenSubtitles</code> project using the <code>subs2vec</code>
+project.</p>
+<ul>
+<li><code>OpenSubtitles</code>: <a href="https://opus.nlpl.eu/OpenSubtitles/corpus/version/OpenSubtitles" class="uri">https://opus.nlpl.eu/OpenSubtitles/corpus/version/OpenSubtitles</a></li>
+<li><code>subs2vec</code>: <a href="https://github.com/jvparidon/subs2vec" class="uri">https://github.com/jvparidon/subs2vec</a>.</li>
+</ul>
+<div id="get-models" class="section level3">
+<h3>Get Models</h3>
+<p>You can review the available models from <code>subs2vec</code> merged
+with the available data in <code>OpenSubtitles</code> by using the data
+function. You can use <code>?subsData</code> to view the information
+about the columns and the dataset.</p>
+<pre class="r"><code>data(&quot;subsData&quot;)
+head(tibble(subsData))</code></pre>
+<pre><code>## # A tibble: 6 × 10
+##   language_code subs_vec   subs_count wiki_vec wiki_count files tokens sentences
+##   &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    
+## 1 hi            https://h… https://h… https:/… https://h…   102 1.0M   0.1M     
+## 2 gl            https://h… https://h… https:/… https://h…   449 2.3M   0.3M     
+## 3 ca            https://h… https://h… https:/… https://h…   832 4.6M   0.6M     
+## 4 bn            https://h… https://h… https:/… https://h…   542 3.7M   0.7M     
+## 5 br            https://h… https://h… https:/… https://h…    32 0.2M   23.1k    
+## 6 bs            https://h… https://h… https:/… https://h… 37309 215.4M 34.1M    
+## # ℹ 2 more variables: language &lt;chr&gt;, udpipe_model &lt;chr&gt;</code></pre>
+<p>We only worked with languages in which we could use a part of speech
+tagger. We recommend <code>udpipe</code> as a great package that has
+many taggers. The language model necessary is shown in the
+<code>udpipe_model</code> column.</p>
+<p>In this example, let’s use Afrikaans as a smaller dataset for an
+example. The datasets can be very large - just a warning for downloading
+and using on your computer. Use the <code>import_subs</code> function to
+download and import the files you are interested in.</p>
+<p>For language, please use the two letter language code in the
+<code>language_code</code> column of the subsData.</p>
+<p>You then need to pick <code>what</code> to download:</p>
+<ul>
+<li><code>subs_vec</code>: The subtitles embeddings from a fastText
+model.</li>
+<li><code>subs_count</code>: The frequency of tokens found in the
+<code>subs_vec</code> model.</li>
+<li><code>wiki_vec</code>: The Wikipedia embeddings from a fastText
+model.</li>
+<li><code>subs_count</code>: The frequency of tokens found in the
+<code>wiki_vec</code> model.</li>
+</ul>
+<p>You may see some warnings based on file formatting.</p>
+<pre class="r"><code>af_freq &lt;- import_subs(
+  language = &quot;af&quot;,
+  what = &quot;subs_count&quot;
+)
+
+head(af_freq)</code></pre>
+<pre><code>##   unigram unigram_freq
+## 1     die        12673
+## 2     nie        11788
+## 3      ek        11605
+## 4      is         9147
+## 5     het         8109
+## 6      jy         7425</code></pre>
+<p>We then used <code>udpipe</code> to filter our possible options. You
+may have other criteria, but here’s an example of how we tagged concepts
+(for their main part of speech, given no sentence context here). When
+you use this function, it will download the model necessary for
+tagging.</p>
+<pre class="r"><code># tag with udpipe
+af_tagged &lt;- udpipe(af_freq$unigram, 
+                    object = subsData$udpipe_model[subsData$language_code == &quot;af&quot;], 
+                    parser = &quot;none&quot;)
+
+head(tibble(af_tagged))</code></pre>
+<pre><code>## # A tibble: 6 × 17
+##   doc_id paragraph_id sentence_id sentence start   end term_id token_id token
+##   &lt;chr&gt;         &lt;int&gt;       &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;
+## 1 doc1              1           1 die          1     3       1 1        die  
+## 2 doc2              1           1 nie          1     3       1 1        nie  
+## 3 doc3              1           1 ek           1     2       1 1        ek   
+## 4 doc4              1           1 is           1     2       1 1        is   
+## 5 doc5              1           1 het          1     3       1 1        het  
+## 6 doc6              1           1 jy           1     2       1 1        jy   
+## # ℹ 8 more variables: lemma &lt;chr&gt;, upos &lt;chr&gt;, xpos &lt;chr&gt;, feats &lt;chr&gt;,
+## #   head_token_id &lt;chr&gt;, dep_rel &lt;chr&gt;, deps &lt;chr&gt;, misc &lt;chr&gt;</code></pre>
+<p>We then:</p>
+<ul>
+<li>Lower cased</li>
+<li>Removed anything less than three characters when appropriate</li>
+<li>Picked words only in nouns, verbs, adjectives, and adverbs</li>
+<li>Took out stopwords</li>
+<li>Took out words with numbers</li>
+</ul>
+<p>We only used the top 10,000 words for the next section, but this
+selection will depend on your use case as well.</p>
+<pre class="r"><code># word_choice
+word_choice &lt;- c(&quot;NOUN&quot;, &quot;VERB&quot;, &quot;ADJ&quot;, &quot;ADV&quot;)
+
+# lower case
+af_tagged$lemma &lt;- tolower(af_tagged$lemma)
+
+# three characters 
+af_tagged &lt;- subset(af_tagged, nchar(af_tagged$lemma) &gt;= 3)
+
+# only nouns verbs, etc. 
+af_tagged &lt;- subset(af_tagged, upos %in% word_choice)
+
+# removed stop words just in case they were incorrectly tagged
+af_tagged &lt;- subset(af_tagged, !(lemma %in% stopwords(language = &quot;af&quot;, source = &quot;stopwords-iso&quot;)))
+
+# removed things with numbers
+af_tagged &lt;- subset(af_tagged, !(grepl(&quot;[0-9]&quot;, af_tagged$sentence)))
+
+# merge frequency back into tagged list
+# merge by sentence so one to one match
+colnames(af_freq) &lt;- c(&quot;sentence&quot;, &quot;freq&quot;)
+af_final &lt;- merge(af_tagged, af_freq, by = &quot;sentence&quot;, all.x = T)
+
+head(tibble(af_final))</code></pre>
+<pre><code>## # A tibble: 6 × 18
+##   sentence    doc_id paragraph_id sentence_id start   end term_id token_id token
+##   &lt;chr&gt;       &lt;chr&gt;         &lt;int&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;
+## 1 aanbeveling doc17…            1           1     1    11       1 1        aanb…
+## 2 aanbeweeg   doc81…            1           1     1     9       1 1        aanb…
+## 3 aanbied     doc13…            1           1     1     7       1 1        aanb…
+## 4 aanbreek    doc82…            1           1     1     8       1 1        aanb…
+## 5 aanbring    doc14…            1           1     1     8       1 1        aanb…
+## 6 aandadig    doc57…            1           1     1     8       1 1        aand…
+## # ℹ 9 more variables: lemma &lt;chr&gt;, upos &lt;chr&gt;, xpos &lt;chr&gt;, feats &lt;chr&gt;,
+## #   head_token_id &lt;chr&gt;, dep_rel &lt;chr&gt;, deps &lt;chr&gt;, misc &lt;chr&gt;, freq &lt;int&gt;</code></pre>
+<pre class="r"><code># eliminate duplicates by lemma
+af_final &lt;- af_final[order(af_final$freq, decreasing = TRUE) , ]
+af_final &lt;- af_final[!duplicated(af_final$lemma), ]
+
+# grab top 10K
+af_top &lt;- af_final[1:10000 , ]</code></pre>
+<p>Next, we used <code>import_subs()</code> again import the embeddings
+for the subtitles.</p>
+<pre class="r"><code>af_dims &lt;- import_subs(
+  language = &quot;af&quot;,
+  what = &quot;subs_vec&quot;
+)
+
+head(tibble(af_dims))</code></pre>
+<pre><code>## # A tibble: 6 × 301
+##   V1           V2        V3      V4      V5     V6        V7       V8       V9
+##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 &lt;/s&gt;  -0.236     0.0544    0.0202 -0.0531  0.146  0.000971  0.0146   0.0423 
+## 2 nie   -0.000683  0.0787    0.0382  0.0379  0.295  0.225    -0.171    0.132  
+## 3 die   -0.0233   -0.000478  0.191  -0.103   0.176 -0.0884   -0.0828  -0.00594
+## 4 is    -0.410     0.144     0.133  -0.104   0.295 -0.0391   -0.00618  0.146  
+## 5 het    0.344    -0.0163   -0.198   0.259  -0.579 -0.154     0.131   -0.0615 
+## 6 n      0.0615   -0.139    -0.0674 -0.0658 -0.105 -0.212    -0.115   -0.0611 
+## # ℹ 292 more variables: V10 &lt;dbl&gt;, V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;, V14 &lt;dbl&gt;,
+## #   V15 &lt;dbl&gt;, V16 &lt;dbl&gt;, V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;, V20 &lt;dbl&gt;,
+## #   V21 &lt;dbl&gt;, V22 &lt;dbl&gt;, V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;, V26 &lt;dbl&gt;,
+## #   V27 &lt;dbl&gt;, V28 &lt;dbl&gt;, V29 &lt;dbl&gt;, V30 &lt;dbl&gt;, V31 &lt;dbl&gt;, V32 &lt;dbl&gt;,
+## #   V33 &lt;dbl&gt;, V34 &lt;dbl&gt;, V35 &lt;dbl&gt;, V36 &lt;dbl&gt;, V37 &lt;dbl&gt;, V38 &lt;dbl&gt;,
+## #   V39 &lt;dbl&gt;, V40 &lt;dbl&gt;, V41 &lt;dbl&gt;, V42 &lt;dbl&gt;, V43 &lt;dbl&gt;, V44 &lt;dbl&gt;,
+## #   V45 &lt;dbl&gt;, V46 &lt;dbl&gt;, V47 &lt;dbl&gt;, V48 &lt;dbl&gt;, V49 &lt;dbl&gt;, V50 &lt;dbl&gt;, …</code></pre>
+<p>In our case, we want to use the tokens as row names, so we want to
+move the first column to the row names and delete it to have a 300
+dimension by tokens matrix.</p>
+<pre class="r"><code># lower case
+af_dims$V1 &lt;- tolower(af_dims[ , 1]) # first column is always the tokens
+
+# eliminate duplicates 
+af_dims &lt;- subset(af_dims, !duplicated(af_dims[ , 1]))
+
+# make row names
+rownames(af_dims) &lt;- af_dims[ , 1]
+af_dims &lt;- af_dims[ , -1]
+head(tibble(af_dims))</code></pre>
+<pre><code>## # A tibble: 6 × 300
+##          V2        V3      V4      V5     V6       V7       V8       V9      V10
+##       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 -0.236     0.0544    0.0202 -0.0531  0.146  9.71e-4  0.0146   0.0423   0.00999
+## 2 -0.000683  0.0787    0.0382  0.0379  0.295  2.25e-1 -0.171    0.132    0.216  
+## 3 -0.0233   -0.000478  0.191  -0.103   0.176 -8.84e-2 -0.0828  -0.00594  0.0445 
+## 4 -0.410     0.144     0.133  -0.104   0.295 -3.91e-2 -0.00618  0.146   -0.0680 
+## 5  0.344    -0.0163   -0.198   0.259  -0.579 -1.54e-1  0.131   -0.0615  -0.0159 
+## 6  0.0615   -0.139    -0.0674 -0.0658 -0.105 -2.12e-1 -0.115   -0.0611  -0.0669 
+## # ℹ 291 more variables: V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;, V14 &lt;dbl&gt;, V15 &lt;dbl&gt;,
+## #   V16 &lt;dbl&gt;, V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;, V20 &lt;dbl&gt;, V21 &lt;dbl&gt;,
+## #   V22 &lt;dbl&gt;, V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;, V26 &lt;dbl&gt;, V27 &lt;dbl&gt;,
+## #   V28 &lt;dbl&gt;, V29 &lt;dbl&gt;, V30 &lt;dbl&gt;, V31 &lt;dbl&gt;, V32 &lt;dbl&gt;, V33 &lt;dbl&gt;,
+## #   V34 &lt;dbl&gt;, V35 &lt;dbl&gt;, V36 &lt;dbl&gt;, V37 &lt;dbl&gt;, V38 &lt;dbl&gt;, V39 &lt;dbl&gt;,
+## #   V40 &lt;dbl&gt;, V41 &lt;dbl&gt;, V42 &lt;dbl&gt;, V43 &lt;dbl&gt;, V44 &lt;dbl&gt;, V45 &lt;dbl&gt;,
+## #   V46 &lt;dbl&gt;, V47 &lt;dbl&gt;, V48 &lt;dbl&gt;, V49 &lt;dbl&gt;, V50 &lt;dbl&gt;, V51 &lt;dbl&gt;, …</code></pre>
+</div>
+<div id="calculate-similarity" class="section level3">
+<h3>Calculate Similarity</h3>
+<p>We can then use the <code>calculate_similarity()</code> function to
+get the similarity values for all words based on the dimension matrix.
+The underlying function is cosine calculated between vectors of the two
+word dimensions.</p>
+<pre class="r"><code>af_cosine &lt;- 
+  calculate_similarity(
+    words = af_final$sentence, # the tokens you want to filter
+    dimensions = af_dims, # the matrix of items 
+    by = 1 # 1 for rows, 2 for columns 
+)</code></pre>
+<p>The <code>top_n</code> function can be used to calculate the top
+number of cosine values for each token in the similarity matrix. Please
+note: it will always return the token-token combination as 1 (the token
+related to itself), so you should ask for n+1 number of cosines to then
+filter out the token-token combinations. Big thanks to Brenton Wiernik
+who figured out how to make this computational efficient.</p>
+<pre class="r"><code># get the top 5 related words 
+af_top_sim &lt;- top_n(af_cosine, 6)
+af_top_sim &lt;- subset(af_top_sim, cue!=target)
+
+head(af_top_sim)</code></pre>
+<pre><code>##    cue  target    cosine
+## 2  nou     als 0.8654161
+## 3  nou   nitto 0.8476698
+## 4  nou    juis 0.8434761
+## 5  nou nicolas 0.8419336
+## 6  nou jakkals 0.8278382
+## 8 hier    bier 0.8086171</code></pre>
+</div>
+<div id="create-pseudowords" class="section level3">
+<h3>Create Pseudowords</h3>
+<p>We originally set up a function to create words by replacing the
+number of characters based on the bigrams in the token. We recommend you
+use the other function based on Wuggy, but you can also do simple
+replacement.</p>
+<pre class="r"><code>af_top_sim$fake_cue &lt;- fake_simple(af_top_sim$cue)
+# you&#39;d want to also do this based on target depending on your study 
+head(af_top_sim)</code></pre>
+<pre><code>##    cue  target    cosine fake_cue
+## 2  nou     als 0.8654161      pou
+## 3  nou   nitto 0.8476698      noo
+## 4  nou    juis 0.8434761      nmu
+## 5  nou nicolas 0.8419336      nof
+## 6  nou jakkals 0.8278382      noo
+## 8 hier    bier 0.8086171     eier</code></pre>
+<p>You can also use the Wuggy algorithm using <code>fake_Wuggy()</code>.
+<em>This function is not fast. It is slower the larger the size of the
+words to create from.</em> It returns a dataframe of options to use for
+pseudowords with the following columns:</p>
+<ul>
+<li><code>word_id</code>: Number id for each unique word.</li>
+<li><code>first</code>: First syllable in pairs of syllables.</li>
+<li><code>original_pair</code>: Pair of syllables together.</li>
+<li><code>second</code>: Second syllable in the pairs of syllables.</li>
+<li><code>syll</code>: Number of syllables in the token.</li>
+<li><code>original_freq</code>: Frequency of the syllable pair.</li>
+<li><code>replacement_pair</code>: Replacement option wherein one of the
+syllables has been changed.</li>
+<li><code>replacement_syll</code>: The replacement syllable.</li>
+<li><code>replacement_freq</code>: The frequency of the replacement
+syllable pair.</li>
+<li><code>freq_diff</code>: The difference in frequency of the
+transition pair.</li>
+<li><code>char_diff</code>: Number of characters difference in the
+original pair and the replacement pair.</li>
+<li><code>letter_diff</code>: Number of letters difference in the
+original pair and the replacement pair. If the replacement includes the
+same letters, the difference would be zero. These values are excluded
+from being options.}</li>
+<li><code>original_word</code>: The original token.}</li>
+<li><code>replacement_word</code>: The final replacement token.</li>
+</ul>
+<pre class="r"><code>af_wuggy &lt;- fake_Wuggy(
+  wordlist = af_final$sentence, # full valid options in language
+  language_hyp = &quot;tutorial_data/hyph-af.tex&quot;, # path to hyphenation.tex 
+  lang = &quot;af&quot;, # two letter language code
+  replacewords &lt;- unique(af_top_sim$cue[1:20]) # words you want to create pseudowords for  
+)</code></pre>
+<pre><code>##   |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%</code></pre>
+<pre class="r"><code>head(tibble(af_wuggy))</code></pre>
+<pre><code>## # A tibble: 4 × 14
+##   word_id first       original_pair  second  syll original_freq replacement_pair
+##     &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;  &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;           
+## 1       2 first_blank first_blank-hi hi         1             5 first_blank-tu  
+## 2       3 ne          ne-t           t          1             1 oi-t            
+## 3       1 first_blank first_blank-no no         1            22 first_blank-va  
+## 4       4 first_blank first_blank-we we         1            23 first_blank-bo  
+## # ℹ 7 more variables: replacement_syll &lt;chr&gt;, replacement_freq &lt;int&gt;,
+## #   freq_diff &lt;dbl&gt;, char_diff &lt;int&gt;, letter_diff &lt;dbl&gt;, original_word &lt;chr&gt;,
+## #   replacement_word &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="get-priming-data" class="section level2">
+<h2>Get Priming Data</h2>
+<p>You can load one of the many files included in the SPAML release by
+using the <code>primeData</code> to see what we have available. The
+datasets are broken into a couple types:</p>
+<ul>
+<li><code>procedure_stimuli</code>: The stimuli from the study. Each
+dataset includes the ~5000 trials used in the study listed as cue-target
+paits with their <code>cue_type</code>/<code>target_type</code>
+(word/nonword) and trial <code>type</code> (related, unrelated,
+nonword). The cosine values from the subs2vec models are included when
+available for word pairs. If the value is blank or NA, you can assume
+one of the words did not exist in the subs2vec model or could not be
+matched. The subs2vec models were often filtered to only the top X
+words, and some stimuli selected may have be infrequent.</li>
+<li><code>matched_stimuli</code>: The matched stimuli datasets fall into
+two types: “matched” which matches the original language to English, and
+“unique” which includes the word pair combo found in the datasets that
+makes each trial unique. Some targets were repeated due to translation -
+therefore, the unique datasets allow you to unambiguously match things
+together. The <code>matched_stimuli.csv</code> files has these all
+matched together if you want all languages at once. The missing data is
+the Arabic pairs we were asked to remove due to their taboo nature in
+that culture.</li>
+</ul>
+<p>Each of the following files have codebooks found at: <a href="https://github.com/SemanticPriming/SPAML/tree/master/05_Data/codebooks" class="uri">https://github.com/SemanticPriming/SPAML/tree/master/05_Data/codebooks</a></p>
+<ul>
+<li><code>participant_data</code>: Information on the participants who
+completed each language.</li>
+<li><code>full_data</code>: The “raw” data with only identifiers
+removed.</li>
+<li><code>trial_data</code>: The trial level data showing only the trial
+blocks (i.e., excluding the other lines that indicate the timing and
+inter-trial interval).</li>
+<li><code>item_data</code>: The average results for each token/item,
+ignoring the condition presented.</li>
+<li><code>priming_data</code>: The priming data in either
+<code>_trials</code> format (meaning these have been matched and labeled
+for trial type) or <code>_summary</code> format (meaning
+averages/summaries of the target trials matched by related and unrelated
+to create a priming score).</li>
+</ul>
+<div id="load-avaiable-data" class="section level3">
+<h3>Load Avaiable Data</h3>
+<pre class="r"><code>data(&quot;primeData&quot;)
+head(primeData)</code></pre>
+<pre><code>##           type                            filename language
+## 1    item_data           ar_answered_item_data.csv       ar
+## 2 priming_data ar_answered_prime_summary_no2.5.csv       ar
+## 3 priming_data ar_answered_prime_summary_no3.0.csv       ar
+## 4 priming_data       ar_answered_prime_summary.csv       ar
+## 5 priming_data        ar_answered_prime_trials.csv       ar
+## 6    full_data                 ar_full_data.csv.gz       ar
+##                                                                                                location
+## 1           https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_item_data.csv
+## 2 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary_no2.5.csv
+## 3 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary_no3.0.csv
+## 4       https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_summary.csv
+## 5        https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_answered_prime_trials.csv
+## 6                 https://github.com/SemanticPriming/SPAML/releases/download/v1.0.1/ar_full_data.csv.gz</code></pre>
+<p>Once you decide what file you would like to download and import, you
+can use <code>import_prime()</code> to import that file. Note that some
+of the <code>full_data</code> datasets are quite large and may take a
+while download and/or import directly. You can also just use the direct
+links the primeData file to download them. Some files are heavily
+compressed in <code>.gz</code> format. I recommend 7-zip if you aren’t
+familar with the command line to unzip these: <a href="https://www.wikihow.com/Extract-a-Gz-File" class="uri">https://www.wikihow.com/Extract-a-Gz-File</a></p>
+<p>You can also import them directly into <em>R</em> with the
+<em>rio</em> package (which is what this function does, but it does
+download the file each time, so I’d recommend one download and then put
+the import into your code directly with
+<code>rio::import(&quot;filepath&quot;)</code>).</p>
+</div>
+<div id="import-specific-data" class="section level3">
+<h3>Import Specific Data</h3>
+<p>In this example, we import the stimuli dataset for Spanish, which
+includes the trials, type of trial information, and the cosine
+calculated from subs2vec.</p>
+<pre class="r"><code>es_words &lt;- import_prime(&quot;es_words.csv&quot;)
+head(es_words)</code></pre>
+<pre><code>##     es_cue es_target    type cue_type target_type es_cosine
+## 1 lenguado   abadejo related     word        word 0.5712210
+## 2    dejar abandonar related     word        word 0.5418134
+## 3  espalda   abdomen related     word        word 0.4251472
+## 4     beso    abrazo related     word        word 0.7530440
+## 5 ridículo   absurdo related     word        word 0.7036410
+## 6   abuelo    abuela related     word        word 0.7450651</code></pre>
+</div>
+</div>
+<div id="match-to-lab-data" class="section level2">
+<h2>Match to LAB Data</h2>
+<div id="load-available-data" class="section level3">
+<h3>Load Available Data</h3>
+<p>To review the available data from the Linguistic Annotated
+Bibliography, you can use <code>data(&quot;labData&quot;)</code>, which includes
+information about available datasets overall and which are included in
+our LAB data release for merging.</p>
+<pre class="r"><code>data(&quot;labData&quot;)
+head(tibble(labData))</code></pre>
+<pre><code>## # A tibble: 6 × 73
+##   included bibtex author  year ref_title ref_journal ref_volume ref_page ref_doi
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;  
+## 1 no       Adelm… Adelm…  2014 &quot;A behav… Behavior R… &quot;46&quot;       &quot;1052--… &quot;10.37…
+## 2 no       Aguil… Aguil…  2017 &quot;Develop… 2017 IEEE … &quot;&quot;         &quot;&quot;       &quot;10.11…
+## 3 no       Akini… Akini…  2014 &quot;Russian… Behavior R… &quot;47&quot;       &quot;691--7… &quot;10.37…
+## 4 no       Al-Su… Al-Su…  2006 &quot;The Des… Internatio… &quot;11&quot;       &quot;135--1… &quot;10.10…
+## 5 no       Alame… Alame…  1995 &quot;Diccion… Servicio d… &quot;&quot;         &quot;&quot;       &quot;&quot;     
+## 6 yes      Alari… Alari…  1999 &quot;A set o… Behavior R… &quot;31&quot;       &quot;531--5… &quot;10.37…
+## # ℹ 64 more variables: no1 &lt;chr&gt;, no2 &lt;int&gt;, type1 &lt;chr&gt;, ref1 &lt;chr&gt;,
+## #   type2 &lt;chr&gt;, ref2 &lt;chr&gt;, notes_stim &lt;chr&gt;, data_name &lt;chr&gt;, nonling &lt;int&gt;,
+## #   language &lt;chr&gt;, notes_lang &lt;chr&gt;, language_glotto &lt;chr&gt;,
+## #   notes_glotto &lt;chr&gt;, population &lt;chr&gt;, notes_var &lt;chr&gt;, accuracy &lt;int&gt;,
+## #   ambiguity &lt;int&gt;, aoa &lt;int&gt;, arousal &lt;int&gt;, assoc &lt;int&gt;, category &lt;int&gt;,
+## #   cloze &lt;int&gt;, complex &lt;int&gt;, concrete &lt;int&gt;, confusion &lt;int&gt;, context &lt;int&gt;,
+## #   dist &lt;int&gt;, dominate &lt;int&gt;, easelearn &lt;int&gt;, familiar &lt;int&gt;, freq &lt;int&gt;, …</code></pre>
+<pre class="r"><code># import_lab() also loads this dataset 
+
+# ?labData # use this to learn about the dataset </code></pre>
+</div>
+<div id="load-filtered-metadata" class="section level3">
+<h3>Load Filtered Metadata</h3>
+<p>If you want to find specific types of LAB data, you can use the
+<code>language</code> and/or `variables</p>
+<pre class="r"><code>saved &lt;- import_lab(language = &quot;English&quot;, variables = c(&quot;aoa&quot;, &quot;freq&quot;))
+# possible datasets that are English, aoa, and frequency
+head(tibble(saved))</code></pre>
+<pre><code>## # A tibble: 2 × 1
+##   saved          
+##   &lt;named list&gt;   
+## 1 &lt;df [118 × 74]&gt;
+## 2 &lt;df [3 × 74]&gt;</code></pre>
+<pre class="r"><code>saved &lt;- import_lab(language = &quot;Spanish&quot;, variables = c(&quot;aoa&quot;))
+
+head(tibble(saved))</code></pre>
+<pre><code>## # A tibble: 2 × 1
+##   saved          
+##   &lt;named list&gt;   
+## 1 &lt;df [118 × 74]&gt;
+## 2 &lt;df [8 × 74]&gt;</code></pre>
+</div>
+<div id="load-specific-data" class="section level3">
+<h3>Load Specific Data</h3>
+<pre class="r"><code>es_aos &lt;- import_lab(bibtexID = &quot;Alonso2015&quot;, citation = TRUE)
+
+es_aos$citation</code></pre>
+<pre><code>## [1] &quot;Alonso, Fernandez, &amp; Diez. (2014). Subjective age-of-acquisition norms for 7039 Spanish words. Behavior Research Methods, 47, 268--274. doi: 10.3758/s13428-014-0454-2&quot;</code></pre>
+<pre class="r"><code>head(tibble(es_aos$loaded_data))</code></pre>
+<pre><code>## # A tibble: 6 × 13
+##   word_spanish aoa_M aoa_SD aoa_min aoa_max aoa_zscore oral_freq_log_M
+##   &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;      &lt;dbl&gt;           &lt;dbl&gt;
+## 1 a             2.28   1.44       1       6     -1.65            4.85 
+## 2 abajo         2.96   1.37       1       6     -1.36            2.62 
+## 3 abandonado    6.06   1.66       2      10     -0.584           1.62 
+## 4 abandonar     7.58   1.66       4      11     -0.02            1.81 
+## 5 abandono      7.22   1.94       3      11      0.04            1.60 
+## 6 abatimiento  10.0    1.49       5      11      1.06            0.602
+## # ℹ 6 more variables: written_freq_log_SUBTLEXESP_M &lt;dbl&gt;,
+## #   written_freq_log_LEXESP_M &lt;dbl&gt;, written_freq_log_espal_M &lt;dbl&gt;,
+## #   lem_cat_espl_max &lt;chr&gt;, lem_max_code &lt;chr&gt;, syllable_N &lt;int&gt;</code></pre>
+<pre class="r"><code>es_sim &lt;- import_lab(bibtexID = &quot;Cabana2024_R1&quot;, citation = TRUE)
+
+es_sim$citation</code></pre>
+<pre><code>## [1] &quot;Cabana, Zugarramurdi, Valle-Lisboa, &amp; De Deyne. (2024). The \xd2Small World of Words\xd3 free association norms for Rioplatense Spanish. Behavior Research Methods, 56, 968--985. doi: 10.3758/s13428-023-02070-z&quot;</code></pre>
+<pre class="r"><code>head(tibble(es_sim$loaded_data))</code></pre>
+<pre><code>## # A tibble: 6 × 5
+##   cue   response         R1     N R1.Strength
+##   &lt;chr&gt; &lt;chr&gt;         &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+## 1 ?     pregunta         26    66      0.394 
+## 2 ?     que               8    66      0.121 
+## 3 ?     duda              6    66      0.0909
+## 4 ?     incógnita         4    66      0.0606
+## 5 ?     interrogación     3    66      0.0455
+## 6 ?     no sé             2    66      0.0303</code></pre>
+</div>
+<div id="match-to-prime-data" class="section level3">
+<h3>Match To Prime Data</h3>
+<pre class="r"><code>es_words_merged &lt;- es_words %&gt;%
+  # merge with the cue word (will be .x variables)
+  left_join(es_aos$loaded_data, 
+            by = c(&quot;es_cue&quot; = &quot;word_spanish&quot;)) %&gt;% 
+  # merge with the target word (will be .y variables)
+  left_join(es_aos$loaded_data, 
+            by = c(&quot;es_target&quot; = &quot;word_spanish&quot;)) %&gt;% 
+  # merge with free association similarity
+  left_join(es_sim$loaded_data, 
+            by = c(&quot;es_cue&quot; = &quot;cue&quot;,
+                   &quot;es_target&quot; = &quot;response&quot;))
+
+head(tibble(es_words_merged))</code></pre>
+<pre><code>## # A tibble: 6 × 33
+##   es_cue   es_target type    cue_type target_type es_cosine aoa_M.x aoa_SD.x
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+## 1 lenguado abadejo   related word     word            0.571    7.68     2.38
+## 2 dejar    abandonar related word     word            0.542    5.5      1.83
+## 3 espalda  abdomen   related word     word            0.425    3.9      1.75
+## 4 beso     abrazo    related word     word            0.753    2.5      1.59
+## 5 ridículo absurdo   related word     word            0.704   NA       NA   
+## 6 abuelo   abuela    related word     word            0.745    2.32     1.28
+## # ℹ 25 more variables: aoa_min.x &lt;int&gt;, aoa_max.x &lt;int&gt;, aoa_zscore.x &lt;dbl&gt;,
+## #   oral_freq_log_M.x &lt;dbl&gt;, written_freq_log_SUBTLEXESP_M.x &lt;dbl&gt;,
+## #   written_freq_log_LEXESP_M.x &lt;dbl&gt;, written_freq_log_espal_M.x &lt;dbl&gt;,
+## #   lem_cat_espl_max.x &lt;chr&gt;, lem_max_code.x &lt;chr&gt;, syllable_N.x &lt;int&gt;,
+## #   aoa_M.y &lt;dbl&gt;, aoa_SD.y &lt;dbl&gt;, aoa_min.y &lt;int&gt;, aoa_max.y &lt;int&gt;,
+## #   aoa_zscore.y &lt;dbl&gt;, oral_freq_log_M.y &lt;dbl&gt;,
+## #   written_freq_log_SUBTLEXESP_M.y &lt;dbl&gt;, written_freq_log_LEXESP_M.y &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div id="other-cool-stuff" class="section level2">
+<h2>Other Cool Stuff</h2>
+<p>We used <code>labjs</code> for this project. The datasets you get
+from <code>labjs</code> are in a SQLite file. It’s not super fun to
+process. So, they wrote a function to do that. We included that function
+here as <code>processData()</code>, and you can see that we used it in
+our data processing files. It’s here if you want to use it yourself on
+<code>labjs</code> projects.</p>
+<pre class="r"><code>df &lt;- processData(&quot;data.sqlite&quot;)</code></pre>
+<ul>
+<li>Check out the <code>text</code> package for how to merge word
+embeddings in <em>R</em>: <a href="https://osf.io/preprints/psyarxiv/293kt" class="uri">https://osf.io/preprints/psyarxiv/293kt</a></li>
+<li><a href="https://cran.r-project.org/web/packages/text/vignettes/huggingface_in_r.html" class="uri">https://cran.r-project.org/web/packages/text/vignettes/huggingface_in_r.html</a></li>
+</ul>
+</div>
 
 
 
