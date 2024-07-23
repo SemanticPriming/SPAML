@@ -19,9 +19,9 @@ library(tidyverse)
 library(googlesheets4)
 library(rcanvas) #install_github("doomlab/rcanvas")
 set_canvas_domain("https://canvas.psysciacc.org")
-```
 
-molly mathews forgot orcid 0009-0003-3081-8954
+library(tenzing)
+```
 
 ## Canvas Gradebook
 
@@ -348,7 +348,7 @@ final_tenzing_sheet <- final_tenzing %>%
          `Data curation` = `SPAML Data Curation`,
          `Formal analysis` = `SPAML Analysis`, 
          `Funding acquisition` = `SPAML Funding`, 
-         Investation = `SPAML Investigation`, 
+         Investigation = `SPAML Investigation`, 
          Methodology = `SPAML Methodology `,	
          `Project administration` = `SPAML Project Admin`,
          Resources = resources,
@@ -369,7 +369,7 @@ final_tenzing_sheet <- final_tenzing %>%
          Surname, Conceptualization,	`Data curation`,
          `Formal analysis`,
          `Funding acquisition`,
-         Investation,	Methodology,	`Project administration`,
+         Investigation,	Methodology,	`Project administration`,
          Resources,	Software,	Supervision,	Validation,
          Visualization,	`Writing - original draft`,
          `Writing - review & editing`, 
@@ -379,7 +379,7 @@ final_tenzing_sheet <- final_tenzing %>%
          Funding,	`ORCID iD`,
          `Corresponding author?`,
          `Conflict of interest`, collaboration_agreement, 
-         user.name, sortable_name, user.login_id) %>% 
+         user.name, sortable_name, user.login_id, FirstInst, SecondInst) %>% 
   mutate(across(Conceptualization:`Writing - original draft`, 
                 ~ifelse(. == 1, TRUE, FALSE))) %>% 
   mutate(across(Conceptualization:`Writing - original draft`, 
@@ -427,4 +427,32 @@ write_sheet(final_tenzing %>%
                      credit, coi),
   ss = "https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
             sheet = "check_information")
+```
+
+## Make Author Page
+
+```{r}
+final_tenzing <- read_sheet(
+  ss = "https://docs.google.com/spreadsheets/d/1AeeArME_L0CPwtVPCVKt2iRF76dRO5Q7gOXOgahnzH8/edit#gid=1390003197", 
+  sheet = "final_edited_include"
+)
+```
+
+
+```{r}
+check_result <- validate_contributors_table(contributors_table = final_tenzing)
+```
+
+```{r}
+print_credit_roles(contributors_table = final_tenzing, 
+                   initials = TRUE, 
+                   order_by = "contributor")
+```
+
+
+```{r}
+writeLines(print_yaml(contributors_table = final_tenzing), 
+           con = "author_yaml.txt")
+
+print_funding(contributors_table = final_tenzing, initials = TRUE)
 ```

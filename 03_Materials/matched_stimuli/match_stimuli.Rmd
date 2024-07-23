@@ -375,7 +375,22 @@ matchDF2 <- matchDF %>%
             by = c("zh_word_combo" = "word_combo")) %>% 
   rename(zh_target_word_unique = target_word_unique) 
 
+# testing
+rowmissing <- apply(matchDF2, 1, function(x){sum(is.na(x))})
+sum(rowmissing)
+colmissing <- apply(matchDF2, 2, function(x){sum(is.na(x))})
+sum(colmissing)
+```
 
+```{r}
+colmissing[colmissing > 0]
+# ar_target_word_unique due to our setup to exclude taboo words
+# temp <- matchDF2 %>% 
+#        select(en_cue, en_target, ro_target_word_unique, ro_cue, ro_target) %>% 
+#   filter(rowmissing > 0) %>% 
+#   filter(is.na(ro_target_word_unique)) %>% 
+#   mutate(trial_copy = paste0(ro_cue, ro_target, ",", ro_target))
+# View(temp)
 
 export(matchDF2, "matched_stimuli.csv", row.names = F)
 ```

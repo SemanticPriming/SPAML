@@ -1,0 +1,2874 @@
+author:
+  - name: Erin M. Buchanan
+    affiliation: '1'
+    role:
+      - Conceptualization
+      - Data curation
+      - Formal analysis
+      - Funding acquisition
+      - Investigation
+      - Methodology
+      - Project administration
+      - Resources
+      - Software
+      - Supervision
+      - Validation
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    corresponding: yes
+    email: ebuchanan@harrisburgu.edu
+    address: Enter postal address here
+  - name: Kelly Cuccolo
+    affiliation: '2'
+    role:
+      - Project administration
+      - Supervision
+      - Writing - review & editing
+    email: cuccolokm@gmail.com
+  - name: Tom Heyman
+    affiliation: '3'
+    role:
+      - Conceptualization
+      - Data curation
+      - Methodology
+      - Project administration
+      - Validation
+      - Writing - review & editing
+    email: t.d.p.heyman@fsw.leidenuniv.nl
+  - name: Niels van Berkel
+    affiliation: '4'
+    role:
+      - Methodology
+      - Project administration
+      - Software
+      - Writing - review & editing
+    email: nielsvanberkel@cs.aau.dk
+  - name: Nicholas A. Coles
+    affiliation: '5'
+    role:
+      - Validation
+      - Writing - review & editing
+    email: ncoles797@gmail.com
+  - name: Aishwarya Iyer
+    affiliation: '6'
+    role:
+      - Project administration
+      - Writing - review & editing
+    email: aishwarya.iyer@res.christuniversity.in
+  - name: Kim Peters
+    affiliation: '7'
+    role:
+      - Project administration
+      - Writing - review & editing
+    email: k.o.peters2@exeter.ac.uk
+  - name: Anna E. van 't Veer
+    affiliation: '3'
+    role:
+      - Project administration
+      - Writing - review & editing
+    email: a.e.van.t.veer@fsw.leidenuniv.nl
+  - name: Maria Montefinese
+    affiliation: '8'
+    role:
+      - Conceptualization
+      - Investigation
+      - Methodology
+      - Resources
+      - Writing - original draft
+      - Writing - review & editing
+    email: maria.montefinese@gmail.com
+  - name: Nicholas P. Maxwell
+    affiliation: '9'
+    role:
+      - Conceptualization
+      - Investigation
+      - Methodology
+      - Writing - review & editing
+    email: nicholas.maxwell@msutexas.edu
+  - name: Jack E. Taylor
+    affiliation: '10'
+    role:
+      - Conceptualization
+      - Methodology
+      - Writing - original draft
+      - Writing - review & editing
+    email: Taylor@psych.uni-frankfurt.de
+  - name: Kathrene  D. Valentine
+    affiliation: '11,275'
+    role:
+      - Conceptualization
+      - Methodology
+      - Writing - original draft
+      - Writing - review & editing
+    email: kvalentine2@mgh.harvard.edu
+  - name: Patrícia Arriaga
+    affiliation: '12'
+    role:
+      - Funding acquisition
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: patricia.arriaga@iscte-iul.pt
+  - name: Krystian Barzykowski
+    affiliation: '13'
+    role:
+      - Investigation
+      - Resources
+      - Supervision
+      - Writing - review & editing
+    email: krystian.barzykowski@uj.edu.pl
+  - name: Leanne Boucher
+    affiliation: '14'
+    role:
+      - Investigation
+      - Resources
+      - Supervision
+      - Writing - review & editing
+    email: lb1079@nova.edu
+  - name: W. M. Collins
+    affiliation: '14'
+    role:
+      - Investigation
+      - Resources
+      - Supervision
+      - Writing - review & editing
+    email: wc292@nova.edu
+  - name: David C. Vaidis
+    affiliation: '15,276'
+    role:
+      - Investigation
+      - Resources
+      - Supervision
+      - Writing - review & editing
+    email: david.vaidis@univ-tlse2.fr
+  - name: Balazs Aczel
+    affiliation: '16'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: balazs.aczel@gmail.com
+  - name: Ali H. Al-Hoorie
+    affiliation: '17'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: hoorie_a@rcjy.edu.sa
+  - name: Ettore Ambrosini
+    affiliation: '18,277'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ettore.ambrosini@unipd.it
+  - name: Théo Besson
+    affiliation: '19'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: theo.besson@u-paris.fr
+  - name: Debora I. Burin
+    affiliation: '20,278'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: dburin@psi.uba.ar
+  - name: Muhammad M. Butt
+    affiliation: '21'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: mussaffa@gmail.com
+  - name: A. J. Benjamin Clarke
+    affiliation: '22'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: "ajb.clarke@gmail.com\r\n "
+  - name: Yalda  Daryani
+    affiliation: '23'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: yaldadaryani@gmail.com 
+  - name: Dina  A. S. El-Dakhs 
+    affiliation: '24'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ddakhs@psu.edu.sa
+  - name: Mahmoud M. Elsherif
+    affiliation: '25,279'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: mahmoud.medhat.elsherif@gmail.com
+  - name: Maria Fernández-López
+    affiliation: '26'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: maria.fernandez@uv.es
+  - name: Paulo R. d. S. Ferreira
+    affiliation: '27'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: paulorobertosantosferreira@gmail.com
+  - name: Raquel M. K. Freitag
+    affiliation: '28'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: rkofreitag@academico.ufs.br
+  - name: Carolina A. Gattei
+    affiliation: '29,280'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: carogattei@utdt.edu
+  - name: Hendrik Godbersen
+    affiliation: '30'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: hendrik.godbersen@fom.de
+  - name: Philip A. Grim II
+    affiliation: '31'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: pgrim@harrisburgu.edu
+  - name: Peter Halama
+    affiliation: '32'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: peter.halama@savba.sk
+  - name: Patrik Havan
+    affiliation: '33'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: patrik.havan@savba.sk
+  - name: Natalia C. Irrazabal
+    affiliation: '34'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: nirrazabal@psi.uba.ar
+  - name: Chris Isloi
+    affiliation: '35'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: barbu.chris@gmail.com
+  - name: Rebecca K. Iversen
+    affiliation: '36'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: r.k.iversen@ifikk.uio.no
+  - name: Yoann Julliard
+    affiliation: '37'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: yoann.julliard@univ-grenoble-alpes.fr
+  - name: Aslan Karaaslan
+    affiliation: '38,281'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: aslankaraaslan@gmail.com
+  - name: Michal Kohút
+    affiliation: '39'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: michal.kohut@truni.sk
+  - name: Veronika Kohútová
+    affiliation: '40'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: veronika.kohutova@truni.sk
+  - name: Julija Kos
+    affiliation: '41'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: julijaakos@gmail.com
+  - name: Alexandra I. Kosachenko
+    affiliation: '42'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: alleshch7@gmail.com
+  - name: Tiago J. S. d. Lima
+    affiliation: '43,282'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: tiago.lima@unb.br
+  - name: Matthew HC Mak
+    affiliation: '44'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: matthew.mak@warwick.ac.uk
+  - name: Christina  Manouilidou
+    affiliation: '45'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: Christina.Manouilidou@ff.uni-lj.si
+  - name: Leonardo A. Marciaga
+    affiliation: '46'
+    role:
+      - Validation
+      - Visualization
+      - Writing - review & editing
+    email: leonardomarciaga@gmail.com
+  - name: Xiaolin M. Melinna
+    affiliation: '47'
+    role:
+      - Project administration
+      - Resources
+      - Writing - review & editing
+    email: melinna@live.cn
+  - name: Jacob F. Miranda
+    affiliation: '48'
+    role:
+      - Investigation
+      - Project administration
+      - Writing - review & editing
+    email: jacob.miranda@csueastbay.edu
+  - name: Coby Morvinski
+    affiliation: '49'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: cobym@bgu.ac.il
+  - name: Aishwarya  Muppoor
+    affiliation: '50'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: aishwaryamuppoor22@gmail.com
+  - name: F. E. Müjdeci
+    affiliation: '51'
+    role:
+      - Resources
+      - Validation
+      - Writing - review & editing
+    email: mujdecifatmaelif@gmail.com
+  - name: Yngwie A. Nielsen
+    affiliation: '52'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: yan@cc.au.dk
+  - name: Juan C. Oliveros
+    affiliation: '53'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: joliveros@ucm.cl
+  - name: Jaš Onič
+    affiliation: '41'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: onicjas@gmail.com
+  - name: Marietta  Papadatou-Pastou
+    affiliation: '54'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: marietta.papadatou-pastou@seh.oxon.org
+  - name: Ishani Patel
+    affiliation: '55'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ishanipatel03@gmail.com
+  - name: Zoran Pavlović
+    affiliation: '56'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: zoran.pavlovic@f.bg.ac.rs
+  - name: Blaž Pažon
+    affiliation: '41'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: blaz.pazon@gmail.com
+  - name: Gerit Pfuhl
+    affiliation: '57,283'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: gerit.pfuhl@ntnu.no
+  - name: Ekaterina Pronizius
+    affiliation: '58'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ekaterina.pronizius@univie.ac.at
+  - name: Timo B. Roettger
+    affiliation: '59'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: timo.roettger@iln.uio.no
+  - name: Camilo R. Ronderos
+    affiliation: '60'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: camilorr@uio.no
+  - name: Susana Ruiz-Fernandez
+    affiliation: '61'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ruizfern@b-tu.de
+  - name: Magdalena Senderecka
+    affiliation: '62'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: magdalena.senderecka@uj.edu.pl
+  - name: Çağlar Solak
+    affiliation: '63'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: solakcaglar@gmail.com
+  - name: Anna Stückler
+    affiliation: '64'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: asj@psy.au.dk
+  - name: Raluca D. Szekely-Copîndean
+    affiliation: '65,284'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ralucaszekely@gmail.com
+  - name: Analí R. Taboh
+    affiliation: '66,285'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: anali.taboh@conicet.gov.ar
+  - name: Rémi Thériault
+    affiliation: '67'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: theriault.remi@courrier.uqam.ca
+  - name: Ulrich S. Tran
+    affiliation: '58'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ulrich.tran@univie.ac.at
+  - name: Fabio Trecca
+    affiliation: '68,112'
+    role:
+      - Funding acquisition
+      - Investigation
+      - Writing - review & editing
+    email: fabio@cc.au.dk
+  - name: José Luis Ulloa
+    affiliation: '69'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: joseluisulloafulgeri@gmail.com
+  - name: Marton A. Varga
+    affiliation: '70'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: martonaronvarga@gmail.com
+  - name: Steven Verheyen
+    affiliation: '71'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: verheyen@essb.eur.nl
+  - name: Tijana Vesić Pavlović
+    affiliation: '72'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: tvesic@mas.bg.ac.rs
+  - name: Giada Viviani
+    affiliation: '73'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: giada.viviani@unipd.it
+  - name: Nan Wang
+    affiliation: '74'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: nanwanglin@gmail.com
+  - name: Kristyna Zivna
+    affiliation: '75'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: kristyna.zivna@oushi.upol.cz
+  - name: Chen C. Yun
+    affiliation: '76'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    email: ccyjuncat@gmail.com
+  - name: Oliver J. Clark
+    affiliation: '77'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: O.clark@mmu.ac.uk
+  - name: Oguz A. Acar
+    affiliation: '78'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: oguz.acar@kcl.ac.uk
+  - name: Matúš Adamkovič
+    affiliation: '79,286'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: matho.adamkovic@gmail.com
+  - name: Giulia Agnoletti
+    affiliation: '80,287'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: giulia.agnoletti@outlook.com
+  - name: Atakan M. Akil
+    affiliation: '81,288'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: akil.atakan@pte.hu
+  - name: Zainab Alsuhaibani
+    affiliation: '82'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: zaalsuhaibani@imamu.edu.sa
+  - name: Simona Amenta
+    affiliation: '83'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: simona.amenta@unimib.it
+  - name: Olga A. Ananyeva
+    affiliation: '84'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: oananyeva@hse.ru
+  - name: Michael Andreychik
+    affiliation: '85'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mandreychik@fairfield.edu
+  - name: Bernhard  Angele
+    affiliation: '86,289'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: bangele1@nebrija.es
+  - name: Danna  C. Arias Quiñones
+    affiliation: '87'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dariasqu@fandm.edu
+  - name: Nwadiogo C. Arinze
+    affiliation: '88'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: arinzenwadiogo@gmail.com
+  - name: Adrian D. Askelund
+    affiliation: '89,290'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: adrian.askelund@gmail.com
+  - name: Bradley J. Baker
+    affiliation: '90'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: bradley.baker@temple.edu
+  - name: Ernest Baskin
+    affiliation: '91'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ebaskin@sju.edu
+  - name: Luisa  Batalha
+    affiliation: '92'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: luisa.batalha@acu.edu.au
+  - name: Carlota Batres
+    affiliation: '87'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: cbatres@fandm.edu
+  - name: Maria S. Beato
+    affiliation: '93'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: msol@usal.es
+  - name: Manuel Becker
+    affiliation: '94'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: manuel.becker@uni-marburg.de
+  - name: Maja Becker
+    affiliation: '95'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mbecker@univ-tlse2.fr
+  - name: Maciej Behnke
+    affiliation: '96,291'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: macbehnke@gmail.com
+  - name: Christophe Blaison
+    affiliation: '97'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: christophe.blaison@u-paris.fr
+  - name: Anna M. Borghi
+    affiliation: '98,292'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: anna.borghi@uniroma1.it
+  - name: Eduard Brandstätter
+    affiliation: '99'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: eduard.brandstaetter@jku.at
+  - name: Jacek Buczny
+    affiliation: '100'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: jbuczny@gmail.com
+  - name: Nesrin Budak
+    affiliation: '101'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: nesrin.budak@metu.edu.tr
+  - name: Álvaro  Cabana
+    affiliation: '102'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: acabana@psico.edu.uy
+  - name: Zhenguang G. Cai
+    affiliation: '103'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: zhenguangcai@cuhk.edu.hk
+  - name: Enrique C. Canessa
+    affiliation: '104,293'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ecanessa@uai.cl
+  - name: Ignacio Castillejo
+    affiliation: '105'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: jignaciocastillejo@gmail.com
+  - name: Müge Cavdan
+    affiliation: '106'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: Muege.Cavdan@psychol.uni-giessen.de
+  - name: Luca Cecchetti
+    affiliation: '107'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: luca.cecchetti@imtlucca.it
+  - name: Sergio E. Chaigneau
+    affiliation: '108'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sergio.chaigneau@uai.cl
+  - name: Feria X. W. Chang
+    affiliation: '109'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: feria@nus.edu.sg
+  - name: Christopher  R. Chartier
+    affiliation: '110'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: cchartie@ashland.edu
+  - name: Sau-Chin Chen
+    affiliation: '111'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: pmsp96@gmail.com
+  - name: Elena Cherniaeva
+    affiliation: '84'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: chernyaeva.ela@gmail.com
+  - name: Morten H. Christiansen
+    affiliation: '112,294'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: morten@cc.au.dk
+  - name: Hu Chuan-Peng
+    affiliation: '113'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: hcp4715@hotmail.com
+  - name: Patrycja Chwiłkowska
+    affiliation: '114'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: patchw1@amu.edu.pl
+  - name: Montserrat Comesaña
+    affiliation: '115'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mvila@psi.uminho.pt
+  - name: Chin Wen Cong
+    affiliation: '116'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: chinwencong@outlook.com
+  - name: Casey Cowan
+    affiliation: '117'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: casey.cowan.cc@gmail.com
+  - name: Stéphane D. Dandeneau
+    affiliation: '118'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sdandeneau@mun.ca
+  - name: Oana A. David
+    affiliation: '119'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: Oana.David@ubbcluj.ro
+  - name: William E. Davis
+    affiliation: '120'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: davisw4@wittenberg.edu
+  - name: Elif G. Demirag Burak
+    affiliation: '121'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: eburak@ou.edu
+  - name: Barnaby J. W. Dixson
+    affiliation: '122,295'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: bdixson@usc.edu.au
+  - name: Hongfei Du
+    affiliation: '123,296'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dhfpsy@gmail.com
+  - name: Rod Duclos
+    affiliation: '124'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: rduclos@ivey.ca
+  - name: Wouter Duyck
+    affiliation: '125'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: wouter.duyck@ugent.be
+  - name: Liudmila A. Efimova
+    affiliation: '84'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: l.efimova@hse.ru
+  - name: Ciara Egan
+    affiliation: '117'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ciara.egan@universityofgalway.ie
+  - name: Vanessa Era
+    affiliation: '126,297'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: vanessa.era@uniroma1.it
+  - name: Thomas  R. Evans
+    affiliation: '127,298'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: thomas.evans@greenwich.ac.uk
+  - name: Anna Exner
+    affiliation: '128'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: anna.exner@posteo.de
+  - name: Gilad Feldman
+    affiliation: '129'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: giladfel@gmail.com
+  - name: Katharina Fellnhofer
+    affiliation: '130'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: kfellnhofer@ethz.ch
+  - name: Chiara  Fini
+    affiliation: '131'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: chiara.fini@uniroma1.it
+  - name: Sarah E. Fisher
+    affiliation: '132'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sfish10art@yahoo.com
+  - name: Heather D. Flowe
+    affiliation: '133'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: hflowe@gmail.com
+  - name: Patricia Garrido-Vásquez
+    affiliation: '134'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: patricia.garrido@udec.cl
+  - name: Daniele Gatti
+    affiliation: '135'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: daniele.gatti@unipv.it
+  - name: Jason Geller 
+    affiliation: '136'
+    role:
+      - Validation
+      - Writing - review & editing
+    email: Drjasongeller@gmail.com
+  - name: Vaitsa Giannouli
+    affiliation: '137'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: giannouliv@hotmail.com
+  - name: Anna S. Gorokhova
+    affiliation: '84'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: anyuta.post@gmail.com
+  - name: Lindsay M. Griener
+    affiliation: '138'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ccpling@ualberta.ca
+  - name: Dmitry Grigoryev
+    affiliation: '139'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dgrigoryev@hse.ru
+  - name: Igor Grossmann
+    affiliation: '140'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: igrossma@uwaterloo.ca
+  - name: Mohammadhesam Hajighasemi
+    affiliation: '141'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mohammadhesam.hajighasemi@essec.edu
+  - name: Giacomo Handjaras
+    affiliation: '142'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: giacomo.handjaras@imtlucca.it
+  - name: Cathy Hauspie
+    affiliation: '125'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: cathy.hauspie@ugent.be
+  - name: Zhiran He
+    affiliation: '143'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: z18839126783@163.com
+  - name: Renata M. Heilman
+    affiliation: '144'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: renataheilman@psychology.ro 
+  - name: Amirmahdi Heydari
+    affiliation: '145'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: amirmahdiheidari2020@gmail.com
+  - name: Alanna M. Hine
+    affiliation: '117'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: alannahine@gmail.com
+  - name: Karlijn Hoyer
+    affiliation: '146'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: Karlijnhoyer@gmail.com
+  - name: Weronika Hryniszak
+    affiliation: '147,299'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: weronika.hryniszak@doctoral.uj.edu.pl
+  - name: Janet H.-w. Hsiao
+    affiliation: '148'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: jhhsiao@ust.hk
+  - name: Guanxiong Huang
+    affiliation: '149'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: g.huang@cityu.edu.hk
+  - name: Keiko Ihaya
+    affiliation: '150'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: ihaya@fit.ac.jp
+  - name: Ewa Ilczuk
+    affiliation: '151'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ewa.ilczuk@doctoral.uj.edu.pl
+  - name: Tatsunori Ishii
+    affiliation: '152'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: t_ishii1108@yahoo.co.jp
+  - name: Andrei Dumbravă
+    affiliation: '153,300'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: andrei.dumbrava@uaic.ro
+  - name: Katarzyna Jankowiak
+    affiliation: '154'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: katarzyna.jankowiak@amu.edu.pl 
+  - name: Xiaoming Jiang
+    affiliation: '155,301'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: xiaoming.jiang@shisu.edu.cn
+  - name: David C. Johnson
+    affiliation: '156,302'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: davejohnson7@mac.com
+  - name: Rafał Jończyk
+    affiliation: '154,303'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: rafal.jonczyk@amu.edu.pl
+  - name: Juhani Järvikivi
+    affiliation: '157'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: jarvikivi@ualberta.ca
+  - name: Laura Kaczer
+    affiliation: '158'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: laurakaczer@gmail.com
+  - name: Kevin  L. Kamermans
+    affiliation: '159'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: klkamermans@gmail.com
+  - name: Johannes A. Karl
+    affiliation: '160'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: johannes.karl@dcu.ie
+  - name: Alexander Karner
+    affiliation: '161'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: alexander.karner@univie.ac.at
+  - name: Pavol Kačmár
+    affiliation: '162'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: pavol.kacmar@upjs.sk
+  - name: Jacob J. Keech
+    affiliation: '163'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: j.keech@griffith.edu.au
+  - name: M. Justin Kim
+    affiliation: '164,304'
+    role:
+      - Validation
+      - Writing - review & editing
+    email: minuekim@skku.edu
+  - name: Max Korbmacher
+    affiliation: '165,305'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: Max.korbmacher@hvl.no
+  - name: Kathrin Kostorz
+    affiliation: '58'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: kathrin.kostorz@univie.ac.at
+  - name: Marta Kowal
+    affiliation: '166'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: marta7kowal@gmail.com
+  - name: Tomas Kratochvil
+    affiliation: '167'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: kratochvilt@mail.muni.cz
+  - name: Yoshihiko Kunisato
+    affiliation: '168'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: ykunisato@psy.senshu-u.ac.jp
+  - name: Anna O. Kuzminska
+    affiliation: '169'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: a.kuzminska@uw.edu.pl
+  - name: Lívia Körtvélyessy
+    affiliation: '170'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: livia.kortvelyessy@upjs.sk
+  - name: Fatma E. Köse
+    affiliation: '171,306'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ebruates.ea@gmail.com
+  - name: Massimo Köster
+    affiliation: '172'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: massimo.koester@uni-marburg.de
+  - name: Magdalena Kękuś
+    affiliation: '173'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mkekus@swps.edu.pl
+  - name: Melanie Labusch
+    affiliation: '174,307'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: melanie.labusch@uv.es
+  - name: Claus Lamm
+    affiliation: '58'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: claus.lamm@univie.ac.at
+  - name: Chaak Ming Lau
+    affiliation: '175'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: lchaakming@eduhk.hk
+  - name: Julieta Laurino
+    affiliation: '158'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: julilaurino@gmail.com
+  - name: Wilbert Law
+    affiliation: '176,308'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: wlaw@eduhk.hk
+  - name: Giada Lettieri
+    affiliation: '177'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: giada.lettieri@imtlucca.it
+  - name: Carmel A. Levitan
+    affiliation: '178'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: levitan@oxy.edu
+  - name: Jackson G. Lu
+    affiliation: '179'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: lu18@mit.edu
+  - name: Sarah E. MacPherson
+    affiliation: '180'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sarah.macpherson@ed.ac.uk
+  - name: Klara Malinakova
+    affiliation: '181'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: klara.malinakova@oushi.upol.cz
+  - name: Diego Manriquez-Robles
+    affiliation: '182'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dmanriquezrobles@gmail.com
+  - name: Nicolás Marchant
+    affiliation: '108'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: nicolas.marchant@edu.uai.cl
+  - name: Marco Marelli
+    affiliation: '183'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: marco.marelli@unimib.it
+  - name: Martín Martínez
+    affiliation: '184'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: tininmartinez@gmail.com
+  - name: Molly F. Matthews
+    affiliation: '185'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: m8matthe@uwaterloo.ca
+  - name: Alan D. A. Mattiassi
+    affiliation: '186'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: alan.mattiassi@gmail.com
+  - name: Josefina Mattoli-Sánchez
+    affiliation: '187'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: josefina.mattoli_s@mail.udp.cl
+  - name: Claudia  Mazzuca
+    affiliation: '188'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: claudia.mazzuca@uniroma1.it
+  - name: David P. McGovern
+    affiliation: '160'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: david.p.mcgovern@dcu.ie
+  - name: Zdenek Meier
+    affiliation: '189'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: zdenek.meier@oushi.upol.cz
+  - name: Filip Melinscak
+    affiliation: '161'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: filip.melinscak@univie.ac.at
+  - name: Michal Misiak
+    affiliation: '190,309'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: michal.misiak@uwr.edu.pl
+  - name: Luis C. P. Monteiro
+    affiliation: '191'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: luis.monteiro@icb.ufpa.br
+  - name: David Moreau
+    affiliation: '192,310'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: d.moreau@auckland.ac.nz
+  - name: Sebastian Moreno
+    affiliation: '193'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sebastian.moreno.araya@gmail.com
+  - name: Kate  E. Mulgrew
+    affiliation: '194'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: kmulgrew@usc.edu.au
+  - name: Dominique Muller
+    affiliation: '195,311'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dominique.muller@univ-grenoble-alpes.fr
+  - name: Tamás Nagy
+    affiliation: '196'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: nagy.tamas@ppk.elte.hu
+  - name: Marcin Naranowicz
+    affiliation: '197'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: marcin.naranowicz@amu.edu.pl
+  - name: Izuchukwu L. G. Ndukaihe
+    affiliation: '198'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ndukaihe.izuchukwu@funai.edu.ng
+  - name: Maital Neta
+    affiliation: '199,312'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: mneta2@unl.edu
+  - name: Lukas Novak
+    affiliation: '200'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: lukas.novak@oushi.upol.cz
+  - name: Chisom E. Ogbonnaya
+    affiliation: '201'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ogbonnaya.chisom@yahoo.com
+  - name: Jessica Jee Won Paek
+    affiliation: '202'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: jesspaek@iu.edu
+  - name: Aspasia E. Paltoglou
+    affiliation: '203,313'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: A.Paltoglou@mmu.ac.uk
+  - name: Francisco J. Parada
+    affiliation: '204'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: francisco.parada@udp.cl
+  - name: Adam J. Parker
+    affiliation: '205'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: adam_parker@ucl.ac.uk
+  - name: Mariola Paruzel-Czachura
+    affiliation: '206,314'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mariola.paruzel-czachura@us.edu.pl
+  - name: Yuri G. Pavlov
+    affiliation: '207'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: pavlovug@gmail.com
+  - name: Saeed  Paydarfard
+    affiliation: '208'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: saeedpaydarfard@gmail.com
+  - name: Dominik Pegler
+    affiliation: '58'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dominik.pegler@univie.ac.at
+  - name: Mehmet Peker
+    affiliation: '209'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mehmet.peker@ege.edu.tr
+  - name: Manuel Perea
+    affiliation: '210,315'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: manuel.perea@uv.es
+  - name: Stefan Pfattheicher
+    affiliation: '64'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sp@psy.au.dk
+  - name: John Protzko
+    affiliation: '211'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: protzko@gmail.com
+  - name: Irina S. Prusova
+    affiliation: '84'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: iprusova@hse.ru
+  - name: Katarzyna Pypno-Blajda
+    affiliation: '206'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: katarzyna.pypno@us.edu.pl
+  - name: Zhuang Qiu
+    affiliation: '212'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: zhuangharveyqiu@gmail.com
+  - name: Ulf-Dietrich Reips
+    affiliation: '213'
+    role:
+      - Validation
+      - Writing - review & editing
+    email: reips@uni-konstanz.de
+  - name: Gianni Ribeiro
+    affiliation: '214,316'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: gianni.ribeiro@unisq.edu.au
+  - name: Luca Rinaldi
+    affiliation: '215,317'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: luca.rinaldi@unipv.it
+  - name: S. C. Roberts
+    affiliation: '190,318'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: craig.roberts@stir.ac.uk
+  - name: Tanja C. Roembke
+    affiliation: '216'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: tanja.roembke@psych.rwth-aachen.de
+  - name: Marina O. Romanova
+    affiliation: '84'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: marina.romanova.msk@gmail.com
+  - name: Robert M. Ross
+    affiliation: '217'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: robross46@gmail.com
+  - name: Jan P. Röer
+    affiliation: '218'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: jan.roeer@uni-wh.de
+  - name: Filiz Rızaoğlu
+    affiliation: '219'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: frizaoglu@pau.edu.tr
+  - name: Toni T. Saari
+    affiliation: '220'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: toni.t.saari@gmail.com
+  - name: Erika Sampaolo
+    affiliation: '107'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: erika.sampaolo@imtlucca.it
+  - name: Anabela C. Santos
+    affiliation: '221'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: anabela.caetano.s@mail.com
+  - name: F. Ç. Sarıçiçek
+    affiliation: '222'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: caglarsaricicek@hotmail.com
+  - name: Kyoshiro Sasaki
+    affiliation: '223'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: kyoshiro0920@gmail.com
+  - name: Frank Scharnowski
+    affiliation: '58'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: frank.scharnowski@univie.ac.at
+  - name: Kathleen Schmidt
+    affiliation: '224'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: kschmi13@ashland.edu
+  - name: Amir Sepehri
+    affiliation: '141'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sepehri@essec.edu
+  - name: Halid O. Serçe
+    affiliation: '225'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: halidoguz.serce@bahcesehir.edu.tr
+  - name: A. T. Sevincer
+    affiliation: '226'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: timur.sevincer@leuphana.de
+  - name: Cynthia S. Q. Siew
+    affiliation: '109'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: cynthia@nus.edu.sg
+  - name: Matilde E. Simonetti
+    affiliation: '227'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: simonetti@psych.rwth-aachen.de
+  - name: Miroslav Sirota
+    affiliation: '228'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: msirota@essex.ac.uk
+  - name: Agnieszka Sorokowska
+    affiliation: '229'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sorokowska@gmail.com
+  - name: Piotr Sorokowski
+    affiliation: '229'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sorokowskipiotr@yahoo.co.uk
+  - name: Ian D. Stephen
+    affiliation: '230'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: stepheni@bournemouth.ac.uk
+  - name: Laura M. Stevens
+    affiliation: '231'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: lms825@student.bham.ac.uk
+  - name: Suzanne L. K. Stewart
+    affiliation: '232'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: s.stewart@chester.ac.uk
+  - name: David Steyrl
+    affiliation: '58'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: david.steyrl@univie.ac.at
+  - name: Stefan Stieger
+    affiliation: '233'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: stefan.stieger@kl.ac.at
+  - name: Anna Studzinska
+    affiliation: '234'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: studzinna@gmail.com
+  - name: Mar Suarez
+    affiliation: '93'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: marsuarez@usal.es
+  - name: Anna Szala
+    affiliation: '235,319'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: szala@oakland.edu
+  - name: Arnaud Szmalec
+    affiliation: '125,236'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: arnaud.szmalec@uclouvain.be
+  - name: Daniel Sznycer
+    affiliation: '237'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: daniel.sznycer@okstate.edu
+  - name: Ewa Szumowska
+    affiliation: '238,320'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ewa.szumowska@uj.edu.pl
+  - name: Sinem Söylemez
+    affiliation: '239'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ssinemsoylemez@gmail.com
+  - name: Bahadır Söylemez
+    affiliation: '240'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: bsoylemez@pau.edu.tr
+  - name: Kaito Takashima
+    affiliation: '241'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: ktaaa331@gmail.com
+  - name: Christian K. Tamnes
+    affiliation: '242'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: c.k.tamnes@psykologi.uio.no
+  - name: Joel  C. R. Tan
+    affiliation: '109'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: joeltancr@u.nus.edu
+  - name: Chengxiang Tang
+    affiliation: '243'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: tang.chengxiang@gmail.com
+  - name: Peter  Tavel
+    affiliation: '244'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: peter.tavel@oushi.upol.cz
+  - name: Julian Tejada
+    affiliation: '245'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: jtejada@academico.ufs.br
+  - name: Benjamin C. Thompson
+    affiliation: '246'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: bcthompson5@crimson.ua.edu
+  - name: Jake  G. Tiernan
+    affiliation: '160'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: jaketiernan0@gmail.com
+  - name: Vicente Torres-Muñoz
+    affiliation: '247'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: vicentetomu@gmail.com
+  - name: Anna  K. Touloumakos
+    affiliation: '248'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: a.touloumakos@gmail.com
+  - name: Bastien Trémolière
+    affiliation: '249,321'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: bastien.tremoliere@univ-tlse2.fr
+  - name: Monika Tschense
+    affiliation: '250'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: monika.tschense@leuphana.de
+  - name: Belgüzar N. Türkan
+    affiliation: '251'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: turkan.nilay@gmail.com
+  - name: Miguel A. Vadillo
+    affiliation: '105'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: miguel.vadillo@uam.es
+  - name: Caterina Vannucci
+    affiliation: '107'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: caterina.vannucci@imtlucca.it
+  - name: Michael E. W. Varnum
+    affiliation: '252'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mvarnum@asu.edu
+  - name: Martin R. Vasilev
+    affiliation: '253'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: m.vasilev@ucl.ac.uk
+  - name: Leigh Ann Vaughn
+    affiliation: '254'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: Lvaughn@ithaca.edu
+  - name: Fanny Verkampt
+    affiliation: '255'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: fanny.verkampt@univ-cotedazur.fr
+  - name: Liliana M. Villar
+    affiliation: '256,322'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: Liliana.m.villar@my.ccsu.edu
+  - name: Sebastian Wallot
+    affiliation: '257'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sebastian.wallot@leuphana.de
+  - name: Lijun Wang
+    affiliation: '258'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: wanglijun239@163.com
+  - name: Ke Wang
+    affiliation: '259'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: ke_wang@g.harvard.edu
+  - name: Glenn P. Williams
+    affiliation: '260'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: glenn.williams@northumbria.ac.uk
+  - name: David Willinger
+    affiliation: '261'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: david.willinger@kl.ac.at
+  - name: Kelly Wolfe
+    affiliation: '262,323'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: k.wolfe@hw.ac.uk
+  - name: Alexandra S. Wormley
+    affiliation: '252,324'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: awormley@asu.edu
+  - name: Yuki Yamada
+    affiliation: '263'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: yamadayuk@gmail.com
+  - name: Yunkai Yang
+    affiliation: '264'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: yykaiii@outlook.com
+  - name: YUWEI ZHOU
+    affiliation: '265'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: s1147972@s.eduhk.hk
+  - name: Mengfan Zhang
+    affiliation: '58'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mengfan.zhang@univie.ac.at
+  - name: Wang Zheng
+    affiliation: '266'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: zhengwangpsy@163.com
+  - name: Yueyuan Zheng
+    affiliation: '267'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: mercuryzheng@connect.hku.hk
+  - name: Chenghao Zhou
+    affiliation: '268'
+    role:
+      - Resources
+      - Writing - review & editing
+    email: chenghao.zhou@nyu.edu
+  - name: Radka Zidkova
+    affiliation: '244'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: lukas.novak@oushi.upol.cz
+  - name: Nina  M. Zumbrunn
+    affiliation: '160'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: nina.zumbrunn3@mail.dcu.ie
+  - name: Ogeday Çoker
+    affiliation: '269'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: ogedcoker@gmail.com
+  - name: Sami Çoksan
+    affiliation: '270,325'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: scoksan@uwo.ca
+  - name: Sezin Öner
+    affiliation: '271'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sezin.oner@khas.edu.tr
+  - name: Asil A. Özdoğru
+    affiliation: '272,326'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: asil.ozdogru@marmara.edu.tr
+  - name: Seda M. Şahin
+    affiliation: '51'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: sahins@metu.edu.tr
+  - name: Dauren Kasanov
+    affiliation: '273'
+    role:
+      - Investigation
+      - Writing - review & editing
+    email: dauren.kasa@gmail.com 
+  - name: Savannah C. Lewis
+    affiliation: '274,327'
+    role:
+      - Investigation
+      - Project administration
+      - Supervision
+      - Writing - review & editing
+    email: slewis5920@gmail.com
+
+affiliation:
+  - id: '1'
+    institution: Analytics, Harrisburg University of Science and Technology, Harrisburg,
+      USA
+  - id: '2'
+    institution: Independent Researcher, Alma, USA
+  - id: '3'
+    institution: Methodology and Statistics Unit, Institute of Psychology, Leiden
+      University, Leiden, The Netherlands
+  - id: '4'
+    institution: Department of Computer Science, Aalborg University, Aalborg, Denmark
+  - id: '5'
+    institution: Center for the Study of Language and Information, Stanford University,
+      Stanford, USA
+  - id: '6'
+    institution: Department of Psychology, Christ University, Bangalore, India
+  - id: '7'
+    institution: University of Exeter Business School, University of Exeter, Exeter,
+      United Kingdom
+  - id: '8'
+    institution: Developmental and Social Psychology, University of Padova, Padova,
+      Italy
+  - id: '9'
+    institution: Psychology, Midwestern State University, Wichita Falls, Texas, United
+      States
+  - id: '10'
+    institution: Department of Psychology, Goethe University Frankfurt, Frankfurt
+      am Main, Germany
+  - id: '11'
+    institution: General Internal Medicine, Massachusetts General Hospital, Boston,
+      United States
+  - id: '12'
+    institution: Department of Psychology, Iscte-Instituto Universtário de Lisboa,
+      Cis_Iscte, Lisbon, Portugal
+  - id: '13'
+    institution: Institute of Psychology, Faculty of Philosophy, Jagiellonian University,
+      Krakow, Poland
+  - id: '14'
+    institution: Department of Psychology and Neuroscience, Nova Southeastern University,
+      Fort Lauderdale, USA
+  - id: '15'
+    institution: UFR de Psychologie, CLLE, Université de Toulouse, CNRS, Toulouse,
+      France
+  - id: '16'
+    institution: Institute of Psychology, ELTE, Eotvos Lorand University Budapest,
+      Hungary
+  - id: '17'
+    institution: Royal Commission for Jubail and Yanbu, Jubail Industrial City, Saudi
+      Arabia
+  - id: '18'
+    institution: Department of Neuroscience, University of Padova, Padova, Italy
+  - id: '19'
+    institution: Laboratoire de Psychologie Sociale, Université Paris Cité, F-92100
+      Boulogne-Billancourt, France
+  - id: '20'
+    institution: Facultad de Psicología, Universidad de Buenos Aires - CONICET, Argentina
+  - id: '21'
+    institution: Department of Psychology, Government College University, Lahore,
+      Lahore, Pakistan
+  - id: '22'
+    institution: Department of Linguistics, Thammasat University, Pathum Thani, Thailand
+  - id: '23'
+    institution: Department of Psychology , University of Tehran , Tehran , Iran 
+  - id: '24'
+    institution: College of Humanities and Sciences , Prince Sultan University , Riyadh,
+      Saudi Arabia 
+  - id: '25'
+    institution: Department of Psychology, University of Birmingham, Birmingham, United
+      Kingdom
+  - id: '26'
+    institution: Department of Basic Psychology,  University of València, València,
+      Spain
+  - id: '27'
+    institution: Instituto de Psicologia, Universidade Federal de Uberlândia (UFU),
+      Uberlândia, Brasil
+  - id: '28'
+    institution: Departamento de Letras Vernáculas, Universidade Federal de Sergipe,
+      São Cristóvão, Sergipe, Brazil
+  - id: '29'
+    institution: Universidad Torcuato Di Tella, Escuela de Gobierno, Buenos Aires,
+      Argentina
+  - id: '30'
+    institution: FOM University of Applied Sciences, Essen, Germany
+  - id: '31'
+    institution: Computer and Information Sciences, Harrisburg University of Science
+      and Technology, Harrisburg, PA, USA
+  - id: '32'
+    institution: Centre of Social and Psychological Sciences, Slovak Academy of Sciences,
+      Bratislava, Slovakia
+  - id: '33'
+    institution: Institute of Experimental Psychology, Centre of Social and Psychological
+      Sciences, Slovak Academy of Sciences, Bratislava, Slovak Republic
+  - id: '34'
+    institution: Departamento de Psicología, Universidad de Palermo - CONICET, Buenos
+      Aires, Argentina
+  - id: '35'
+    institution: Unaffiliated Researcher, London, UK
+  - id: '36'
+    institution: Department of Philosophy, Classics, History of Art and Ideas (IFIKK),
+      University of Oslo, Oslo, Norway
+  - id: '37'
+    institution: LIP/PC2S, Univ. Grenoble Alpes, Univ. Savoie Mont Blanc, 38000 Grenoble,
+      France
+  - id: '38'
+    institution: Department of Psychology, Izmir Katip Celebi University, Izmir, Türkiye
+  - id: '39'
+    institution: Department of psychology, Faculty of Philosophy and Arts, University
+      of Trnava, Trnava, Slovakia
+  - id: '40'
+    institution: Faculty of Philosophy and Arts, University of Trnava, Trnava, Slovakia
+  - id: '41'
+    institution: Department of Comparative and General Linguistics, Faculty of Arts,
+      University of Ljubljana, Ljubljana, Slovenia
+  - id: '42'
+    institution: Department Of Psychology, Ural Federal University, Ekaterinburg,
+      Russian Federation
+  - id: '43'
+    institution: Department of Social and Work Psychology, University of Brasília,
+      Brasília, Brazil
+  - id: '44'
+    institution: Department of Psychology, University of Warwick, Coventry, United
+      Kingdom
+  - id: '45'
+    institution: Department of Comparative and General Linguistics, Faculty of Arts, University
+      of Ljubljana, Ljubljana, Slovenia
+  - id: '46'
+    institution: Department of Applied Mathematics, Illinois Institute of Technology,
+      Chicago, IL, United States
+  - id: '47'
+    institution: The School of Optometry, The Hong Kong Polytechnic University, Hong
+      Kong, Hong Kong SAR, China
+  - id: '48'
+    institution: Psychology Department, California State University, East Bay, Hayward,
+      United States
+  - id: '49'
+    institution: Department of Management, Ben-Gurion University of the Negev, Be'er Sheva,
+      Israel
+  - id: '50'
+    institution: Department of Psychology and Neuroscience, Nova Southeastern University ,
+      Fort Lauderdale, Florida, United States
+  - id: '51'
+    institution: Department of Psychology, Middle East Technical University, Ankara,
+      Turkey
+  - id: '52'
+    institution: Department of Linguistics, Cognitive Science and Semiotics, Aarhus
+      University, Aarhus, Denmark
+  - id: '53'
+    institution: Department of Psychology, Universidad Católica del Maule, Talca,
+      Chile
+  - id: '54'
+    institution: Department of Primary Education, National and Kapodistrian University
+      of Athens, Athens, Greece
+  - id: '55'
+    institution: College of Psychology, Nova Southeastern University, Fort Lauderdale,
+      United States
+  - id: '56'
+    institution: Department of Psychology, University of Belgrade, Faculty of Philosophy,
+      Belgrade, Serbia
+  - id: '57'
+    institution: Department of Psychology, UiT The Arctic University of Norway, Tromsø,
+      Norway
+  - id: '58'
+    institution: Department of Cognition, Emotion, and Methods in Psychology, Faculty
+      of Psychology, University of Vienna, Vienna, Austria
+  - id: '59'
+    institution: Department of Linguistics and Scandinavian Studies, University of
+      Oslo, Oslo, Norway
+  - id: '60'
+    institution: Department of Philosophy, Classics, History of Art and Ideas, University
+      of Oslo, Oslo, Norway
+  - id: '61'
+    institution: Department of Psychology, Brandenburg University of Technology Cottbus-Senftenberg,
+      Cottbus-Senftenberg, Germany
+  - id: '62'
+    institution: Centre for Cognitive Science, Jagiellonian University, Krakow, Poland
+  - id: '63'
+    institution: Department of Psychology, Manisa Celal Bayar University, Manisa,
+      Turkey
+  - id: '64'
+    institution: Department of Psychology and Behavioural Sciences, Aarhus University,
+      Aarhus, Denmark
+  - id: '65'
+    institution: Department of Social and Human Research, Romanian Academy, Cluj-Napoca,
+      Romania
+  - id: '66'
+    institution: CONICET - Universidad de Buenos Aires, Instituto de Física Interdisciplinaria
+      y Aplicada (INFINA), Buenos Aires, Argentina
+  - id: '67'
+    institution: Department of Psychology, Université du Québec à Montréal, Montréal,
+      Canada
+  - id: '68'
+    institution: TrygFonden's Centre for Child Research, Aarhus University, Aarhus,
+      Denmark
+  - id: '69'
+    institution: Programa de Investigación Asociativa (PIA) en Ciencias Cognitivas,
+      Centro de Investigación en Ciencias Cognitivas (CICC), Facultad de Psicología,
+      Universidad de Talca, Talca, Chile
+  - id: '70'
+    institution: ELTE Eotvos Lorand University, Budapest, Hungary
+  - id: '71'
+    institution: Department of Psychology, Education and Child Studies, Erasmus University
+      Rotterdam, Rotterdam, The Netherlands
+  - id: '72'
+    institution: Faculty of Mechanical Engineering, University of Belgrade, Belgrade,
+      Serbia
+  - id: '73'
+    institution: Department of Developmental Psychology and Socialisation, Department
+      of Developmental Psychology and Socialisation, University of Padua, Padua, Italy
+  - id: '74'
+    institution: Department of Linguistics, the Chinese University of Hong Kong, Hong
+      Kong, China
+  - id: '75'
+    institution: Olomouc University Social Health Institute, Palacky University Olomouc,
+      Olomouc University Social Health Institute, Olomouc, Czech republic
+  - id: '76'
+    institution: School of Psychology, Nanjing Normal University , Nanjing, China
+  - id: '77'
+    institution: Faculty of Health and Education, Manchester Metropolitan University,
+      Manchester, United Kingdom
+  - id: '78'
+    institution: King's Business School, King's College London, London, United Kingdom
+  - id: '79'
+    institution: Institute of Social Sciences CSPS, Slovak Academy of Sciences, Košice,
+      Slovakia
+  - id: '80'
+    institution: Escuela de Gobierno, Universidad Favaloro, Buenos Aires, Argentina
+  - id: '81'
+    institution: Doctoral School of Psychology, ELTE Eötvös Loránd University, Budapest,
+      Hungary
+  - id: '82'
+    institution: College of Languages and Translation, Imam Mohammad Ibn Saud Islamic
+      University (IMSIU), Riyadh, Saudi Arabia
+  - id: '83'
+    institution: Department of Psychology, University of Milano-Bicocca, Milan, Italy
+  - id: '84'
+    institution: Laboratory for Psychology of Social Inequality, HSE University, Moscow,
+      Russian Federation
+  - id: '85'
+    institution: Department of Psychological and Brain Sciences, Fairfield University,
+      Fairfield, CT, United States
+  - id: '86'
+    institution: Department of Psychology, Bournemouth University , Poole, UK
+  - id: '87'
+    institution: Department of Psychology, Franklin and Marshall College, Lancaster,
+      USA
+  - id: '88'
+    institution: Psychology, Alex Ekwueme Federal University, Ndufu-Alike, Nigeria
+  - id: '89'
+    institution: Nic Waals Institute, Lovisenberg Diaconal Hospital, Oslo, Norway
+  - id: '90'
+    institution: Department of Sport, Tourism and Hospitality Management, Temple University,
+      Philadelphia, USA
+  - id: '91'
+    institution: Department of Food, Pharma, and Healthcare, Saint Joseph's University,
+      Philadelphia, PA, USA
+  - id: '92'
+    institution: School of Behavioural and Health Sciences, Australian Catholic University,
+      Strathfield, Australia
+  - id: '93'
+    institution: Faculty of Psychology, University of Salamanca, Salamanca, Spain
+  - id: '94'
+    institution: Psychological Assessment, University of Marburg, Germany, Marburg,
+      Germany
+  - id: '95'
+    institution: CLLE, Université de Toulouse, CNRS, Toulouse, France
+  - id: '96'
+    institution: Department of Psychology and Cognitive Science, Adam Mickiewicz University,
+      Poznan, Poland
+  - id: '97'
+    institution: Laboratoire de Psychologie Sociale, Université Paris Cité, Paris,
+      France
+  - id: '98'
+    institution: Department of Dynamic and Clinical Psychology, and Health Studies,
+      Sapienza University of Rome, CNR, Rome, Italy
+  - id: '99'
+    institution: Department of Economic Psychology, Johannes Kepler University Linz,
+      Linz, Austria
+  - id: '100'
+    institution: Department of Experimental and Applied Psychology, Vrije Universiteit
+      Amsterdam, Amsterdam, The Netherlands
+  - id: '101'
+    institution: Department of Psychology, Middle East Technical University, Ankara,
+      Türkiye
+  - id: '102'
+    institution: Universidad de la República, Montevideo, Uruguay
+  - id: '103'
+    institution: Department of Linguistics and Modern Languages, The Chinese University
+      of Hong Kong, Hong Kong, Hong Kong SAR, China
+  - id: '104'
+    institution: Facultad de Ingeniería y Ciencias, Universidad Adolfo Ibánez, Viña
+      del mar, Chile
+  - id: '105'
+    institution: Departamento de Psicología Básica, Universidad Autónoma de Madrid,
+      Madrid, Spain
+  - id: '106'
+    institution: Experimental Psychology, Justus Liebig University Giessen, Giessen,
+      Germany
+  - id: '107'
+    institution: Social and Affective Neuroscience Group, IMT School for Advanced
+      Studies Lucca, Lucca, Italy
+  - id: '108'
+    institution: Center for Social and Cognitive Neuroscience, School of Psychology,
+      Universidad Adolfo Ibáñez, Santiago, Chile
+  - id: '109'
+    institution: Department of Psychology, National University of Singapore, Singapore,
+      Singapore
+  - id: '110'
+    institution: Department of Psychology, Ashland University, Ashland, USA
+  - id: '111'
+    institution: Department of Human Development and Psychology, Tzu-Chi University,
+      Haulien, Taiwan
+  - id: '112'
+    institution: School of Communication and Culture, Aarhus University, Aarhus, Denmark
+  - id: '113'
+    institution: School of Psychology, Nanjing Normal University, Nanjing, China
+  - id: '114'
+    institution: Psychology and Cognitive Science Department, Adam Mickiewicz University,
+      Poznań, Poland
+  - id: '115'
+    institution: Basic Psychology, Psycholinguistics Research Line, CIPsi, School
+      of Psychology, University of Minho, Portugal, Braga, Portugal
+  - id: '116'
+    institution: Independent Researcher, Malaysia
+  - id: '117'
+    institution: School of Psychology, University of Galway, Galway, Ireland
+  - id: '118'
+    institution: Psychology, Memorial University of Newfoundland, St.John's, Newfoundland
+      and Labrador, Canada
+  - id: '119'
+    institution: The International Institute for the Advanced Studies of Psychotherapy
+      and Applied Mental Health, Babes-Bolyai University , Cluj-Napoca, Romania
+  - id: '120'
+    institution: Department of Psychology, Wittenberg University, Springfield, USA
+  - id: '121'
+    institution: Department of Psychology, University of Oklahoma, Norman, Oklahoma,
+      US
+  - id: '122'
+    institution: The School of Health, The School of Health, the University of the
+      Sunshine Coast, 1 Moreton Parade, Petrie QLD 4502, Australia, Morton Bay, Australia
+  - id: '123'
+    institution: Department of Psychology, Department of Psychology, Faculty of Arts
+      and Sciences, Beijing Normal University at Zhuhai, Zhuhai, China, Zhuhai, China
+  - id: '124'
+    institution: Ivey School at Western University, London, Ontario, Canada
+  - id: '125'
+    institution: Department of Experimental Psychology, Ghent University, Ghent, Belgium
+  - id: '126'
+    institution: Department of Psychology, Sapienza University Of Rome, Rome, Italy
+  - id: '127'
+    institution: School of Human Sciences, University of Greenwich, London, United
+      Kingdom
+  - id: '128'
+    institution: Faculty of Psychology, Ruhr University Bochum, Bochum, Germany
+  - id: '129'
+    institution: Psychology, University of Hong Kong, Hong Kong SAR, Hong Kong SAR
+  - id: '130'
+    institution: Department of Management, Technology, and Economics, ETH Zürich,
+      Zürich, Switzerland
+  - id: '131'
+    institution: Department of Dynamic and Clinical Psychology and Health Studies,
+      Sapienza University of Rome, Rome, Italy
+  - id: '132'
+    institution: Department of Psychology, Ashland University, Ashland, Ohio, United
+      States
+  - id: '133'
+    institution: School of Psychology, University of Birmingham, Edgbaston, UK
+  - id: '134'
+    institution: Department of Psychology, University of Concepción, Concepción, Chile
+  - id: '135'
+    institution: Department of Brain and Behavioral Sciences, University of Pavia,
+      Pavia, Italy
+  - id: '136'
+    institution: Psychology, Princeton University, Princeton, US 
+  - id: '137'
+    institution: School of Social Sciences, Hellenic Open University, Patras, Greece
+  - id: '138'
+    institution: Centre for Comparative Psycholinguistics, University of Alberta,
+      Edmonton, Alberta, Canada
+  - id: '139'
+    institution: Center for Sociocultural Research, HSE University, Moscow, Russia
+  - id: '140'
+    institution: Department of Psychology, University of Waterloo, Waterloo, Ontario,
+      Canada
+  - id: '141'
+    institution: Marketing, ESSEC Business School, Cergy, France
+  - id: '142'
+    institution: IMT School for Advanced Studies Lucca, Lucca, Italy
+  - id: '143'
+    institution: The Education Department, Henan University, Kaifeng, China
+  - id: '144'
+    institution: Department of Psychology, Babes-Bolyai University, Cluj-Napoca, Romania
+  - id: '145'
+    institution: Psychology, University of Tehran, Tehran, Iran
+  - id: '146'
+    institution: Developmental Psychology, University of Amsterdam, Amsterdam, The
+      Netherlands
+  - id: '147'
+    institution: Faculty of Philosophy, Applied Memory Research Laboratory, Institute
+      of Psychology, Jagiellonian University, Krakow, Poland
+  - id: '148'
+    institution: Division of Social Science, Hong Kong University of Science and Technology,
+      Kowloon, Hong Kong
+  - id: '149'
+    institution: Department of Media and Communication, City University of Hong Kong,
+      Kowloon, Hong Kong SAR
+  - id: '150'
+    institution: Center for Liberal Arts, Fukuoka Institute of Technology, Fukuoka,
+      Japan
+  - id: '151'
+    institution: Faculty of Philosophy, Jagiellonian University, Kraków, Poland
+  - id: '152'
+    institution: Department of Psychology, Japan Women's University, Tokyo, Japan
+  - id: '153'
+    institution: George I.M. Georgescu Institute of Cardiovascular Diseases, Iași,
+      Romania
+  - id: '154'
+    institution: Faculty of English, Adam Mickiewicz University, Poznań, Poland
+  - id: '155'
+    institution: Institute of Linguistics, Shanghai International Studies University,
+      Shanghai, P. R. China
+  - id: '156'
+    institution: Department of Behavioral Sciences, York College, CUNY, New York,
+      USA
+  - id: '157'
+    institution: Department of Linguistics, University of Alberta, Edmonton, Canada
+  - id: '158'
+    institution: Departamento de Fisiología, Biología Molecular y Celular, Universidad
+      de Buenos Aires, Buenos Aires, Argentina
+  - id: '159'
+    institution: Indepedent Researcher, The Netherlands
+  - id: '160'
+    institution: School of Psychology, Dublin City University, Dublin, Ireland
+  - id: '161'
+    institution: Department of Cognition, Emotion, and Methods in Psychology, University
+      of Vienna, Vienna, Austria
+  - id: '162'
+    institution: Department of Psychology, Faculty of Arts, Pavol Jozef Šafárik University
+      in Košice, Košice, Slovakia
+  - id: '163'
+    institution: School of Applied Psychology, Griffith University, Mt Gravatt, Australia
+  - id: '164'
+    institution: Department of Psychology, Sungkyunkwan University, Seoul, South Korea
+  - id: '165'
+    institution: Department of Health and Functioning, Western Norway University of
+      Applied Sciences, Bergen, Norway
+  - id: '166'
+    institution: IDN Being Human, Institute of Psychology, University of Wrocław ,
+      Wrocław, Poland
+  - id: '167'
+    institution: International Research Team on Internet and Society, Masaryk University,
+      Faculty of Social Studies, International Research Team on Internet and Society,
+      Joštova 10, Brno, Czech Republic, Brno, Czech Republic
+  - id: '168'
+    institution: Department of Psychology, Senshu University, Kawasaki, Japan
+  - id: '169'
+    institution: Faculty of Management, University of Warsaw, Warsaw, Poland
+  - id: '170'
+    institution: Department of British and American Studies, Pavol Jozef Šafárik University
+      in Košice, Slovakia, Košice, Slovakia
+  - id: '171'
+    institution: Psychology Department, Aydın Adnan Menderes University, Aydın, Türkiye
+  - id: '172'
+    institution: Psychological Assessment, University of Marburg, Marburg, Germany
+  - id: '173'
+    institution: Faculty of Psychology, SWPS University, Kraków, Kraków, Poland
+  - id: '174'
+    institution: ERI-Lectura and Department of Methodology, Universitat de València,
+      Valencia, Spain
+  - id: '175'
+    institution: Centre for Research on Linguistics and Language Studies (CRLLS),
+      The Education University of Hong Kong, Tai Po, Hong Kong
+  - id: '176'
+    institution: Department of Psychology, The Education University of Hong Kong,
+      Hong Kong SAR, Hong Kong SAR
+  - id: '177'
+    institution: Affective Physiology and Interoception (API) Group, MoMiLab, IMT
+      School for Advanced Studies Lucca, Lucca, Italy, Lucca, Italy
+  - id: '178'
+    institution: Cognitive Science, Occidental College, Los Angeles, USA
+  - id: '179'
+    institution: MIT Sloan School of Management, Massachusetts Institute of Technology,
+      Cambridge, MA, USA
+  - id: '180'
+    institution: Human Cognitive Neuroscience, Department of Psychology, University
+      of Edinburgh, Edinburgh, United Kingdom
+  - id: '181'
+    institution: Olomouc University Social Health Institute, Olomouc University Social
+      Health Institute, Palacký University Olomouc, Olomouc, Czech Republic, Olomouc,
+      Czech Republic
+  - id: '182'
+    institution: Departamento de Psicología, Universidad Católica de Temuco, Temuco,
+      Chile
+  - id: '183'
+    institution: Department of Psychology, University of Milano-Bicocca, Milano, Italy
+  - id: '184'
+    institution: Department of Psychology, University of Navarra, Pamplona, Spain
+  - id: '185'
+    institution: Psychology, University of Waterloo, Waterloo, Canada
+  - id: '186'
+    institution: Department of Education, Literatures, Intercultural Studies, Languages
+      and Psychology, University of Florence, Florence, Italy
+  - id: '187'
+    institution: Facultad de Psicología, Centro de Estudios en Neurociencia Humana
+      y Neuropsicología, Universidad Diego Portales, Santiago, Chile
+  - id: '188'
+    institution: Department of Dynamic and Clinical Psychology, and Health Studies,
+      Sapienza University of Rome, Rome, Italy
+  - id: '189'
+    institution: Social Health Institute, Palacký University Olomouc, Social Health
+      Institute, Olomouc, Czech Republic, Olomouc, Czech Republic
+  - id: '190'
+    institution: IDN Being Human, Institute of Psychology, University of Wroclaw,
+      Wroclaw, Poland
+  - id: '191'
+    institution: Institute of Biological Sciences, Federal University of Pará, Belém,
+      Brazil
+  - id: '192'
+    institution: School of Psychology, University of Auckland, Auckland, New Zealand
+  - id: '193'
+    institution: Facultad de Ingeniería y Ciencias, Universidad Adolfo Ibáñez, Viña
+      del Mar, Chile
+  - id: '194'
+    institution: School of Health, University of the Sunshine Coast, Petrie, Australia
+  - id: '195'
+    institution: Psychology, University of Grenoble Alpes, Univ. Savoie Mont Blanc,
+      LIP/PC2S, Grenoble, France
+  - id: '196'
+    institution: ELTE Eötvös Loránd University, Institute of Psychology, Budapest,
+      Hungary
+  - id: '197'
+    institution: Faculty of English, Adam Mickiewicz University, Poznan, Poznan, Poland
+  - id: '198'
+    institution: Department of Psychology, Alex Ekwueme Federal University, Ndufu-Alike,
+      Nigeria
+  - id: '199'
+    institution: Department of Psychology, University of Nebraska-Lincoln, Lincoln,
+      NE, USA
+  - id: '200'
+    institution: Olomouc University Social Health Institute, Olomouc University Social
+      Health Institute, Palacký University Olomouc, Olomouc, Czech Republic
+  - id: '201'
+    institution: Psychology Department, Alex Ekwueme Federal University   Ndufu-Alike
+      Nigeria, Ebonyi State, Nigeria
+  - id: '202'
+    institution: Department of Management and Entrepreneurship, Indiana University
+      Kelley School of Business, Bloomington, IN, United States
+  - id: '203'
+    institution: School of Psychology, Manchester Metropolitan University, Manchester,
+      UK
+  - id: '204'
+    institution: Psychology, Universidad Diego Portales, Santiago, Chile/South America
+  - id: '205'
+    institution: Department of Experimental Psychology, Division of Psychology and
+      Language Sciences, University College London, London, United kingdom
+  - id: '206'
+    institution: Institute of Psychology, University of Silesia in Katowice, Katowice,
+      Poland
+  - id: '207'
+    institution: Institute of Medical Psychology and Behavioral Neurobiology, University
+      of Tuebingen, Tuebingen, Germany
+  - id: '208'
+    institution: Psychology and Educational Science, Shahid Beheshti University, Tehran,
+      Iran 
+  - id: '209'
+    institution: Faculty of Letters, Department of Psychology, Ege University, Izmir,
+      Türkiye
+  - id: '210'
+    institution: Department of Methodology, Universitat de València, Valencia, Spain
+  - id: '211'
+    institution: Psychological Science, Central Connecticut State University, New
+      Britain, USA
+  - id: '212'
+    institution: Department of Linguistics and Modern Language, Department of Linguistics
+      and Modern Languages, The Chinese University of Hong Kong, Hong Kong, Hong Kong
+  - id: '213'
+    institution: Department of Psychology, University of Konstanz, Konstanz, Germany
+  - id: '214'
+    institution: School of Psychology, The University of Queensland, Brisbane, Australia
+  - id: '215'
+    institution: Department of Brain and Behavioural Sciences, University of Pavia,
+      Pavia, Italy
+  - id: '216'
+    institution: Chair of Cognitive and Experimental Psychology, Institute of Psychology,
+      RWTH Aachen University, Aachen, Germany
+  - id: '217'
+    institution: Department of Philosophy, Macquarie University, Sydney, Australia
+  - id: '218'
+    institution: Department of Psychology and Psychotherapy, Witten/Herdecke University,
+      Witten, Germany
+  - id: '219'
+    institution: Foreign Language Education Department, Pamukkale University, Denizli,
+      Türkiye
+  - id: '220'
+    institution: Institute for Molecular Medicine Finland (FIMM), University of Helsinki,
+      Helsinki, Finland
+  - id: '221'
+    institution: CIS-Iscte, Instituto Universitário de Lisboa (Iscte-IUL), Lisboa,
+      Portugal
+  - id: '222'
+    institution: Department of Psychology, Kadir Has University, İstanbul, Türkiye
+  - id: '223'
+    institution: Faculty of Informatics, Kansai University, Takatsuki, Japan
+  - id: '224'
+    institution: Department of Psychology, Ashland University, Ashland, OH, USA
+  - id: '225'
+    institution: Psychology Department, Bahçeşehir University, İstanbul, Turkey
+  - id: '226'
+    institution: Institute for Sustainability Psychology, Leuphana University Lüneburg,
+      Lüneburg, Germany
+  - id: '227'
+    institution: Instute of Psychology, RWTH Aachen University, Aachen, Germany
+  - id: '228'
+    institution: Department of Psychology, University of Essex, Colchester, United
+      Kingdom
+  - id: '229'
+    institution: Institute of Psychology, University of Wrocław, Wrocław, Poland
+  - id: '230'
+    institution: Department of Psychology, Bournemouth University, Bournemouth, United
+      Kingdom
+  - id: '231'
+    institution: School of Psychology, University of Birmingham, Birmingham, United
+      Kingdom
+  - id: '232'
+    institution: Division of Psychology, University of Chester, Chester, United Kingdom
+  - id: '233'
+    institution: Department Psychology and Psychodynamics, Karl Landsteiner University
+      of Health Sciences, Krems an der Donau, Austria
+  - id: '234'
+    institution: Humanities Department, Icam School of Engineering, Toulouse, France
+  - id: '235'
+    institution: Department of Anthropology, Hirszfeld Institute of Immunology and
+      Experimental Therapy, Polish Academy of Sciences, Wrocław, Poland
+  - id: '236'
+    institution: Psychological Sciences Research Institute, Université catholique
+      de Louvain, Louvain-la-Neuve, Belgium
+  - id: '237'
+    institution: Department of Psychology, Oklahoma State University, Stillwater,
+      United States
+  - id: '238'
+    institution: Institute of Psychology, Jagiellonian University, Krakow, Poland
+  - id: '239'
+    institution: Psychology, Manisa Celal Bayar University, Manisa, Türkiye
+  - id: '240'
+    institution: Felsefe, Pamukkale Üniversitesi, Denizli, Türkiye
+  - id: '241'
+    institution: Graduate School of Human-Environment Studies, Kyushu University,
+      Fukuoka, Japan
+  - id: '242'
+    institution: Department of Psychology, University of Oslo, Oslo, Norway
+  - id: '243'
+    institution: School of Economics and Management, Beijing Jiaotong University,
+      Beijing, China
+  - id: '244'
+    institution: Olomouc University Social Health Institute, Palacký University Olomouc,
+      Olomouc, Czech Republic
+  - id: '245'
+    institution: Department of Psychology, Federal University of Sergipe, Aracaju,
+      Brazil
+  - id: '246'
+    institution: Psychology, The University of Alabama-Tuscaloosa, Alabama, United
+      States
+  - id: '247'
+    institution: Centro de Investigación en Ciencias Cognitivas, Talca, Chile
+  - id: '248'
+    institution: Department of Psychology, Panteion University of Social and Political
+      Science, Athens, Greece
+  - id: '249'
+    institution: Psychology, Université de Toulouse, Toulouse, France
+  - id: '250'
+    institution: Institute for Sustainability Psychology, School of Sustainability,
+      Leuphana University Lüneburg, Lüneburg, Germany
+  - id: '251'
+    institution: Department of Cognitive Psychology, Trier University, Trier, Germany
+  - id: '252'
+    institution: Department of Psychology, Arizona State University, Tempe, AZ, USA
+  - id: '253'
+    institution: Department of Experimental Psychology, University College London,
+      London, United Kingdom
+  - id: '254'
+    institution: Psychology Department, Ithaca College, Ithaca, USA
+  - id: '255'
+    institution: Department of Psychology, LAPCOS, Université Côte d’Azur, Nice, France
+  - id: '256'
+    institution: Department of Psychological Sciences, Central Connecticut State University,
+      New Britain, CT, United States of America
+  - id: '257'
+    institution: Institute of Sustainability Psychology, Leuphana University of Lüneburg,
+      Lüneburg, Germany
+  - id: '258'
+    institution: School of Digital Ecomomics and Management, Suzhou City University,
+      Suzhou, China
+  - id: '259'
+    institution: Harvard Kennedy School, Harvard University, Cambridge, USA
+  - id: '260'
+    institution: Department of Psychology, Faculty of Health and Life Sciences, Northumbria
+      University, Newcastle-upon-Tyne, UK
+  - id: '261'
+    institution: Department of Psychology and Psychodynamics, Karl Landsteiner University
+      of Health Sciences, Krems an der Donau, Austria
+  - id: '262'
+    institution: Psychology Department, School of Philosophy & Language Sciences,
+      University of Edinburgh, Edinburgh, United Kingdom
+  - id: '263'
+    institution: Faculty of Arts and Science, Kyushu University, Fukuoka, Japan
+  - id: '264'
+    institution: Institute of Psychology and Behavior, Henan University, Kaifeng,
+      China
+  - id: '265'
+    institution: Psychology, The Education University of Hong Kong, Hong Kong, Hong
+      Kong
+  - id: '266'
+    institution: The School of Psychology and Cognitive Science, East China Normal
+      University, Shanghai, China
+  - id: '267'
+    institution: Department of Psychology, University of Hong Kong, Hong Kong Special
+      Administrative Region, China
+  - id: '268'
+    institution: Department of Psychology, New York University, New York, U.S.
+  - id: '269'
+    institution: Department of Psychology, Pamukkale University, Denizli, Turkey
+  - id: '270'
+    institution: Network for Economic and Social Trends, Western University, London,
+      Canada
+  - id: '271'
+    institution: Department of Psychologystanbul, Turkey, Kadir Has University, İstanbul,
+      Turkey
+  - id: '272'
+    institution: Department of Psychology, Marmara University, İstanbul, Türkiye
+  - id: '273'
+    institution: Laboratory of Neurotechnology, Ural Federal University, Ekaterinburg,
+      Russia
+  - id: '274'
+    institution: Psychology, University of Alabama- Tuscaloosa, Tuscaloosa, USA
+  - id: '275'
+    institution: Medicine, Harvard Medical School, Boston, United States
+  - id: '276'
+    institution: Institut de Psychologie, Université Paris Cité, Laboratoire de Psychologie
+      Sociale, Paris, France
+  - id: '277'
+    institution: Padova Neuroscience Center, University of Padova, Padova, Italy
+  - id: '278'
+    institution: Departamento de Psicología, Universidad de Palermo, Buenos Aires
+  - id: '279'
+    institution: Department of Vision Sciences, University of Leicester, Leicester,
+      United Kingdom
+  - id: '280'
+    institution: Instituto de Lingüística, Facultad de Filosofía y Letras, Universidad
+      de Buenos Aires, CONICET, Buenos Aires, Argentina
+  - id: '281'
+    institution: Department of Psychology, Ege University, Izmir, Türkiye
+  - id: '282'
+    institution: Social and Affective Neuroscience Institute, Brasília, Brazil
+  - id: '283'
+    institution: Department of Psychology, NTNU, Trondheim, Norway
+  - id: '284'
+    institution: Department of Psychology, Babeș-Bolyai University, Cluj-Napoca, Romania
+  - id: '285'
+    institution: Universidad Torcuato Di Tella, Escuela de Negocios, Laboratorio de
+      Neurociencia, Buenos Aires, Argentina
+  - id: '286'
+    institution: Faculty of Education, Charles University, Prague, Czechia; Faculty
+      of Humanities and Social Sciences, University of Jyväskylä, Jyväskylä, Finland
+  - id: '287'
+    institution: Escuela de Gobierno, Universidad Torcuato Di Tella, Buenos Aires,
+      Argentina
+  - id: '288'
+    institution: Institute of Psychology, University of Pécs, Pécs, Hungary
+  - id: '289'
+    institution: Centro de Investigación Nebrija en Cognición (CINC), Universidad
+      Antonio de Nebrija , Madrid , Spain
+  - id: '290'
+    institution: PsychGen Center for Genetic Epidemiology and Mental Health, Norwegian
+      Institute of Public Health, Oslo, Norway
+  - id: '291'
+    institution: Cognitive Neuroscience Center, Adam Mickiewicz University, Poznan,
+      Poland
+  - id: '292'
+    institution: Institute of Cognitive Sciences and Technologies, Italian Research
+      Council, Rome, Italy
+  - id: '293'
+    institution: Escuela de Psicología, Center for Cognition Research, Universidad
+      Adolfo Ibáñez, Santiago, Chile
+  - id: '294'
+    institution: Department of Psychology, Cornell University, Ithaca, New York, USA
+  - id: '295'
+    institution: The School of Psychology, The University of Queensland Brisbane QLD
+      4072 Australia., Brisbane, Australia
+  - id: '296'
+    institution: Beijing Key Laboratory of Applied Experimental Psychology, National
+      Demonstration Center for Experimental Psychology Education, Faculty of Psychology,
+      Beijing Normal University, Beijing, China
+  - id: '297'
+    institution: Social Neuroscience Laboratory, IRCCS Santa Lucia Foundation, Rome,
+      Italy, Rome, Italy
+  - id: '298'
+    institution: Institute for Lifecourse Development, University of Greenwich, London,
+      United Kingdom
+  - id: '299'
+    institution: Faculty of Philosophy, Doctoral School in the Social Sciences​, Jagiellonian
+      University​, Krakow, Poland
+  - id: '300'
+    institution: Alexandru Ioan Cuza university, Iași, Romania
+  - id: '301'
+    institution: Key Laboratory of Language Science and Multilingual Artificial Intelligence,
+      Shanghai International Studies University, Shanghai, P. R. China
+  - id: '302'
+    institution: Dept. of Psychology, CUNY Graduate Center, New York, USA
+  - id: '303'
+    institution: Cognitive Neuroscience Center, Adam Mickiewicz University, Poznań,
+      Poland
+  - id: '304'
+    institution: Center for Neuroscience Imaging Research, Institute for Basic Science,
+      Suwon, South Korea
+  - id: '305'
+    institution: Mohn Medical Imaging and Visualization Centre, Bergen, Norway
+  - id: '306'
+    institution: Psychology Department, Durham University, Durham, United Kingdom
+  - id: '307'
+    institution: Centro de Investigación Nebrija en Cognición (CINC), Universidad
+      Nebrija, Madrid, Spain
+  - id: '308'
+    institution: Centre for Psychosocial Health, The Education University of Hong
+      Kong, Hong Kong SAR, Hong Kong SAR
+  - id: '309'
+    institution: School of Anthropology & Museum Ethnography, University of Oxford,
+      Oxford, United Kingdom
+  - id: '310'
+    institution: Centre for Brain Research, University of Auckland, Auckland, New
+      Zealand
+  - id: '311'
+    institution: Institut Universitaire de France, Paris, France
+  - id: '312'
+    institution: Center for Brain, Biology, and Behavior, University of Nebraska-Lincoln,
+      Lincoln, NE, USA
+  - id: '313'
+    institution: School of Psychology, Social Work and Public Health (PSP), Oxford
+      Brookes University, Oxford, UK
+  - id: '314'
+    institution: Penn Center for Neuroaesthetics, University of Pennsylvania, Philadelphia,
+      USA
+  - id: '315'
+    institution: Centro de Investigación Nebrija en Cognición, Universidad Nebrija,
+      Madrid, Spain
+  - id: '316'
+    institution: School of Law and Justice, University of Southern Queensland, Ipswich,
+      Australia
+  - id: '317'
+    institution: Cognitive Psychology Unit, IRCCS Mondino Foundation, Pavia, Italy
+  - id: '318'
+    institution: Division of Psychology, University of Stirling, Stirling, UK
+  - id: '319'
+    institution: Center for Language Evolution Studies, Nicolaus Copernicus University
+      in Toruń, Toruń, Poland
+  - id: '320'
+    institution: Department of Psychology, University of Maryland, College Park, USA
+  - id: '321'
+    institution: Psychology, Université du Québec à Trois-Rivières, Trois-Rivières,
+      Canada
+  - id: '322'
+    institution: Department of Psychology, Southern New Hampshire University, Manchester,
+      NH, United States of America
+  - id: '323'
+    institution: Psychology Department, Centre for Applied Behavioural Sciences, School
+      of Social Sciences, Heriot-Watt University, Edinburgh, United Kingdom
+  - id: '324'
+    institution: Department of Psychology, University of Michigan, Ann Arbor, MI,
+      USA
+  - id: '325'
+    institution: Department of Psychology, Erzurum Technical University, Erzurum,
+      Türkiye
+  - id: '326'
+    institution: Department of Psychology, Üsküdar University, İstanbul, Türkiye
+  - id: '327'
+    institution: Psychology, Ashland University, Ashland, USA
+
