@@ -582,7 +582,7 @@ cat(temp %>%
 
 View(temp)
 
-export(matchDF2, "matched_stimuli.csv", row.names = F)
+export(matchDF2_final, "matched_stimuli.csv", row.names = F)
 ```
 
 ## Put the Files In Order
