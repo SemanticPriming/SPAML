@@ -1,0 +1,4 @@
+- source: pnom_2024.qmd
+  quarto-pub:
+    - id: ed997fe3-da0f-46c1-9226-503b54586b71
+      url: 'https://doomlab.quarto.pub/pnom-2024'

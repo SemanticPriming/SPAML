@@ -3291,7 +3291,7 @@ sum(duplicated(zh$zh_fake_target))
 
 nrow(zh %>% filter(zh_cue == zh_target)) # after so much trouble, two is ok 
 
-export(zh, "../matched_stimuli/zh_simple_matched.csv", row.names = F)
+export(zh, "../matched_stimuli/zh_matched.csv", row.names = F)
 
 # create possible trials ----
 zh_trials <- zh[ , c("zh_cue", "zh_target")]

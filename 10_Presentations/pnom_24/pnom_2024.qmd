@@ -1,0 +1,458 @@
+---
+title: 'Priming is consistent but different across languages: The data release and results from the Semantic Priming Across Many Languages Project'
+author: "Erin M. Buchanan & The Psychological Science Accelerator"
+institute: "Harrisburg University"
+format: 
+  revealjs:
+    theme: night
+editor: source
+incremental: true 
+scrollable: true 
+preview-links: true
+code-copy: true 
+highlight-style: github 
+editor_options: 
+  chunk_output_type: inline
+---
+
+## Outline{.smaller}
+
+- The SPAML Dataset
+- Official Results 
+- The *semanticprimeR* package
+
+## Many Thanks{.smaller}
+
+```{css}
+h1.title {
+font-size: 1.5em;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(dplyr)
+library(rio)
+library(tidyr)
+library(ggridges)
+library(nlme)
+library(broom)
+library(ggrepel)
+library(knitr)
+library(wordcloud2)
+library(flextable)
+library(forcats)
+```
+
+:::: {.columns}
+::: {.column width="50%"}
+<center>
+```{r out.width="100%"}
+include_graphics("authors_spaml.png")
+```
+
+```{r out.width="60%"}
+include_graphics("psa_logo.png")
+```
+</center>
+:::
+::: {.column width="50%"}
+<center>
+```{r out.width="100%"}
+include_graphics("zpid_logo.png")
+include_graphics("hu_logo.jpg")
+```
+</center>
+:::
+::::
+
+## Semantic Priming{.smaller} 
+:::: {.columns}
+::: {.column width="50%"}
+<center>
+FASTER
+
+```{r out.width="100%"}
+include_graphics("dog_cat.jpg")
+```
+</center>
+:::
+::: {.column width="50%"}
+<center>
+SLOWER
+```{r out.width="100%"}
+include_graphics("dog_spoon.jpg")
+```
+</center>
+:::
+::::
+
+## SPAML Stimuli{.smaller}
+
+- Selected by language word frequency and similarity using Open Subtitles 
+- 1000 cue-target pairs
+- Matched across 31 languages/dialects
+
+```{r}
+langs <- data.frame(
+  word = c(
+    "Arabic", "Brazilian Portuguese", "Czech", "Danish", "German", "Greek",
+    "English", "Spanish", "Farsi", "Finnish", "French", "Hebrew", "Hindi", 
+    "Hungarian", "Italian", "Japanese", "Korean", "Dutch", "Norwegian",
+    "Polish", 
+    "Portuguese", "Romanian", "Russian", "Slovak", "Solvenian", "Serbian",
+    "Thai", "Turkish", "Urdu", "Simplified Chinese", "Traditional Chinese"
+  ),
+  freq = rep(1,31)
+)
+  
+wordcloud2(data = langs, 
+           minRotation = 0, maxRotation = 0,
+           minSize = 1,
+           size = .25, 
+           color = "random-light",
+           backgroundColor = "black",
+           shape = "square")
+```
+
+## SPAML Procedure{.smaller}
+<center>
+```{r out.width="75%", out.height="75%"}
+include_graphics("procedure.jpg")
+```
+</center>
+
+## Participants: Numbers{.smaller}
+
+```{r}
+# open all participant data
+p.list <- list.files(
+  path = "../../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*.participant_data.csv"
+)
+
+# import files
+p.files <- lapply(p.list, import)
+
+# give them names 
+names(p.files) <- gsub("../../05_Data/data_processing/output_data/participant_data/|_participant_data.csv|_combo", "", p.list)
+
+# deal with mismatches
+for (i in 1:length(p.files)){
+  p.files[[i]]$url_lab <- as.character(p.files[[i]]$url_lab)
+}
+
+# merge them together
+p.df <- bind_rows(p.files)
+p.df$language <- rep(names(p.files), times = unlist(lapply(p.files, nrow)))
+
+# recode missing
+p.df <- p.df %>% 
+   mutate(please_tell_us_your_gender = 
+           ifelse(is.na(please_tell_us_your_gender)|please_tell_us_your_gender == "", "Missing", 
+                  please_tell_us_your_gender), 
+          please_tell_us_your_education_level = 
+           ifelse(is.na(please_tell_us_your_education_level)|please_tell_us_your_education_level == "", "Missing", 
+                  please_tell_us_your_education_level),
+          meta_platform = ifelse(is.na(meta_platform)|meta_platform == "",
+          "Missing", meta_platform))
+
+# age
+p.df <- p.df %>% 
+  mutate(year_exp = as.numeric(substr(timestamp_consent,1,4)), 
+         age = year_exp - which_year_were_you_born)
+
+p.df <- p.df %>% 
+  mutate(please_tell_us_your_gender = factor(please_tell_us_your_gender, 
+                                             levels = c("Missing", "female", 
+                                                        "male", "notsay", "other"), 
+                                             labels = c("Missing", "Female", 
+                                                        "Male", "Not Say", "Other")),
+         please_tell_us_your_education_level = factor(please_tell_us_your_education_level, 
+                                                      levels = c("Missing", 
+                                                                 "less than high school", 
+                                                                 "high school",
+                                                                 "some college",
+                                                                 "college", 
+                                                                 "master",
+                                                                 "doctorate"),
+                                                      labels = c("Missing", 
+                                                                 "Less than High School",
+                                                                 "High School", 
+                                                                 "Some College",
+                                                                 "College", 
+                                                                 "Masters", 
+                                                                 "Doctorate")))
+```
+
+- `r nrow(p.df)` participants that opened the experiment
+- `r nrow(p.df %>% filter(n_trials >= 100))` completed at least 100 trials
+- `r nrow(p.df %>% filter(n_trials >= 100) %>% filter(p_correct >= .80))` also performed at 80% accuracy
+
+## Participants: Languages/Geopolitical Regions{.smaller}
+
+```{r}
+include_graphics("binned_country.png")
+```
+
+## Participants: Gender{.smaller}
+
+```{r}
+ggplot(p.df, 
+       aes(x = language, fill = please_tell_us_your_gender)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent) +  # Converts y-axis to percentages
+  labs(
+    x = "Language",
+    y = "Percentage",
+    fill = "Gender"
+  ) +
+  theme_minimal() + 
+  coord_flip() + 
+  scale_fill_brewer(palette = "Set1")
+```
+
+## Participants: Education{.smaller}
+
+```{r}
+p.df$please_tell_us_your_education_level <- factor(
+  p.df$please_tell_us_your_education_level,
+  levels = rev(levels(p.df$please_tell_us_your_education_level)) # Reverse the current order
+)
+
+ggplot(p.df %>% 
+         filter(!is.na(please_tell_us_your_education_level)), 
+       aes(x = language, fill = please_tell_us_your_education_level)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent) +  # Converts y-axis to percentages
+  labs(
+    x = "Language",
+    y = "Education",
+    fill = "Gender"
+  ) +
+  theme_minimal() + 
+  coord_flip() + 
+  scale_fill_brewer(palette = "Blues")
+```
+
+## Items{.smaller}
+
+```{r}
+i.list <- list.files(
+  path = "../../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*item_data.csv"
+)
+
+# import files
+i.files <- lapply(i.list, import)
+
+# give them names 
+names(i.files) <- gsub("../../05_Data/data_processing/output_data/item_data/|_item_data.csv|_pt_combo", "", i.list)
+
+# merge them together
+i.df <- bind_rows(i.files)
+i.df$language <- rep(names(i.files), times = unlist(lapply(i.files, nrow)))
+
+# remove answered
+i.df <- i.df %>% 
+  filter(!(grepl("answered", language)))
+```
+
+- `r length(unique(i.df$word))` unique word forms
+  - `r length(unique(i.df$word[i.df$class == "word"]))` words
+  - `r length(unique(i.df$word[i.df$class == "nonword"]))` non-words
+- Words with 50+ answered trials
+- `r length(unique(i.df$word[i.df$n_answered >= 50]))` unique word forms
+  - `r length(unique(i.df$word[i.df$class == "word" & i.df$n_answered >= 50]))` words
+  - `r length(unique(i.df$word[i.df$class == "nonword" & i.df$n_answered >= 50]))` non-words
+
+## Priming: What Primed?{.smaller}
+
+```{r}
+# open all participant data
+prime.list <- list.files(
+  path = "../../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary.csv"
+)
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../../05_Data/data_processing/output_data/priming_data/|_prime_summary.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df <- bind_rows(prime.files) 
+prime.df$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df$z_type <- "All"
+prime.df <- prime.df %>% 
+  filter(!(grepl("answered", language))) %>% 
+  filter(target_answeredN_related >= 50) %>% 
+  filter(target_answeredN_unrelated >= 50) %>% 
+  filter(!(language %in% c("ur", "sk", "he")))
+
+matched <- read.csv("../../03_Materials/matched_stimuli/matched_stimuli.csv")
+
+matched2 <- matched %>% 
+  left_join(prime.df %>% filter(language == "br_pt") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("pt_br_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "cs") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("cs_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "da") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("da_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "de") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("de_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "el") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("el_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "en") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("en_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "es") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("es_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "fr") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("fr_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "hu") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("hu_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "it") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("it_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "ja") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("ja_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "ko") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("ko_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "pl") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("pl_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "pt") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("pt_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "ro") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("ro_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "ru") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("ru_target_word_unique" = "target_word_unique")) %>%
+    left_join(prime.df %>% filter(language == "sr") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("sr_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "tr") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("tr_target_word_unique" = "target_word_unique")) %>%
+  left_join(prime.df %>% filter(language == "zh") %>% 
+              select(target_word_unique, avgZ_prime),
+            by = c("zh_target_word_unique" = "target_word_unique")) %>% 
+  select(starts_with("avgZ_prime"), en_cue, en_target)
+
+matched2$prop_work <- apply(matched2 %>% select(-en_cue, -en_target), 1, function(x) sum(x > 0, na.rm = T) / length(na.omit(x)))
+
+```
+
+- Total Pairs:
+  - `r nrow(prime.df)` unique pairs with at least 50 answers on both the related and unrelated condition
+  - `r nrow(prime.df %>% filter(avgZ_prime > 0))` priming pairs "work" 
+- Matched Pairs:
+  - `r nrow(matched2 %>% filter(prop_work == 1))` "work" in every language
+  - `r nrow(matched2 %>% filter(prop_work >= .5))` "work" in half of the languages 
+  - All "work" in at least 4/19 languages (dna-fingerprint, dvd-video)
+
+## Priming: What Primed?{.smaller}
+
+```{r}
+ggplot(matched2, aes(x = prop_work)) + 
+  theme_minimal() + 
+  geom_density(color = "black") + 
+  ylab("Frequency") + 
+  xlab("Proportion that 'Work' by Item") +
+  geom_vline(xintercept = mean(matched2$prop_work), color = "red",
+             linewidth = 2) + 
+    geom_vline(xintercept = median(matched2$prop_work), color = "blue",
+             linewidth = 2) 
+```
+
+## Priming: What Primed?{.smaller}
+
+```{r}
+kable(matched2 %>% 
+  filter(prop_work == 1) %>% 
+  select(en_cue, en_target) %>% 
+    dplyr::rename("Cue" = "en_cue",
+                  "Target" = "en_target"))
+```
+
+## Priming: Consistent{.smaller}
+
+```{r}
+ggplot(prime.df %>% 
+         filter(!is.na(avgZ_prime)), 
+       aes(x = avgZ_prime, fill = language)) + 
+  geom_density(alpha = 0.5) +  # Add transparency with alpha to see overlaps
+  labs(
+    x = "Average Z Prime",
+    y = "Density",
+    # title = "Density Plot of avgZ_prime by Language",
+    fill = "Language"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Priming: Consistent{.smaller}
+
+```{r out.width="100%"}
+include_graphics("original.boxplots.png")
+```
+
+## Priming: Some Variability{.smaller}
+
+```{r out.width="100%"}
+include_graphics("original.forest.png")
+```
+
+## Data Creation{.smaller}
+
+```{r echo = T}
+library(semanticprimeR)
+```
+
+- Import word frequencies and/or word vectors `import_subs`
+- Calculate word similarity `calculate_similarity` and find the most related words `top_n`
+- Create non-words (simple) `fake_simple`
+- Create non-words (Wuggy) `fake_Wuggy`
+
+## Data Access{.smaller}
+
+```{r echo = T}
+library(semanticprimeR)
+```
+
+- View the data available `data("primeData")`
+- Import specific SPAML datasets `import_prime`
+- View related data available `data("labData")`
+- Import specific related datasets `import_lab`
+
+## Thank You{.smaller}
+
+```{r}
+include_graphics("QR_links.png")
+```
+
+- Much priming, big wow!
+- Very similar priming across languages, but some variability 
+- Please use the data, stimuli, and more
