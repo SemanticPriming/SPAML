@@ -511,7 +511,35 @@ matchDF2 <- matchDF %>%
   left_join(uniqueDF %>% filter(lang == "Traditional Chinese") %>% 
               select(-lang), 
             by = c("zh_hk_word_combo" = "word_combo")) %>% 
-  rename(zh_hk_target_word_unique = target_word_unique) 
+  rename(zh_hk_target_word_unique = target_word_unique) %>% 
+  unique()
+
+dups <- matchDF2 %>% 
+       filter(duplicated(en_cue)) %>% 
+  pull(en_cue)
+
+View(matchDF2 %>%
+       filter(en_cue %in% dups) %>%
+       select(en_cue, en_target, zh_cue, zh_target, zh_target_word_unique))
+
+random_pairs <- 
+  data.frame(en_cue = c("reading", "read", "risky", "risk",
+                        "chance", "maybe", "probably", "maybe", 
+                        "probably", "chance"),
+             zh_target_word_unique = c("写作", "写作.1", "危险",
+                                       "危险.1", "大概", "大概", 
+                                       "大概.1", "大概.1",
+                                       "大概.2", "大概.2"))
+
+matchDF2_dedup <- list()
+
+for (i in 1:nrow(random_pairs)){
+  matchDF2_dedup[[i]] <- matchDF2 %>% 
+    filter(en_cue == random_pairs$en_cue[i]) %>% 
+    filter(zh_target_word_unique == random_pairs$zh_target_word_unique[i])
+}
+
+matchDF2_final <- matchDF2 %>% anti_join(bind_rows(matchDF2_dedup))
 
 # testing
 rowmissing <- apply(matchDF2, 1, function(x){sum(is.na(x))})
