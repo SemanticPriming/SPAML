@@ -524,8 +524,8 @@ View(matchDF2 %>%
 
 random_pairs <- 
   data.frame(en_cue = c("reading", "read", "risky", "risk",
-                        "chance", "maybe", "probably", "maybe", 
-                        "probably", "chance"),
+                        "chance", "maybe", "probability", "maybe", 
+                        "probability", "chance"),
              zh_target_word_unique = c("写作", "写作.1", "危险",
                                        "危险.1", "大概", "大概", 
                                        "大概.1", "大概.1",
