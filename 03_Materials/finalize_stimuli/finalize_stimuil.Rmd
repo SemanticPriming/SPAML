@@ -3892,7 +3892,7 @@ sum(duplicated(pt_br$pt_fake_target))
 
 nrow(pt_br %>% filter(pt_cue == pt_target))
 
-export(pt_br, "../matched_stimuli/pt_br_matched.csv", row.names = F)
+export(pt_br, "../matched_stimuli/br_pt_matched.csv", row.names = F)
 
 # create possible trials ----
 pt_br_trials <- pt_br[ , c("pt_cue", "pt_target")]
@@ -4075,7 +4075,7 @@ export(pt_br_final, "pt/pt_br/pt_br_trials_final.csv")
 
 ```{r eval = F}
 pt <- import("../matched_stimuli/pt_matched.csv")
-pt_br <- import("../matched_stimuli/pt_br_matched.csv")
+pt_br <- import("../matched_stimuli/br_pt_matched.csv")
 
 pt_together <- pt %>% 
   left_join(pt_br, by = c("en_cue" = "en_cue", 
