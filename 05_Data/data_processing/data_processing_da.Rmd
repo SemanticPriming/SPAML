@@ -959,6 +959,21 @@ Priming is defined as the subtraction of average z-scored related response laten
 
 # Calculate Statistics ----------------------------------------------------
   
+  priming_trial_paired <- priming_Z %>% 
+  select(word_combo, cue_word, type, target_word) %>% 
+  unique() %>% 
+  arrange(target_word, type) %>% 
+  group_by(type) %>% 
+  mutate(target_word_unique = make.unique(target_word)) %>% 
+  ungroup() %>%
+  pivot_wider(
+    names_from = "type", 
+    id_cols = "target_word_unique", 
+    values_from = c("word_combo", "cue_word", "target_word")
+  ) %>% 
+  select(-target_word_related, -target_word_unrelated) %>% 
+  export(., file = "../../03_Materials/matched_stimuli/da_trial_unique.csv")
+  
   priming_Z_summary <- priming_Z %>% 
   ##group them by target word and condition related/unrelated
   group_by(word_combo, type, target_word) %>% 
