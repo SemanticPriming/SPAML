@@ -99,7 +99,7 @@ bred,smalbred,edrubred,smal,edru
 brensel,gassbrensel,tablettbrensel,gass,tablett
 brev,telegrambrev,riflebrev,telegram,rifle
 bror,søsterbror,kommentarbror,søster,kommentar
-brud,,sørligbrud,,sørlig
+brud,brudgombrud,sørligbrud,brudgom,sørlig
 bruk,anvendebruk,smørbrødbruk,anvende,smørbrød
 brus,limonadebrus,dronningbrus,limonade,dronning
 bryllup,forlovelsebryllup,markbryllup,forlovelse,mark
@@ -140,7 +140,7 @@ doktor,kirurgdoktor,bedriftdoktor,kirurg,bedrift
 dokument,fildokument,kirurgdokument,fil,kirurg
 dollar,punddollar,forfatterdollar,pund,forfatter
 donasjon,veldedighetdonasjon,dagligdonasjon,veldedighet,daglig
-dra,dyttedra,,dytte,
+dra,dyttedra,turneringdra,dytte,turnering
 drepe,giftdrepe,uvanligdrepe,gift,uvanlig
 drøm,marerittdrøm,normaltdrøm,mareritt,normalt
 dum,naivdum,glassdum,naiv,glass
@@ -309,7 +309,7 @@ greit,okgreit,kontrolleregreit,ok,kontrollere
 gresk,romerskgresk,gulvgresk,romersk,gulv
 grevinne,barongrevinne,regelgrevinne,baron,regel
 gris,kugris,kapasitetgris,ku,kapasitet
-grunnlov,lovgrunnlov,,lov,
+grunnlov,lovgrunnlov,stillehavetgrunnlov,lov,stillehavet
 gruppe,gjenggruppe,naturliggruppe,gjeng,naturlig
 grusom,brutalgrusom,teknologigrusom,brutal,teknologi
 grusomhet,ondgrusomhet,junigrusomhet,ond,juni
@@ -329,7 +329,7 @@ hard,vanskelighard,fremstillehard,vanskelig,fremstille
 harmoni,balanseharmoni,ambassadeharmoni,balanse,ambassade
 hastighet,avstandhastighet,inspirerehastighet,avstand,inspirere
 hatt,hjelmhatt,medisinskhatt,hjelm,medisinsk
-hav,sjøhav,,sjø,
+hav,sjøhav,profilhav,sjø,profil
 havn,bukthavn,limonadehavn,bukt,limonade
 heks,forbannelseheks,betongheks,forbannelse,betong
 helbrede,komme seghelbrede,bordhelbrede,komme seg,bord
@@ -337,7 +337,7 @@ helikopter,ambulansehelikopter,vekthelikopter,ambulanse,vekt
 helvete,paradishelvete,tillatehelvete,paradis,tillate
 hengivenhet,gjengivelsehengivenhet,stempelhengivenhet,gjengivelse,stempel
 henrettelse,henginghenrettelse,generatorhenrettelse,henging,generator
-herlighet,,atomiskherlighet,,atomisk
+herlighet,herligherlighet,atomiskherlighet,herlig,atomisk
 heroin,kokainheroin,stoltheroin,kokain,stolt
 hest,eselhest,komfortabelhest,esel,komfortabel
 hilse på,gratulerehilse på,askehilse på,gratulere,aske
@@ -400,7 +400,7 @@ jenter,gutterjenter,bestikkelsejenter,gutter,bestikkelse
 jordbær,bananjordbær,ambulansejordbær,banan,ambulanse
 journalist,reporterjournalist,kanskjejournalist,reporter,kanskje
 juli,junijuli,arvjuli,juni,arv
-juliet,romeojuliet,,romeo,
+juliet,romeojuliet,underdrivejuliet,romeo,underdrive
 junior,seniorjunior,faktorjunior,senior,faktor
 juvel,diamantjuvel,direktejuvel,diamant,direkte
 kaffe,koppkaffe,styrkekaffe,kopp,styrke
@@ -479,7 +479,7 @@ last,lastelast,forbannelselast,laste,forbannelse
 lastebil,jeeplastebil,rivelastebil,jeep,rive
 latter,smillatter,skjelatter,smil,skje
 leder,medlemleder,forferdeligleder,medlem,forferdelig
-ledsage,,gravledsage,,grav
+ledsage,eskortereledsage,gravledsage,eskortere,grav
 legende,mytelegende,komme seglegende,myte,komme seg
 leie,ansetteleie,sinneleie,ansette,sinne
 leilighet,husleilighet,flytendeleilighet,hus,flytende
@@ -491,7 +491,7 @@ liberal,konservativliberal,ektemannliberal,konservativ,ektemann
 lidenskap,entusiasmelidenskap,kelnerlidenskap,entusiasme,kelner
 lik,kropplik,meninglik,kropp,mening
 limousine,drosjelimousine,ingentinglimousine,drosje,ingenting
-ling,mingling,,ming,
+ling,mingling,drinkling,ming,drink
 liten,littliten,faseliten,litt,fase
 litteratur,kunstlitteratur,kulitteratur,kunst,ku
 lokal,regionallokal,nytelokal,regional,nyte
@@ -624,7 +624,7 @@ partikkel,materiepartikkel,elskerinnepartikkel,materie,elskerinne
 pass,billettpass,konseptpass,billett,konsept
 passord,kodepassord,haipassord,kode,hai
 patetisk,elendigpatetisk,rustenpatetisk,elendig,rusten
-patrulje,vaktpatrulje,,vakt,
+patrulje,vaktpatrulje,svingepatrulje,vakt,svinge
 penger,mynterpenger,skypenger,mynter,sky
 penis,vaginapenis,erstattepenis,vagina,erstatte
 penn,papirpenn,marinepenn,papir,marine
@@ -792,7 +792,7 @@ snø,regnsnø,kidnappersnø,regn,kidnapper
 sol,månesol,hendelsesol,måne,hendelse
 solar,lunarsolar,nobelsolar,lunar,nobel
 soloppgang,solnedgangsoloppgang,opprettelsesoloppgang,solnedgang,opprettelse
-sonde,kapselsonde,,kapsel,
+sonde,kapselsonde,motsonde,kapsel,mot
 sone,områdesone,lekeguttsone,område,lekegutt
 sove,hvilesove,gjengivelsesove,hvile,gjengivelse
 soverom,romsoverom,frosksoverom,rom,frosk
@@ -814,7 +814,7 @@ stat,føderalstat,saktestat,føderal,sakte
 statue,monumentstatue,åpningstatue,monument,åpning
 stearinlys,lampestearinlys,konstruksjonstearinlys,lampe,konstruksjon
 stein,bergstein,langsomstein,berg,langsom
-stemme,flertallstemme,,flertall,
+stemme,flertallstemme,lampestemme,flertall,lampe
 sterkt,faststerkt,autopsisterkt,fast,autopsi
 sti,rutesti,lasagnesti,rute,lasagne
 stil,rytmestil,landstil,rytme,land
