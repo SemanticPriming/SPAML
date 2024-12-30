@@ -46,6 +46,7 @@ import("fi_matched.csv") %>%
   ) %>% 
   export("fi_trial_unique.csv")
 
+# only a few participants not all trial combinations seen
 import("hi_matched.csv") %>% 
   mutate(target_word_unique = make.unique(hi_target)) %>% 
   mutate(word_combo_related = paste0(hi_cue, hi_target)) %>% 
@@ -61,6 +62,23 @@ import("hi_matched.csv") %>%
   by = "target_word_unique"
   ) %>% 
   export("hi_trial_unique.csv")
+
+# only a few participants not all trial combinations seen
+import("sl_matched.csv") %>% 
+  mutate(target_word_unique = make.unique(sl_target)) %>% 
+  mutate(word_combo_related = paste0(sl_cue, sl_target)) %>% 
+  dplyr::rename(cue_word_related = sl_cue) %>% 
+  select(target_word_unique, word_combo_related, cue_word_related) %>% 
+  left_join(
+    import("../../04_Procedure/sl/sl_words.csv") %>% 
+  filter(type == "unrelated") %>% 
+  mutate(target_word_unique = make.unique(sl_target),
+         word_combo_unrelated = paste0(sl_cue, sl_target)) %>% 
+  dplyr::rename(cue_word_unrelated = sl_cue) %>% 
+  select(target_word_unique, word_combo_unrelated, cue_word_unrelated),
+  by = "target_word_unique"
+  ) %>% 
+  export("sl_trial_unique.csv")
 ```
 
 ## Data
@@ -644,57 +662,72 @@ matchDF2 <- matchDF %>%
 #        filter(en_cue %in% dups) %>%
 #        select(en_cue, en_target, zh_cue, zh_target, zh_target_word_unique))
 
-random_pairs <- 
-  data.frame(en_cue = c("reading", "read", "risky", "risk",
-                        "chance", "maybe", "probability", "maybe", 
-                        "probability", "chance"),
-             zh_target_word_unique = c("写作", "写作.1", "危险",
-                                       "危险.1", "大概", "大概", 
-                                       "大概.1", "大概.1",
-                                       "大概.2", "大概.2"))
+# random_pairs <- 
+#   data.frame(en_cue = c("reading", "read", "risky", "risk",
+#                         "chance", "maybe", "probability", "maybe", 
+#                         "probability", "chance"),
+#              zh_target_word_unique = c("写作", "写作.1", "危险",
+#                                        "危险.1", "大概", "大概", 
+#                                        "大概.1", "大概.1",
+#                                        "大概.2", "大概.2"))
+# 
+# matchDF2_dedup <- list()
+# 
+# for (i in 1:nrow(random_pairs)){
+#   matchDF2_dedup[[i]] <- matchDF2 %>% 
+#     filter(en_cue == random_pairs$en_cue[i]) %>% 
+#     filter(zh_target_word_unique == random_pairs$zh_target_word_unique[i])
+# }
 
-matchDF2_dedup <- list()
-
-for (i in 1:nrow(random_pairs)){
-  matchDF2_dedup[[i]] <- matchDF2 %>% 
-    filter(en_cue == random_pairs$en_cue[i]) %>% 
-    filter(zh_target_word_unique == random_pairs$zh_target_word_unique[i])
-}
-
-matchDF2_final <- matchDF2 %>% anti_join(bind_rows(matchDF2_dedup))
+# matchDF2_final <- suppressMessages(matchDF2 %>% anti_join(bind_rows(matchDF2_dedup)))
 
 # testing
 rowmissing <- apply(matchDF2, 1, function(x){sum(is.na(x))})
 sum(rowmissing)
 colmissing <- apply(matchDF2, 2, function(x){sum(is.na(x))})
 sum(colmissing)
+
+colmissing2 <- apply(matchDF2, 2, function(x){sum(nchar(x) < 1, na.rm = T)})
 ```
 
 ```{r}
+# [1] "target_word_unique"  
+# [2] "word_combo_related"  
+# [3] "word_combo_unrelated"
+# [4] "cue_word_related"    
+# [5] "cue_word_unrelated" 
+
 colmissing[colmissing > 0]
+colmissing2[colmissing2 > 0]
 # ar_target_word_unique due to our setup to exclude taboo words
 
 temp <- matchDF2 %>%
-       select(en_cue, en_target, br_pt_target_word_unique, br_pt_cue, br_pt_target) %>%
-  mutate(trial_copy = paste0(br_pt_cue, br_pt_target, ",", br_pt_target),
-         word_combo = paste0(br_pt_cue, br_pt_target)) %>% 
+       select(en_cue, en_target, th_target_word_unique, th_cue, th_target) %>%
+  mutate(trial_copy = paste0(th_cue, th_target, ",", th_target),
+         word_combo = paste0(th_cue, th_target)) %>% 
   full_join(
-    import("br_pt_matched.csv") %>% 
+    import("th_matched.csv") %>% 
       mutate(across(everything(), tolower)) %>% 
       mutate(en_cue = gsub("naïve", "naive", en_cue)), 
     by = c("en_cue", "en_target")
   ) %>% 
   full_join(
-    import("br_pt_trial_unique.csv") %>% 
+    import("th_trial_unique.csv") %>% 
                         mutate(across(everything(), tolower),
-                               lang = "br_pt"),
-    by = c("br_pt_target_word_unique" = "target_word_unique")
+                               lang = "fa"),
+    by = c("th_target_word_unique" = "target_word_unique")
   )
 
-View(temp %>% 
-      filter(is.na(br_pt_target_word_unique)))
+temp_nchar <- temp %>% 
+      filter(is.na(th_target_word_unique) | is.na(en_cue) | nchar(word_combo_related) < 1 | nchar(word_combo_unrelated) < 1) %>% pull(th_target_word_unique)
 
-export(matchDF2_final, "matched_stimuli.csv", row.names = F)
+temp2 <- import("../../04_Procedure/th/th_words.csv") %>% 
+  filter(type == "related") %>% 
+  filter(th_target %in% temp_nchar) %>% 
+  mutate(word_combo_unrelated = paste0(th_cue, th_target),
+         cue_word_unrelated = th_cue)
+
+export(matchDF2, "matched_stimuli.csv", row.names = F)
 ```
 
 ## Put the Files In Order
