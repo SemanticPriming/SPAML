@@ -702,30 +702,30 @@ colmissing2[colmissing2 > 0]
 # ar_target_word_unique due to our setup to exclude taboo words
 
 temp <- matchDF2_final %>%
-       select(en_cue, en_target, zh_target_word_unique, zh_cue, zh_target) %>%
-  mutate(trial_copy = paste0(zh_cue, zh_target, ",", zh_target),
-         word_combo = paste0(zh_cue, zh_target)) %>% 
+       select(en_cue, en_target, ar_target_word_unique, ar_cue, ar_target) %>%
+  mutate(trial_copy = paste0(ar_cue, ar_target, ",", ar_target),
+         word_combo = paste0(ar_cue, ar_target)) %>% 
   full_join(
-    import("zh_matched.csv") %>% 
+    import("ar_matched.csv") %>% 
       mutate(across(everything(), tolower)) %>% 
       mutate(en_cue = gsub("naïve", "naive", en_cue)), 
     by = c("en_cue", "en_target")
   ) %>% 
   full_join(
-    import("zh_trial_unique.csv") %>% 
+    import("ar_trial_unique.csv") %>% 
                         mutate(across(everything(), tolower),
                                lang = "fa"),
-    by = c("zh_target_word_unique" = "target_word_unique")
+    by = c("ar_target_word_unique" = "target_word_unique")
   )
 
 temp_nchar <- temp %>% 
-      filter(is.na(zh_target_word_unique) | is.na(en_cue) | nchar(word_combo_related) < 1 | nchar(word_combo_unrelated) < 1) %>% pull(zh_target_word_unique)
+      filter(is.na(ar_target_word_unique) | is.na(en_cue) | nchar(word_combo_related) < 1 | nchar(word_combo_unrelated) < 1) %>% pull(ar_target_word_unique)
 
-temp2 <- import("../../04_Procedure/zh/zh_words.csv") %>% 
-  filter(type == "unrelated") %>% 
-  #filter(zh_target %in% temp_nchar) %>% 
-  mutate(word_combo_unrelated = paste0(zh_cue, zh_target),
-         cue_word_unrelated = zh_cue)
+temp2 <- import("../../04_Procedure/ar/ar_words.csv") %>% 
+  #filter(type == "unrelated") %>% 
+  #filter(ar_target %in% temp_nchar) %>% 
+  mutate(word_combo_unrelated = paste0(ar_cue, ar_target),
+         cue_word_unrelated = ar_cue)
 
 export(matchDF2_final, "matched_stimuli.csv", row.names = F)
 ```
