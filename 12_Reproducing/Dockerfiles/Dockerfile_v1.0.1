@@ -1,0 +1,125 @@
+FROM ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG GH_TOKEN
+
+ENV GH_TOKEN=${GH_TOKEN}
+
+# Pin all APT package versions
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends apt-utils=2.0.10
+RUN apt-get install -y --no-install-recommends cmake=3.16.3-1ubuntu1.20.04.1
+RUN apt-get install -y --no-install-recommends libfreetype6-dev=2.10.1-2ubuntu0.3
+RUN apt-get install -y --no-install-recommends libfribidi-dev=1.0.8-2ubuntu0.1
+RUN apt-get install -y --no-install-recommends libharfbuzz-dev=2.6.4-1ubuntu4.3
+RUN apt-get install -y --no-install-recommends libjpeg-dev=8c-2ubuntu8
+RUN apt-get install -y --no-install-recommends libpng-dev=1.6.37-2
+RUN apt-get install -y --no-install-recommends libtiff5-dev=4.1.0+git191117-2ubuntu0.20.04.14
+RUN apt-get install -y --no-install-recommends pandoc=2.5-3build2
+RUN apt-get install -y --no-install-recommends pandoc-citeproc=0.15.0.1-1build4
+RUN apt-get install -y --no-install-recommends software-properties-common=0.99.9.12
+RUN apt-get install -y --no-install-recommends curl=7.68.0-1ubuntu2.25
+RUN apt-get install -y --no-install-recommends dirmngr=2.2.19-3ubuntu2.2
+RUN apt-get install -y --no-install-recommends gnupg=2.2.19-3ubuntu2.2
+RUN apt-get install -y --no-install-recommends coreutils=8.30-3ubuntu2
+RUN apt-get install -y --no-install-recommends libcurl4-openssl-dev=7.68.0-1ubuntu2.25
+RUN apt-get install -y --no-install-recommends libssl-dev=1.1.1f-1ubuntu2.23
+RUN apt-get install -y --no-install-recommends libxml2-dev=2.9.10+dfsg-5ubuntu0.20.04.8
+RUN apt-get install -y --no-install-recommends libfontconfig1-dev=2.13.1-2ubuntu3
+RUN apt-get install -y --no-install-recommends libcairo2-dev=1.16.0-4ubuntu1
+
+RUN curl -fsSL https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/cran-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/cran-archive-keyring.gpg] https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" | tee /etc/apt/sources.list.d/cran.list
+RUN apt-get update
+RUN apt-get install -y r-base=4.4.2-1.2004.0 r-base-dev=4.4.2-1.2004.0
+RUN rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+RUN apt-get update
+RUN apt-get install -y gh=2.66.1
+RUN rm -rf /var/lib/apt/lists/*
+
+RUN echo "machine github.com login oauth token ${GH_TOKEN}" > ~/.netrc
+RUN gh auth setup-git
+RUN gh release download v1.0.1 -D spaml-data-1.0.1 -R SemanticPriming/SPAML
+
+# Copy the MD5 checksum file into the container
+COPY spaml-v1.0.1-data-md5sums.txt /spaml-data-1.0.1/
+
+# Verify downloaded files against MD5 checksums
+RUN cd /spaml-data-1.0.1 && md5sum -c spaml-v1.0.1-data-md5sums.txt || { echo "MD5 verification failed!"; exit 1; }
+
+# Install all R packages with pinned versions
+RUN Rscript -e 'install.packages("remotes", repos="https://cloud.r-project.org")'
+RUN Rscript -e 'remotes::install_version("remotes", version="2.5.0", repos="https://cloud.r-project.org")'
+RUN Rscript -e 'remotes::install_version("curl", version="6.2.0")'
+RUN Rscript -e 'remotes::install_version("openssl", version="2.3.2")'
+RUN Rscript -e 'remotes::install_version("xml2", version="1.3.6")'
+RUN Rscript -e 'remotes::install_version("systemfonts", version="1.2.1")'
+RUN Rscript -e 'remotes::install_version("textshaping", version="1.0.0")'
+RUN Rscript -e 'remotes::install_version("ragg", version="1.3.3")'
+RUN Rscript -e 'remotes::install_version("flextable", version="0.9.7")'
+RUN Rscript -e 'remotes::install_version("rio", version="1.2.3")'
+RUN Rscript -e 'remotes::install_version("MuMIn", version="1.48.4")'
+RUN Rscript -e 'remotes::install_version("countrycode", version="1.6.0")'
+RUN Rscript -e 'remotes::install_version("dplyr", version="1.1.4")'
+RUN Rscript -e 'remotes::install_version("ggplot2", version="3.5.1")'
+RUN Rscript -e 'remotes::install_version("ggridges", version="0.5.6")'
+RUN Rscript -e 'remotes::install_version("lme4", version="1.1-35.5")'
+RUN Rscript -e 'remotes::install_version("maps", version="3.4.2")'
+RUN Rscript -e 'remotes::install_version("markdown", version="1.13")'
+RUN Rscript -e 'remotes::install_version("papaja", version="0.1.2")'
+RUN Rscript -e 'remotes::install_version("parameters", version="0.22.1")'
+RUN Rscript -e 'remotes::install_version("performance", version="0.12.2")'
+RUN Rscript -e 'remotes::install_version("psych", version="2.4.6.26")'
+RUN Rscript -e 'remotes::install_version("rmarkdown", version="2.29")'
+RUN Rscript -e 'remotes::install_version("tidyverse", version="2.0.0")'
+RUN Rscript -e 'remotes::install_version("uaparserjs", version="0.3.5")'
+RUN Rscript -e 'remotes::install_version("viridis", version="0.6.5")'
+
+# Move data files
+RUN mkdir -p /data/item_data && mv /spaml-data-1.0.1/*_item_data.csv /data/item_data/
+RUN mkdir -p /data/participant_data && mv /spaml-data-1.0.1/*_participant_data.csv /data/participant_data/
+RUN mkdir -p /data/priming_data && mv /spaml-data-1.0.1/*_prime_* /data/priming_data/
+RUN mkdir -p /data/trial_data && mv /spaml-data-1.0.1/*trial_data.csv.gz /data/trial_data/
+
+# ---------------------------
+# Download and extract source code archive
+RUN mkdir -p /spaml-source
+RUN gh release download v1.0.1 --archive=zip -D /spaml-source -R SemanticPriming/SPAML && \
+    unzip /spaml-source/*.zip -d /spaml-source && \
+    # Move the contents of any top-level folder(s) up one level
+    for d in /spaml-source/*/ ; do mv "$d"* /spaml-source/ ; done && \
+    rm -rf /spaml-source/*/ && rm /spaml-source/*.zip
+
+# ---------------------------
+# Copy local fallback files into temporary locations
+
+# For recoding files fallback
+COPY data/recoding_files /tmp/local_recoding_files
+
+# For supplemental files fallback (the entire directory)
+COPY data/supplemental/ /tmp/local_supplemental/
+
+# ---------------------------
+# Conditionally copy recoding files to /data/recoding_files
+RUN mkdir -p /data/recoding_files && \
+    if [ -d "/spaml-source/06_Analysis/recoding_files" ]; then \
+         echo "Using recoding files from the source archive"; \
+         cp -r /spaml-source/06_Analysis/recoding_files/* /data/recoding_files/; \
+    else \
+         echo "Using local recoding files from build context"; \
+         cp -r /tmp/local_recoding_files/* /data/recoding_files/; \
+    fi
+
+# ---------------------------
+# Conditionally copy the entire supplemental directory to /data/supplemental
+RUN mkdir -p /data/supplemental && \
+    if [ -d "/spaml-source/06_Analysis/supplemental" ]; then \
+         echo "Using supplemental files from the source archive"; \
+         cp -r /spaml-source/06_Analysis/supplemental/* /data/supplemental/; \
+    else \
+         echo "Using local supplemental files from build context"; \
+         cp -r /tmp/local_supplemental/* /data/supplemental/; \
+    fi
