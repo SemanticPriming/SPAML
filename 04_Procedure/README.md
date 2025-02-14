@@ -9,6 +9,7 @@ This folder contains:
 -   `consent_spaml.docx` is the English version of the consent form that is linked through OSF for people to download. The language specific versions of the consent are linked in the `03_Materials` folder.
 -   `debug.php` is a file provided by the labjs team that helps you identify if your experimental setup on your own server with php and sql is set up properly.
 -   `example/` folder includes the example .json that you can use to build the experiment in labjs, the pictures included in the proposal for the study.
+-   `extra_setups/` folder includes specific changes requested for individual labs. These edits include showing another consent form, using a specific data collect provider like Prolific/MTurk, or requirements to meet ethics guidelines. 
 -   `shiny/` folder contains the scripts used to build our shiny tracking app. Please note that to make this app work on a local machine, you should change the import file paths in `load_summary.R`.
 -   `summary_data/` is a folder that demonstrates how the summaries were calculated for the shiny app and the algorithm. These files mirror the data analysis workflow, however, these R files also include the selection algorithm that writes/rewrites the embedded json stimuli files for the experiment to re-randomize every few minutes. Included in this folder:
     -   `lang_participants.csv`: examples of how we kept track of the total number of usable participants, their "participation" codes given to researchers who needed them, and the total number that each lab contributed.
