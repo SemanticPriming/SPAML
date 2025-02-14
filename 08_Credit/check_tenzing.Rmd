@@ -20,7 +20,7 @@ library(googlesheets4)
 library(rcanvas) #install_github("doomlab/rcanvas")
 set_canvas_domain("https://canvas.psysciacc.org")
 
-library(tenzing)
+library(tenzing) #install_github("marton-balazs-kovacs/tenzing")
 ```
 
 ## Canvas Gradebook
@@ -439,8 +439,10 @@ final_tenzing <- read_sheet(
 ```
 
 
-```{r}
-check_result <- validate_contributors_table(contributors_table = final_tenzing)
+```{r eval = F}
+# tenzing has updated see new validation options
+check_result <- validate_contributors_table(
+  contributors_table = final_tenzing)
 ```
 
 ```{r}
