@@ -1,23 +1,17 @@
 # Materials Folder
 
-Other files:
-
--   `stimuli_options.xlsx`: include all the possible languages we could use, links to their *subs2vec* files and *udpipe* information. This file was used in stimuli creation.
--   `match_spp.R`: this file was used during the submission process to calculate the overlap of our chosen English stimuli with the stimuli from the Semantic Priming Project. Please have the entire project open in Rstudio for the file imports to work.
--   `transition_probs.R`: this file was used during the submission process to calculate the transition probabilities between word to non-word, word to word, non-word to word, and non-word to non-word. This information was presented in the pre-print.
-
 To create the materials, we started with `stimuli_creation`:
 
--   The `stimuli_creation.Rmd` shows how the stimuli were originally generated according to our pre-print description. You can also view a picture of the process using the `selection_flowchart` files (original .drawio form or .jpg). Note that the files used from subs2vec were stored externally to this repository because they are several GB large. The links for them can be found in the stimuli options file.
--   In the `similarity` folder the output from the `stimuli_creation` markdown can be found. Each file is language code \_ sims.csv to indicate the two digit language code and that they are the simulation output. These files are the top 10,000 words by top 5 cosine values related to each word as a starting point for stimuli.
--   These files were then combined together into `translation_dict.csv` merging all potential starting cue-target pairs into one file. These are loosely translated using Google Translate.
--   From this file - `finalstimuli_list.xlsx` was created. This file is the English word-pairs selected with the most overlap between languages trying to avoid using words twice, avoid come direct orthographic forms, and more (this is not totally possible, but those were the guidelines).
--   Last, `final_selected_words.csv` was created which was the starting point for the final stimuli - all available translations for the stimuli from English to other languages. These are not the procedure stimuli, as they have not yet undergone translation checks and fixes.
+-   The file `stimuli_creation.Rmd` shows how the stimuli were originally generated according to our pre-print description. You can also view a picture of the process using the `selection_flowchart` files (original .drawio form or .jpg). Note that the files used from subs2vec were stored externally to this repository because they are several GB large. The links for them can be found in the stimuli options file.
+-   In the `similarity` folder, the output from `stimuli_creation.Rmd` can be found. Each file is formatted as *(language code)*\_ sims.csv to indicate the two-digit language code and that they are the simulation output. These files contain the top 10,000 words by top 5 cosine values related to each word as a starting point for stimuli.
+-   These files were then combined together into `translation_dict.csv`, merging all potential starting cue-target pairs into one file. These are loosely translated using Google Translate.
+-   From this file `finalstimuli_list.xlsx` was created. This file contains the English word-pairs selected with the most overlap between languages, trying to avoid using words twice, avoid some direct orthographic forms, and more (this was not totally possible, but were the guidelines we followed).
+-   Last, `final_selected_words.csv` was created, which was the starting point for the final stimuli: it contains all available translations for the stimuli from English to other languages. These are not the procedure stimuli, as they have not yet undergone translation checks and fixes.
 
 Next, we created the `finalize_stimuli` folder:
 
 -   `final_selected_words.xlsx` is a file that contains all the final words from the previous folder filled in using Google Translate to give translators a starting point from which to work.
--   Next, we used `translation_stimuli.Rmd` to create the files for translators (which are stored in individual folders within this folder). This document takes the proposed stimuli and creates the information for each one to be included in the experiment for translation purposes. This file creates the Wuggy-like fake words for most languages (not Chinese) and originally created trial pairings for each language. We ended up reorganizing these original trial pairings in the final step, as the unrelated pairs needed to be controlled for their cosine. The outputs for this document are in each subfolder. The important information is:
+-   Next, we used `translation_stimuli.Rmd` to create the files for translators (which are stored in individual folders within this folder). This document takes the proposed stimuli and creates the information for each one to be included in the experiment for translation purposes. This file creates the Wuggy-like fake words for most languages (but not Chinese) and originally created trial pairings for each language. We ended up reorganizing these original trial pairings in the final step, as the unrelated pairs needed to be controlled for their cosine similarity. The outputs for this document are in each subfolder. The important information is:
     -   `LANG_translate.csv`: original file given to translators to review
     -   `LANG_fake_cues.csv`: statistics information Wuggy style of the original fake cues (note that many of these changed during the translation process)
     -   `LANG_fake_targets.csv`: statistics information Wuggy style of the original fake targets (note that many of these changed during the translation process)
@@ -35,3 +29,9 @@ The other files in each subfolder (possibly) include:
 -   `consent_LANG.docx/pdf`: consent form translated into language added from translators.
 -   All other files come from translation teams and are used to create the finalized trials, please see code.
 -   We did our best to normalize the names in this manner - please let us know if you see any issues.
+
+Other files in this folder include:
+
+-   `stimuli_options.xlsx`: this file includes all the possible languages we could use, links to their *subs2vec* files and *udpipe* information. This file was used in stimuli creation.
+-   `match_spp.R`: this file was used during the submission process to calculate the overlap of our chosen English stimuli with the stimuli from the Semantic Priming Project. Please have the entire project open in Rstudio for the file imports to work.
+-   `transition_probs.R`: this file was used during the submission process to calculate the transition probabilities between word to non-word, word to word, non-word to word, and non-word to non-word. This information was presented in the pre-print.
