@@ -1,0 +1,36 @@
+# hash:sha256:aee901268d784244314f349250ab588275804a4841580c4871e4690881f6cdf7
+FROM registry.codeocean.com/codeocean/r-studio:2022.07.0-548-r4.2.1-ubuntu18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        cmake=3.10.2-1ubuntu2.18.04.2 \
+        libfreetype6-dev=2.8.1-2ubuntu2.2 \
+        libfribidi-dev=0.19.7-2ubuntu0.1 \
+        libharfbuzz-dev=1.7.2-1ubuntu1 \
+        libjpeg-dev=8c-2ubuntu8 \
+        libpng-dev=1.6.34-1ubuntu0.18.04.2 \
+        libtiff5-dev=4.0.9-5ubuntu0.10 \
+        pandoc=1.19.2.4~dfsg-1build4 \
+        pandoc-citeproc=0.10.5.1-1build4 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN Rscript -e 'remotes::install_version("MuMIn", "1.48.4")' \
+    && Rscript -e 'remotes::install_version("countrycode", "1.6.0")' \
+    && Rscript -e 'remotes::install_version("dplyr", "1.1.4")' \
+    && Rscript -e 'remotes::install_version("flextable", "0.9.6")' \
+    && Rscript -e 'remotes::install_version("ggplot2", "3.5.1")' \
+    && Rscript -e 'remotes::install_version("ggridges", "0.5.6")' \
+    && Rscript -e 'remotes::install_version("lme4", "1.1-35.5")' \
+    && Rscript -e 'remotes::install_version("maps", "3.4.2")' \
+    && Rscript -e 'remotes::install_version("markdown", "1.13")' \
+    && Rscript -e 'remotes::install_version("papaja", "0.1.2")' \
+    && Rscript -e 'remotes::install_version("parameters", "0.22.1")' \
+    && Rscript -e 'remotes::install_version("performance", "0.12.2")' \
+    && Rscript -e 'remotes::install_version("psych", "2.4.6.26")' \
+    && Rscript -e 'remotes::install_version("rio", "1.2.2")' \
+    && Rscript -e 'remotes::install_version("rmarkdown", "2.28")' \
+    && Rscript -e 'remotes::install_version("tidyverse", "2.0.0")' \
+    && Rscript -e 'remotes::install_version("uaparserjs", "0.3.5")' \
+    && Rscript -e 'remotes::install_version("viridis", "0.6.5")'
