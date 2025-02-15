@@ -453,6 +453,18 @@ print_credit_roles(contributors_table = final_tenzing,
 
 
 ```{r}
+# clean up column names and such
+final_tenzing <- 
+  final_tenzing %>% 
+  rename(`Affiliation 1` = `Primary Uni`, 
+         `Affiliation 2` = `Second Uni`,
+         `Affiliation 3` = `Third Uni`) %>%
+  select(`Order in publication`:`Email address`, 
+         `Affiliation 1`, `Affiliation 2`,
+         `Affiliation 3`, `Corresponding author?`,
+         Funding)
+
+
 writeLines(print_yaml(contributors_table = final_tenzing), 
            con = "author_yaml.txt")
 
