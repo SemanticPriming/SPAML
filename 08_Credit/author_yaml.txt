@@ -13,7 +13,11 @@ author:
       - Resources
       - Software
       - Supervision
+      - Validation
       - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+      - .na.character
     corresponding: yes
     email: ebuchanan@harrisburgu.edu
     address: Enter postal address here
@@ -21,61 +25,63 @@ author:
     name: Kelly Cuccolo
     affiliation: '2'
     role:
-      - Formal analysis
-      - Methodology
+      - Project administration
       - Supervision
+      - Writing - review & editing
     corresponding: no
     email: cuccolokm@gmail.com
   Tom Heyman:
     name: Tom Heyman
     affiliation: '3'
     role:
+      - Conceptualization
       - Data curation
-      - Formal analysis
+      - Methodology
       - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: t.d.p.heyman@fsw.leidenuniv.nl
   Niels van Berkel:
     name: Niels van Berkel
     affiliation: '4'
     role:
-      - Data curation
-      - Formal analysis
-      - Investigation
-      - Supervision
+      - Methodology
+      - Project administration
+      - Software
+      - Writing - review & editing
     corresponding: no
     email: nielsvanberkel@cs.aau.dk
   Nicholas A. Coles:
     name: Nicholas A. Coles
     affiliation: '5'
     role:
-      - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: ncoles797@gmail.com
   Aishwarya Iyer:
     name: Aishwarya Iyer
     affiliation: '6'
     role:
-      - Formal analysis
-      - Supervision
+      - Project administration
+      - Writing - review & editing
     corresponding: no
     email: aishwarya.iyer@res.christuniversity.in
   Kim Peters:
     name: Kim Peters
     affiliation: '7'
     role:
-      - Formal analysis
-      - Supervision
+      - Project administration
+      - Writing - review & editing
     corresponding: no
     email: k.o.peters2@exeter.ac.uk
-  Anna E. van 't Veer:
-    name: Anna E. van 't Veer
+  A. E. van 't Veer:
+    name: A. E. van 't Veer
     affiliation: '3'
     role:
-      - Formal analysis
-      - Supervision
+      - Project administration
+      - Writing - review & editing
     corresponding: no
     email: a.e.van.t.veer@fsw.leidenuniv.nl
   Maria Montefinese:
@@ -83,10 +89,11 @@ author:
     affiliation: '8'
     role:
       - Conceptualization
-      - Data curation
-      - Funding acquisition
-      - Software
-      - Supervision
+      - Investigation
+      - Methodology
+      - Resources
+      - Writing - original draft
+      - Writing - review & editing
     corresponding: no
     email: maria.montefinese@gmail.com
   Nicholas P. Maxwell:
@@ -94,2597 +101,2610 @@ author:
     affiliation: '9'
     role:
       - Conceptualization
-      - Data curation
-      - Supervision
+      - Investigation
+      - Methodology
+      - Writing - review & editing
     corresponding: no
     email: nicholas.maxwell@msutexas.edu
   Jack E. Taylor:
     name: Jack E. Taylor
     affiliation: '10'
     role:
-      - Data curation
-      - Software
-      - Supervision
+      - Conceptualization
+      - Methodology
+      - Writing - original draft
+      - Writing - review & editing
     corresponding: no
     email: Taylor@psych.uni-frankfurt.de
   Kathrene  D. Valentine:
     name: Kathrene  D. Valentine
     affiliation: '11,12'
     role:
-      - Data curation
-      - Software
-      - Supervision
+      - Conceptualization
+      - Methodology
+      - Writing - original draft
+      - Writing - review & editing
     corresponding: no
     email: kvalentine2@mgh.harvard.edu
   Patrícia Arriaga:
     name: Patrícia Arriaga
     affiliation: '13'
     role:
-      - Conceptualization
       - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: patricia.arriaga@iscte-iul.pt
   Krystian Barzykowski:
     name: Krystian Barzykowski
     affiliation: '14'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Methodology
+      - Investigation
+      - Resources
       - Supervision
+      - Writing - review & editing
     corresponding: no
     email: krystian.barzykowski@uj.edu.pl
   Leanne Boucher:
     name: Leanne Boucher
     affiliation: '15'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Methodology
+      - Investigation
+      - Resources
       - Supervision
+      - Writing - review & editing
     corresponding: no
     email: lb1079@nova.edu
   W. M. Collins:
     name: W. M. Collins
     affiliation: '15'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Methodology
+      - Investigation
+      - Resources
       - Supervision
+      - Writing - review & editing
     corresponding: no
     email: wc292@nova.edu
   David C. Vaidis:
     name: David C. Vaidis
     affiliation: '16,17'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Methodology
+      - Investigation
+      - Resources
       - Supervision
+      - Writing - review & editing
     corresponding: no
     email: david.vaidis@univ-tlse2.fr
   Balazs Aczel:
     name: Balazs Aczel
     affiliation: '18'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: balazs.aczel@gmail.com
   Ali H. Al-Hoorie:
     name: Ali H. Al-Hoorie
     affiliation: '19'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: hoorie_a@rcjy.edu.sa
   Ettore Ambrosini:
     name: Ettore Ambrosini
     affiliation: '8'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ettore.ambrosini@unipd.it
   Théo Besson:
     name: Théo Besson
     affiliation: '17'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: theo.besson@u-paris.fr
   Debora I. Burin:
     name: Debora I. Burin
     affiliation: '20,21'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: dburin@psi.uba.ar
   Muhammad M. Butt:
     name: Muhammad M. Butt
     affiliation: '22'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: mussaffa@gmail.com
   A. J. Benjamin Clarke:
     name: A. J. Benjamin Clarke
     affiliation: '23'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: "ajb.clarke@gmail.com\r\n "
   Yalda  Daryani:
     name: Yalda  Daryani
     affiliation: '24'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: yaldadaryani@gmail.com 
   Dina  A. S. El-Dakhs :
     name: Dina  A. S. El-Dakhs 
     affiliation: '25'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ddakhs@psu.edu.sa
   Mahmoud M. Elsherif:
     name: Mahmoud M. Elsherif
     affiliation: '26,27'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: mahmoud.medhat.elsherif@gmail.com
   Maria Fernández-López:
     name: Maria Fernández-López
     affiliation: '28'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: maria.fernandez@uv.es
-  Paulo R. d. S. Ferreira:
-    name: Paulo R. d. S. Ferreira
+  Paulo R. S. Ferreira:
+    name: Paulo R. S. Ferreira
     affiliation: '29'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: paulorobertosantosferreira@gmail.com
   Raquel M. K. Freitag:
     name: Raquel M. K. Freitag
     affiliation: '30'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: rkofreitag@academico.ufs.br
   Carolina A. Gattei:
     name: Carolina A. Gattei
     affiliation: '20,31'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: carogattei@utdt.edu
   Hendrik Godbersen:
     name: Hendrik Godbersen
     affiliation: '32'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: hendrik.godbersen@fom.de
   Philip A. Grim II:
     name: Philip A. Grim II
     affiliation: '1'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: pgrim@harrisburgu.edu
   Peter Halama:
     name: Peter Halama
     affiliation: '33'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: peter.halama@savba.sk
   Patrik Havan:
     name: Patrik Havan
     affiliation: '33'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: patrik.havan@savba.sk
   Natalia C. Irrazabal:
     name: Natalia C. Irrazabal
     affiliation: '21'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: nirrazabal@psi.uba.ar
   Chris Isloi:
     name: Chris Isloi
     affiliation: '34'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: barbu.chris@gmail.com
   Rebecca K. Iversen:
     name: Rebecca K. Iversen
     affiliation: '35'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: r.k.iversen@ifikk.uio.no
   Yoann Julliard:
     name: Yoann Julliard
     affiliation: '36,37'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
-    email: yoann.julliard@univ-grenoble-alpes.fr
+    email: yoannjulliard@protonmail.com
   Aslan Department of Psychology, IIzmir Katip Celebi University, Izmir, Türkiye:
     name: Aslan Department of Psychology, IIzmir Katip Celebi University, Izmir, Türkiye
     affiliation: '38,39'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: aslankaraaslan@gmail.com
   Michal Kohút:
     name: Michal Kohút
     affiliation: '40'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: michal.kohut@truni.sk
   Veronika Kohútová:
     name: Veronika Kohútová
     affiliation: '40'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: veronika.kohutova@truni.sk
   Julija Kos:
     name: Julija Kos
     affiliation: '41'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: julijaakos@gmail.com
   Alexandra I. Kosachenko:
     name: Alexandra I. Kosachenko
     affiliation: '42'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: alleshch7@gmail.com
   Tiago J. S. d. Lima:
     name: Tiago J. S. d. Lima
     affiliation: '43'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: tiago.lima@unb.br
   Matthew HC Mak:
     name: Matthew HC Mak
     affiliation: '44'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: matthew.mak@warwick.ac.uk
   Christina  Manouilidou:
     name: Christina  Manouilidou
     affiliation: '41'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: Christina.Manouilidou@ff.uni-lj.si
   Leonardo A. Marciaga:
     name: Leonardo A. Marciaga
     affiliation: '45'
     role:
-      - Project administration
-      - Resources
-      - Supervision
+      - Validation
+      - Visualization
+      - Writing - review & editing
     corresponding: no
     email: leonardomarciaga@gmail.com
   Xiaolin M. Melinna:
     name: Xiaolin M. Melinna
     affiliation: '46'
     role:
-      - Formal analysis
-      - Funding acquisition
-      - Supervision
+      - Project administration
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: melinna@live.cn
   Jacob F. Miranda:
     name: Jacob F. Miranda
     affiliation: '47'
     role:
-      - Conceptualization
-      - Formal analysis
-      - Supervision
+      - Investigation
+      - Project administration
+      - Writing - review & editing
     corresponding: no
     email: jacob.miranda@csueastbay.edu
   Coby Morvinski:
     name: Coby Morvinski
     affiliation: '48'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: cobym@bgu.ac.il
   Aishwarya  Muppoor:
     name: Aishwarya  Muppoor
     affiliation: '15'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: aishwaryamuppoor22@gmail.com
-  F. E. Müjdeci:
-    name: F. E. Müjdeci
+  F. Elif Müjdeci:
+    name: F. Elif Müjdeci
     affiliation: '49'
     role:
-      - Funding acquisition
-      - Project administration
-      - Supervision
+      - Resources
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: mujdecifatmaelif@gmail.com
   Yngwie A. Nielsen:
     name: Yngwie A. Nielsen
     affiliation: '50'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: yan@cc.au.dk
   Juan C. Oliveros:
     name: Juan C. Oliveros
     affiliation: '51'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: joliveros@ucm.cl
   Jaš Onič:
     name: Jaš Onič
     affiliation: '41'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: onicjas@gmail.com
   Marietta  Papadatou-Pastou:
     name: Marietta  Papadatou-Pastou
     affiliation: '52'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: marietta.papadatou-pastou@seh.oxon.org
   Ishani Patel:
     name: Ishani Patel
     affiliation: '15'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ishanipatel03@gmail.com
   Zoran Pavlović:
     name: Zoran Pavlović
     affiliation: '53'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: zoran.pavlovic@f.bg.ac.rs
   Blaž Pažon:
     name: Blaž Pažon
     affiliation: '41'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: blaz.pazon@gmail.com
   Gerit Pfuhl:
     name: Gerit Pfuhl
     affiliation: '54,55'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: gerit.pfuhl@ntnu.no
   Ekaterina Pronizius:
     name: Ekaterina Pronizius
     affiliation: '56'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ekaterina.pronizius@univie.ac.at
   Timo B. Roettger:
     name: Timo B. Roettger
     affiliation: '35'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: timo.roettger@iln.uio.no
   Camilo R. Ronderos:
     name: Camilo R. Ronderos
     affiliation: '35'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: camilorr@uio.no
   Susana Ruiz-Fernandez:
     name: Susana Ruiz-Fernandez
     affiliation: '57'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ruizfern@b-tu.de
   Magdalena Senderecka:
     name: Magdalena Senderecka
     affiliation: '14'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: magdalena.senderecka@uj.edu.pl
   Çağlar Solak:
     name: Çağlar Solak
     affiliation: '58'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: solakcaglar@gmail.com
   Anna Stückler:
     name: Anna Stückler
     affiliation: '50'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: asj@psy.au.dk
   Raluca D. Szekely-Copîndean:
     name: Raluca D. Szekely-Copîndean
     affiliation: '59,60'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ralucaszekely@gmail.com
   Analí R. Taboh:
     name: Analí R. Taboh
     affiliation: '20,31'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: anali.taboh@conicet.gov.ar
   Rémi Thériault:
     name: Rémi Thériault
     affiliation: '61'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: theriault.remi@courrier.uqam.ca
   Ulrich S. Tran:
     name: Ulrich S. Tran
     affiliation: '56'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ulrich.tran@univie.ac.at
   Fabio Trecca:
     name: Fabio Trecca
     affiliation: '50'
     role:
-      - Conceptualization
-      - Supervision
+      - Funding acquisition
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: fabio@cc.au.dk
   José Luis Ulloa:
     name: José Luis Ulloa
     affiliation: '62'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: joseluisulloafulgeri@gmail.com
   Marton A. Varga:
     name: Marton A. Varga
     affiliation: '18'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: martonaronvarga@gmail.com
   Steven Verheyen:
     name: Steven Verheyen
     affiliation: '63'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: verheyen@essb.eur.nl
   Tijana Vesić Pavlović:
     name: Tijana Vesić Pavlović
     affiliation: '53'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: tvesic@mas.bg.ac.rs
   Giada Viviani:
     name: Giada Viviani
     affiliation: '64'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: giada.viviani@unipd.it
   Nan Wang:
     name: Nan Wang
     affiliation: '65'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: nanwanglin@gmail.com
   Kristyna Zivna:
     name: Kristyna Zivna
     affiliation: '66'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: kristyna.zivna@oushi.upol.cz
   Chen C. Yun:
     name: Chen C. Yun
     affiliation: '67'
     role:
-      - Conceptualization
-      - Funding acquisition
-      - Supervision
+      - Investigation
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ccyjuncat@gmail.com
   Oliver J. Clark:
     name: Oliver J. Clark
     affiliation: '68'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: O.clark@mmu.ac.uk
   Oguz A. Acar:
     name: Oguz A. Acar
     affiliation: '69'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: oguz.acar@kcl.ac.uk
   Matúš Adamkovič:
     name: Matúš Adamkovič
     affiliation: '33,70,71'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: matho.adamkovic@gmail.com
   Giulia Agnoletti:
     name: Giulia Agnoletti
     affiliation: '31,72'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: giulia.agnoletti@outlook.com
   Atakan M. Akil:
     name: Atakan M. Akil
     affiliation: '18,73'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: akil.atakan@pte.hu
   Zainab Alsuhaibani:
     name: Zainab Alsuhaibani
     affiliation: '74'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: zaalsuhaibani@imamu.edu.sa
   Simona Amenta:
     name: Simona Amenta
     affiliation: '75'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: simona.amenta@unimib.it
   Olga A. Ananyeva:
     name: Olga A. Ananyeva
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: oananyeva@hse.ru
   Michael Andreychik:
     name: Michael Andreychik
     affiliation: '77'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mandreychik@fairfield.edu
   Bernhard  Angele:
     name: Bernhard  Angele
     affiliation: '78,79'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: bangele1@nebrija.es
   Danna  C. Arias Quiñones:
     name: Danna  C. Arias Quiñones
     affiliation: '80'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dariasqu@fandm.edu
   Nwadiogo C. Arinze:
     name: Nwadiogo C. Arinze
     affiliation: '81'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: arinzenwadiogo@gmail.com
   Adrian D. Askelund:
     name: Adrian D. Askelund
     affiliation: '82,83'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: adrian.askelund@gmail.com
   Bradley J. Baker:
     name: Bradley J. Baker
     affiliation: '84'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: bradley.baker@temple.edu
   Ernest Baskin:
     name: Ernest Baskin
     affiliation: '85'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ebaskin@sju.edu
   Luisa  Batalha:
     name: Luisa  Batalha
     affiliation: '86'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: luisa.batalha@acu.edu.au
   Carlota Batres:
     name: Carlota Batres
     affiliation: '80'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: cbatres@fandm.edu
   Maria S. Beato:
     name: Maria S. Beato
     affiliation: '87'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: msol@usal.es
   Manuel Becker:
     name: Manuel Becker
     affiliation: '88'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: manuel.becker@uni-marburg.de
   Maja Becker:
     name: Maja Becker
     affiliation: '16'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mbecker@univ-tlse2.fr
   Maciej Behnke:
     name: Maciej Behnke
     affiliation: '89'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: macbehnke@gmail.com
   Christophe Blaison:
     name: Christophe Blaison
     affiliation: '17'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: christophe.blaison@u-paris.fr
   Anna M. Borghi:
     name: Anna M. Borghi
     affiliation: '90,91'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: anna.borghi@uniroma1.it
   Eduard Brandstätter:
     name: Eduard Brandstätter
     affiliation: '92'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: eduard.brandstaetter@jku.at
   Jacek Buczny:
     name: Jacek Buczny
     affiliation: '93'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: jbuczny@gmail.com
   Nesrin Budak:
     name: Nesrin Budak
     affiliation: '94'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: nesrin.budak@metu.edu.tr
   Álvaro  Cabana:
     name: Álvaro  Cabana
     affiliation: '95'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: acabana@psico.edu.uy
   Zhenguang G. Cai:
     name: Zhenguang G. Cai
     affiliation: '65'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: zhenguangcai@cuhk.edu.hk
   Enrique C. Canessa:
     name: Enrique C. Canessa
     affiliation: '96'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ecanessa@uai.cl
   Ignacio Castillejo:
     name: Ignacio Castillejo
     affiliation: '97'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: jignaciocastillejo@gmail.com
   Müge Cavdan:
     name: Müge Cavdan
     affiliation: '98'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: Muege.Cavdan@psychol.uni-giessen.de
   Luca Cecchetti:
     name: Luca Cecchetti
     affiliation: '99'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: luca.cecchetti@imtlucca.it
   Sergio E. Chaigneau:
     name: Sergio E. Chaigneau
     affiliation: '96'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sergio.chaigneau@uai.cl
   Feria X. W. Chang:
     name: Feria X. W. Chang
     affiliation: '100'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
-    email: feria@nus.edu.sg
+    email: feriachangxiuwen@gmail.com
   Christopher  R. Chartier:
     name: Christopher  R. Chartier
     affiliation: '101'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: cchartie@ashland.edu
   Sau-Chin Chen:
     name: Sau-Chin Chen
     affiliation: '102'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: pmsp96@gmail.com
   Elena Cherniaeva:
     name: Elena Cherniaeva
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: chernyaeva.ela@gmail.com
   Morten H. Christiansen:
     name: Morten H. Christiansen
     affiliation: '50,103'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: morten@cc.au.dk
   Hu Chuan-Peng:
     name: Hu Chuan-Peng
     affiliation: '67'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: hcp4715@hotmail.com
   Patrycja Chwiłkowska:
     name: Patrycja Chwiłkowska
     affiliation: '89'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: patchw1@amu.edu.pl
   Montserrat Comesaña:
     name: Montserrat Comesaña
     affiliation: '104'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mvila@psi.uminho.pt
   Chin Wen Cong:
     name: Chin Wen Cong
-    affiliation: '2'
+    affiliation: '105'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: chinwencong@outlook.com
   Casey Cowan:
     name: Casey Cowan
-    affiliation: '105'
+    affiliation: '106'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: casey.cowan.cc@gmail.com
   Stéphane D. Dandeneau:
     name: Stéphane D. Dandeneau
-    affiliation: '106'
+    affiliation: '107'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sdandeneau@mun.ca
   Oana A. David:
     name: Oana A. David
     affiliation: '60'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: Oana.David@ubbcluj.ro
   William E. Davis:
     name: William E. Davis
-    affiliation: '107'
+    affiliation: '108'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: davisw4@wittenberg.edu
   Elif G. Demirag Burak:
     name: Elif G. Demirag Burak
-    affiliation: '108'
+    affiliation: '109'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: eburak@ou.edu
   Barnaby J. W. Dixson:
     name: Barnaby J. W. Dixson
-    affiliation: '109,110'
+    affiliation: '110,111'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: bdixson@usc.edu.au
   Hongfei Du:
     name: Hongfei Du
-    affiliation: '111,112'
+    affiliation: '112,113'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dhfpsy@gmail.com
   Rod Duclos:
     name: Rod Duclos
-    affiliation: '113'
+    affiliation: '114'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: rduclos@ivey.ca
   Wouter Duyck:
     name: Wouter Duyck
-    affiliation: '114'
+    affiliation: '115'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: wouter.duyck@ugent.be
   Liudmila A. Efimova:
     name: Liudmila A. Efimova
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: laefimova@edu.hse.ru
   Ciara Egan:
     name: Ciara Egan
-    affiliation: '105'
+    affiliation: '106'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ciara.egan@universityofgalway.ie
   Vanessa Era:
     name: Vanessa Era
-    affiliation: '115,116'
+    affiliation: '90,116'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: vanessa.era@uniroma1.it
   Thomas  R. Evans:
     name: Thomas  R. Evans
     affiliation: '117'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: thomas.evans@greenwich.ac.uk
   Anna Exner:
     name: Anna Exner
     affiliation: '118'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: anna.exner@posteo.de
   Gilad Feldman:
     name: Gilad Feldman
     affiliation: '119'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: giladfel@gmail.com
   Katharina Fellnhofer:
     name: Katharina Fellnhofer
-    affiliation: '120'
+    affiliation: '120,121'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: kfellnhofer@ethz.ch
   Chiara  Fini:
     name: Chiara  Fini
     affiliation: '90'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: chiara.fini@uniroma1.it
   Sarah E. Fisher:
     name: Sarah E. Fisher
     affiliation: '101'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sfish10art@yahoo.com
   Heather D. Flowe:
     name: Heather D. Flowe
     affiliation: '26'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: hflowe@gmail.com
   Patricia Garrido-Vásquez:
     name: Patricia Garrido-Vásquez
-    affiliation: '121'
+    affiliation: '122'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: patricia.garrido@udec.cl
   Daniele Gatti:
     name: Daniele Gatti
-    affiliation: '122'
+    affiliation: '123'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: daniele.gatti@unipv.it
   Jason Geller :
     name: Jason Geller 
-    affiliation: '123'
+    affiliation: '124'
     role:
-      - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: Drjasongeller@gmail.com
   Vaitsa Giannouli:
     name: Vaitsa Giannouli
-    affiliation: '124'
+    affiliation: '125'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: giannouliv@hotmail.com
   Anna S. Gorokhova:
     name: Anna S. Gorokhova
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: anyuta.post@gmail.com
   Lindsay M. Griener:
     name: Lindsay M. Griener
-    affiliation: '125'
+    affiliation: '126'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ccpling@ualberta.ca
   Dmitry Grigoryev:
     name: Dmitry Grigoryev
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dgrigoryev@hse.ru
   Igor Grossmann:
     name: Igor Grossmann
-    affiliation: '126'
+    affiliation: '127'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: igrossma@uwaterloo.ca
   Mohammadhesam Hajighasemi:
     name: Mohammadhesam Hajighasemi
-    affiliation: '127'
+    affiliation: '128'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mohammadhesam.hajighasemi@essec.edu
   Giacomo Handjaras:
     name: Giacomo Handjaras
     affiliation: '99'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: giacomo.handjaras@imtlucca.it
   Cathy Hauspie:
     name: Cathy Hauspie
-    affiliation: '114'
+    affiliation: '115'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: cathy.hauspie@ugent.be
   Zhiran He:
     name: Zhiran He
-    affiliation: '128'
+    affiliation: '129'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: z18839126783@163.com
   Renata M. Heilman:
     name: Renata M. Heilman
     affiliation: '60'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: renataheilman@psychology.ro 
   Amirmahdi Heydari:
     name: Amirmahdi Heydari
     affiliation: '24'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: amirmahdiheidari2020@gmail.com
   Alanna M. Hine:
     name: Alanna M. Hine
-    affiliation: '105'
+    affiliation: '106'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: alannahine@gmail.com
   Karlijn Hoyer:
     name: Karlijn Hoyer
-    affiliation: '129'
+    affiliation: '130'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: Karlijnhoyer@gmail.com
   Weronika Hryniszak:
     name: Weronika Hryniszak
-    affiliation: '14,130'
+    affiliation: '14'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: weronika.hryniszak@doctoral.uj.edu.pl
   Janet H.-w. Hsiao:
     name: Janet H.-w. Hsiao
     affiliation: '131'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: jhhsiao@ust.hk
   Guanxiong Huang:
     name: Guanxiong Huang
     affiliation: '132'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: g.huang@cityu.edu.hk
   Keiko Ihaya:
     name: Keiko Ihaya
     affiliation: '133'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ihaya@fit.ac.jp
   Ewa Ilczuk:
     name: Ewa Ilczuk
     affiliation: '14'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ewa.ilczuk@doctoral.uj.edu.pl
   Tatsunori Ishii:
     name: Tatsunori Ishii
     affiliation: '134'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: t_ishii1108@yahoo.co.jp
   Andrei Dumbravă:
     name: Andrei Dumbravă
     affiliation: '135,136'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: andrei.dumbrava@uaic.ro
   Katarzyna Jankowiak:
     name: Katarzyna Jankowiak
     affiliation: '89'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: katarzyna.jankowiak@amu.edu.pl 
   Xiaoming Jiang:
     name: Xiaoming Jiang
     affiliation: '137'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: xiaoming.jiang@shisu.edu.cn
   David C. Johnson:
     name: David C. Johnson
     affiliation: '138'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: davejohnson7@mac.com
   Rafał Jończyk:
     name: Rafał Jończyk
     affiliation: '89'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: rafal.jonczyk@amu.edu.pl
   Juhani Järvikivi:
     name: Juhani Järvikivi
-    affiliation: '125'
+    affiliation: '126'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: jarvikivi@ualberta.ca
   Laura Kaczer:
     name: Laura Kaczer
     affiliation: '20'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: laurakaczer@gmail.com
   Kevin  L. Kamermans:
     name: Kevin  L. Kamermans
     affiliation: '2'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: klkamermans@gmail.com
   Johannes A. Karl:
     name: Johannes A. Karl
     affiliation: '139'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
-    email: johannes.karl@dcu.ie
+    email: johannes.a.karl@gmail.com
   Alexander Karner:
     name: Alexander Karner
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: alexander.karner@univie.ac.at
   Pavol Kačmár:
     name: Pavol Kačmár
     affiliation: '140'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: pavol.kacmar@upjs.sk
   Jacob J. Keech:
     name: Jacob J. Keech
     affiliation: '141'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: j.keech@griffith.edu.au
   M. Justin Kim:
     name: M. Justin Kim
     affiliation: '142,143'
     role:
-      - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: minuekim@skku.edu
   Max Korbmacher:
     name: Max Korbmacher
     affiliation: '144,145'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: Max.korbmacher@hvl.no
   Kathrin Kostorz:
     name: Kathrin Kostorz
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: kathrin.kostorz@univie.ac.at
   Marta Kowal:
     name: Marta Kowal
     affiliation: '146'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: marta7kowal@gmail.com
   Tomas Kratochvil:
     name: Tomas Kratochvil
     affiliation: '147'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: kratochvilt@mail.muni.cz
   Yoshihiko Kunisato:
     name: Yoshihiko Kunisato
     affiliation: '148'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ykunisato@psy.senshu-u.ac.jp
   Anna O. Kuzminska:
     name: Anna O. Kuzminska
     affiliation: '149'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: a.kuzminska@uw.edu.pl
   Lívia Körtvélyessy:
     name: Lívia Körtvélyessy
     affiliation: '140'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: livia.kortvelyessy@upjs.sk
   Fatma E. Köse:
     name: Fatma E. Köse
     affiliation: '150,151'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ebruates.ea@gmail.com
   Massimo Köster:
     name: Massimo Köster
     affiliation: '88'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: massimo.koester@uni-marburg.de
   Magdalena Kękuś:
     name: Magdalena Kękuś
     affiliation: '152'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mkekus@swps.edu.pl
   Melanie Labusch:
     name: Melanie Labusch
     affiliation: '28,153'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: melanie.labusch@uv.es
   Claus Lamm:
     name: Claus Lamm
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: claus.lamm@univie.ac.at
   Chaak Ming Lau:
     name: Chaak Ming Lau
     affiliation: '154'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: lchaakming@eduhk.hk
   Julieta Laurino:
     name: Julieta Laurino
     affiliation: '20'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: julilaurino@gmail.com
   Wilbert Law:
     name: Wilbert Law
     affiliation: '154'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: wlaw@eduhk.hk
   Giada Lettieri:
     name: Giada Lettieri
     affiliation: '99'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: giada.lettieri@imtlucca.it
   Carmel A. Levitan:
     name: Carmel A. Levitan
     affiliation: '155'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: levitan@oxy.edu
   Jackson G. Lu:
     name: Jackson G. Lu
     affiliation: '156'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: lu18@mit.edu
   Sarah E. MacPherson:
     name: Sarah E. MacPherson
     affiliation: '157'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sarah.macpherson@ed.ac.uk
   Klara Malinakova:
     name: Klara Malinakova
     affiliation: '66'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: klara.malinakova@oushi.upol.cz
   Diego Manriquez-Robles:
     name: Diego Manriquez-Robles
     affiliation: '158'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dmanriquezrobles@gmail.com
   Nicolás Marchant:
     name: Nicolás Marchant
     affiliation: '96'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: nicolas.marchant@edu.uai.cl
   Marco Marelli:
     name: Marco Marelli
     affiliation: '75'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: marco.marelli@unimib.it
   Martín Martínez:
     name: Martín Martínez
     affiliation: '159'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: tininmartinez@gmail.com
   Molly F. Matthews:
     name: Molly F. Matthews
-    affiliation: '126'
+    affiliation: '127'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: m8matthe@uwaterloo.ca
   Alan D. A. Mattiassi:
     name: Alan D. A. Mattiassi
     affiliation: '160'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: alan.mattiassi@gmail.com
   Josefina Mattoli-Sánchez:
     name: Josefina Mattoli-Sánchez
     affiliation: '161'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: josefina.mattoli_s@mail.udp.cl
   Claudia  Mazzuca:
     name: Claudia  Mazzuca
     affiliation: '90'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: claudia.mazzuca@uniroma1.it
   David P. McGovern:
     name: David P. McGovern
     affiliation: '139'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: david.p.mcgovern@dcu.ie
   Zdenek Meier:
     name: Zdenek Meier
     affiliation: '66'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: zdenek.meier@oushi.upol.cz
   Filip Melinscak:
     name: Filip Melinscak
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: filip.melinscak@univie.ac.at
   Michal Misiak:
     name: Michal Misiak
     affiliation: '146,162'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: michal.misiak@uwr.edu.pl
   Luis C. P. Monteiro:
     name: Luis C. P. Monteiro
     affiliation: '163'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: luis.monteiro@icb.ufpa.br
   David Moreau:
     name: David Moreau
     affiliation: '164'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: d.moreau@auckland.ac.nz
   Sebastian Moreno:
     name: Sebastian Moreno
     affiliation: '96'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sebastian.moreno.araya@gmail.com
   Kate  E. Mulgrew:
     name: Kate  E. Mulgrew
-    affiliation: '109'
+    affiliation: '110'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: kmulgrew@usc.edu.au
   Dominique Muller:
     name: Dominique Muller
     affiliation: '36,37,165'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dominique.muller@univ-grenoble-alpes.fr
   Tamás Nagy:
     name: Tamás Nagy
     affiliation: '18'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: nagy.tamas@ppk.elte.hu
   Marcin Naranowicz:
     name: Marcin Naranowicz
     affiliation: '89'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: marcin.naranowicz@amu.edu.pl
   Izuchukwu L. G. Ndukaihe:
     name: Izuchukwu L. G. Ndukaihe
     affiliation: '81'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ndukaihe.izuchukwu@funai.edu.ng
   Maital Neta:
     name: Maital Neta
     affiliation: '166'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: mneta2@unl.edu
   Lukas Novak:
     name: Lukas Novak
     affiliation: '66'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: lukas.novak@oushi.upol.cz
   Chisom E. Ogbonnaya:
     name: Chisom E. Ogbonnaya
     affiliation: '81'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ogbonnaya.chisom@yahoo.com
   Jessica Jee Won Paek:
     name: Jessica Jee Won Paek
     affiliation: '167'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: jesspaek@iu.edu
   Aspasia E. Paltoglou:
     name: Aspasia E. Paltoglou
     affiliation: '68,168'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: A.Paltoglou@mmu.ac.uk
   Francisco J. Parada:
     name: Francisco J. Parada
     affiliation: '161'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: francisco.parada@udp.cl
   Adam J. Parker:
     name: Adam J. Parker
     affiliation: '169'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: adam_parker@ucl.ac.uk
   Mariola Paruzel-Czachura:
     name: Mariola Paruzel-Czachura
     affiliation: '170,171'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mariola.paruzel-czachura@us.edu.pl
   Yuri G. Pavlov:
     name: Yuri G. Pavlov
     affiliation: '172'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: pavlovug@gmail.com
   Saeed  Paydarfard:
     name: Saeed  Paydarfard
     affiliation: '173'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: saeedpaydarfard@gmail.com
   Dominik Pegler:
     name: Dominik Pegler
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dominik.pegler@univie.ac.at
   Mehmet Peker:
     name: Mehmet Peker
     affiliation: '39'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mehmet.peker@ege.edu.tr
   Manuel Perea:
     name: Manuel Perea
     affiliation: '28,153'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: manuel.perea@uv.es
   Stefan Pfattheicher:
     name: Stefan Pfattheicher
     affiliation: '50'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sp@psy.au.dk
   John Protzko:
     name: John Protzko
     affiliation: '174'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: protzko@gmail.com
   Irina S. Prusova:
     name: Irina S. Prusova
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: iprusova@hse.ru
   Katarzyna Pypno-Blajda:
     name: Katarzyna Pypno-Blajda
     affiliation: '170'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: katarzyna.pypno@us.edu.pl
   Zhuang Qiu:
     name: Zhuang Qiu
     affiliation: '65,175'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: zhuangharveyqiu@gmail.com
   Ulf-Dietrich Reips:
     name: Ulf-Dietrich Reips
     affiliation: '176'
     role:
-      - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: reips@uni-konstanz.de
   Gianni Ribeiro:
     name: Gianni Ribeiro
     affiliation: '177,178'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: gianni.ribeiro@unisq.edu.au
   Luca Rinaldi:
     name: Luca Rinaldi
-    affiliation: '122,179'
+    affiliation: '123,179'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: luca.rinaldi@unipv.it
   S. Craig Roberts:
     name: S. Craig Roberts
     affiliation: '146,180'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: craig.roberts@stir.ac.uk
   Tanja C. Roembke:
     name: Tanja C. Roembke
     affiliation: '181'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: tanja.roembke@psych.rwth-aachen.de
   Marina O. Romanova:
     name: Marina O. Romanova
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: marina.romanova.msk@gmail.com
   Robert M. Ross:
     name: Robert M. Ross
     affiliation: '182'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: robross46@gmail.com
   Jan P. Röer:
     name: Jan P. Röer
     affiliation: '183'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: jan.roeer@uni-wh.de
   Filiz Rızaoğlu:
     name: Filiz Rızaoğlu
     affiliation: '184'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: frizaoglu@pau.edu.tr
   Toni T. Saari:
     name: Toni T. Saari
     affiliation: '185'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: toni.t.saari@gmail.com
   Erika Sampaolo:
     name: Erika Sampaolo
     affiliation: '99'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: erika.sampaolo@imtlucca.it
   Anabela Caetano Santos:
     name: Anabela Caetano Santos
     affiliation: '13'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: anabela.caetano.s@gmail.com
   F. Çağlar Sarıçiçek:
     name: F. Çağlar Sarıçiçek
     affiliation: '186'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: caglarsaricicek@hotmail.com
   Kyoshiro Sasaki:
     name: Kyoshiro Sasaki
     affiliation: '187'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: kyoshiro0920@gmail.com
   Frank Scharnowski:
     name: Frank Scharnowski
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: frank.scharnowski@univie.ac.at
   Kathleen Schmidt:
     name: Kathleen Schmidt
     affiliation: '101'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: kschmi13@ashland.edu
   Amir Sepehri:
     name: Amir Sepehri
-    affiliation: '127'
+    affiliation: '128'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sepehri@essec.edu
   Halid O. Serçe:
     name: Halid O. Serçe
     affiliation: '188'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: halidoguz.serce@bahcesehir.edu.tr
   A. T. Sevincer:
     name: A. T. Sevincer
     affiliation: '189'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: timur.sevincer@leuphana.de
   Cynthia S. Q. Siew:
     name: Cynthia S. Q. Siew
     affiliation: '100'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: cynthia@nus.edu.sg
   Matilde E. Simonetti:
     name: Matilde E. Simonetti
     affiliation: '181'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: simonetti@psych.rwth-aachen.de
   Miroslav Sirota:
     name: Miroslav Sirota
     affiliation: '190'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: msirota@essex.ac.uk
   Agnieszka Sorokowska:
     name: Agnieszka Sorokowska
     affiliation: '146'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sorokowska@gmail.com
   Piotr Sorokowski:
     name: Piotr Sorokowski
     affiliation: '146'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sorokowskipiotr@yahoo.co.uk
   Ian D. Stephen:
     name: Ian D. Stephen
     affiliation: '78'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: stepheni@bournemouth.ac.uk
   Laura M. Stevens:
     name: Laura M. Stevens
     affiliation: '26'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: lms825@student.bham.ac.uk
   Suzanne L. K. Stewart:
     name: Suzanne L. K. Stewart
     affiliation: '191'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: s.stewart@chester.ac.uk
   David Steyrl:
     name: David Steyrl
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: david.steyrl@univie.ac.at
   Stefan Stieger:
     name: Stefan Stieger
     affiliation: '192'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: stefan.stieger@kl.ac.at
   Anna Studzinska:
     name: Anna Studzinska
     affiliation: '193'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: studzinna@gmail.com
   Mar Suarez:
     name: Mar Suarez
     affiliation: '87'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: marsuarez@usal.es
   Anna Szala:
     name: Anna Szala
     affiliation: '194,195'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: szala@oakland.edu
   Arnaud Szmalec:
     name: Arnaud Szmalec
-    affiliation: '114,196'
+    affiliation: '115,196'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: arnaud.szmalec@uclouvain.be
   Daniel Sznycer:
     name: Daniel Sznycer
     affiliation: '197'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: daniel.sznycer@okstate.edu
   Ewa Szumowska:
     name: Ewa Szumowska
     affiliation: '14,198'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ewa.szumowska@uj.edu.pl
   Sinem Söylemez:
     name: Sinem Söylemez
     affiliation: '58'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ssinemsoylemez@gmail.com
   Bahadır Söylemez:
     name: Bahadır Söylemez
     affiliation: '184'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: bsoylemez@pau.edu.tr
   Kaito Takashima:
     name: Kaito Takashima
     affiliation: '199'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: ktaaa331@gmail.com
   Christian K. Tamnes:
     name: Christian K. Tamnes
     affiliation: '35'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: c.k.tamnes@psykologi.uio.no
   Joel  C. R. Tan:
     name: Joel  C. R. Tan
     affiliation: '100'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: joeltancr@u.nus.edu
   Chengxiang Tang:
     name: Chengxiang Tang
     affiliation: '200'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: tang.chengxiang@gmail.com
   Peter  Tavel:
     name: Peter  Tavel
     affiliation: '66'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: peter.tavel@oushi.upol.cz
   Julian Tejada:
     name: Julian Tejada
     affiliation: '30'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: jtejada@academico.ufs.br
   Benjamin C. Thompson:
     name: Benjamin C. Thompson
     affiliation: '201'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: bcthompson5@crimson.ua.edu
   Jake  G. Tiernan:
     name: Jake  G. Tiernan
     affiliation: '139'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: jaketiernan0@gmail.com
   Vicente Torres-Muñoz:
     name: Vicente Torres-Muñoz
     affiliation: '62'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: vicentetomu@gmail.com
   Anna  K. Touloumakos:
     name: Anna  K. Touloumakos
     affiliation: '202'
     role:
-      - Conceptualization
-      - Supervision
-      - .na.character
-    corresponding: .na
+      - Investigation
+      - Writing - review & editing
+    corresponding: no
     email: annatouloumakos@gmail.com
   Bastien Trémolière:
     name: Bastien Trémolière
     affiliation: '16,203'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: bastien.tremoliere@univ-tlse2.fr
   Monika Tschense:
     name: Monika Tschense
     affiliation: '189'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: monika.tschense@leuphana.de
   Belgüzar N. Türkan:
     name: Belgüzar N. Türkan
     affiliation: '204'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: turkan.nilay@gmail.com
   Miguel A. Vadillo:
     name: Miguel A. Vadillo
     affiliation: '97'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: miguel.vadillo@uam.es
   Caterina Vannucci:
     name: Caterina Vannucci
     affiliation: '99'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: caterina.vannucci@imtlucca.it
   Michael E. W. Varnum:
     name: Michael E. W. Varnum
     affiliation: '205'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mvarnum@asu.edu
   Martin R. Vasilev:
     name: Martin R. Vasilev
     affiliation: '169'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: m.vasilev@ucl.ac.uk
   Leigh Ann Vaughn:
     name: Leigh Ann Vaughn
     affiliation: '206'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: Lvaughn@ithaca.edu
   Fanny Verkampt:
     name: Fanny Verkampt
     affiliation: '207'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: fanny.verkampt@univ-cotedazur.fr
   Liliana M. Villar:
     name: Liliana M. Villar
     affiliation: '174,208'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: Liliana.m.villar@my.ccsu.edu
   Sebastian Wallot:
     name: Sebastian Wallot
     affiliation: '189'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sebastian.wallot@leuphana.de
   Lijun Wang:
     name: Lijun Wang
     affiliation: '209'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: wanglijun239@163.com
   Ke Wang:
     name: Ke Wang
     affiliation: '210'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: wangk@darden.virginia.edu
   Glenn P. Williams:
     name: Glenn P. Williams
     affiliation: '211'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: glenn.williams@northumbria.ac.uk
   David Willinger:
     name: David Willinger
     affiliation: '192'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: david.willinger@kl.ac.at
   Kelly Wolfe:
     name: Kelly Wolfe
     affiliation: '157,212'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: k.wolfe@hw.ac.uk
   Alexandra S. Wormley:
     name: Alexandra S. Wormley
     affiliation: '205,213'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: awormley@umich.edu
   Yuki Yamada:
     name: Yuki Yamada
     affiliation: '199'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: yamadayuk@gmail.com
   Yunkai Yang:
     name: Yunkai Yang
-    affiliation: '128'
+    affiliation: '129'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: yykaiii@outlook.com
   YUWEI ZHOU:
     name: YUWEI ZHOU
     affiliation: '154'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: s1147972@s.eduhk.hk
   Mengfan Zhang:
     name: Mengfan Zhang
     affiliation: '56'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: mengfan.zhang@univie.ac.at
   Wang Zheng:
     name: Wang Zheng
     affiliation: '214'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: zhengwangpsy@163.com
   Yueyuan Zheng:
     name: Yueyuan Zheng
-    affiliation: '119'
+    affiliation: '131'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
-    email: mercuryzheng@connect.hku.hk
+    email: yyzheng@ust.hk
   Chenghao Zhou:
     name: Chenghao Zhou
     affiliation: '215'
     role:
-      - Funding acquisition
-      - Supervision
+      - Resources
+      - Writing - review & editing
     corresponding: no
     email: chenghao.zhou@nyu.edu
   Radka Zidkova:
     name: Radka Zidkova
     affiliation: '66'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: radka.zidkova@oushi.upol.cz.
   Nina  M. Zumbrunn:
     name: Nina  M. Zumbrunn
     affiliation: '139'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: nina.zumbrunn3@mail.dcu.ie
   Ogeday Çoker:
     name: Ogeday Çoker
     affiliation: '184'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ogedcoker@gmail.com
   Sami Çoksan:
     name: Sami Çoksan
-    affiliation: '113,216'
+    affiliation: '114,216'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: scoksan@uwo.ca
   Sezin Öner:
     name: Sezin Öner
     affiliation: '186'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sezin.oner@khas.edu.tr
   Asil A. Özdoğru:
     name: Asil A. Özdoğru
     affiliation: '217,218'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: asil.ozdogru@marmara.edu.tr
   Seda M. Şahin:
     name: Seda M. Şahin
     affiliation: '94'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: sahins@metu.edu.tr
   Dauren Kasanov:
     name: Dauren Kasanov
     affiliation: '42'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: dauren.kasa@gmail.com 
   Alexios Arvanitis:
     name: Alexios Arvanitis
     affiliation: '219'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: a.arvanitis@uoc.gr
   Cameron Brick:
     name: Cameron Brick
-    affiliation: '129'
+    affiliation: '130'
     role:
-      - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: c.brick@uva.nl
   Melissa F. Colloff:
     name: Melissa F. Colloff
     affiliation: '26'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: m.colloff@bham.ac.uk
   Albina Gallyamova:
     name: Albina Gallyamova
     affiliation: '76'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: albgallyamova@gmail.com
   Christopher Koch:
     name: Christopher Koch
     affiliation: '220'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ckoch@georgefox.edu
   Ivan Ropovik:
     name: Ivan Ropovik
     affiliation: '221,222'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: ivan.ropovik@gmail.com
-  Yucheng Zhang Zhang:
-    name: Yucheng Zhang Zhang
+  Yucheng C. Zhang:
+    name: Yucheng C. Zhang
     affiliation: '223'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: yucheng.eason.zhang@gmail.com
   Xingxing Zhou:
     name: Xingxing Zhou
     affiliation: '224'
     role:
-      - Conceptualization
-      - Supervision
+      - Investigation
+      - Writing - review & editing
     corresponding: no
     email: zhouxingxing@gdaas.cn
+  Sneh Patel:
+    name: Sneh Patel
+    affiliation: '15'
+    role:
+      - Investigation
+      - Resources
+      - Writing - review & editing
+    corresponding: no
+    email: snehusa1@gmail.com
   Jordan W. Suchow:
     name: Jordan W. Suchow
     affiliation: '225'
     role:
-      - Project administration
-      - Supervision
+      - Validation
+      - Writing - review & editing
     corresponding: no
     email: jws@stevens.edu
   Savannah C. Lewis:
     name: Savannah C. Lewis
     affiliation: '101,201'
     role:
-      - Conceptualization
-      - Formal analysis
-      - Methodology
+      - Investigation
+      - Project administration
       - Supervision
+      - Writing - review & editing
     corresponding: no
     email: slewis5920@gmail.com
 
@@ -2898,27 +2918,27 @@ affiliation:
   - id: 104
     institution: University of Minho
   - id: 105
-    institution: University of Galway
+    institution: Wawasan Open University
   - id: 106
-    institution: Memorial University of Newfoundland
+    institution: University of Galway
   - id: 107
-    institution: Wittenberg University
+    institution: Memorial University of Newfoundland
   - id: 108
-    institution: University of Oklahoma
+    institution: Wittenberg University
   - id: 109
-    institution: University of the Sunshine Coast
+    institution: University of Oklahoma
   - id: 110
-    institution: The University of Queensland Brisbane
+    institution: University of the Sunshine Coast
   - id: 111
-    institution: Beijing Normal University at Zhuhai
+    institution: The University of Queensland Brisbane
   - id: 112
-    institution: Beijing Normal University
+    institution: Beijing Normal University at Zhuhai
   - id: 113
-    institution: Western University
+    institution: Beijing Normal University
   - id: 114
-    institution: Ghent University
+    institution: Western University
   - id: 115
-    institution: Sapienza University Of Rome
+    institution: Ghent University
   - id: 116
     institution: IRCCS Santa Lucia Foundation
   - id: 117
@@ -2930,25 +2950,25 @@ affiliation:
   - id: 120
     institution: ETH Zürich
   - id: 121
-    institution: University of Concepción
+    institution: Research and Innovation Management GmbH
   - id: 122
-    institution: University of Pavia
+    institution: University of Concepción
   - id: 123
-    institution: Boston College
+    institution: University of Pavia
   - id: 124
-    institution: Hellenic Open University
+    institution: Boston College
   - id: 125
-    institution: University of Alberta
+    institution: Hellenic Open University
   - id: 126
-    institution: University of Waterloo
+    institution: University of Alberta
   - id: 127
-    institution: ESSEC Business School
+    institution: University of Waterloo
   - id: 128
-    institution: Henan University
+    institution: ESSEC Business School
   - id: 129
-    institution: University of Amsterdam
+    institution: Henan University
   - id: 130
-    institution: Jagiellonian University​
+    institution: University of Amsterdam
   - id: 131
     institution: Hong Kong University of Science and Technology
   - id: 132
@@ -3106,7 +3126,7 @@ affiliation:
   - id: 208
     institution: Southern New Hampshire University
   - id: 209
-    institution: Suzhou City University
+    institution: Wuhan University of Technology
   - id: 210
     institution: University of Virginia
   - id: 211
