@@ -38,6 +38,8 @@ In a separate file, we prepared information about priming results which includes
 
 ## Original Accuracy Priming Scores
 
+### Priming Averages
+
 ```{r keep-get-priming}
 langs <- c("cs", "da", "de", 
            "el", "en", "es", "fr", "hu", "it", "ja", 
@@ -177,7 +179,169 @@ flextable(prime.lang) %>%
   add_footer_lines("Note. UR = Unrelated trials, R = related trials, M = mean Z-scored response latency, N = mean number of trials.")
 ```
 
+### Priming Standard Errors
+
+```{r keep-calc-priming.se}
+# z priming, z unrelated, z related, sample unrelated, sample related
+prime.overall <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = sd(avgZ_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seZ_RT_unrelated, na.rm = T),
+            m_rel = mean(seZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = sd(avgZ_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seZ_RT_unrelated, na.rm = T),
+            m_rel = mean(seZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keep.se}
+flextable(prime.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "SE Z", "SE Z2.5", "SE Z3.0",
+                               "SE UR Z", "SE UR Z2.5", "SE UR Z3.0", 
+                               "SE R Z", "SE R Z2.5", "SE R Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, SE = standard error, N = mean number of trials.")
+```
+
+### Raw RT Averages
+
+```{r keep-calc-priming-keep-rt}
+prime.overall.rt <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = mean(avgRT_prime, na.rm = T),
+            m_unrel = mean(avgRT_unrelated, na.rm = T),
+            m_rel = mean(avgRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang.rt <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = mean(avgRT_prime, na.rm = T),
+            m_unrel = mean(avgRT_unrelated, na.rm = T),
+            m_rel = mean(avgRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall.rt) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keep-rt}
+flextable(prime.lang.rt) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "M RT", "M RT Z2.5", "M RT Z3.0",
+                               "M UR RT", "M UR RT Z2.5", "M UR RT Z3.0", 
+                               "M R RT", "M R RT Z2.5", "M R RT Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, M = mean raw response times, N = mean number of trials. Note that the Z-scores were used to eliminate outlier trials for this calculation.")
+```
+
+### Raw RT Standard Errors
+
+```{r keep-calc-priming-keep-rt-se}
+prime.overall.rt <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = sd(avgRT_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seRT_unrelated, na.rm = T),
+            m_rel = mean(seRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang.rt <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = sd(avgRT_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seRT_unrelated, na.rm = T),
+            m_rel = mean(seRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall.rt) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keep-rt-se}
+flextable(prime.lang.rt) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "SE RT", "SE RT Z2.5", "SE RT Z3.0",
+                               "SE UR RT", "SE UR RT Z2.5", "SE UR RT Z3.0", 
+                               "SE R RT", "SE R RT Z2.5", "SE R RT Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, SE = standard error, N = mean number of trials. Note that the Z-scores were used to eliminate outlier trials for this calculation.")
+```
+
 ## Rescored Acccuracy Priming Scores 
+
+### Priming Averages
 
 ```{r keep-get-priming-keepanswered}
 # open all participant data
@@ -310,6 +474,168 @@ flextable(prime.lang) %>%
   big.mark = ",", digits = 2, na_str = "N/A",
 ) %>% 
   add_footer_lines("Note. UR = Unrelated trials, R = related trials, M = mean Z-scored response latency, N = mean number of trials.")
+```
+
+### Priming Standard Errors
+
+```{r keep-calc-priminganswered.se}
+# z priming, z unrelated, z related, sample unrelated, sample related
+prime.overall <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = sd(avgZ_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seZ_RT_unrelated, na.rm = T),
+            m_rel = mean(seZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = sd(avgZ_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seZ_RT_unrelated, na.rm = T),
+            m_rel = mean(seZ_RT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keepanswered.se}
+flextable(prime.lang) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "SE Z", "SE Z2.5", "SE Z3.0",
+                               "SE UR Z", "SE UR Z2.5", "SE UR Z3.0", 
+                               "SE R Z", "SE R Z2.5", "SE R Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, SE = standard error, N = mean number of trials.")
+```
+
+
+### Raw RT Averages
+
+```{r keep-calc-priming-keepanswered-rt}
+# z priming, z unrelated, z related, sample unrelated, sample related
+prime.overall.rt <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = mean(avgRT_prime, na.rm = T),
+            m_unrel = mean(avgRT_unrelated, na.rm = T),
+            m_rel = mean(avgRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang.rt <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = mean(avgRT_prime, na.rm = T),
+            m_unrel = mean(avgRT_unrelated, na.rm = T),
+            m_rel = mean(avgRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall.rt) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keepanswered-rt}
+flextable(prime.lang.rt) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "M RT", "M RT Z2.5", "M RT Z3.0",
+                               "M UR RT", "M UR RT Z2.5", "M UR RT Z3.0", 
+                               "M R RT", "M R RT Z2.5", "M R RT Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, M = mean raw response times, N = mean number of trials. Note that the Z-scores were used to eliminate outlier trials for this calculation.")
+```
+
+### Raw RT Standard Errors
+
+```{r keep-calc-priming-keepanswered-rt-se}
+prime.overall.rt <- prime.df.all %>% 
+  group_by(z_type) %>% 
+  summarize(m_prime = sd(avgRT_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seRT_unrelated, na.rm = T),
+            m_rel = mean(seRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              names_from = "z_type",
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  mutate(language = "Overall")
+
+prime.lang.rt <- prime.df.all %>% 
+  group_by(language, z_type) %>% 
+  summarize(m_prime = sd(avgRT_prime, na.rm = T)/sqrt(n()),
+            m_unrel = mean(seRT_unrelated, na.rm = T),
+            m_rel = mean(seRT_related, na.rm = T),
+            n_unrel = mean(target_answeredN_unrelated, na.rm = T),
+            n_rel = mean(target_answeredN_related, na.rm = T),
+            .groups = "keep") %>% 
+  pivot_wider(data = .,
+              id_cols = "language",
+              names_from = "z_type", 
+              values_from = c(m_prime:n_rel)) %>% 
+  select(-n_unrel_2.5, -n_unrel_3.0, -n_rel_2.5, -n_rel_3.0) %>% 
+  bind_rows(prime.overall.rt) %>% 
+  select(language, m_prime_All, m_prime_2.5, m_prime_3.0, 
+         m_unrel_All, m_unrel_2.5, m_unrel_3.0, 
+         m_rel_All, m_rel_2.5, m_rel_3.0, 
+         n_unrel_All, n_rel_All
+         )
+```
+
+```{r priming-table-keepanswered-rt-se}
+flextable(prime.lang.rt) %>% 
+  set_header_labels(x = ., 
+                    values = c("Language", 
+                               "SE RT", "SE RT Z2.5", "SE RT Z3.0",
+                               "SE UR RT", "SE UR RT Z2.5", "SE UR RT Z3.0", 
+                               "SE R RT", "SE R RT Z2.5", "SE R RT Z3.0", 
+                               "N UR", "N R")) %>% 
+  colformat_double(
+  x = .,
+  big.mark = ",", digits = 2, na_str = "N/A",
+) %>% 
+  add_footer_lines("Note. UR = Unrelated trials, R = related trials, SE = standard error, N = mean number of trials. Note that the Z-scores were used to eliminate outlier trials for this calculation.")
 ```
 
 ## Reliability 
@@ -505,7 +831,6 @@ rel_trial <- list(
 save(rel_trial, file = "supplemental/reliability_trial.RData")
 ```
 
-
 ```{r rel-item-results}
 # see code above 
 load(file = "supplemental/reliability_item.RData")
@@ -514,7 +839,11 @@ load(file = "supplemental/reliability_trial.RData")
 # rel_trial
 ```
 
-Item reliability was calculated by randomly splitting priming trials into two halves, calculating *Z*-score priming for each half, and correlating those scores by item. Person level reliability was calculated in a similar fashion by splitting participant related-unrelated trials in half and calculating priming as the average unrelated *Z*-scored response latency minus the related *Z*-scored response latency, and correlating the two priming scores. TThe Spearman-Brown prophecy formula was applied to the average and median correlation across 100 trial runs to calculate total reliability. The Spearman-Brown prophecy formula was applied to the average and median correlation across 100 trial runs to calculate total reliability. Table X shows the reliability scores for person and items. The average reliability for items was `r apa_num(sb(mean(rel_item$save.cor.item)), gt1 = FALSE)` (*Mdn* = 
+Item reliability was calculated by randomly splitting priming trials into two halves, calculating *Z*-score priming for each half, and correlating those scores by item. Person level reliability was calculated in a similar fashion by splitting participant related-unrelated trials in half and calculating priming as the average unrelated *Z*-scored response latency minus the related *Z*-scored response latency, and correlating the two priming scores. TThe Spearman-Brown prophecy formula was applied to the average and median correlation across 100 trial runs to calculate total reliability. The Spearman-Brown prophecy formula was applied to the average and median correlation across 100 trial runs to calculate total reliability. 
+
+### Reliability for Original Accuracy
+
+Table X shows the reliability scores for person and items. The average reliability for items was `r apa_num(sb(mean(rel_item$save.cor.item)), gt1 = FALSE)` (*Mdn* = 
 `r apa_num(sb(median(rel_item$save.cor.item)), gt1 = FALSE)`) and for people was `r apa_num(sb(mean(rel_trial$save.cor.trial)), gt1 = FALSE)` (*Mdn* = `r apa_num(sb(median(rel_trial$save.cor.trial)), gt1 = FALSE)`). 
 
 ```{r reliability-table-keep}
@@ -538,10 +867,69 @@ flextable(rel.lang) %>%
 
 ```
 
+### Correlation of Reliability and Sample Size
+
+```{r}
+# open all participant data
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_prime_summary.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df <- bind_rows(prime.files)
+prime.df$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df$z_type <- "All"
+
+prime.lang <- prime.df %>% 
+  group_by(language, z_type) %>% 
+  summarize(n_unrel = mean(target_sample_keep_unrelated, na.rm = T),
+            n_rel = mean(target_sample_keep_related, na.rm = T),
+            .groups = "keep") %>% 
+  na.omit() %>% 
+  mutate(avg_avg_n = mean(c(n_unrel, n_rel))) %>% 
+  ungroup()
+
+rel.lang <- rel.lang %>%
+  left_join(prime.lang, by = "language") %>% 
+  ungroup()
+
+# correlations  
+cor(rel.lang %>% select(correl.x, n_unrel, n_rel, avg_avg_n))
+
+# plot 
+plot(rel.lang$correl.x, rel.lang$avg_avg_n)
+
+# without english
+cor(rel.lang %>% 
+      filter(language != "en") %>% 
+      select(correl.x, n_unrel, n_rel, avg_avg_n))
+
+plot(rel.lang$correl.x[rel.lang$language != "en"], rel.lang$avg_avg_n[rel.lang$language != "en"])
+
+# what would you need for .80 reliability? 
+predict.model <- lm(correl.x ~ avg_avg_n, data = rel.lang)
+(.80 - coef(predict.model)[1]) / coef(predict.model)[2]
+```
+
+### Reliability for Rescored Accuracy
+
 For rescored accuracy participants the average reliability for items was `r apa_num(sb(mean(rel_item$save.cor.item.keepanswered)), gt1 = FALSE)` (*Mdn* = `r apa_num(sb(median(rel_item$save.cor.item.keepanswered)), gt1 = FALSE)`) and for people was `r apa_num(sb(mean(rel_trial$save.cor.trial.keepanswered)), gt1 = FALSE)` (*Mdn* = `r apa_num(sb(median(rel_trial$save.cor.trial.keepanswered)), gt1 = FALSE)`). Table X shows the same information split by language for rescored accuracy participants. 
 
 ```{r reliability-table-keepanswered}
-rel.lang <- bind_rows(rel_item$save.cor.item.keepanswered.lang) %>% 
+rel.lang.rescore <- bind_rows(rel_item$save.cor.item.keepanswered.lang) %>% 
   group_by(language) %>% 
   summarize(correl = sb(mean(correl)), .groups = "keep") %>% 
   full_join(
@@ -551,7 +939,7 @@ rel.lang <- bind_rows(rel_item$save.cor.item.keepanswered.lang) %>%
   by = "language"
   )
 
-flextable(rel.lang) %>% 
+flextable(rel.lang.rescore) %>% 
   set_header_labels(x = ., 
                     values = c("Language", "Item Reliability", "Person Reliability")) %>% 
   colformat_double(
@@ -560,4 +948,58 @@ flextable(rel.lang) %>%
 ) 
 ```
 
+### Correlation of Reliability and Sample Size
 
+```{r}
+prime.list <- list.files(
+  path = "../05_Data/data_processing/output_data",
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = "*prime_summary.csv"
+)
+
+# only languages we need
+langs_trial <- paste(paste0("/", langs, "_answered_prime"), collapse = "|")
+prime.list <- prime.list[grepl(langs_trial, prime.list)]
+
+# import files
+prime.files <- lapply(prime.list, import)
+
+# give them names 
+names(prime.files) <- gsub("../05_Data/data_processing/output_data/priming_data/|_answered_prime_summary.csv|_combo", "", prime.list)
+
+# merge them together
+prime.df <- bind_rows(prime.files)
+prime.df$language <- rep(names(prime.files), times = unlist(lapply(prime.files, nrow)))
+prime.df$z_type <- "All"
+
+prime.lang <- prime.df %>% 
+  group_by(language, z_type) %>% 
+  summarize(n_unrel = mean(target_sample_keep_unrelated  , na.rm = T),
+            n_rel = mean(target_sample_keep_related, na.rm = T),
+            .groups = "keep") %>% 
+  na.omit() %>% 
+  mutate(avg_avg_n = mean(c(n_unrel, n_rel))) %>% 
+  ungroup()
+
+rel.lang.rescore <- rel.lang.rescore %>%
+  left_join(prime.lang, by = "language") %>% 
+  ungroup()
+
+# correlations  
+cor(rel.lang.rescore %>% select(correl.x, n_unrel, n_rel, avg_avg_n))
+
+# plot 
+plot(rel.lang.rescore$correl.x, rel.lang.rescore$avg_avg_n)
+
+# without english
+cor(rel.lang %>% 
+      filter(language != "en") %>% 
+      select(correl.x, n_unrel, n_rel, avg_avg_n))
+
+plot(rel.lang.rescore$correl.x[rel.lang.rescore$language != "en"], rel.lang.rescore$avg_avg_n[rel.lang.rescore$language != "en"])
+
+# what would you need for .80 reliability? 
+predict.model <- lm(correl.x ~ avg_avg_n, data = rel.lang.rescore)
+(.80 - coef(predict.model)[1]) / coef(predict.model)[2]
+```

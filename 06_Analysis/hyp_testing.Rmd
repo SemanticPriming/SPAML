@@ -231,6 +231,19 @@ ggplot(combo.original %>%
                       values = viridis::turbo(2)) 
 
 ggsave("images/original.boxplots.png", dpi = 300, width = 8, units = "in")
+
+ggplot(combo.original %>% 
+         filter(cutoff == "None"), 
+       aes(avgRT_prime, Language, fill = Language_type)) + 
+  geom_boxplot(alpha = .80) + 
+  theme_bw(base_size = 15) + 
+  #facet_wrap(~cutoff) + 
+  xlab("Raw RT Priming") +
+  theme(legend.position = "bottom") + 
+  scale_fill_manual(name = "Language Script",
+                      values = viridis::turbo(2)) 
+
+ggsave("images/original.boxplots.rt.png", dpi = 300, width = 8, units = "in")
 ```
 
 ## Hypothesis 1 - Redefined Accuracy
@@ -301,6 +314,19 @@ ggplot(combo.original.answered %>%
                       values = viridis::turbo(2)) 
 
 ggsave("images/redefined.boxplots.png", dpi = 300, width = 8, units = "in")
+
+ggplot(combo.original.answered %>% 
+         filter(cutoff == "None"), 
+       aes(avgRT_prime, Language, fill = Language_type)) + 
+  geom_boxplot(alpha = .80) + 
+  theme_bw(base_size = 15) + 
+  #facet_wrap(~cutoff) + 
+  xlab("Raw RT Priming") +
+  theme(legend.position = "bottom") + 
+  scale_fill_manual(name = "Language Script",
+                      values = viridis::turbo(2)) 
+
+ggsave("images/redefined.boxplots.rt.png", dpi = 300, width = 8, units = "in")
 ```
 
 ## Hypothesis 2
@@ -406,6 +432,26 @@ ggplot(combo.original, aes(Language, avgZ_prime, color = cutoff, shape = Languag
   scale_shape(guide = "none")
 
 ggsave("images/original.forest.png", dpi = 300, width = 10, height = 10, units = "in")
+
+ggplot(combo.original, aes(Language, avgRT_prime, color = cutoff, shape = Language_type)) +
+  stat_summary(fun.data = mean_cl_normal, 
+              geom = "errorbar", 
+              width = .2) + 
+  stat_summary(fun = mean,
+               geom = "point", 
+               size = 3) + 
+  xlab("Language") + 
+  ylab("Raw RT Priming") +
+  theme_classic(base_size = 18) + 
+  #geom_hline(yintercept = avg_prime) + 
+  coord_flip() + 
+  #facet_wrap(~cutoff) + 
+  scale_color_manual(name = "Z-Score Exclusion",
+                       values = viridis::turbo(10)[c(1,8,10)]) + 
+  theme(legend.position = "bottom") + 
+  scale_shape(guide = "none")
+
+ggsave("images/original.forest.rt.png", dpi = 300, width = 10, height = 10, units = "in")
 ```
 
 ## Hypothesis 2 - Redefined
@@ -508,6 +554,27 @@ ggplot(combo.original.answered, aes(Language, avgZ_prime, color = cutoff, shape 
   scale_shape(guide = "none")
 
 ggsave("images/redefined.forest.png", dpi = 300, width = 8, height = 10, units = "in")
+
+# forest plot
+ggplot(combo.original.answered, aes(Language, avgRT_prime, color = cutoff, shape = Language_type)) +
+  stat_summary(fun.data = mean_cl_normal, 
+              geom = "errorbar", 
+              width = .2) + 
+  stat_summary(fun = mean,
+               geom = "point", 
+               size = 3) + 
+  xlab("Language") + 
+  ylab("Z-Score Priming") +
+  theme_classic(base_size = 18) + 
+  #geom_hline(yintercept = avg_prime) + 
+  coord_flip() + 
+  #facet_wrap(~cutoff) + 
+  scale_color_manual(name = "Z-Score Exclusion",
+                       values = viridis::turbo(10)[c(1,8,10)]) + 
+  theme(legend.position = "bottom") + 
+  scale_shape(guide = "none")
+
+ggsave("images/redefined.forest.rt.png", dpi = 300, width = 8, height = 10, units = "in")
 ```
 
 ## Hypothesis 1 - Raw Scores
