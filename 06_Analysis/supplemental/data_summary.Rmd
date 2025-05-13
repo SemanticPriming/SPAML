@@ -67,6 +67,8 @@ rmarkdown::render("data_processing_zh.Rmd") # current
 rmarkdown::render("data_processing_zh_hk.Rmd") # current 
 ```
 
+## Import Summary Participant Files 
+
 ```{r}
 # get all the files
 participant_files <- list.files("../../05_Data/data_processing/output_data/participant_data",
@@ -108,12 +110,24 @@ participant_data %>%
 
 ```
 
-## Import Summary Participant Files 
-
 ```{r import_data, eval = T}
 # deal with blank gender, education
 participant_data$please_tell_us_your_gender[participant_data$please_tell_us_your_gender == ""] <- NA
 participant_data$please_tell_us_your_education_level[participant_data$please_tell_us_your_education_level == ""] <- NA
+```
+
+## Start and Stop
+
+```{r}
+participant_data %>% 
+  arrange(desc(timestamp_consent)) %>% 
+  pull(timestamp_consent) %>% 
+  min(., na.rm = T)
+
+participant_data %>% 
+  arrange(desc(timestamp_consent)) %>% 
+  pull(timestamp_consent) %>% 
+  max(., na.rm = T)
 ```
 
 ## Import Priming Level Data 
