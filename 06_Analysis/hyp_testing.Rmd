@@ -218,6 +218,7 @@ ggplot(combo.original %>%
                       values = viridis::turbo(2)) 
 
 ggsave("images/original.distributions.png", dpi = 300, width = 8, units = "in")
+ggsave("images/original.distributions.eps", dpi = 300, width = 8, units = "in")
 
 ggplot(combo.original %>% 
          filter(cutoff == "None"), 
@@ -231,6 +232,7 @@ ggplot(combo.original %>%
                       values = viridis::turbo(2)) 
 
 ggsave("images/original.boxplots.png", dpi = 300, width = 8, units = "in")
+ggsave("images/original.boxplots.eps", dpi = 300, width = 8, units = "in")
 
 ggplot(combo.original %>% 
          filter(cutoff == "None"), 

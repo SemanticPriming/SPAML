@@ -821,5 +821,8 @@ ggplot(country_summary) +
 ####CHECK COLOR PALETTE#### (issue with the yellow)
 ggsave("images/binned_country.png", dpi = 300, width = 7, 
        height = 4, units = "in")
+
+ggsave("images/binned_country.eps", dpi = 300, width = 7, 
+       height = 4, units = "in")
 ```
 
