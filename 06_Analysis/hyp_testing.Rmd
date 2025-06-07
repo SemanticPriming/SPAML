@@ -218,7 +218,6 @@ ggplot(combo.original %>%
                       values = viridis::turbo(2)) 
 
 ggsave("images/original.distributions.png", dpi = 300, width = 8, units = "in")
-ggsave("images/original.distributions.eps", dpi = 300, width = 8, units = "in")
 
 ggplot(combo.original %>% 
          filter(cutoff == "None"), 
@@ -434,6 +433,7 @@ ggplot(combo.original, aes(Language, avgZ_prime, color = cutoff, shape = Languag
   scale_shape(guide = "none")
 
 ggsave("images/original.forest.png", dpi = 300, width = 10, height = 10, units = "in")
+ggsave("images/original.forest.eps", dpi = 300, width = 10, height = 10, units = "in")
 
 ggplot(combo.original, aes(Language, avgRT_prime, color = cutoff, shape = Language_type)) +
   stat_summary(fun.data = mean_cl_normal, 
