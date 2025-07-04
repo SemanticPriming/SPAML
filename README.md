@@ -37,3 +37,5 @@ For information about individual files, please see the REAMDE.md file within in 
 `10_Presentations`: This folder contains the information for presentations given about the project. 
 
 `11_Grants`: This folder contains information about a few of the grants we submitted to support this project. 
+
+`12_Reproducing`: This folder contains a reproducibility check of the files in these folders against the manuscript and the final releases. See more details within the readme of that folder. 
