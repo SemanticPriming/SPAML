@@ -10,7 +10,7 @@ You can copy the citations direction from these websites:
 
 - Dataset: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10888832.svg)](https://doi.org/10.5281/zenodo.10888832)
 - Pre-Print: [https://doi.org/10.31219/osf.io/q4fjy](https://doi.org/10.31219/osf.io/q4fjy)
-- Publication: *coming soon*
+- Publication: [https://www.nature.com/articles/s41562-025-02254-x](https://www.nature.com/articles/s41562-025-02254-x)
 
 # Folder Information
 
