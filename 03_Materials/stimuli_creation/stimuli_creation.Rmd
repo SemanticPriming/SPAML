@@ -3245,7 +3245,7 @@ write.csv(zh_cn_top_sim, paste0(root, "similarity/", language, "_sims.csv"), row
 ```
 
 
-## zh_tw Mandarin TO DO 
+## zh_tw Mandarin
 
 ```{r eval = F}
 language <- "zh_tw"
